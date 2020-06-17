@@ -1,0 +1,1 @@
+echo "source $HOME/git/dotfiles/zsh/zshrc.sh" > $HOME/.zshrc
