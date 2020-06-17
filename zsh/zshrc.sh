@@ -8,3 +8,4 @@ source $ZSH/oh-my-zsh.sh
 source ~/git/dotfiles/zsh/p10k.zsh
 source ~/git/dotfiles/zsh/aliases.sh
 source ~/git/dotfiles/zsh/extras.sh
+

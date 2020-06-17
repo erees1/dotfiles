@@ -161,13 +161,6 @@ alias tree='tree -Csu'    # nice alternative to 'recursive ls'
 alias c19="ssh edwardr@code19.cantabresearch.com"
 alias colo="ssh edwardr@cam2c01.farm.speechmatics.io"
 alias aml="ssh edwardr@bastion.aml.speechmatics.io"
-alias qq='qstat -f -u "*"'
-alias q='qstat'
-alias gpu980='qlogin -q gpu.q@@980'
-alias titanx='qlogin -q gpu.q@@titanx'
-alias nv='nvidia-smi'
-alias cuda0='export CUDA_VISIBLE_DEVICES=0'
-alias cuda1='export CUDA_VISIBLE_DEVICES=1'
 
 #-------------------------------------------------------------
 # chmod
