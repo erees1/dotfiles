@@ -9,9 +9,6 @@ alias ve="source ~/venv/bin/activate"
 alias spy="tail -f"
 alias zrc="cd ~/git/dotfiles/zsh"
 alias dot="cd ~/git/dotfiles"
-alias c19="ssh edwardr@code19.cantabresearch.com"
-alias colo="ssh edwardr@cam2c01.farm.speechmatics.io"
-alias aml="ssh edwardr@bastion.aml.speechmatics.io"
 alias mkve="virtualenv -p python3"
 
 # -------------------------------------------------------------------
@@ -156,6 +153,21 @@ alias lt='ls -ltr'        # sort by date, most recent last
 alias lm='ls -al |more'   # pipe through 'more'
 alias lr='ls -lR'         # recursive ls
 alias tree='tree -Csu'    # nice alternative to 'recursive ls'
+
+# -------------------------------------------------------------------
+# cantab
+# -------------------------------------------------------------------
+
+alias c19="ssh edwardr@code19.cantabresearch.com"
+alias colo="ssh edwardr@cam2c01.farm.speechmatics.io"
+alias aml="ssh edwardr@bastion.aml.speechmatics.io"
+alias qq='qstat -f -u "*"'
+alias q='qstat'
+alias gpu980='qlogin -q gpu.q@@980'
+alias titanx='qlogin -q gpu.q@@titanx'
+alias nv='nvidia-smi'
+alias cuda0='export CUDA_VISIBLE_DEVICES=0'
+alias cuda1='export CUDA_VISIBLE_DEVICES=1'
 
 #-------------------------------------------------------------
 # chmod
