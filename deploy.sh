@@ -1,5 +1,3 @@
-
-
 #!/bin/bash
 
 USAGE="Usage: ./deploy.sh local or ./deploy.sh remote"
