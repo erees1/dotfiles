@@ -174,3 +174,4 @@ chx () {
   else
     echo "Usage: chx <dir>" >&2
   fi
+}
