@@ -32,16 +32,16 @@ done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
 
-echo "source $HOME/git/dotfiles/zsh/zshrc.sh" > $HOME/.zshrc
 echo "source $HOME/git/dotfiles/vim/vimrc.vim" > $HOME/.vimrc
 echo "source $HOME/git/dotfiles/config/tmux.conf" > $HOME/.tmux.conf
 
 if [ $PARAMS == "local" ]; then
     echo "deploying on local machine..."
+    echo "source $HOME/git/dotfiles/zsh/zshrc_local.sh" > $HOME/.zshrc
     zsh
 elif [ $PARAMS == "remote" ]; then
     echo "deploying on remote machine..."
-    echo "source $HOME/git/dotfiles/zsh/remote.sh" > $HOME/.zshrc
+    echo "source $HOME/git/dotfiles/zsh/zshrc_remote.sh" > $HOME/.zshrc
     zsh
 else
     echo "Error: Unsupported flags provided"
