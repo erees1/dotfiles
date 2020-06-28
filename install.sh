@@ -7,13 +7,15 @@ case "${unameOut}" in
     *)          machine="UNKNOWN:${unameOut}"
 esac
 
-if [ $machine == "linux" ]; then
+if [ $machine == "Linux" ]; then
     sudo apt-get install zsh
     sudo apt-get install tmux
-elif [ $machine == "mac" ]; then
+elif [ $machine == "Mac" ]; then
     brew install zsh
     brew install tmux
+    chsh -s /usr/local/bin/zsh
 fi
+
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
