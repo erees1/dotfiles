@@ -12,6 +12,7 @@ alias ls='ls -hF --color' # add colors for filetype recognition
 
 # jupyter lab
 alias jpl="jupyter lab --no-browser --ip $(hostname)"
+alias cjpl = "cuda_wrapper 1 jupyter lab --no-browswer --ip $(hostname)"
 # virtual envs
 alias veh="source /cantab/dev/inbetweeners/hydra/venv_stable/bin/activate"
 alias ve="source ~/venv/bin/activate"
