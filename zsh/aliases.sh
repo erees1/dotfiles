@@ -10,7 +10,7 @@ alias spy="tail -f"
 alias zrc="cd ~/git/dotfiles/zsh"
 alias dot="cd ~/git/dotfiles"
 alias mkve="virtualenv -p python3"
-alias jpl="juypter lab"
+alias jpl="jupyter lab"
 
 # -------------------------------------------------------------------
 # general
