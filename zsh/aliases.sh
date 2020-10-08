@@ -5,7 +5,7 @@
 # -------------------------------------------------------------------
 
 alias cdg="cd ~/git"
-alias ve="source ~/venv/bin/activate"
+alias ve="source ./venv/bin/activate"
 alias spy="tail -f"
 alias zrc="cd ~/git/dotfiles/zsh"
 alias dot="cd ~/git/dotfiles"
