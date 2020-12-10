@@ -11,6 +11,9 @@ alias zrc="cd ~/git/dotfiles/zsh"
 alias dot="cd ~/git/dotfiles"
 alias mkve="virtualenv -p python3"
 alias jpl="jupyter lab"
+alias mkipy="python -m ipykernel install --user --name"
+alias rmipy="jupyter kernelspec uninstall"
+
 
 # -------------------------------------------------------------------
 # general

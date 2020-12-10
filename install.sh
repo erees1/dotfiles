@@ -1,5 +1,44 @@
 #!/bin/bash
 
+USAGE="Usage: ./install.sh root or ./install.sh noroot"
+if [ $# -eq 0 ]
+  then
+    echo "Error: No flags provided"
+    echo $USAGE
+    exit 1
+fi
+
+zsh=true
+tmux=false
+root_access=true
+PARAMS=""
+while (( "$#" )); do
+  case "$1" in
+    -h|--help)
+      echo $USAGE
+      exit
+      ;;
+    --noroot)
+      root_access=false
+      shift
+      ;;
+    --) # end argument parsing
+      shift
+      break
+      ;;
+    -*|--*=) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS $1"
+      shift
+      ;;
+  esac
+done
+# set positional arguments in their proper place
+eval set -- "$PARAMS"
+
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -10,8 +49,18 @@ case "${unameOut}" in
 esac
 
 if [ $machine == "Linux" ]; then
-    sudo apt-get install zsh
-    sudo apt-get install tmux
+    if [ root_access == true ]; then
+        sudo apt-get install zsh
+        sudo apt-get install tmux
+        chsh -s $(which zsh | awk 'NR==1{print $3}')
+    elif [ $root_access == false ]; then
+        # Then we need to install from source
+        cd && mkdir zsh && cd zsh
+        wget -O zsh.tar.xz https://sourceforge.net/projects/zsh/files/latest/download
+        unxz zsh.tar.xz  && tar -xvf zsh.tar && rm -rf zsh.tar
+        cd zsh* && "./configure -prefix=$HOME"
+        make && make install
+    fi
 elif [ $machine == "Mac" ]; then
     brew install zsh
     brew install tmux

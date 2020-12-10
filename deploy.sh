@@ -43,6 +43,10 @@ elif [ $PARAMS == "remote" ]; then
     echo "deploying on remote machine..."
     echo "source $HOME/git/dotfiles/zsh/zshrc_remote.sh" > $HOME/.zshrc
     zsh
+elif [ $PARAMS == "ucl" ]; then
+    echo "deploying on remote UCL machine..."
+    echo "source $HOME/git/dotfiles/zsh/zshrc_remote.sh" > $HOME/.zshrc
+    echo "source $HOME/git/dotfiles/zsh/ucl.sh"
 else
     echo "Error: Unsupported flags provided"
     echo $USAGE

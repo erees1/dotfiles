@@ -1,13 +1,4 @@
-ZSH_DISABLE_COMPFIX=true
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search)
-
-source $ZSH/oh-my-zsh.sh
-source ~/git/dotfiles/zsh/p10k.zsh
-source ~/git/dotfiles/zsh/aliases.sh
-source ~/git/dotfiles/zsh/extras.sh
+source ~/git/dotfiles/zsh/zshrc_local.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -23,10 +14,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
 
 # inserts shim for .rbenv
 eval "$(rbenv init -)"
