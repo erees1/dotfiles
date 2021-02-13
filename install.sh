@@ -1,7 +1,7 @@
 #!/bin/bash
 
-USAGE="Usage: ./install.sh root or ./install.sh noroot"
-if [ $# -eq 0 ]
+USAGE="Usage: ./install.sh or ./install.sh --noroot"
+if [ 1 == 0 ]
   then
     echo "Error: No flags provided"
     echo $USAGE
@@ -55,17 +55,21 @@ if [ $machine == "Linux" ]; then
         chsh -s $(which zsh | awk 'NR==1{print $3}')
     elif [ $root_access == false ]; then
         # Then we need to install from source
-        cd && mkdir zsh && cd zsh
-        wget -O zsh.tar.xz https://sourceforge.net/projects/zsh/files/latest/download
-        unxz zsh.tar.xz  && tar -xvf zsh.tar && rm -rf zsh.tar
-        cd zsh* && "./configure -prefix=$HOME"
-        make && make install
+        if [[ $(which zsh) != *"bin/zsh"* ]]; then
+            cd && mkdir zsh && cd zsh
+            wget -O zsh.tar.xz https://sourceforge.net/projects/zsh/files/latest/download
+            unxz zsh.tar.xz  && tar -xvf zsh.tar && rm -rf zsh.tar
+            cd zsh-*
+            ./configure -prefix=$HOME/.local
+            make && make install
+        fi
     fi
 elif [ $machine == "Mac" ]; then
     brew install zsh
     brew install tmux
     chsh -s /usr/local/bin/zsh
 fi
+
 
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
