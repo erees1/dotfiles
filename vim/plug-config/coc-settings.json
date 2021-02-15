@@ -2,10 +2,13 @@
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.enabled": true,
-	"python.linting.flake8Args": [
+  "python.linting.flake8Args": [
     "--ignore=E203,E266,E501,W503",
     "--max-line-length=100",
     "--select=B,C,E,F,W,T4,B9",
     "--max-complexity=18"
   ],
+  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length", "100"]
 }

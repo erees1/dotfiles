@@ -34,7 +34,7 @@ eval set -- "$PARAMS"
 
 echo "source $HOME/git/dotfiles/vim/vimrc.vim" > $HOME/.vimrc
 echo "source $HOME/git/dotfiles/config/tmux.conf" > $HOME/.tmux.conf
-ln -s -f $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.vim
+ln -sf $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.vim
 
 if [ ! -d  $HOME/.config/nvim ]; then
   mkdir -p $HOME/.config/nvim;
@@ -42,9 +42,9 @@ fi
 
 # Neovim setup
 echo "source $HOME/git/dotfiles/vim/vimrc.vim" > $HOME/.config/nvim/init.vim
-ln -s -f $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.config/nvim/coc-settings.json
-
 if [ $PARAMS == "local" ]; then
+    ln -sf $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.config/nvim/coc-settings.json
+
     echo "deploying on local machine..."
     echo "source $HOME/git/dotfiles/zsh/zshrc_local.sh" > $HOME/.zshrc
     zsh
