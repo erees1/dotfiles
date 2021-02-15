@@ -56,12 +56,7 @@ if [ $machine == "Linux" ]; then
     elif [ $root_access == false ]; then
         # Then we need to install from source
         if [[ $(which zsh) != *"bin/zsh"* ]]; then
-            cd && mkdir zsh && cd zsh
-            wget -O zsh.tar.xz https://sourceforge.net/projects/zsh/files/latest/download
-            unxz zsh.tar.xz  && tar -xvf zsh.tar && rm -rf zsh.tar
-            cd zsh-*
-            ./configure -prefix=$HOME/.local
-            make && make install
+            source $HOME/git/dotfiles/install_scripts/install_zsh.sh
         fi
     fi
 elif [ $machine == "Mac" ]; then
