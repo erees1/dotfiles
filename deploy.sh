@@ -8,58 +8,29 @@ if [ $# -eq 0 ]
     exit 1
 fi
 
-PARAMS=""
-while (( "$#" )); do
-  case "$1" in
+case "$1" in
     -h|--help)
-      echo $USAGE
-      exit
-      ;;
-    --) # end argument parsing
-      shift
-      break
-      ;;
-    -*|--*=) # unsupported flags
-      echo "Error: Unsupported flag $1" >&2
-      exit 1
-      ;;
-    *) # preserve positional arguments
-      PARAMS="$PARAMS $1"
-      shift
-      ;;
-  esac
-done
+    echo $USAGE
+    exit
+  ;;
+esac
+
 # set positional arguments in their proper place
-eval set -- "$PARAMS"
+PARAMS=$1
 
-echo "source $HOME/git/dotfiles/vim/vimrc.vim" > $HOME/.vimrc
-echo "source $HOME/git/dotfiles/config/tmux.conf" > $HOME/.tmux.conf
-ln -sf $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.vim
+if [ $PARAMS == "local" ] || [ $PARAMS == "remote" ]; then
+    
+    # Tmux setup
+    echo "source $HOME/git/dotfiles/config/tmux.conf" > $HOME/.tmux.conf
 
-if [ ! -d  $HOME/.config/nvim ]; then
-  mkdir -p $HOME/.config/nvim;
-fi
+    # Vim / Neovim setup
+    source "$HOME/git/dotfiles/vim/setup_vimrc.sh"
 
-# Neovim setup
-echo "source $HOME/git/dotfiles/vim/vimrc.vim" > $HOME/.config/nvim/init.vim
-if [ $PARAMS == "local" ]; then
-    ln -sf $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.config/nvim/coc-settings.json
+    # zshrc setup
+    source "$HOME/git/dotfiles/zsh/setup_zshrc.sh"
 
-    echo "deploying on local machine..."
-    echo "source $HOME/git/dotfiles/zsh/zshrc_local.sh" > $HOME/.zshrc
-    zsh
-elif [ $PARAMS == "remote" ]; then
-    echo "deploying on remote machine..."
-    echo "source $HOME/git/dotfiles/zsh/zshrc_remote.sh" > $HOME/.zshrc
-    zsh
-elif [ $PARAMS == "ucl" ]; then
-    echo "deploying on remote UCL machine..."
-    echo "source $HOME/git/dotfiles/zsh/zshrc_remote.sh" > $HOME/.zshrc
-    echo "source $HOME/git/dotfiles/zsh/ucl.sh"
 else
     echo "Error: Unsupported flags provided"
     echo $USAGE
     exit 1
 fi
-
-

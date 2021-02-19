@@ -18,12 +18,18 @@ Plug 'sheerun/vim-polyglot'
 
 Plug 'ryanoasis/vim-devicons'
 
+Plug 'vim-airline/vim-airline'
+
+Plug '907th/vim-auto-save'
+
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
 call plug#end()
 
 " Source plugin specific settings
 source $HOME/git/dotfiles/vim/plug-config/coc.vim
 source $HOME/git/dotfiles/vim/plug-config/ntree.vim
-
+source $HOME/git/dotfiles/vim/plug-config/airline.vim
 
 
 

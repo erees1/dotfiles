@@ -35,3 +35,10 @@ function mkcd () {
   case "$1" in /*) :;; *) set -- "./$1";; esac
   mkdir -p "$1" && cd "$1"
 }
+
+# When /etc/profile is run we make sure that the path is empty
+# this prevents tmux from screwing with my path 
+if [ -f /etc/profile ]; then
+    PATH=""
+    source /etc/profile
+fi

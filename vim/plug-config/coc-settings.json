@@ -8,7 +8,7 @@
     "--select=B,C,E,F,W,T4,B9",
     "--max-complexity=18"
   ],
-  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "coc.preferences.formatOnSaveFiletypes": [],
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--line-length", "100"]
+  "python.formatting.blackArgs": ["--line-length=100"]
 }
