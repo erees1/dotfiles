@@ -10,5 +10,24 @@
   ],
   "coc.preferences.formatOnSaveFiletypes": [],
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--line-length=100"]
+  "python.formatting.blackArgs": ["--line-length=100"],
+  "diagnostic.checkCurrentLine": true,
+  "prettier.printWidth": 80,
+  "prettier.proseWrap": "preserve",
+  // Specify file types to spell check.
+  "cSpell.language": "en-GB",
+  "cSpell.enabledLanguageIds": [
+    "go",
+    "csharp",
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "php",
+    "plaintext",
+    "typescript",
+    "typescriptreact",
+    "yml",
+    "latex",
+    "tex",
+  ]
 }

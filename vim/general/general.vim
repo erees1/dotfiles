@@ -1,9 +1,13 @@
-set tabstop=4
-" " when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" " On pressing tab, insert 4 spaces
+set tabstop=2
+" when indenting with '>', use 2 spaces width
+set shiftwidth=2
+" On pressing tab, insert 2 spaces
 set expandtab
 
+"Default text width
+" set textwidth=80
+
+:set wrap linebreak nolist
 
 "Getting python indentation
 au BufNewFile,BufRead *.py
@@ -18,14 +22,12 @@ au BufNewFile,BufRead *.py
 " numbering
 set number norelativenumber
 
-" :augroup numbertoggle
-" :  autocmd!
-" :  autocmd BufEnter,FocusGained,InsertLeave * if &filetype != 'nerdtree' && &filetype != 'tagbar' && &filetype != 'term'  | set relativenumber | endif
-" :  autocmd BufLeave,FocusLost,InsertEnter * if &filetype != 'nerdtree' && &filetype != 'tagbar'  && &filetype != 'term' | set norelativenumber | endif
-" :augroup END
-
-
 let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save_events = ["InsertLeave"]
+
+
+autocmd FileType markdown nnoremap <F5> :MarkdownPreview<cr>
+autocmd FileType tex nnoremap <F5> :VimtexCompile<cr>
 
 source $HOME/git/dotfiles/vim/general/monkeyterminal.vim
 source $HOME/git/dotfiles/vim/general/keys.vim

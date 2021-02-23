@@ -5,7 +5,6 @@
 # -------------------------------------------------------------------
 
 alias cdg="cd ~/git"
-alias ve="source ./venv/bin/activate"
 alias spy="tail -f"
 alias zrc="cd ~/git/dotfiles/zsh"
 alias dot="cd ~/git/dotfiles"
@@ -13,8 +12,14 @@ alias mkve="virtualenv -p python3"
 alias jpl="jupyter lab"
 alias mkipy="python -m ipykernel install --user --name"
 alias rmipy="jupyter kernelspec uninstall"
+alias vdot="cd ~/git/dotfiles; nvim"
 
-
+function ve () {
+    if [ -f ./venv/bin/activate ]; then
+        source ./venv/bin/activate
+    fi
+}
+alias vd="deactivate source"
 # -------------------------------------------------------------------
 # general
 # -------------------------------------------------------------------

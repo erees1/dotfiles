@@ -4,6 +4,7 @@
 let s:monkey_terminal_window = -1
 let s:monkey_terminal_buffer = -1
 let s:monkey_terminal_job_id = -1
+let s:prev_window = -1
 
 function! MonkeyTerminalOpen()
   " Check if buffer exists, if not create a window and a buffer
@@ -48,7 +49,9 @@ endfunction
 function! MonkeyTerminalToggle()
   if win_gotoid(s:monkey_terminal_window)
     call MonkeyTerminalClose()
+    call win_gotoid(s:prev_window)
   else
+    let s:prev_window = win_getid()
     call MonkeyTerminalOpen()
   endif
 endfunction
@@ -78,6 +81,7 @@ endfunction
 nnoremap <F7> :call MonkeyTerminalToggle()<cr>
 inoremap <F7> <Esc> :call MonkeyTerminalToggle()<cr>
 tnoremap <F7> <C-\><C-n>:call MonkeyTerminalToggle()<cr>
+tnoremap <Esc> <C-\><C-n><cr>
 
 " This an example on how specify command with different types of files.
 augroup go
