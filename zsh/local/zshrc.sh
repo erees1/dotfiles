@@ -1,3 +1,11 @@
+
+# When /etc/profile is run we make sure that the path is empty
+# this prevents tmux from screwing with my path 
+if [ -f /etc/profile ] ; then
+    TMPPATH=$PATH
+    source /etc/profile
+fi
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/edwardrees/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
