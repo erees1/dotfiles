@@ -38,7 +38,8 @@ function mkcd () {
 
 # When /etc/profile is run we make sure that the path is empty
 # this prevents tmux from screwing with my path 
-if [ -f /etc/profile ]; then
-    PATH=""
+if [ -f /etc/profile ] ; then
+    TMPPATH=$PATH
     source /etc/profile
+    PATH=$TMPPATH
 fi
