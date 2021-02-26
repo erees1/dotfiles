@@ -4,7 +4,10 @@
 export PATH="$HOME/.local/bin:$PATH"
 
 # extra aliases
-alias ls='ls -hF --color' # add colors for filetype recognition
+# alias ls='ls -hF --color' # add colors for filetype recognition
+
+# Make color of directoroies purple not dark blue
+LS_COLORS=$LS_COLORS:'di=0;35:' ; export LS_COLORS
 
 # -------------------------------------------------------------------
 # speechmatics

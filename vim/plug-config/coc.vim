@@ -1,3 +1,13 @@
+" List of required extensions
+let g:coc_global_extensions = [
+      \'coc-python',
+      \'coc-prettier',
+      \'coc-tabnine',
+      \'coc-texlab',
+      \'coc-git'
+      \]
+
+
 " TextEdit might fail if hidden is not set.
 set hidden
 

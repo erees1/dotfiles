@@ -18,7 +18,7 @@ esac
 # set positional arguments in their proper place
 PARAMS=$1
 
-if [ $PARAMS == "local" ] || [ $PARAMS == "remote" ]; then
+if [ $PARAMS == "local" ] || [ $PARAMS == "remote" ] || [ $PARAMS == "ucl" ] ; then
     
     # Tmux setup
     echo "source $HOME/git/dotfiles/config/tmux.conf" > $HOME/.tmux.conf
