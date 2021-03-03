@@ -25,9 +25,8 @@ set number norelativenumber
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_events = ["InsertLeave"]
 
-
-autocmd FileType markdown nnoremap <F5> :MarkdownPreview<cr>
-autocmd FileType tex nnoremap <F5> :VimtexCompile<cr>
+" Copy to cliboard by default
+set clipboard+=unnamedplus
 
 source $HOME/git/dotfiles/vim/general/monkeyterminal.vim
 source $HOME/git/dotfiles/vim/general/keys.vim

@@ -1,13 +1,18 @@
 " Key Mappings
 
+" Note this is not all key mappings, generally ones specific to a plugin 
+" are in the plug-config folder
+
 
 " ctr-p for fuzzy file search
-nnoremap <C-p> :FZF<Cr>
+function! FZFOpen(command_str)
+  if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
+    exe "normal! \<c-w>\<c-w>"
+  endif
+  exe 'normal! ' . a:command_str . "\<cr>"
+endfunction
 
-" ctrl-a to toggle nerdtree
-nnoremap <C-a> :NERDTreeFocus<CR>
-inoremap <C-a> <Esc> :NERDTreeFocus<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
 
 " Move lines up and down
 if (has("nvim"))

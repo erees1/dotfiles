@@ -6,3 +6,6 @@ let g:mkdp_auto_start = 0
 " from markdown buffer to another buffer
 " default: 1
 let g:mkdp_auto_close = 0
+
+" F5 to run show markwon preview 
+autocmd FileType markdown nnoremap <F5> :MarkdownPreview<cr>

@@ -24,3 +24,6 @@ function! UpdateSkim() abort
 
     call jobstart(l:cmd + [line('.'), l:out, l:src_file_path])
 endfunction
+
+" F5 to run 
+autocmd FileType tex nnoremap <F5> :VimtexCompile<cr>

@@ -10,6 +10,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'mhinz/vim-startify'
+
 Plug 'preservim/nerdtree'
 
 Plug 'joshdick/onedark.vim'
@@ -17,6 +19,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 
 Plug 'ryanoasis/vim-devicons'
+
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 Plug 'vim-airline/vim-airline'
 
@@ -38,3 +42,4 @@ source $HOME/git/dotfiles/vim/plug-config/ntree.vim
 source $HOME/git/dotfiles/vim/plug-config/airline.vim
 source $HOME/git/dotfiles/vim/plug-config/latex.vim
 source $HOME/git/dotfiles/vim/plug-config/markdown-preview.vim
+source $HOME/git/dotfiles/vim/plug-config/commenter.vim
