@@ -49,6 +49,28 @@ nnoremap g<Up> k
 nnoremap <Down> gj
 nnoremap g<Down> j 
 
+inoremap j gj
+inoremap gj j
+inoremap k gk
+inoremap gk k
+inoremap <Up> gk
+inoremap g<Up> k 
+inoremap <Down> gj
+inoremap g<Down> j 
+
+" Don't cut - delete
+nnoremap x "_x
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+nnoremap <leader>d ""d
+nnoremap <leader>D ""D
+vnoremap <leader>d ""d
+
+" Shortcuts for deletion
+inoremap <C-S-W> <esc>ce
+
 " ctr-p for fuzzy file search
 nnoremap <C-p> :FZF<Cr>
 

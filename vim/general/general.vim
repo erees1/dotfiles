@@ -4,9 +4,6 @@ set shiftwidth=2
 " On pressing tab, insert 2 spaces
 set expandtab
 
-"Default text width
-" set textwidth=80
-
 :set wrap linebreak nolist
 
 "Getting python indentation
