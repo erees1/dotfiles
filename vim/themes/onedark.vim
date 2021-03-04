@@ -1,20 +1,17 @@
 " onedark.vim override: Don't set a background color when running in a terminal;
-"if (has("autocmd") && !has("gui_running"))
- " augroup colorset
-  "  autocmd!
-   " let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-    "autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
- " augroup END
-"endif
+if (has("autocmd") && !has("gui_running"))
+ augroup colorset
+   autocmd!
+   let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+ augroup END
+endif
 
 let g:onedark_hide_endofbuffer=1
-let g:onedark_termcolors=16
 
 hi Comment cterm=italic
 let g:onedark_terminal_italics=0
-syntax on
-colorscheme onedark
-
+let g:onedark_termcolors=16
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support

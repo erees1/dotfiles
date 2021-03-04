@@ -1,10 +1,9 @@
- 
 " Start NERDTree and leave the cursor in it.
 " autocmd VimEnter * NERDTree
 
 " Start NERDTree when Vim is started without file arguments.
 " autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" autocmd VimEnter * if argc() == 2 && !exists('s:std_in') | NERDTree | endif
 
 " Start NERDTree when Vim starts with a directory argument.
 autocmd StdinReadPre * let s:std_in=1
@@ -25,6 +24,6 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in
 let nerdtreeshowlinenumbers=0
 
 " ctrl-shift-a to toggle nerdtree
-nnoremap <C-S-a> :NERDTreeFocus<CR>
-inoremap <C-S-a> <Esc> :NERDTreeFocus<CR>
+nnoremap <C-A> :NERDTreeFocus<CR>
+inoremap <C-A> <Esc> :NERDTreeFocus<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>

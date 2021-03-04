@@ -16,6 +16,8 @@ Plug 'preservim/nerdtree'
 
 Plug 'joshdick/onedark.vim'
 
+" Plug 'altercation/vim-colors-solarized'
+
 Plug 'sheerun/vim-polyglot'
 
 Plug 'ryanoasis/vim-devicons'

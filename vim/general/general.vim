@@ -25,5 +25,7 @@ let g:auto_save_events = ["InsertLeave"]
 " Copy to cliboard by default
 set clipboard+=unnamedplus
 
+:hi NonText guifg=bg
+
 source $HOME/git/dotfiles/vim/general/monkeyterminal.vim
 source $HOME/git/dotfiles/vim/general/keys.vim

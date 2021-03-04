@@ -49,14 +49,10 @@ nnoremap g<Up> k
 nnoremap <Down> gj
 nnoremap g<Down> j 
 
-inoremap j gj
-inoremap gj j
-inoremap k gk
-inoremap gk k
-inoremap <Up> gk
-inoremap g<Up> k 
-inoremap <Down> gj
-inoremap g<Down> j 
+" inoremap <Up> <C-o>gk
+" inoremap g<Up> <C-o>k 
+" inoremap <Down> <C-o>gj
+" inoremap g<Down> <C-o>j 
 
 " Don't cut - delete
 nnoremap x "_x
@@ -73,10 +69,6 @@ inoremap <C-S-W> <esc>ce
 
 " ctr-p for fuzzy file search
 nnoremap <C-p> :FZF<Cr>
-
-" ctrl-a to toggle nerdtree
-nmap <C-a> :NERDTreeFocus<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
 
 " alias to insert a ipython style breakpoint
 :ia ipydb import IPython ; IPython.embed() ; exit(1)<CR>
