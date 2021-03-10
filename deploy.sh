@@ -34,3 +34,4 @@ else
     echo $USAGE
     exit 1
 fi
+zsh

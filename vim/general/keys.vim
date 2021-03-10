@@ -65,7 +65,7 @@ nnoremap <leader>D ""D
 vnoremap <leader>d ""d
 
 " Shortcuts for deletion
-inoremap <C-S-W> <esc>ce
+inoremap <C-S-W> <esc>lce
 
 " ctr-p for fuzzy file search
 nnoremap <C-p> :FZF<Cr>

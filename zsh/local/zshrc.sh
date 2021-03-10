@@ -1,9 +1,13 @@
 
+# Set array path to only have unique values
+typeset -U path
+
 # When /etc/profile is run we make sure that the path is empty
 # this prevents tmux from screwing with my path 
 if [ -f /etc/profile ] ; then
     TMPPATH=$PATH
     source /etc/profile
+    PATH=$TMPPATH
 fi
 
 # >>> conda initialize >>>
@@ -25,5 +29,11 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
-# inserts shim for .rbenv
-eval "$(rbenv init -)"
+
+# inserts shim for .rbenv if its not there already
+SUB='rbenv/shims'
+if [[ "$PATH" != *"$SUB"* ]]; then
+  eval "$(rbenv init -)"
+fi
+
+
