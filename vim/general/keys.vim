@@ -49,23 +49,20 @@ nnoremap g<Up> k
 nnoremap <Down> gj
 nnoremap g<Down> j 
 
-" inoremap <Up> <C-o>gk
-" inoremap g<Up> <C-o>k 
-" inoremap <Down> <C-o>gj
-" inoremap g<Down> <C-o>j 
-
-" Don't cut - delete
-nnoremap x "_x
+" Don't cut - delete when using d or c, x will still cut
 nnoremap d "_d
-nnoremap D "_D
+nnoremap c "_c
 vnoremap d "_d
+vnoremap c "_c
 
+" If you want to cut use the leader
 nnoremap <leader>d ""d
+nnoremap <leader>dd ""dd
 nnoremap <leader>D ""D
 vnoremap <leader>d ""d
 
 " Shortcuts for deletion
-inoremap <C-S-W> <esc>lce
+inoremap <C-S-W> <esc>ce
 
 " ctr-p for fuzzy file search
 nnoremap <C-p> :FZF<Cr>

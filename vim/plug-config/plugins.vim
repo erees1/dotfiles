@@ -16,6 +16,8 @@ Plug 'preservim/nerdtree'
 
 Plug 'joshdick/onedark.vim'
 
+Plug 'machakann/vim-highlightedyank'
+
 " Plug 'altercation/vim-colors-solarized'
 
 Plug 'sheerun/vim-polyglot'
@@ -45,3 +47,4 @@ source $HOME/git/dotfiles/vim/plug-config/airline.vim
 source $HOME/git/dotfiles/vim/plug-config/latex.vim
 source $HOME/git/dotfiles/vim/plug-config/markdown-preview.vim
 source $HOME/git/dotfiles/vim/plug-config/commenter.vim
+source $HOME/git/dotfiles/vim/plug-config/highlightedyank.vim
