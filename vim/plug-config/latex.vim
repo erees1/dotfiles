@@ -27,3 +27,18 @@ endfunction
 
 " F5 to run 
 autocmd FileType tex nnoremap <F5> :VimtexCompile<cr>
+
+
+let g:vimtex_compiler_latexmk = {
+    \ 'build_dir' : 'out',
+    \ 'callback' : 1,
+    \ 'continuous' : 1,
+    \ 'executable' : 'latexmk',
+    \ 'hooks' : [],
+    \ 'options' : [
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \}

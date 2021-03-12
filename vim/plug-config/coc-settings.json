@@ -29,5 +29,14 @@
     "yml",
     "latex",
     "tex",
+  ],
+  "cSpell.userWords": [
+    "ARIMA",
+    "CGMs",
+    "Etran",
+    "MRes",
+    "bibliographystyle",
+    "documentclass",
+    "maketitle"
   ]
 }

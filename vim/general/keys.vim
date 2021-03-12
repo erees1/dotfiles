@@ -14,6 +14,9 @@ endfunction
 
 nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
 
+vmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
+
 " Move lines up and down
 if (has("nvim"))
 	nnoremap <A-j> :m .+1<CR>==
@@ -62,7 +65,7 @@ nnoremap <leader>D ""D
 vnoremap <leader>d ""d
 
 " Shortcuts for deletion
-inoremap <C-S-W> <esc>ce
+inoremap <C-S-W> <esc>lce
 
 " ctr-p for fuzzy file search
 nnoremap <C-p> :FZF<Cr>

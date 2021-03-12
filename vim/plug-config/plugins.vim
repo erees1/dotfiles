@@ -10,15 +10,20 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Better tabline
+" Plug 'romgrk/barbar.nvim'
+
 Plug 'mhinz/vim-startify'
 
 Plug 'preservim/nerdtree'
 
-Plug 'joshdick/onedark.vim'
+Plug 'erees1/onedark.vim'
 
 Plug 'machakann/vim-highlightedyank'
 
-" Plug 'altercation/vim-colors-solarized'
+Plug 'rakr/vim-one'
+
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
 Plug 'sheerun/vim-polyglot'
 

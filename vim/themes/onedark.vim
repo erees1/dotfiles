@@ -10,7 +10,7 @@ endif
 let g:onedark_hide_endofbuffer=1
 
 hi Comment cterm=italic
-let g:onedark_terminal_italics=0
+let g:onedark_terminal_italics=1
 let g:onedark_termcolors=16
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -26,3 +26,7 @@ endif
 if (has("termguicolors"))
   set termguicolors
 endif
+
+syntax on
+let g:airline_theme='onedark'
+colorscheme onedark
