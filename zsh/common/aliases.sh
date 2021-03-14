@@ -12,7 +12,7 @@ alias mkve="virtualenv -p python3"
 alias jpl="jupyter lab"
 alias mkipy="python -m ipykernel install --user --name"
 alias rmipy="jupyter kernelspec uninstall"
-alias vdot="cd ~/git/dotfiles; nvim ."
+alias vdot="nvim ${HOME}/git/dotfiles"
 
 function ve () {
     if [ -f ./venv/bin/activate ]; then

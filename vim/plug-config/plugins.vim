@@ -21,7 +21,7 @@ Plug 'erees1/onedark.vim'
 
 Plug 'machakann/vim-highlightedyank'
 
-Plug 'rakr/vim-one'
+Plug 'erees1/vim-one'
 
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
