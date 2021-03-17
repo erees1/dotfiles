@@ -3,8 +3,6 @@
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-" Fuzzy finding
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Use release branch (recommend)
@@ -14,7 +12,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'romgrk/barbar.nvim'
 " Plug 'vim-endwise'
 
-" Plug 'liuchengxu/vim-which-key'
 
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 
@@ -33,8 +30,6 @@ Plug 'erees1/vim-one'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
 Plug 'sheerun/vim-polyglot'
-
-" Plug 'ryanoasis/vim-devicons'
 
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
