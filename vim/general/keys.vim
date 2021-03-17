@@ -3,6 +3,9 @@
 " Note this is not all key mappings, generally ones specific to a plugin 
 " are in the plug-config folder
 
+" Set space as leader
+nnoremap <SPACE> <Nop>
+let mapleader=" "
 
 " ctr-p for fuzzy file search
 function! FZFOpen(command_str)

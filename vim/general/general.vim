@@ -7,9 +7,7 @@ set expandtab
 :set wrap linebreak nolist
 
 "Getting python indentation
-au BufNewFile,BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
+au BufNewFile,BufRead *.py \ set tabstop=4 | \ set softtabstop=4 |
     \ set shiftwidth=4 |
     \ set textwidth=0 |
     \ set expandtab |
@@ -27,5 +25,3 @@ set clipboard+=unnamedplus
 
 :hi NonText guifg=bg
 
-source $HOME/git/dotfiles/vim/general/monkeyterminal.vim
-source $HOME/git/dotfiles/vim/general/keys.vim

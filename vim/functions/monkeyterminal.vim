@@ -89,3 +89,7 @@ augroup go
     autocmd BufRead,BufNewFile *.go set filetype=go
     autocmd FileType go nnoremap <F5> :call MonkeyTerminalExec('go run ' . expand('%'))<cr>
 augroup END
+
+
+
+" autocmd QuitPre * call <sid>MonkeyTerminalClose()

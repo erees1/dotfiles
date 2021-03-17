@@ -12,10 +12,17 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Better tabline
 " Plug 'romgrk/barbar.nvim'
+" Plug 'vim-endwise'
+
+" Plug 'liuchengxu/vim-which-key'
+
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+
+Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'mhinz/vim-startify'
 
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 
 Plug 'erees1/onedark.vim'
 
@@ -27,7 +34,7 @@ Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
@@ -45,11 +52,3 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 
 call plug#end()
 
-" Source plugin specific settings
-source $HOME/git/dotfiles/vim/plug-config/coc.vim
-source $HOME/git/dotfiles/vim/plug-config/ntree.vim
-source $HOME/git/dotfiles/vim/plug-config/airline.vim
-source $HOME/git/dotfiles/vim/plug-config/latex.vim
-source $HOME/git/dotfiles/vim/plug-config/markdown-preview.vim
-source $HOME/git/dotfiles/vim/plug-config/commenter.vim
-source $HOME/git/dotfiles/vim/plug-config/highlightedyank.vim

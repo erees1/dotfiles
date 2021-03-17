@@ -9,5 +9,5 @@ if [ ! -d  $HOME/.config/nvim ]; then
 fi
 
 # Neovim setup
-echo "source $HOME/git/dotfiles/vim/vimrc.vim" > $HOME/.config/nvim/init.vim
+echo "source $HOME/git/dotfiles/vim/init.vim" > $HOME/.config/nvim/init.vim
 ln -sf $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.config/nvim/coc-settings.json

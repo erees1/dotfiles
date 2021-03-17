@@ -21,6 +21,7 @@
 " Refresh when entering nerd tree
 " autocmd BufEnter NERD_tree_* | execute 'normal R'
 
+let g:NERDTreeQuitOnOpen = 1
 let nerdtreeshowlinenumbers=0
 
 " ctrl-a to toggle nerdtree

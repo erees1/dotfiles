@@ -55,10 +55,17 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+function! My_mapping()
+  if pumvisible() && complete_info()["selected"] == -1
+    return "\<C-y>\<CR>"
+  elseif pumvisible()
+    return coc#_select_confirm()
+  else
+    return "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  endif
+endfunction
+inoremap <expr> <Plug>CustomCocCR My_mapping()
+imap <CR> <Plug>CustomCocCR
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.

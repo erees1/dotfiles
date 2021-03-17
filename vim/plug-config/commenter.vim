@@ -16,5 +16,3 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespce = 1
 
-" Map ctrl-shift-c to toggle comment 
-" nnoremap <C-S-c> :
