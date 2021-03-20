@@ -7,7 +7,9 @@ set expandtab
 :set wrap linebreak nolist
 
 "Getting python indentation
-au BufNewFile,BufRead *.py \ set tabstop=4 | \ set softtabstop=4 |
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
     \ set shiftwidth=4 |
     \ set textwidth=0 |
     \ set expandtab |
@@ -17,7 +19,7 @@ au BufNewFile,BufRead *.py \ set tabstop=4 | \ set softtabstop=4 |
 " numbering
 set number norelativenumber
 
-let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save = 0  " enable AutoSave on Vim startup
 let g:auto_save_events = ["InsertLeave"]
 
 " Copy to cliboard by default

@@ -7,6 +7,9 @@
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 
+" Leader s to save
+noremap <Leader>s :update<CR>
+
 " ctr-p for fuzzy file search
 function! FZFOpen(command_str)
   if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
@@ -61,13 +64,17 @@ nnoremap c "_c
 vnoremap d "_d
 vnoremap c "_c
 
+" Move left and right with ctrl-h, ctrl-l
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
 " If you want to cut use the leader
 nnoremap <leader>d ""d
 nnoremap <leader>dd ""dd
 nnoremap <leader>D ""D
 vnoremap <leader>d ""d
 
-" Shortcuts for deletion
+" Shortcuts for forward deletion in insert mode
 inoremap <C-f> <esc>lce
 
 " ctr-p for fuzzy file search
@@ -77,4 +84,5 @@ nnoremap <C-p> :FZF<Cr>
 :ia ipydb import IPython ; IPython.embed() ; exit(1)<CR>
 
 " ctrl-l to clear highlighing after search
-nnoremap <silent> <C-l> :nohl<CR><C-l>
+" nnoremap <silent> <C-l> :nohl<CR><C-l>
+nnoremap <Leader><space> :noh<cr>

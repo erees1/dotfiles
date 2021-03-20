@@ -5,9 +5,9 @@ let g:which_key_timeout = 100
 
 let g:which_key_display_names = {'<CR>': '↵', '<TAB>': '⇆'}
 
-" Map leader to which_key
-nnoremap <silent> <leader> :silent <c-u> :silent WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
+" Map \ as leader to which_key
+nmap <silent> \ :silent <c-u> :silent WhichKey '<leader>'<CR>
+vmap <silent> \ :silent <c-u> :silent WhichKeyVisual '<leader>'<CR>
 
 let g:which_key_map =  {}
 let g:which_key_sep = '→'

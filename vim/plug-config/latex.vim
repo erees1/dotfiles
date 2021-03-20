@@ -6,7 +6,7 @@ let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSuppor
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 
 "Shortcut to open latex table of contents
-nnoremap <C-t> :VimtexTocOpen<cr>
+" nnoremap <C-t> :VimtexTocOpen<cr>
 
 augroup vimtex_mac
     autocmd!

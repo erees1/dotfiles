@@ -10,16 +10,14 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Better tabline
 " Plug 'romgrk/barbar.nvim'
-" Plug 'vim-endwise'
 
+Plug 'liuchengxu/vim-which-key'
 
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 
 Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'mhinz/vim-startify'
-
-" Plug 'preservim/nerdtree'
 
 Plug 'erees1/onedark.vim'
 

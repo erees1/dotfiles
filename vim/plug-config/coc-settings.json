@@ -10,7 +10,7 @@
   ],
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["--line-length=100"],
-  "diagnostic.checkCurrentLine": true,
+  "diagnostic.checkCurrentLine": false,
   "prettier.printWidth": 80,
   "prettier.proseWrap": "preserve",
   // Specify file types to spell check.
@@ -33,10 +33,17 @@
     "ARIMA",
     "CGMs",
     "Etran",
+    "Falcone",
     "MRes",
+    "Oreshkin",
+    "RNN's",
+    "agsm",
     "bibliographystyle",
+    "citep",
     "documentclass",
     "maketitle",
-    "textit"
+    "natbib",
+    "textit",
+    "usepackage"
   ]
 }
