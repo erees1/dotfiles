@@ -20,9 +20,6 @@ endfunction
 
 nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
 
-vmap <leader>a <Plug>(coc-codeaction-selected)
-nmap <leader>a <Plug>(coc-codeaction-selected)
-
 " Move lines up and down
 if (has("nvim"))
 	nnoremap <A-j> :m .+1<CR>==
