@@ -25,8 +25,6 @@ Plug 'machakann/vim-highlightedyank'
 
 Plug 'erees1/vim-one'
 
-Plug 'christianchiarulli/nvcode-color-schemes.vim'
-
 Plug 'sheerun/vim-polyglot'
 
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'

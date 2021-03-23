@@ -20,20 +20,30 @@ endfunction
 
 nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
 
+" Always use g mode
+nnoremap j gj
+nnoremap gj j
+nnoremap k gk
+nnoremap gk k
+nnoremap <Up> gk
+nnoremap g<Up> k 
+nnoremap <Down> gj
+nnoremap g<Down> j 
+
 " Move lines up and down
 if (has("nvim"))
-	nnoremap <A-j> :m .+1<CR>==
-	nnoremap <A-k> :m .-2<CR>==
-	inoremap <A-j> :m .+1<CR>==gi
-	inoremap <A-k> :m .-2<CR>==gi
-	vnoremap <A-j> :m '>+1<CR>gv=gv
-	vnoremap <A-k> :m '<-2<CR>gv=gv
-	nnoremap <A-Down> :m .+1<CR>==
-	nnoremap <A-Up> :m .-2<CR>==
-	inoremap <A-Down> :m .+1<CR>==gi
-	inoremap <A-UP> :m .-2<CR>==gi
-	vnoremap <A-Down> :m '>+1<CR>gv=gv
-	vnoremap <A-UP> :m '<-2<CR>gv=gv
+	nnoremap <silent> <A-j> :m .+1<CR>==
+	nnoremap <silent> <A-k> :m .-2<CR>==
+	inoremap <silent> <A-j> :m .+1<CR>==gi
+	inoremap <silent> <A-k> :m .-2<CR>==gi
+	vnoremap <silent> <A-j> :m '>+1<CR>gv=gv
+	vnoremap <silent> <A-k> :m '<-2<CR>gv=gv
+	nnoremap <silent> <A-Down> :m .+1<CR>==
+	nnoremap <silent> <A-Up> :m .-2<CR>==
+	inoremap <silent> <A-Down> :m .+1<CR>==gi
+	inoremap <silent> <A-UP> :m .-2<CR>==gi
+	vnoremap <silent> <A-Down> :m '>+1<CR>gv=gv
+	vnoremap <silent> <A-UP> :m '<-2<CR>gv=gv
 else
 	execute "set <M-j>=\ej"
 	execute "set <M-k>=\ek"
@@ -45,15 +55,6 @@ else
 	vnoremap <M-k> :m '<-2<CR>gv=gv
 endif
 
-" Always use g mode
-nnoremap j gj
-nnoremap gj j
-nnoremap k gk
-nnoremap gk k
-nnoremap <Up> gk
-nnoremap g<Up> k 
-nnoremap <Down> gj
-nnoremap g<Down> j 
 
 " Don't cut - delete when using d or c, x will still cut
 nnoremap d "_d
