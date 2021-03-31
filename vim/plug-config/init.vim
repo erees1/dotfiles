@@ -9,3 +9,4 @@ source $HOME/git/dotfiles/vim/plug-config/markdown-preview.vim
 source $HOME/git/dotfiles/vim/plug-config/commenter.vim
 source $HOME/git/dotfiles/vim/plug-config/highlightedyank.vim
 source $HOME/git/dotfiles/vim/plug-config/whichkey.vim
+source $HOME/git/dotfiles/vim/plug-config/barbar.vim

@@ -1,4 +1,4 @@
-source $HOME/git/dotfiles/vim/themes/airline.vim
+" source $HOME/git/dotfiles/vim/themes/airline.vim
 source $HOME/git/dotfiles/vim/themes/one.vim
 
 function! ToggleBackgroundColour ()
