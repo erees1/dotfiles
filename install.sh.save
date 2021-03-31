@@ -53,6 +53,7 @@ if [ $machine == "Linux" ]; then
     if [ $root_access == true ]; then
 	sudo apt-get install zsh
         sudo apt-get install tmux
+        sudo apt-get install neovimsh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
         chsh -s $(which zsh)
     elif [ $root_access == false ]; then
         # Then we need to install from source

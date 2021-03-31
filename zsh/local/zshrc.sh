@@ -10,30 +10,40 @@ if [ -f /etc/profile ] ; then
     PATH=$TMPPATH
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/edwardrees/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/edwardrees/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/edwardrees/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/edwardrees/opt/miniconda3/bin:$PATH"
-    fi
+if [[ "$PATH" != *"miniconda3"* ]]; then
+  # >>> conda initialize >>>
+  # !! Contents within this block are managed by 'conda init' !!
+  conda_loc="${HOME}/.local"
+  __conda_setup=$("${conda_loc}/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "${conda_loc}/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "${conda_loc}/miniconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="${conda_loc}/miniconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+  # <<< conda initialize <<<
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
+# add pyenv if pyenv isntalled
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
 
 # inserts shim for .rbenv if its not there already
-SUB='rbenv/shims'
-if [[ "$PATH" != *"$SUB"* ]]; then
-  eval "$(rbenv init -)"
+if hash rbenv 2>/dev/null; then 
+  SUB='rbenv/shims'
+  if [[ "$PATH" != *"$SUB"* ]]; then
+    eval "$(rbenv init -)"
+  fi
 fi
 
-
+# add ./local/bin to path
+p="${HOME}/.local/bin"
+if [[ "$PATH" != *"$p"* ]]; then
+  export PATH="$p:$PATH"
+fi
