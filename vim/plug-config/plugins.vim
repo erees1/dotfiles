@@ -2,11 +2,14 @@
 " - For Neovim: stdpath('data') . '/plugged'
 
 " auto-install vim plug                                                                                                                
-if empty(glob('~/.config/nvim/autoload/plug.vim'))                                                                                    
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim \
-  --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim                                                             
-  autocmd VimEnter * PlugInstall                                                                                                      
+let autoload_plug_path = expand('~/.config/nvim/autoload/plug.vim')
+if !filereadable(autoload_plug_path)                                                                                    
+  echo 'Downloading vim plug'
+  silent execute '!curl -fLo ' . autoload_plug_path . ' --create-dirs
+        \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
+  autocmd VimEnter * PlugInstall
 endif                                                                                                                                 
+unlet autoload_plug_path
 
 call plug#begin('~/.config/nvim/plugged')
 

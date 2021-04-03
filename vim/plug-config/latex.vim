@@ -1,17 +1,21 @@
 let g:livepreview_cursorhold_recompile = 0
-let g:livepreview_previewer = 'open -a skim'
 
 
-let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-let g:vimtex_view_general_options = '-r @line @pdf @tex'
-
-"Shortcut to open latex table of contents
-" nnoremap <C-t> :VimtexTocOpen<cr>
-
-augroup vimtex_mac
-    autocmd!
-    autocmd User VimtexEventCompileSuccess call UpdateSkim()
-augroup END
+if has("unix")
+  let s:uname = system("uname -s")
+  if s:uname == "Darwin"
+    let g:livepreview_previewer = 'open -a skim'
+    let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+    let g:vimtex_view_general_options = '-r @line @pdf @tex'
+    " Do Mac stuff here
+        augroup vimtex_mac
+            autocmd!
+            autocmd User VimtexEventCompileSuccess call UpdateSkim()
+        augroup END
+  elseif s:uname == "Linux"
+     let g:livepreview_previewer = 'evince'
+ endif
+endif
 
 function! UpdateSkim() abort
     let l:out = b:vimtex.out()

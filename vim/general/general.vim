@@ -1,20 +1,17 @@
-set tabstop=2
-" when indenting with '>', use 2 spaces width
-set shiftwidth=2
-" On pressing tab, insert 2 spaces
+
 set expandtab
+set shiftround  " Round indent to multiple of 'shiftwidth'
+set smartindent " Do smart indenting when starting a new line
+set autoindent  " Copy indent from current line, over to the new line
+
+" Set the tab width
+let s:tabwidth=10
+exec 'set tabstop='    .s:tabwidth
+exec 'set shiftwidth=' .s:tabwidth
+exec 'set softtabstop='.s:tabwidth
 
 :set wrap linebreak nolist
 
-"Getting python indentation
-au BufNewFile,BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=0 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix
 
 " numbering
 set number norelativenumber
@@ -27,5 +24,5 @@ set clipboard+=unnamedplus
 
 :hi NonText guifg=bg
 
-" Set .cls files to format as tex
-au BufNewFile,BufRead *.cls set syntax=tex
+
+echo "general.vim"
