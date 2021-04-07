@@ -21,6 +21,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Better tabline
 Plug 'romgrk/barbar.nvim'
 
+Plug 'zhou13/vim-easyescape'
+
 Plug 'liuchengxu/vim-which-key'
 
 Plug 'kyazdani42/nvim-web-devicons' " for file icons

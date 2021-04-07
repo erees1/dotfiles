@@ -15,7 +15,6 @@ let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
 let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_show_icons = {
-    \ 'git': 1,
     \ 'folders': 1,
     \ 'files': 1,
     \ }
@@ -28,13 +27,6 @@ let g:nvim_tree_show_icons = {
 let g:nvim_tree_icons = {
     \ 'default': '',
     \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★"
-    \   },
     \ 'folder': {
     \   'default': "",
     \   'open': "",
