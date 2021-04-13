@@ -78,9 +78,9 @@ function! MonkeyTerminalExec(cmd)
 endfunction
 
 " With this maps you can now toggle the terminal
-nnoremap <F7> :call MonkeyTerminalToggle()<cr>
-inoremap <F7> <Esc> :call MonkeyTerminalToggle()<cr>
-tnoremap <F7> <C-\><C-n>:call MonkeyTerminalToggle()<cr>
+nnoremap <silent> <F7> :call MonkeyTerminalToggle()<cr>
+inoremap <silent> <F7> <Esc> :call MonkeyTerminalToggle()<cr>
+tnoremap <silent> <F7> <C-\><C-n>:call MonkeyTerminalToggle()<cr>
 tnoremap <Esc> <C-\><C-n><cr>
 
 " This an example on how specify command with different types of files.

@@ -21,6 +21,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Better tabline
 Plug 'romgrk/barbar.nvim'
 
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+
 Plug 'zhou13/vim-easyescape'
 
 Plug 'liuchengxu/vim-which-key'

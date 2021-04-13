@@ -11,3 +11,4 @@ source $HOME/git/dotfiles/vim/plug-config/highlightedyank.vim
 source $HOME/git/dotfiles/vim/plug-config/whichkey.vim
 source $HOME/git/dotfiles/vim/plug-config/barbar.vim
 source $HOME/git/dotfiles/vim/plug-config/easy-escape.vim
+source $HOME/git/dotfiles/vim/plug-config/pydocstring.vim

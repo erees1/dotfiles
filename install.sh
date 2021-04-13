@@ -1,16 +1,8 @@
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
 
-USAGE="Usage: ./install.sh or ./install.sh --noroot"
-if [ 1 == 0 ]
-  then
-    echo "Error: No flags provided"
-    echo $USAGE
-    exit 1
-fi
+USAGE="Usage: ./install.sh [zsh] [tmux] or ./install.sh --noroot [zsh] [tmux]"
 
-zsh=true
-tmux=false
 root_access=true
 PARAMS=""
 while (( "$#" )); do
@@ -39,6 +31,17 @@ while (( "$#" )); do
 done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
+PARAMS=($PARAMS)
+
+
+zsh=false
+tmux=false
+if [[ " ${PARAMS[@]} " =~ " zsh " ]]; then
+ zsh=true 
+fi
+if [[ " ${PARAMS[@]} " =~ " tmux " ]]; then
+ tmux=true 
+fi
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
@@ -49,24 +52,40 @@ case "${unameOut}" in
     *)          machine="UNKNOWN:${unameOut}"
 esac
 
+# Installing on linux with apt
 if [ $machine == "Linux" ]; then
-    if [ $root_access == true ]; then
-	sudo apt-get install zsh
-        sudo apt-get install tmux
-        chsh -s $(which zsh)
-    elif [ $root_access == false ]; then
-        # Then we need to install from source
-        if [[ $(which zsh) != *"bin/zsh"* ]]; then
-            source $HOME/git/dotfiles/install_scripts/install_zsh.sh
-        fi
+  if [ $root_access == true ]; then
+    if [ $zsh == true ]; then
+        sudo apt-get install zsh
     fi
+    if [ $tmux == true ]; then
+        sudo apt-get install tmux 
+    fi
+
+  elif [ $root_access == false ]; then
+    if [ $zsh == true ]; then
+      # Then we need to install from source
+      if [[ $(which zsh) != *"bin/zsh"* ]]; then
+          source $HOME/git/dotfiles/install_scripts/install_zsh.sh
+      fi
+    fi
+  fi
+
+# Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
-    brew install zsh
-    brew install tmux
-    chsh -s /usr/local/bin/zsh
+    if [ $zsh == true ]; then
+      brew install zsh
+      chsh -s /usr/local/bin/zsh
+    fi
+    if [ $tmux == true ]; then
+      brew install tmux
+    fi
 fi
 
-rm -rf ${ZSH_CUSTOM:-~/.oh-my-zsh}
+# Setting up oh my zsh and oh my zsh plugins
+# ZSH=~/opt/oh-my-zsh
+# ZSH_CUSTOM=$ZSH/custom
+rm -rf ${ZSH:-~/.oh-my-zsh}
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting

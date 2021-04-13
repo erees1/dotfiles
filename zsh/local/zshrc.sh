@@ -1,4 +1,3 @@
-
 # Set array path to only have unique values
 typeset -U path
 
@@ -10,18 +9,19 @@ if [ -f /etc/profile ] ; then
     PATH=$TMPPATH
 fi
 
-if [[ "$PATH" != *"miniconda3"* ]]; then
+# Need to remember to install miniconda to opt
+conda_loc="${HOME}/opt/miniconda3"
+if [[ "$PATH" != *"${conda_loc}"* ]]; then
   # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!
-  conda_loc="${HOME}/.local"
-  __conda_setup=$("${conda_loc}/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)
+  # !! Contents within this block are managed by 'conda init' !!  - not any more
+  __conda_setup=$("${conda_loc}/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)
   if [ $? -eq 0 ]; then
       eval "$__conda_setup"
   else
-      if [ -f "${conda_loc}/miniconda3/etc/profile.d/conda.sh" ]; then
-          . "${conda_loc}/miniconda3/etc/profile.d/conda.sh"
+      if [ -f "${conda_loc}/etc/profile.d/conda.sh" ]; then
+          . "${conda_loc}/etc/profile.d/conda.sh"
       else
-          export PATH="${conda_loc}/miniconda3/bin:$PATH"
+          export PATH="${conda_loc}/bin:$PATH"
       fi
   fi
   unset __conda_setup

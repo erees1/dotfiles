@@ -1,6 +1,7 @@
 #!/bin/bash
+set -euo pipefail
 
-USAGE="Usage: ./deploy.sh local or ./deploy.sh remote"
+USAGE="Usage: ./deploy.sh local or ./deploy.sh remote, optional flag --terminfo to compile kitty terminfo"
 if [ $# -eq 0 ]
   then
     echo "Error: No flags provided"
@@ -8,25 +9,44 @@ if [ $# -eq 0 ]
     exit 1
 fi
 
-case "$1" in
+terminfo=false
+PARAMS=""
+while (( "$#" )); do
+  case "$1" in
     -h|--help)
-    echo $USAGE
-    exit
-  ;;
-esac
-
+      echo $USAGE
+      exit
+      ;;
+    --terminfo)
+      terminfo=true
+      shift
+      ;;
+    --) # end argument parsing
+      shift
+      break
+      ;;
+    -*|--*=) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS $1"
+      shift
+      ;;
+  esac
+done
 # set positional arguments in their proper place
-PARAMS=$1
-LOC=$PARAMS
+eval set -- "$PARAMS"
+PARAMS=($PARAMS)
+LOC=${PARAMS[0]}
 
-if [ $PARAMS == "local" ] || [ $PARAMS == "remote" ] || [ $PARAMS == "ucl" ] ; then
-   
+# Set any variables
+source vars.sh
+
+if [ $LOC == "local" ] || [ $LOC == "remote" ] || [ $LOC == "ucl" ] ; then
 
     # Tmux setup
     echo "source $HOME/git/dotfiles/tmux/tmux.conf" > $HOME/.tmux.conf
-
-    # Alacritty setup
-    ln -sf "$HOME/git/dotfiles/alacritty/config.yml" "$HOME/.config/alacritty.yml"
 
     # Kitty setup
     source "$HOME/git/dotfiles/kitty/setup_kitty.sh"
