@@ -8,3 +8,8 @@ au BufNewFile,BufRead *.py
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix
+
+augroup ft_python
+  au!
+  au FileType python let b:auto_save_events = ["InsertLeave", "TextChanged"]
+augroup END

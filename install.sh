@@ -83,18 +83,28 @@ elif [ $machine == "Mac" ]; then
 fi
 
 # Setting up oh my zsh and oh my zsh plugins
-# ZSH=~/opt/oh-my-zsh
-# ZSH_CUSTOM=$ZSH/custom
-rm -rf ${ZSH:-~/.oh-my-zsh}
-sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+ZSH=~/.oh-my-zsh
+ZSH_CUSTOM=$ZSH/custom
+if [[ -d $ZSH ]]; then
+  echo "Skipping download of oh-my-zsh and related plugins, remove $ZSH to force"
+else
+  echo "You will need to ctrl-d out of the next step as install oh-my-zsh spawns a new zsh shell"
+  sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  rm -f ~/.zshrc.pre-*
+  git clone --quiet https://github.com/romkatv/powerlevel10k.git \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k 
+  git clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 
+  git clone --quiet https://github.com/zsh-users/zsh-autosuggestions \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 
+  git clone --quiet https://github.com/zsh-users/zsh-completions \
+    ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions 
+  git clone  --quiet https://github.com/zsh-users/zsh-history-substring-search \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search 
+fi
 
-rm -rf ~/.tmux-themepack
-git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
-
+if [[ ! -d ~/.tmux-themepack ]]; then
+  git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
+fi
 
 echo " --------- INSTALLED SUCCESSFULLY ----------- "
