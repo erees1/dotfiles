@@ -57,6 +57,9 @@ if [ $LOC == "local" ] || [ $LOC == "remote" ] || [ $LOC == "ucl" ] ; then
     # zshrc setup
     source "$HOME/git/dotfiles/zsh/setup_zshrc.sh"
 
+    # Gitconfig setup
+    source "$HOME/git/dotfiles/gitconf/setup_gitconfig.sh"
+    
 else
     echo "Error: Unsupported flags provided"
     echo $USAGE
