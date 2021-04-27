@@ -1,6 +1,4 @@
-" source $HOME/git/dotfiles/vim/themes/airline.vim
-source $HOME/git/dotfiles/vim/themes/one.vim
-
+colorscheme tokyonight
 function! ToggleBackgroundColour ()
     if (&background == 'light')
         set background=dark

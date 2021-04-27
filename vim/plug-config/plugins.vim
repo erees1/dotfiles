@@ -13,45 +13,44 @@ unlet autoload_plug_path
 
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
-" Use release branch (recommend)
+" Stuff for completion / code
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Better tabline
-Plug 'romgrk/barbar.nvim'
-
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 
+" Shortcuts etc
 Plug 'zhou13/vim-easyescape'
-
 Plug 'liuchengxu/vim-which-key'
+Plug '907th/vim-auto-save'
+Plug 'preservim/nerdcommenter'
 
-Plug 'kyazdani42/nvim-web-devicons' " for file icons
+" File navigation 
+" Plug 'francoiscabrol/ranger.vim'
+" Plug 'rbgrouleff/bclose.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
-Plug 'kyazdani42/nvim-tree.lua'
-
-Plug 'mhinz/vim-startify'
-
+" Themes
+Plug 'folke/tokyonight.nvim'
 Plug 'erees1/vim-one'
 
 Plug 'machakann/vim-highlightedyank'
 
-Plug 'sheerun/vim-polyglot'
+" Highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update Plug 
 
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Nerdtree stuff
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'vim-airline/vim-airline'
-
-Plug '907th/vim-auto-save'
-
+" Appearance
+Plug 'romgrk/barbar.nvim'  " tab bar at the top
+Plug 'hoob3rt/lualine.nvim'  " bar at the bottom
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
+" Langauge specific
 Plug 'lervag/vimtex'
-
-Plug 'preservim/nerdcommenter'
-
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 
 call plug#end()
 

@@ -6,15 +6,21 @@ let s:monkey_terminal_buffer = -1
 let s:monkey_terminal_job_id = -1
 let s:prev_window = -1
 
-function! MonkeyTerminalOpen()
+function! MonkeyTerminalOpen(loc)
   " Check if buffer exists, if not create a window and a buffer
   if !bufexists(s:monkey_terminal_buffer)
     " Creates a window call monkey_terminal
     new monkey_terminal
 
     " Moves to the window the right the current one
-    wincmd J
-    resize 12
+    if a:loc == 'v' 
+      wincmd J
+      resize 12
+    else
+      wincmd L
+      vertical resize -20
+      resize 
+    endif
     set nonumber
     set norelativenumber
     set signcolumn=no
@@ -33,8 +39,13 @@ function! MonkeyTerminalOpen()
     if !win_gotoid(s:monkey_terminal_window)
     sp
     " Moves to the window below the current one
-    wincmd J
-    resize 12
+    if a:loc == 'v'
+      wincmd J
+      resize 12
+    else
+      wincmd L
+      vertical resize -20
+    endif
     set nonumber
     set norelativenumber
     set signcolumn=no
@@ -46,13 +57,13 @@ function! MonkeyTerminalOpen()
   endif
 endfunction
 
-function! MonkeyTerminalToggle()
+function! MonkeyTerminalToggle(loc)
   if win_gotoid(s:monkey_terminal_window)
     call MonkeyTerminalClose()
     call win_gotoid(s:prev_window)
   else
     let s:prev_window = win_getid()
-    call MonkeyTerminalOpen()
+    call MonkeyTerminalOpen(a:loc)
   endif
 endfunction
 
@@ -78,17 +89,20 @@ function! MonkeyTerminalExec(cmd)
 endfunction
 
 " With this maps you can now toggle the terminal
-nnoremap <silent> <F7> :call MonkeyTerminalToggle()<cr>
-inoremap <silent> <F7> <Esc> :call MonkeyTerminalToggle()<cr>
-tnoremap <silent> <F7> <C-\><C-n>:call MonkeyTerminalToggle()<cr>
+nnoremap <silent> <F7> :call MonkeyTerminalToggle('v')<cr>
+nnoremap <silent> <F8> :call MonkeyTerminalToggle('h')<cr>
+inoremap <silent> <F7> <Esc> :call MonkeyTerminalToggle('v')<cr>
+inoremap <silent> <F8> <Esc> :call MonkeyTerminalToggle('h')<cr>
+tnoremap <silent> <F7> <C-\><C-n>:call MonkeyTerminalToggle('v')<cr>
+tnoremap <silent> <F8> <C-\><C-n>:call MonkeyTerminalToggle('v')<cr>
 tnoremap <Esc> <C-\><C-n><cr>
 
 " This an example on how specify command with different types of files.
-augroup go
-    autocmd!
-    autocmd BufRead,BufNewFile *.go set filetype=go
-    autocmd FileType go nnoremap <F5> :call MonkeyTerminalExec('go run ' . expand('%'))<cr>
-augroup END
+" augroup py
+    " autocmd!
+    " autocmd BufRead,BufNewFile *.py set filetype=py
+    " autocmd FileType py nnoremap <F5> :call MonkeyTerminalExec('python ' . expand('%'))<cr>
+" augroup END
 
 
 

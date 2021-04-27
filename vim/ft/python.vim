@@ -7,7 +7,8 @@ au BufNewFile,BufRead *.py
     \ set textwidth=0 |
     \ set expandtab |
     \ set autoindent |
-    \ set fileformat=unix
+    \ set fileformat=unix |
+    \ set foldmethod=indent
 
 augroup ft_python
   au!

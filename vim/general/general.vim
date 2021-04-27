@@ -3,6 +3,7 @@ set expandtab
 set shiftround  " Round indent to multiple of 'shiftwidth'
 set smartindent " Do smart indenting when starting a new line
 set autoindent  " Copy indent from current line, over to the new line
+:set foldlevelstart=99  " Don't have folds closed on open
 
 " Set the tab width
 let s:tabwidth=10
@@ -11,7 +12,6 @@ exec 'set shiftwidth=' .s:tabwidth
 exec 'set softtabstop='.s:tabwidth
 
 :set wrap linebreak nolist
-
 
 " numbering
 set number norelativenumber
@@ -23,4 +23,3 @@ let g:auto_save_events = ["InsertLeave"]
 set clipboard+=unnamedplus
 
 :hi NonText guifg=bg
-
