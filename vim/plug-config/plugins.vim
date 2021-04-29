@@ -31,7 +31,10 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Themes
 Plug 'folke/tokyonight.nvim'
-Plug 'erees1/vim-one'
+" Plug 'erees1/vim-one'
+Plug 'tjdevries/colorbuddy.nvim'
+Plug 'erees1/onebuddy'
+Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
 
 Plug 'machakann/vim-highlightedyank'
 
@@ -43,7 +46,7 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Appearance
-Plug 'romgrk/barbar.nvim'  " tab bar at the top
+" Plug 'romgrk/barbar.nvim'  " tab bar at the top
 Plug 'hoob3rt/lualine.nvim'  " bar at the bottom
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 

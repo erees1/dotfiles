@@ -6,7 +6,7 @@ set autoindent  " Copy indent from current line, over to the new line
 :set foldlevelstart=99  " Don't have folds closed on open
 
 " Set the tab width
-let s:tabwidth=10
+let s:tabwidth=2
 exec 'set tabstop='    .s:tabwidth
 exec 'set shiftwidth=' .s:tabwidth
 exec 'set softtabstop='.s:tabwidth

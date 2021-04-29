@@ -1,4 +1,6 @@
-colorscheme tokyonight
+
+set background=dark
+colorscheme onebuddy
 function! ToggleBackgroundColour ()
     if (&background == 'light')
         set background=dark
