@@ -23,3 +23,8 @@ let g:auto_save_events = ["InsertLeave"]
 set clipboard+=unnamedplus
 
 :hi NonText guifg=bg
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
+augroup END

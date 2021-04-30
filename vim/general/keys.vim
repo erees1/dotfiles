@@ -10,13 +10,6 @@ let mapleader=" "
 " Leader s to save
 noremap <Leader>s :update<CR>
 
-" ctr-p for fuzzy file search
-function! FZFOpen(command_str)
-  if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
-    exe "normal! \<c-w>\<c-w>"
-  endif
-  exe 'normal! ' . a:command_str . "\<cr>"
-endfunction
 
 nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
 

@@ -7,8 +7,12 @@
     name = erees1
     email = edward.r.rees@zoho.com
 [difftool]
-    prompt = false
+    prompt = true
+    # Be able to abort all diffs with `:cq` or `:cquit`
+    trustExitCode = true
 [diff]
     tool = nvimdiff
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [init]
     defaultBranch = main

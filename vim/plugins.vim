@@ -13,7 +13,6 @@ unlet autoload_plug_path
 
 call plug#begin('~/.config/nvim/plugged')
 
-
 " Stuff for completion / code
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
@@ -25,23 +24,18 @@ Plug '907th/vim-auto-save'
 Plug 'preservim/nerdcommenter'
 
 " File navigation 
-" Plug 'francoiscabrol/ranger.vim'
-" Plug 'rbgrouleff/bclose.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Themes
-Plug 'folke/tokyonight.nvim'
-" Plug 'erees1/vim-one'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'erees1/onebuddy'
-Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
-
-Plug 'machakann/vim-highlightedyank'
 
 " Highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update Plug 
 
-" Nerdtree stuff
+" Nvim tree / explorer stuff
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
@@ -49,6 +43,8 @@ Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'romgrk/barbar.nvim'  " tab bar at the top
 Plug 'hoob3rt/lualine.nvim'  " bar at the bottom
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'lewis6991/gitsigns.nvim'
+
 
 " Langauge specific
 Plug 'lervag/vimtex'
@@ -57,3 +53,17 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 
 call plug#end()
 
+" Plugin specific settings
+source $HOME/git/dotfiles/vim/plug-config/coc.vim
+source $HOME/git/dotfiles/vim/plug-config/nv-tree.vim
+source $HOME/git/dotfiles/vim/plug-config/latex.vim
+source $HOME/git/dotfiles/vim/plug-config/markdown-preview.vim
+source $HOME/git/dotfiles/vim/plug-config/commenter.vim
+source $HOME/git/dotfiles/vim/plug-config/whichkey.vim
+source $HOME/git/dotfiles/vim/plug-config/barbar.vim
+source $HOME/git/dotfiles/vim/plug-config/easy-escape.vim
+source $HOME/git/dotfiles/vim/plug-config/pydocstring.vim
+source $HOME/git/dotfiles/vim/plug-config/treesitter.vim
+source $HOME/git/dotfiles/vim/plug-config/lualine.vim
+source $HOME/git/dotfiles/vim/plug-config/telescope.vim
+source $HOME/git/dotfiles/vim/plug-config/gitsigns.vim

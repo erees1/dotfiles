@@ -1,10 +1,9 @@
 " List of required extensions
 let g:coc_global_extensions = [
-      \'coc-python',
+      \'coc-pyright',
       \'coc-prettier',
       \'coc-tabnine',
       \'coc-texlab',
-      \'coc-git',
       \]
 
 
