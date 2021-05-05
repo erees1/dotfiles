@@ -3,15 +3,10 @@
 " Note this is not all key mappings, generally ones specific to a plugin 
 " are in the plug-config folder
 
-" Set space as leader
-nnoremap <SPACE> <Nop>
-let mapleader=" "
 
 " Leader s to save
 noremap <Leader>s :update<CR>
 
-
-nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
 
 " Always use g mode
 nnoremap j gj
@@ -58,6 +53,8 @@ vnoremap c "_c
 " Move left and right with ctrl-h, ctrl-l
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
 
 " If you want to cut use the leader
 nnoremap <leader>d ""d
@@ -67,9 +64,6 @@ vnoremap <leader>d ""d
 
 " Shortcuts for forward deletion in insert mode
 inoremap <C-f> <esc>lce
-
-" ctr-p for fuzzy file search
-nnoremap <C-p> :FZF<Cr>
 
 " alias to insert a ipython style breakpoint
 :ia ipydb import IPython ; IPython.embed() ; exit(1)<CR>

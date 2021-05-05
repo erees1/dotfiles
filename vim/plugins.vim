@@ -44,7 +44,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'hoob3rt/lualine.nvim'  " bar at the bottom
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'lewis6991/gitsigns.nvim'
-
+Plug 'norcalli/nvim-colorizer.lua'  " Highlight colors in that color
 
 " Langauge specific
 Plug 'lervag/vimtex'
@@ -53,7 +53,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 
 call plug#end()
 
-" Plugin specific settings
+" Plugin specific settings - I keep these all in plug-config directory
 source $HOME/git/dotfiles/vim/plug-config/coc.vim
 source $HOME/git/dotfiles/vim/plug-config/nv-tree.vim
 source $HOME/git/dotfiles/vim/plug-config/latex.vim
@@ -67,3 +67,5 @@ source $HOME/git/dotfiles/vim/plug-config/treesitter.vim
 source $HOME/git/dotfiles/vim/plug-config/lualine.vim
 source $HOME/git/dotfiles/vim/plug-config/telescope.vim
 source $HOME/git/dotfiles/vim/plug-config/gitsigns.vim
+source $HOME/git/dotfiles/vim/plug-config/colorizer.vim
+

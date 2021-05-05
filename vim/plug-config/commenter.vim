@@ -1,5 +1,5 @@
 " Create default mappings
-let g:NERDCreateDefaultMappings = 1
+let g:NERDCreateDefaultMappings = 0
 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -16,3 +16,5 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespce = 1
 
+nmap <leader>ci <Plug>NERDCommenterToggle
+vmap <leader>ci <Plug>NERDCommenterToggle
