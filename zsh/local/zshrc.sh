@@ -42,8 +42,3 @@ if hash rbenv 2>/dev/null; then
   fi
 fi
 
-# add ./local/bin to path
-p="${HOME}/.local/bin"
-if [[ "$PATH" != *"$p"* ]]; then
-  export PATH="$p:$PATH"
-fi

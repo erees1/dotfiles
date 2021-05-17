@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# env
-export PATH="$HOME/.local/bin:$PATH"
-
 # extra aliases
 alias ls='ls -hF --color' # add colors for filetype recognition
 
