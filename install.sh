@@ -107,10 +107,12 @@ ZSH_CUSTOM=$ZSH/custom
 if [[ -d $ZSH ]]; then
   echo "Skipping download of oh-my-zsh and related plugins, remove $ZSH to force"
 else
+  echo "------------------------------------------------------------"
   echo "You will need to ctrl-d out of the next step as install oh-my-zsh spawns a new zsh shell"
+  echo "------------------------------------------------------------"
   sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   rm -f ~/.zshrc.pre-*
-  git clone --quiet https://github.com/romkatv/powerlevel10k.git \
+  git clone https://github.com/romkatv/powerlevel10k.git \
     ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k 
   git clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting.git \
     ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 
