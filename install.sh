@@ -1,14 +1,19 @@
 #!/bin/bash
 set -euo pipefail
-
-USAGE="Usage: ./install.sh [zsh] [tmux] or ./install.sh --noroot [zsh] [tmux]"
+USAGE=$(cat <<-END
+    Usage: ./install.sh [p1] [p2]
+    where p1, p2 are from the following options:
+    tmux, pyenv, kitty, zsh (they wont all work on linux) 
+    optional flag --noroot does not use sudo when on linux 
+END
+)
 
 root_access=true
 PARAMS=""
 while (( "$#" )); do
   case "$1" in
     -h|--help)
-      echo $USAGE
+      echo "$USAGE"
       exit
       ;;
     --noroot)
@@ -36,11 +41,19 @@ PARAMS=($PARAMS)
 
 zsh=false
 tmux=false
+pyenv=false
+kitty=false
 if [[ " ${PARAMS[@]} " =~ " zsh " ]]; then
  zsh=true 
 fi
 if [[ " ${PARAMS[@]} " =~ " tmux " ]]; then
  tmux=true 
+fi
+if [[ " ${PARAMS[@]} " =~ " pyenv " ]]; then
+ pyenv=true 
+fi
+if [[ " ${PARAMS[@]} " =~ " kitty " ]]; then
+ kitty=true 
 fi
 
 unameOut="$(uname -s)"
@@ -61,7 +74,6 @@ if [ $machine == "Linux" ]; then
     if [ $tmux == true ]; then
         sudo apt-get install tmux 
     fi
-
   elif [ $root_access == false ]; then
     if [ $zsh == true ]; then
       # Then we need to install from source
@@ -73,12 +85,19 @@ if [ $machine == "Linux" ]; then
 
 # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
+  brew install wget
+  brew install node # Node required for coc
     if [ $zsh == true ]; then
       brew install zsh
-      chsh -s /usr/local/bin/zsh
     fi
     if [ $tmux == true ]; then
       brew install tmux
+    fi
+    if [ $pyenv == true ]; then
+      brew install pyenv
+    fi
+    if [ $kitty == true ]; then
+      brew install --cask kitty
     fi
 fi
 
