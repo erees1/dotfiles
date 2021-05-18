@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # extra aliases
 alias ls='ls -hF --color' # add colors for filetype recognition
@@ -74,9 +74,27 @@ alias qcpu='qstat -f -u "*" -q cpu.q'
 alias qgpu='qstat -f -u "*" -q gpu.q'
 alias qtop='qalter -p 1024'
 
-alias qlogin='qlogin -q gpu.q -now n'
+# New ones
+alias qq='qstat -q "aml*.q@*" -f -u \*' # Display full queue
+alias gq='qstat -q aml-gpu.q -f -u \*' # Display just the gpu queues
+alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding|Hard|Soft|Requested|Granted"' # Display the gpu queues, including showing the preemption state of each job
+alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
+
+qlogin () {
+  echo "$#"
+  if [ "$#" -eq 1 ]; then
+    /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -pty y -N D_edwardr
+  elif [ "$#" -eq 2 ]; then
+    /usr/bin/qlogin -now n -pe smp $1 -q $2 -l gpu=$1 -pty y -N D_johnh
+  else
+    echo "Usage: qlogin <num_gpus>" >&2
+    echo "Usage: qlogin <num_gpus> <queue>" >&2
+  fi
+}
 alias gpu980='qrsh -q gpu.q@@980 -pty no -now n'
 alias titanx='qrsh -q gpu.q@@titanx -pty no -now n'
+
+
 qrl () {
   if [ "$#" -eq 1 ]; then
     qrsh -q gpu.q@"$1".cantabresearch.com -pty no -now n
