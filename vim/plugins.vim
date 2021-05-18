@@ -50,6 +50,7 @@ Plug 'norcalli/nvim-colorizer.lua'  " Highlight colors in that color
 Plug 'lervag/vimtex'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
+Plug 'ojroques/vim-oscyank'
 
 call plug#end()
 
