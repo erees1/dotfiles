@@ -57,6 +57,7 @@ tblink () {
 }
 
 # quick navigation
+alias cda="cd ~/git/aladdin"
 alias cdh="cd ~/git/hydra"
 alias dev='cd /cantab/dev/inbetweeners/hydra'
 alias exp='cd /cantab/dev/inbetweeners/hydra/exp'
