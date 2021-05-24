@@ -13,7 +13,7 @@ let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a n
 let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
 let g:nvim_tree_disable_netrw = 1 "1 by default, disables netrw
 let g:nvim_tree_hijack_netrw = 1 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+let g:nvim_tree_add_trailing = 0 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_show_icons = {
     \ 'folders': 1,
     \ 'files': 1,
