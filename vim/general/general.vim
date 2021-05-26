@@ -21,6 +21,9 @@ let g:auto_save_events = ["InsertLeave"]
 " Copy to cliboard by default
 set clipboard+=unnamedplus
 
+" enable mouse in all modes
+set mouse=a
+
 :hi NonText guifg=bg
 
 augroup highlight_yank
