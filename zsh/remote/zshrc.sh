@@ -84,9 +84,9 @@ alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
 qlogin () {
   echo "$#"
   if [ "$#" -eq 1 ]; then
-    /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -pty y -N D_edwardr
+    /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -pty y -N D_$(whoami)
   elif [ "$#" -eq 2 ]; then
-    /usr/bin/qlogin -now n -pe smp $1 -q $2 -l gpu=$1 -pty y -N D_johnh
+    /usr/bin/qlogin -now n -pe smp $1 -q $2 -l gpu=$1 -pty y -N D_$(whoami)
   else
     echo "Usage: qlogin <num_gpus>" >&2
     echo "Usage: qlogin <num_gpus> <queue>" >&2
