@@ -15,8 +15,8 @@ export LS_COLORS
 alias jpl="jupyter lab --no-browser --ip $(/bin/hostname)"
 alias cjpl="cuda_wrapper 1 jupyter lab --no-browswer --ip $(/bin/hostname)"
 # virtual envs
-alias veh="source /cantab/dev/inbetweeners/hydra/venv_stable/bin/activate"
 alias ve="source ~/venv/bin/activate"
+alias msa="make -C /home/edwardr/git/aladdin/ shell"
 
 # make file
 alias m='make'
