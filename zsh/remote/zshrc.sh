@@ -1,5 +1,11 @@
 #!/bin/zsh
 
+# add ./local/bin/node_bin to path
+p="${HOME}/.local/bin/node_bin"
+if [[ "$PATH" != *"$p"* ]]; then
+  export PATH="$p:$PATH"
+fi
+
 # extra aliases
 alias ls='ls -hF --color' # add colors for filetype recognition
 
