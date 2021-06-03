@@ -3,7 +3,7 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[user]
+ [user]
     name = erees1
     email = edward.r.rees@zoho.com
 [difftool]

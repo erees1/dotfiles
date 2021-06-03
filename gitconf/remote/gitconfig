@@ -1,0 +1,18 @@
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[difftool]
+    prompt = true
+    # Be able to abort all diffs with `:cq` or `:cquit`
+    trustExitCode = true
+[diff]
+    tool = nvimdiff
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[init]
+    defaultBranch = main
+[user]
+	 name = Edward Rees
+	 email = edwardr@speechmatics.com
