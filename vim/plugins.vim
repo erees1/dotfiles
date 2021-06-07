@@ -18,6 +18,7 @@ call plug#begin('~/.config/nvim/plugged')
 " I'm now going to be experimenting with built in lsp instead of coc
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'sbdchd/neoformat'
 
@@ -44,7 +45,6 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Appearance
-" Plug 'romgrk/barbar.nvim'  " tab bar at the top
 Plug 'hoob3rt/lualine.nvim'  " bar at the bottom
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'lewis6991/gitsigns.nvim'
@@ -59,7 +59,7 @@ Plug 'ojroques/vim-oscyank'
 call plug#end()
 
 " Plugin specific settings - I keep these all in plug-config directory
-source $HOME/git/dotfiles/vim/plug-config/lspconfig.vim
+luafile $HOME/git/dotfiles/vim/plug-config/lspconfig.lua
 source $HOME/git/dotfiles/vim/plug-config/compe.vim
 source $HOME/git/dotfiles/vim/plug-config/neoformat.vim
 source $HOME/git/dotfiles/vim/plug-config/nv-tree.vim
