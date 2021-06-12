@@ -10,24 +10,24 @@ local nvim_lsp = require('lspconfig')
   },
 }
 
--- require'lspconfig'.pyright.setup{
---   settings = {
---     python = {
---       analysis = {
---         typeCheckingMode = "off"
---         }
---       }
---     },
---     on_attach = function()
---       require'lsp_signature'.on_attach(cfg)
---     end
--- }
-
-require'lspconfig'.pylsp.setup{
+require'lspconfig'.pyright.setup{
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "off"
+        }
+      }
+    },
     on_attach = function()
       require'lsp_signature'.on_attach(cfg)
     end
 }
+
+-- require'lspconfig'.pylsp.setup{
+--     on_attach = function()
+--       require'lsp_signature'.on_attach(cfg)
+--     end
+-- }
 require'lspconfig'.bashls.setup{}
 -- Mappings.
 local opts = { noremap=true, silent=true }

@@ -13,15 +13,16 @@ unlet autoload_plug_path
 
 call plug#begin('~/.config/nvim/plugged')
 
-" Stuff for completion / code
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" CoC vs LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " I'm now going to be experimenting with built in lsp instead of coc
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
-Plug 'ray-x/lsp_signature.nvim'
-Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
-Plug 'sbdchd/neoformat'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'hrsh7th/nvim-compe'
+" Plug 'ray-x/lsp_signature.nvim'
+" Plug 'sbdchd/neoformat'
 
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+ 
 " Shortcuts etc
 Plug 'zhou13/vim-easyescape'
 Plug 'liuchengxu/vim-which-key'
@@ -59,9 +60,13 @@ Plug 'ojroques/vim-oscyank'
 call plug#end()
 
 " Plugin specific settings - I keep these all in plug-config directory
-luafile $HOME/git/dotfiles/vim/plug-config/lspconfig.lua
-source $HOME/git/dotfiles/vim/plug-config/compe.vim
-source $HOME/git/dotfiles/vim/plug-config/neoformat.vim
+" If using coc
+source $HOME/git/dotfiles/vim/plug-config/coc.vim
+" If using lsp
+" luafile $HOME/git/dotfiles/vim/plug-config/lspconfig.lua
+" source $HOME/git/dotfiles/vim/plug-config/compe.vim
+" source $HOME/git/dotfiles/vim/plug-config/neoformat.vim
+
 source $HOME/git/dotfiles/vim/plug-config/nv-tree.vim
 source $HOME/git/dotfiles/vim/plug-config/latex.vim
 source $HOME/git/dotfiles/vim/plug-config/markdown-preview.vim

@@ -2,7 +2,6 @@
 let g:coc_global_extensions = [
       \'coc-pyright',
       \'coc-prettier',
-      \'coc-tabnine',
       \'coc-texlab',
       \]
 
