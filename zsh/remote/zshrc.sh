@@ -88,29 +88,27 @@ alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding
 alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
 
 qlogin () {
-  echo "$#"
   if [ "$#" -eq 1 ]; then
     /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -pty y -N D_$(whoami)
   elif [ "$#" -eq 2 ]; then
+    if [ "$1" = "cpu" ]; then
+      /usr/bin/qlogin -now n -pe smp $2 -q aml-cpu.q -pty y -N D_$(whoami) 
+    else
     /usr/bin/qlogin -now n -pe smp $1 -q $2 -l gpu=$1 -pty y -N D_$(whoami)
+    fi
   else
     echo "Usage: qlogin <num_gpus>" >&2
     echo "Usage: qlogin <num_gpus> <queue>" >&2
+    echo "Usage: qlogin cpu <num_slots>" >&2
   fi
 }
-alias gpu980='qrsh -q gpu.q@@980 -pty no -now n'
-alias titanx='qrsh -q gpu.q@@titanx -pty no -now n'
 
-
-qrl () {
-  if [ "$#" -eq 1 ]; then
-    qrsh -q gpu.q@"$1".cantabresearch.com -pty no -now n
-  else
-    qrsh -q gpu.q -pty no -now n
-  fi
-}
 
 alias nv='nvidia-smi'
+# Only way to get a gpu is via queue
+if [ -z $CUDA_VISIBLE_DEVICES ]; then
+    export CUDA_VISIBLE_DEVICES=
+fi
 alias cuda0='export CUDA_VISIBLE_DEVICES=0'
 alias cuda1='export CUDA_VISIBLE_DEVICES=1'
 cuda () {
