@@ -18,6 +18,9 @@ nnoremap g<Up> k
 nnoremap <Down> gj
 nnoremap g<Down> j 
 
+" esc in insert mode
+inoremap jk  <esc>
+
 " Move lines up and down
 if (has("nvim"))
 	nnoremap <silent> <A-j> :m .+1<CR>==
@@ -50,17 +53,15 @@ nnoremap c "_c
 vnoremap d "_d
 vnoremap c "_c
 
-" Move left and right with ctrl-h, ctrl-l
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-nnoremap <C-k> <C-w>k
-nnoremap <C-j> <C-w>j
-
 " If you want to cut use the leader
 nnoremap <leader>d ""d
 nnoremap <leader>dd ""dd
 nnoremap <leader>D ""D
 vnoremap <leader>d ""d
+
+" Quick fix navigation
+nnoremap <M-n> :cn<CR>
+nnoremap <M-p> :cp<CR>
 
 " Shortcuts for forward deletion in insert mode
 inoremap <C-f> <esc>lce
