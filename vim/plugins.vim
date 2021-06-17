@@ -21,11 +21,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'ray-x/lsp_signature.nvim'
 " Plug 'sbdchd/neoformat'
 
-Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+" Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
  
 " Shortcuts etc
-Plug 'zhou13/vim-easyescape'
-Plug 'liuchengxu/vim-which-key'
 Plug '907th/vim-auto-save'
 Plug 'preservim/nerdcommenter'
 
@@ -33,6 +31,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Themes
 Plug 'tjdevries/colorbuddy.nvim'
@@ -48,12 +47,15 @@ Plug 'kyazdani42/nvim-tree.lua'
 " Appearance
 Plug 'hoob3rt/lualine.nvim'  " bar at the bottom
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'norcalli/nvim-colorizer.lua'  " Highlight colors in that color
 
+"Git
+Plug 'lewis6991/gitsigns.nvim' 
+Plug 'tpope/vim-fugitive'
+
 " Langauge specific
-Plug 'lervag/vimtex'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" Plug 'lervag/vimtex'
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 Plug 'ojroques/vim-oscyank'
 
@@ -71,13 +73,12 @@ source $HOME/git/dotfiles/vim/plug-config/nv-tree.vim
 source $HOME/git/dotfiles/vim/plug-config/latex.vim
 source $HOME/git/dotfiles/vim/plug-config/markdown-preview.vim
 source $HOME/git/dotfiles/vim/plug-config/commenter.vim
-source $HOME/git/dotfiles/vim/plug-config/whichkey.vim
 source $HOME/git/dotfiles/vim/plug-config/barbar.vim
-source $HOME/git/dotfiles/vim/plug-config/easy-escape.vim
 source $HOME/git/dotfiles/vim/plug-config/pydocstring.vim
 source $HOME/git/dotfiles/vim/plug-config/treesitter.vim
 source $HOME/git/dotfiles/vim/plug-config/lualine.vim
 source $HOME/git/dotfiles/vim/plug-config/telescope.vim
 source $HOME/git/dotfiles/vim/plug-config/gitsigns.vim
 source $HOME/git/dotfiles/vim/plug-config/colorizer.vim
+source $HOME/git/dotfiles/vim/plug-config/fugitive.vim
 
