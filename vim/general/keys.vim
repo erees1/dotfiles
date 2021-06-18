@@ -69,6 +69,5 @@ inoremap <C-f> <esc>lce
 " alias to insert a ipython style breakpoint
 :ia ipydb import IPython ; IPython.embed() ; exit(1)<CR>
 
-" ctrl-l to clear highlighing after search
-" nnoremap <silent> <C-l> :nohl<CR><C-l>
+" <leader><space> to clear highlighing after search
 nnoremap <Leader><space> :noh<cr>
