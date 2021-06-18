@@ -18,22 +18,26 @@ export LS_COLORS
 # -------------------------------------------------------------------
 
 # jupyter lab
-alias jpl="jupyter lab --no-browser --ip $(/bin/hostname)"
-alias cjpl="cuda_wrapper 1 jupyter lab --no-browswer --ip $(/bin/hostname)"
+alias jpl="jupyter lab --no-browser --ip $(/bin/hostname -f)"
 # virtual envs
 alias ve="source ~/venv/bin/activate"
+
+# Activate aladdin SIF in current directory
+alias msad="/home/edwardr/git/aladdin/env/singularity.sh -c "$SHELL""
+# Change to aladdin directory and activate SIF
 alias msa="make -C /home/edwardr/git/aladdin/ shell"
 
 # make file
 alias m='make'
 alias mc="make check"
+alias ms='make shell'
 alias mf="make format"
 alias mtest="make test"
 alias mft="make functest"
 alias mut="make unittest"
 
 # tensorboard
-alias tbr='source $HOME/venvs/venv_tb/bin/activate && tensorboard --host=$(hostname) --logdir=.'
+alias tbr='source $HOME/venvs/venv_tb/bin/activate && tensorboard --host=$(hostname -f) --logdir=.'
 alias tbkill="ps aux | grep tensorboard | grep edwardr | awk '{print \$2}' | xargs kill"
 
 tblink () {
