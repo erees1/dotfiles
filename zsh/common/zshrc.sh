@@ -15,3 +15,4 @@ source $ZSH/oh-my-zsh.sh
 source ~/git/dotfiles/zsh/common/p10k.zsh
 source ~/git/dotfiles/zsh/common/aliases.sh
 source ~/git/dotfiles/zsh/common/extras.sh
+source ~/git/dotfiles/zsh/common/keybindings.sh
