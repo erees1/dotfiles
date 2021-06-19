@@ -4,11 +4,12 @@ if [ ! -d  $HOME/.config/nvim ]; then
 fi
 
 # Neovim setup
-echo "source $HOME/git/dotfiles/vim/init.vim" > $HOME/.config/nvim/init.vim
+echo "require('init')" > $HOME/.config/nvim/init.lua
 
 if [ $LOC == "remote" ] ; then
-  echo "source $HOME/git/dotfiles/vim/remote.vim" >> $HOME/.config/nvim/init.vim
+  echo "require('remote')" >> $HOME/.config/nvim/init.lua
 fi
 
-
+ln -sf $HOME/git/dotfiles/vim/lua $HOME/.config/nvim
 ln -sf $HOME/git/dotfiles/vim/plug-config/coc-settings.json $HOME/.config/nvim/coc-settings.json
+

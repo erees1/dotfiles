@@ -12,7 +12,7 @@
   "python.pythonPath": "/venv/bin/python3",
   "python.analysis.useLibraryCodeForTypes": true,
   "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["--line-length=85"],
+  "python.formatting.blackArgs": ["--line-length=100"],
   "diagnostic.checkCurrentLine": false,
   "prettier.printWidth": 80,
   "prettier.proseWrap": "preserve",

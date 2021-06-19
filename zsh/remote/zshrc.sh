@@ -17,6 +17,18 @@ export LS_COLORS
 # speechmatics
 # -------------------------------------------------------------------
 
+# quick navigation
+alias cda="cd ~/git/aladdin"
+alias cdh="cd ~/git/hydra"
+alias dev='cd /cantab/dev/inbetweeners/hydra'
+alias exp='cd /cantab/dev/inbetweeners/hydra/exp'
+alias data='cd /cantab/data'
+exp0 () {
+  cd /cantab/exp0/inbetweeners/hydra
+  ls -tcrd edwardr*
+}
+alias cdvad="cd /perish_aml02/edwardr/vad_workspace"
+
 # jupyter lab
 alias jpl="jupyter lab --no-browser --ip $(/bin/hostname -f)"
 # virtual envs
@@ -64,17 +76,6 @@ tblink () {
   fi
   echo "logdir: $logdir"
   tensorboard --host=$(hostname) --logdir=$logdir
-}
-
-# quick navigation
-alias cda="cd ~/git/aladdin"
-alias cdh="cd ~/git/hydra"
-alias dev='cd /cantab/dev/inbetweeners/hydra'
-alias exp='cd /cantab/dev/inbetweeners/hydra/exp'
-alias data='cd /cantab/data'
-exp0 () {
-  cd /cantab/exp0/inbetweeners/hydra
-  ls -tcrd edwardr*
 }
 
 # gpu
