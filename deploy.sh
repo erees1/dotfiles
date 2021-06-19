@@ -52,7 +52,7 @@ if [ $LOC == "local" ] || [ $LOC == "remote" ] || [ $LOC == "ucl" ] ; then
     source "$HOME/git/dotfiles/kitty/setup_kitty.sh"
 
     # Vim / Neovim setup
-    source "$HOME/git/dotfiles/vim/setup_vimrc.sh"
+    source "$HOME/git/dotfiles/vim/setup_init.sh"
 
     # zshrc setup
     source "$HOME/git/dotfiles/zsh/setup_zshrc.sh"
