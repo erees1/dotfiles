@@ -12,6 +12,8 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 -- End of bootstrap
 
+vim.cmd "autocmd BufWritePost plugins/init.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
+
 -- Specify plugins here
 return require('packer').startup(function()
   -- Packer can manage itself
@@ -40,7 +42,7 @@ return require('packer').startup(function()
     'nvim-treesitter/nvim-treesitter',
     opt = true,
     run = ":TSUpdate",
-    ft = {'sh', 'python'},
+    ft = {'python'},
     config = function() 
       require'nvim-treesitter.configs'.setup {
         ensure_installed = {"python", "bash"},
