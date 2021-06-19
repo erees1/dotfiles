@@ -30,3 +30,5 @@ augroup highlight_yank
     autocmd!
     au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
 augroup END
+
+set termguicolors " this variable must be enabled for colors to be applied properly
