@@ -9,4 +9,6 @@ vim.o.mouse = 'a' -- Enable mouse in all modes
 vim.wo.number = true
 vim.cmd(':hi NoneText guifg=bg')
 
-vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
+vim.api.nvim_command([[
+au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
+]])

@@ -66,5 +66,8 @@ return require('packer').startup(function()
   -- Appearance
   use {'hoob3rt/lualine.nvim', config = function() require('plugins/lualine') end}
   use 'jeffkreeftmeijer/vim-numbertoggle'
+
+  -- Copy to OSC52
+  use {'ojroques/vim-oscyank'}
 end)
 
