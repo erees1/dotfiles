@@ -19,16 +19,25 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+  -- Appearance
+  use {'hoob3rt/lualine.nvim', config = function() require('plugins/lualine') end}
+  use 'jeffkreeftmeijer/vim-numbertoggle'
+ 
   -- CoC
-  use {'neoclide/coc.nvim', config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end} 
+  use {'neoclide/coc.nvim',
+        opt=true,
+        ft = {'python', 'sh'},
+        config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end} 
 
   -- Shortucts etc
-  use {'preservim/nerdcommenter'}
+  use 'preservim/nerdcommenter'
   use 'christoomey/vim-tmux-navigator'
 
   -- Nvim tree / explorer stuff
   use {'kyazdani42/nvim-web-devicons'}
   use {'kyazdani42/nvim-tree.lua', 
+        opt=true,
+        cmd="NvimTreeToggle",
         config = function() 
           require('plugins/nv-tree')
         end}
@@ -54,18 +63,20 @@ return require('packer').startup(function()
   }
 
   -- Git
-  use {'lewis6991/gitsigns.nvim', config = function() require('plugins/gitsigns') end}
+  use {'lewis6991/gitsigns.nvim',
+        requires={'nvim-lua/plenary.nvim'},
+        config = function() require('plugins/gitsigns') end}
   use {'tpope/vim-fugitive', config = function() require('plugins/fugitive') end}
 
-  -- File navigation
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use {'nvim-telescope/telescope.nvim', config = function() require('plugins/telescope') end}
+  -- File navigation with telescope
+  use {'nvim-telescope/telescope.nvim',
+        opt=true,
+        cmd={'Telescope'},
+        config = function() require('plugins/telescope') end, 
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+       }
 
 
-  -- Appearance
-  use {'hoob3rt/lualine.nvim', config = function() require('plugins/lualine') end}
-  use 'jeffkreeftmeijer/vim-numbertoggle'
 
   -- Copy to OSC52
   use {'ojroques/vim-oscyank'}

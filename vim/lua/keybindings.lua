@@ -41,5 +41,6 @@ vim.api.nvim_set_keymap('n', '<M-p>', ':cp<CR>', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', '<Leader><space>', ':noh<CR>', {noremap=true, silent=true })
 
 
--- Keybindgs for plugins
+-- Keybindgs for plugins, optional plugin need to have their keybinds specified here
 vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<c-p>', '<cmd>Telescope find_files<CR>', { noremap=true, silent=true })
