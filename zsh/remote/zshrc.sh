@@ -1,12 +1,10 @@
 #!/bin/zsh
 
-# add ./local/bin/node_bin to path
-p="${HOME}/.local/bin/node_bin"
-if [[ "$PATH" != *"$p"* ]]; then
-  export PATH="$p:$PATH"
-fi
+# -------------------------------------------------------------------
+# Remote Sppecific settings
+# -------------------------------------------------------------------
 
-# extra aliases
+# Colors on ls
 alias ls='ls -hF --color' # add colors for filetype recognition
 
 # Make color of directoroies purple not dark blue
@@ -14,30 +12,26 @@ LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:t
 export LS_COLORS
 
 # -------------------------------------------------------------------
-# speechmatics
+# Speechmatics Specific
 # -------------------------------------------------------------------
 
-# quick navigation
+# quick navigation add more here
 alias cda="cd ~/git/aladdin"
 alias cdh="cd ~/git/hydra"
-alias dev='cd /cantab/dev/inbetweeners/hydra'
-alias exp='cd /cantab/dev/inbetweeners/hydra/exp'
-alias data='cd /cantab/data'
-exp0 () {
-  cd /cantab/exp0/inbetweeners/hydra
-  ls -tcrd edwardr*
-}
-alias cdvad="cd /perish_aml02/edwardr/vad_workspace"
+alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
 
-# jupyter lab
-alias jpl="jupyter lab --no-browser --ip $(/bin/hostname -f)"
-# virtual envs
-alias ve="source ~/venv/bin/activate"
-
-# Activate aladdin SIF in current directory
-alias msad="/home/edwardr/git/aladdin/env/singularity.sh -c "$SHELL""
 # Change to aladdin directory and activate SIF
-alias msa="make -C /home/edwardr/git/aladdin/ shell"
+alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
+# Activate aladdin SIF in current directory
+alias msad="/home/$(whoami)/git/aladdin/env/singularity.sh -c "$SHELL""
+
+
+# -------------------------------------------------------------------
+# General
+# -------------------------------------------------------------------
+
+# Jupyter Lab
+alias jpl="jupyter lab --no-browser --ip $(/bin/hostname -f)"
 
 # make file
 alias m='make'
@@ -48,10 +42,9 @@ alias mtest="make test"
 alias mft="make functest"
 alias mut="make unittest"
 
-# tensorboard
+# Tensorboard
 alias tbr='tensorboard --host=$(hostname -f) --logdir=.'
 alias tbkill="ps aux | grep tensorboard | grep edwardr | awk '{print \$2}' | xargs kill"
-
 tblink () {
   if [ "$#" -eq 0 ]; then
     logdir=$(pwd)
@@ -78,15 +71,21 @@ tblink () {
   tensorboard --host=$(hostname) --logdir=$logdir
 }
 
-# gpu
-alias qq='qstat -f -u "*"'
-alias q='qstat'
-alias qc='source ~/venv_dashboard/bin/activate && ~/git/dotfiles/scripts/qstat.py'
-alias qcpu='qstat -f -u "*" -q cpu.q'
-alias qgpu='qstat -f -u "*" -q gpu.q'
-alias qtop='qalter -p 1024'
+# Nvidia 
+alias nv='nvidia-smi'
 
-# New ones
+# -------------------------------------------------------------------
+# Queue management
+# -------------------------------------------------------------------
+
+# Only way to get a gpu is via queue
+if [ -z $CUDA_VISIBLE_DEVICES ]; then
+  export CUDA_VISIBLE_DEVICES=
+fi
+
+# Short aliases
+alias q='qstat'
+alias qtop='qalter -p 1024'
 alias qq='qstat -q "aml*.q@*" -f -u \*' # Display full queue
 alias gq='qstat -q aml-gpu.q -f -u \*' # Display just the gpu queues
 alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding|Hard|Soft|Requested|Granted"' # Display the gpu queues, including showing the preemption state of each job
@@ -94,12 +93,12 @@ alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
 
 qlogin () {
   if [ "$#" -eq 1 ]; then
-    /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -pty y -N D_$(whoami)
+    /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -N D_$(whoami)
   elif [ "$#" -eq 2 ]; then
     if [ "$1" = "cpu" ]; then
-      /usr/bin/qlogin -now n -pe smp $2 -q aml-cpu.q -pty y -N D_$(whoami) 
+      /usr/bin/qlogin -now n -pe smp $2 -q aml-cpu.q -N D_$(whoami) 
     else
-    /usr/bin/qlogin -now n -pe smp $1 -q $2 -l gpu=$1 -pty y -N D_$(whoami)
+    /usr/bin/qlogin -now n -pe smp $1 -q $2 -l gpu=$1 -N D_$(whoami)
     fi
   else
     echo "Usage: qlogin <num_gpus>" >&2
@@ -107,15 +106,6 @@ qlogin () {
     echo "Usage: qlogin cpu <num_slots>" >&2
   fi
 }
-
-
-alias nv='nvidia-smi'
-# Only way to get a gpu is via queue
-if [ -z $CUDA_VISIBLE_DEVICES ]; then
-    export CUDA_VISIBLE_DEVICES=
-fi
-alias cuda0='export CUDA_VISIBLE_DEVICES=0'
-alias cuda1='export CUDA_VISIBLE_DEVICES=1'
 cuda () {
   if [ "$#" -eq 1 ]; then
     export CUDA_VISIBLE_DEVICES=$1
@@ -123,7 +113,6 @@ cuda () {
     echo "Usage: cuda <slot>" >&2
   fi
 }
-
 qtail () {
   tail -f $(qlog $@)
 }
@@ -162,17 +151,3 @@ qdesc () {
     fi
   done
 }
-
-# docker
-alias dsts='docker stack services demo'
-alias dstr='docker stack rm demo'
-alias dstd='docker stack deploy -c demo.yml demo'
-alias dstp='docker stack ps demo'
-alias ds='docker stats'
-alias di='docker images'
-alias dl='docker logs'
-# stop and remove all containers
-alias harpoon='(docker stop $(docker ps -a -q); docker rm -f $(docker ps -a -q))'
-# remove all untagged images
-alias flense='docker rmi -f $(docker images | grep "^<none>" | awk "{print $3}")'
-function jonah() { docker exec -it $@ /bin/bash ;}
