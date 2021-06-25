@@ -30,7 +30,7 @@ return require('packer').startup(function()
         config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end} 
 
   -- Shortucts etc
-  use 'preservim/nerdcommenter'
+  use {'preservim/nerdcommenter', config = function() require('plugins/nerdcommenter') end}
   use 'christoomey/vim-tmux-navigator'
 
   -- Nvim tree / explorer stuff
