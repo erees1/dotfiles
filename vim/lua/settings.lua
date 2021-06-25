@@ -3,6 +3,8 @@ vim.cmd('colorscheme onebuddy')
 
 vim.bo.smartindent = false
 vim.cmd('set expandtab') -- Converts tabs to spaces
+vim.cmd('set ts=2') -- Insert 2 spaces for a tab
+vim.cmd('set sw=2') -- Change the number of space characters inserted for indentation
 vim.o.clipboard = 'unnamedplus'
 
 vim.o.mouse = 'a' -- Enable mouse in all modes
