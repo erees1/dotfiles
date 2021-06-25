@@ -11,6 +11,9 @@ if [[ "$PATH" != *"$p"* ]]; then
   export PATH="$p:$PATH"
 fi
 
+# Source fzf file
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 source $ZSH/oh-my-zsh.sh
 source ~/git/dotfiles/zsh/common/p10k.zsh
 source ~/git/dotfiles/zsh/common/aliases.sh

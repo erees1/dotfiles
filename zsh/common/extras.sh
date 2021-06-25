@@ -24,15 +24,4 @@ zstyle ':completion:*' hosts off
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward
  
-# ls after every cd
-function chpwd() {
- emulate -L zsh
- ls
-}
-
-# cd into created directory
-function mkcd () {
-  case "$1" in /*) :;; *) set -- "./$1";; esac
-  mkdir -p "$1" && cd "$1"
-}
 

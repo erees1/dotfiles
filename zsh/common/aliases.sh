@@ -20,6 +20,7 @@ function ve () {
     fi
 }
 alias vd="deactivate source"
+
 # -------------------------------------------------------------------
 # general
 # -------------------------------------------------------------------
@@ -62,10 +63,6 @@ alias hist='history | grep'
 alias path='echo -e ${PATH//:/\\n}'
 alias man="man -a"
 alias busy="cat /dev/urandom | hexdump -C | grep "ca fe""
-# alias j='jobs -l'
-# alias ltx='pdflatex'
-# alias x='xclip -sel clip'
-
 
 #-------------------------------------------------------------
 # cd
@@ -91,6 +88,18 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
+
+# ls after every cd
+function chpwd() {
+ emulate -L zsh
+ ls
+}
+
+# cd into created directory
+function mkcd () {
+  case "$1" in /*) :;; *) set -- "./$1";; esac
+  mkdir -p "$1" && cd "$1"
+}
 
 #-------------------------------------------------------------
 # git
@@ -194,7 +203,14 @@ chx () {
 #-------------------------------------------------------------
 # vim 
 #-------------------------------------------------------------
+
 alias v="nvim"
+vf () {
+  file=$(fzf --height 40% --reverse)
+  if [ "$file" != "" ]; then
+    nvim $file
+  fi
+}
 alias vim="nvim"
 alias vimdiff='nvim -d'
 export EDITOR=nvim
