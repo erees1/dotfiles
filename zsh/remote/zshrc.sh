@@ -90,7 +90,6 @@ alias qq='qstat -q "aml*.q@*" -f -u \*' # Display full queue
 alias gq='qstat -q aml-gpu.q -f -u \*' # Display just the gpu queues
 alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding|Hard|Soft|Requested|Granted"' # Display the gpu queues, including showing the preemption state of each job
 alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
-
 qlogin () {
   if [ "$#" -eq 1 ]; then
     /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -N D_$(whoami)
@@ -115,6 +114,11 @@ cuda () {
 }
 qtail () {
   tail -f $(qlog $@)
+}
+qlast () {
+  job_id=$(qstat | awk '{print $1}' | grep -E '[0-9]' | sort -r | head -n 1)
+  echo "qtail of most recent job ${job_id}"
+  qtail ${job_id} 
 }
 qless () {
   less $(qlog $@)
