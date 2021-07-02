@@ -20,7 +20,7 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Appearance
-  use {'hoob3rt/lualine.nvim', config = function() require('plugins/lualine') end}
+  use {'hoob3rt/lualine.nvim',opt=true, config = function() require('plugins/lualine') end}
   use 'jeffkreeftmeijer/vim-numbertoggle'
  
   -- CoC
