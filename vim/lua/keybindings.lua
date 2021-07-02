@@ -42,5 +42,12 @@ vim.api.nvim_set_keymap('n', '<Leader><space>', ':noh<CR>', {noremap=true, silen
 
 
 -- Keybindgs for plugins, optional plugin need to have their keybinds specified here
+
+--Nvim tree
 vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<c-p>', '<cmd>Telescope find_files<CR>', { noremap=true, silent=true })
+
+--Telescope
+vim.api.nvim_set_keymap('n', '<c-p>', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>tf', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>tg', "<cmd> Telescope live_grep<CR>", { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>tb', "<cmd> Telescope buffers<CR>", { noremap=true, silent=true })
