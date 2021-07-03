@@ -19,6 +19,7 @@ export LS_COLORS
 alias cda="cd ~/git/aladdin"
 alias cdh="cd ~/git/hydra"
 alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
+alias cde="cd /exp/$(whoami)"
 
 # Change to aladdin directory and activate SIF
 alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
