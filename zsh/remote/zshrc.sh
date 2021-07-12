@@ -44,7 +44,7 @@ alias mft="make functest"
 alias mut="make unittest"
 
 # Tensorboard
-alias tbr='tensorboard --host=$(hostname -f) --logdir=.'
+alias tbr='singularity exec oras://singularity-master.artifacts.speechmatics.io/tensorboard:20210213 tensorboard --host=$(hostname -f)  --reload_multifile true --logdir=.'
 alias tbkill="ps aux | grep tensorboard | grep edwardr | awk '{print \$2}' | xargs kill"
 tblink () {
   if [ "$#" -eq 0 ]; then
