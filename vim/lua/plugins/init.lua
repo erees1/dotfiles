@@ -20,27 +20,34 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Appearance
-  use {'hoob3rt/lualine.nvim',opt=true, config = function() require('plugins/lualine') end}
+  use {
+    'hoob3rt/lualine.nvim',opt=true, config = function() require('plugins/lualine') end
+  }
   use 'jeffkreeftmeijer/vim-numbertoggle'
- 
+
   -- CoC
-  use {'neoclide/coc.nvim',
-        opt=true,
-        ft = {'python', 'sh'},
-        config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end} 
+  use {
+    'neoclide/coc.nvim',
+    opt=true,
+    ft = {'python', 'sh'},
+    config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
+  } 
 
   -- Shortucts etc
-  use {'preservim/nerdcommenter', config = function() require('plugins/nerdcommenter') end}
+  use {
+    'preservim/nerdcommenter', config = function() require('plugins/nerdcommenter') end
+  }
   use 'christoomey/vim-tmux-navigator'
 
   -- Nvim tree / explorer stuff
   use {'kyazdani42/nvim-web-devicons'}
-  use {'kyazdani42/nvim-tree.lua', 
-        opt=true,
-        cmd="NvimTreeToggle",
-        config = function() 
-          require('plugins/nv-tree')
-        end}
+  use {
+    'kyazdani42/nvim-tree.lua', 
+    keys="<space>e",
+    config = function() 
+      require('plugins/nv-tree')
+    end
+  }
 
   -- Colors schemes
   use 'tjdevries/colorbuddy.nvim'
@@ -49,7 +56,6 @@ return require('packer').startup(function()
   -- Treesitter for better highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
-    opt = true,
     run = ":TSUpdate",
     ft = {'python'},
     config = function() 
@@ -63,19 +69,28 @@ return require('packer').startup(function()
   }
 
   -- Git
-  use {'lewis6991/gitsigns.nvim',
-        requires={'nvim-lua/plenary.nvim'},
-        config = function() require('plugins/gitsigns') end}
-  use {'tpope/vim-fugitive', config = function() require('plugins/fugitive') end}
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires={'nvim-lua/plenary.nvim'},
+    config = function() require('plugins/gitsigns') end
+  }
+  use {
+    'tpope/vim-fugitive', config = function() require('plugins/fugitive') end
+  }
 
-  -- File navigation with telescope
-  use {'nvim-telescope/telescope.nvim',
-        opt=true,
-        cmd={'Telescope'},
-        config = function() require('plugins/telescope') end, 
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-       }
+  -- File navigation with telescope or fzf, telescope is nicer but fzf is faster
+  use {
+    'nvim-telescope/telescope.nvim',
+    cmd={'Telescope'},
+    config = function() require('plugins/telescope') end, 
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  }
 
+  use {
+    'junegunn/fzf',
+    keys="<c-p>",
+    config = function() require('plugins/fzf') end
+  }
 
 
   -- Copy to OSC52
