@@ -7,6 +7,7 @@ vim.cmd('set ts=2') -- Insert 2 spaces for a tab
 vim.cmd('set sw=2') -- Change the number of space characters inserted for indentation
 vim.o.clipboard = 'unnamedplus'
 
+vim.cmd('set cursorline')
 vim.o.mouse = 'a' -- Enable mouse in all modes
 vim.wo.number = true
 vim.cmd(':hi NoneText guifg=bg')
