@@ -27,6 +27,7 @@ alias vd="deactivate source"
 
 alias zshrc="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
+alias cl="clear"
 
 # file and directories
 alias rm='rm -i'
@@ -71,9 +72,9 @@ alias busy="cat /dev/urandom | hexdump -C | grep "ca fe""
 alias c='cd'
 alias ..='cd ..'
 alias ...='cd ../../'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
-alias .....='cd ../../../../'
+alias ....='cd ../../../'
+alias .2='cd ../../'
+alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
 alias /='cd /'
