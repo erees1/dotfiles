@@ -20,6 +20,7 @@ alias cda="cd ~/git/aladdin"
 alias cdh="cd ~/git/hydra"
 alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
 alias cde="cd /exp/$(whoami)"
+alias cdco="cd /perish_aml02/$(whoami)/coreasr"
 
 # Change to aladdin directory and activate SIF
 alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
