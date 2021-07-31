@@ -50,9 +50,13 @@ return require('packer').startup(function()
   }
 
   -- Colors schemes
-  use 'tjdevries/colorbuddy.nvim'
-  use 'erees1/onebuddy'
+  use 'erees1/color-schemes.vim'
 
+  use {
+    'norcalli/nvim-colorizer.lua',
+    opt=true,
+    config = function() require'colorizer'.setup() end
+  }
   -- Treesitter for better highlighting
   use {
     'nvim-treesitter/nvim-treesitter',

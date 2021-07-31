@@ -1,5 +1,5 @@
 vim.o.termguicolors = true -- Needed for colors
-vim.cmd('colorscheme onebuddy')
+vim.cmd('colorscheme onedark')
 
 vim.bo.smartindent = false
 vim.cmd('set expandtab') -- Converts tabs to spaces
