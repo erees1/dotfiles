@@ -14,5 +14,19 @@
 [init]
     defaultBranch = main
 [user]
-	 name = Edward Rees
-	 email = edwardr@speechmatics.com
+	  name = Edward Rees
+	  email = edwardr@speechmatics.com
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    line-numbers = true
+    syntax-theme = gruvbox
+    side-by-side = false
+    file-modified-label = modified:
+[interactive]
+    diffFilter = delta --color-only
+[credential]
+    helper = cache
