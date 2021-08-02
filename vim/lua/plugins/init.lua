@@ -43,7 +43,6 @@ return require('packer').startup(function()
   use {'kyazdani42/nvim-web-devicons'}
   use {
     'kyazdani42/nvim-tree.lua', 
-    keys="<space>e",
     config = function() 
       require('plugins/nv-tree')
     end
@@ -51,12 +50,7 @@ return require('packer').startup(function()
 
   -- Colors schemes
   use 'erees1/color-schemes.vim'
-
-  use {
-    'norcalli/nvim-colorizer.lua',
-    opt=true,
-    config = function() require'colorizer'.setup() end
-  }
+ 
   -- Treesitter for better highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -64,7 +58,7 @@ return require('packer').startup(function()
     ft = {'python'},
     config = function() 
       require'nvim-treesitter.configs'.setup {
-        ensure_installed = {"python", "bash"},
+        ensure_installed = {"python"},
         highlight = {
           enable = true,
         },
@@ -89,13 +83,18 @@ return require('packer').startup(function()
     config = function() require('plugins/telescope') end, 
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
-
   use {
     'junegunn/fzf',
     keys="<c-p>",
     config = function() require('plugins/fzf') end
   }
 
+  -- Misc
+  use {
+    'norcalli/nvim-colorizer.lua',
+    opt=true,
+    config = function() require'colorizer'.setup() end
+  }
 
   -- Copy to OSC52
   use {'ojroques/vim-oscyank'}
