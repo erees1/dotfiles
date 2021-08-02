@@ -70,7 +70,7 @@ tblink () {
     done
   fi
   echo "logdir: $logdir"
-  tensorboard --host=$(hostname) --logdir=$logdir
+  #tensorboard --host=$(hostname) --logdir=$logdir
 }
 
 # Nvidia 
