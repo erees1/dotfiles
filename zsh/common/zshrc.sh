@@ -1,9 +1,8 @@
-
 source $HOME/git/dotfiles/vars.sh
 ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search vi-mode)
 
 # add ./local/bin to path
 p="${HOME}/.local/bin"
