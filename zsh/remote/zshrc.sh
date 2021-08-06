@@ -21,6 +21,7 @@ alias cdh="cd ~/git/hydra"
 alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
 alias cde="cd /exp/$(whoami)"
 alias cdco="cd /perish_aml02/$(whoami)/coreasr"
+alias cdt="cd ~/tb"
 
 # Change to aladdin directory and activate SIF
 alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
@@ -54,9 +55,9 @@ tblink () {
   # setup tensorboard directory
     tbdir="$HOME/tb"
     if [ -d "$tbdir" ]; then
-      
-      last=$(ls -v $tbdir | tail -1)
+      last="$(printf '%s\n' $tbdir/* | sed 's/.*\///' | sort -g -r | head -n 1)"
       new=$((last+1))
+      echo "last folder $last, new folder $new"
       logdir="$tbdir/$new"
     else
       logdir="$tbdir/0"
@@ -70,7 +71,17 @@ tblink () {
     done
   fi
   echo "logdir: $logdir"
-  #tensorboard --host=$(hostname) --logdir=$logdir
+  singularity exec oras://singularity-master.artifacts.speechmatics.io/tensorboard:20210213 tensorboard --host=$(hostname -f)  --reload_multifile true --logdir=$logdir
+}
+tbadd() {
+  if [ "$#" -eq 2 ]; then
+    tbdir="$HOME/tb"
+    linkdir=$(rl $1)
+    logdir=$tbdir/$2
+    ln -s $linkdir $logdir
+  else
+    echo "tbadd <exp_dir> <tb number>"
+  fi
 }
 
 # Nvidia 
@@ -118,7 +129,8 @@ qtail () {
   tail -f $(qlog $@)
 }
 qlast () {
-  job_id=$(qstat | awk '{print $1}' | grep -E '[0-9]' | sort -r | head -n 1)
+  # Tail the last running job
+  job_id=$(qstat | awk '$5=="r" {print $1}' | grep -E '[0-9]' | sort -r | head -n 1)
   echo "qtail of most recent job ${job_id}"
   qtail ${job_id} 
 }
@@ -156,4 +168,8 @@ qdesc () {
       fi
     fi
   done
+}
+
+getfucked() {
+    qstat -u "*" | grep $1 | awk '{print $1}' | while read job; do qmakep $job; done
 }
