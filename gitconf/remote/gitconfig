@@ -18,7 +18,6 @@
 	  email = edwardr@speechmatics.com
 [pager]
     diff = delta
-    log = delta
     reflog = delta
     show = delta
 [delta]
