@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # -------------------------------------------------------------------
-# Remote Sppecific settings
+# Remote Specific settings
 # -------------------------------------------------------------------
 
 # Colors on ls
@@ -12,22 +12,10 @@ LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:t
 export LS_COLORS
 
 # -------------------------------------------------------------------
-# Speechmatics Specific
+# Speechmatics Specific Aliases
 # -------------------------------------------------------------------
 
-# quick navigation add more here
-alias cda="cd ~/git/aladdin"
-alias cdh="cd ~/git/hydra"
-alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
-alias cde="cd /exp/$(whoami)"
-alias cdco="cd /perish_aml02/$(whoami)/coreasr"
-alias cdt="cd ~/tb"
-
-# Change to aladdin directory and activate SIF
-alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
-# Activate aladdin SIF in current directory
-alias msad="/home/$(whoami)/git/aladdin/env/singularity.sh -c "$SHELL""
-
+source ~/git/dotfiles/zsh/remote/aliases.sh
 
 # -------------------------------------------------------------------
 # General
@@ -79,6 +67,8 @@ tbadd() {
     linkdir=$(rl $1)
     logdir=$tbdir/$2
     ln -s $linkdir $logdir
+    echo "linkdir: $linkdir"
+    echo "logdir: $logdir"
   else
     echo "tbadd <exp_dir> <tb number>"
   fi
