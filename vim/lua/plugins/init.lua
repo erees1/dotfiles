@@ -16,14 +16,40 @@ vim.cmd "autocmd BufWritePost plugins/init.lua PackerCompile" -- Auto compile wh
 
 -- Specify plugins here
 return require('packer').startup(function()
+  local local_use = function(first, second, opts)
+    opts = opts or {}
+
+    local plug_path, home
+    if second == nil then
+      plug_path = first
+      home = "erees1"
+    else
+      plug_path = second
+      home = first
+    end
+
+    if vim.fn.isdirectory(vim.fn.expand("~/git/" .. plug_path)) == 1 then
+      opts[1] = "~/git/" .. plug_path
+    else
+      opts[1] = string.format("%s/%s", home, plug_path)
+    end
+
+    use(opts)
+  end
+
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
   -- Appearance
   use {
-    'hoob3rt/lualine.nvim',opt=true, config = function() require('plugins/lualine') end
+    'hoob3rt/lualine.nvim',
+    opt=true,
+    config = function() require('plugins/lualine') end
   }
-  use 'jeffkreeftmeijer/vim-numbertoggle'
+  use {
+    'jeffkreeftmeijer/vim-numbertoggle',
+    opt=true
+  }
 
   -- CoC
   use {
@@ -37,10 +63,14 @@ return require('packer').startup(function()
   use {
     'preservim/nerdcommenter', config = function() require('plugins/nerdcommenter') end
   }
-  use 'christoomey/vim-tmux-navigator'
+  use {
+    'christoomey/vim-tmux-navigator'
+  }
 
   -- Nvim tree / explorer stuff
-  use {'kyazdani42/nvim-web-devicons'}
+  use {
+    'kyazdani42/nvim-web-devicons'
+  }
   use {
     'kyazdani42/nvim-tree.lua', 
     config = function() 
@@ -49,8 +79,9 @@ return require('packer').startup(function()
   }
 
   -- Colors schemes
-  use 'erees1/color-schemes.vim'
- 
+  local_use 'color-schemes.vim'
+   
+
   -- Treesitter for better highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
