@@ -40,6 +40,10 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+  use {
+      '907th/vim-auto-save',
+      config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
+  }
   -- Appearance
   use {
     'hoob3rt/lualine.nvim',
@@ -116,7 +120,6 @@ return require('packer').startup(function()
   }
   use {
     'junegunn/fzf',
-    keys="<c-p>",
     config = function() require('plugins/fzf') end
   }
 
