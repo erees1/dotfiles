@@ -87,12 +87,15 @@ if [ -z $CUDA_VISIBLE_DEVICES ]; then
 fi
 
 # Short aliases
+full_queue='qstat -q "aml*.q@*" -f -u \*'
 alias q='qstat'
 alias qtop='qalter -p 1024'
-alias qq='qstat -q "aml*.q@*" -f -u \*' # Display full queue
+alias qq=$full_queue # Display full queue
 alias gq='qstat -q aml-gpu.q -f -u \*' # Display just the gpu queues
 alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding|Hard|Soft|Requested|Granted"' # Display the gpu queues, including showing the preemption state of each job
 alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
+alias wq="watch qstat"
+alias wqq="watch $full_queue"
 qlogin () {
   if [ "$#" -eq 1 ]; then
     /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -N D_$(whoami)

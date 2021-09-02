@@ -106,42 +106,42 @@ function mkcd () {
 # git
 #-------------------------------------------------------------
 
-alias g="git"
-alias gcl="git clone"
-alias ga="git add"
-alias gaa="git add ."
+#alias g="git"
+#alias gcl="git clone"
+#alias ga="git add"
+#alias gaa="git add ."
 alias gc="git commit -m"
-alias gp="git push"
+#alias gp="git push"
 alias gpf="git push -f"
 
-alias gg='git gui'
-alias glog='git log --oneline --all --graph --decorate'
+#alias gg='git gui'
+#alias glog='git log --oneline --all --graph --decorate'
 
-alias gf="git fetch"
-alias gl="git pull"
+#alias gf="git fetch"
+#alias gl="git pull"
 
-alias grb="git rebase"
-alias grbm="git rebase master"
-alias grbc="git rebase --continue"
-alias grbs="git rebase --skip"
-alias grba="git rebase --abort"
+#alias grb="git rebase"
+#alias grbm="git rebase master"
+#alias grbc="git rebase --continue"
+#alias grbs="git rebase --skip"
+#alias grba="git rebase --abort"
 
-alias gd="git diff"
+#alias gd="git diff"
 alias gdt="git difftool"
 alias gs="git status"
 
-alias gco="git checkout"
-alias gcb="git checkout -b"
-alias gcm="git checkout master"
+#alias gco="git checkout"
+#alias gcb="git checkout -b"
+#alias gcm="git checkout master"
 
 alias grhead="git reset HEAD^"
 alias grhard="git fetch origin && git reset --hard"
 
-alias gst="git stash"
-alias gstp="git stash pop"
+#alias gst="git stash"
+#alias gstp="git stash pop"
 alias gsta="git stash apply"
-alias gstd="git stash drop"
-alias gstc="git stash clear"
+#alias gstd="git stash drop"
+#alias gstc="git stash clear"
 
 #-------------------------------------------------------------
 # tmux
