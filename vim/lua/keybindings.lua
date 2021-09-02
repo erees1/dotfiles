@@ -10,8 +10,9 @@ vim.api.nvim_set_keymap('n', 'k', 'gk', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'gj', 'j', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'gk', 'k', {noremap=true, silent=true })
 
--- jk in to escape insert mode
+-- jk or kj in to escape insert mode
 vim.api.nvim_set_keymap('i', 'jk', '<esc>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('i', 'kj', '<esc>', {noremap=true, silent=true })
 
 -- Move lines up and down with the alt key a-la vscode
 vim.api.nvim_set_keymap('n', '<A-j>' , ':m .+1<CR>==', {noremap=true, silent=true })
@@ -45,8 +46,8 @@ vim.api.nvim_set_keymap('n', '<Leader><space>', ':noh<CR>', {noremap=true, silen
 -- in keys= of packer
 
 --Telescope
-vim.api.nvim_set_keymap('n', '<c-p>', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>tf', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>tg', "<cmd> Telescope live_grep<CR>", { noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>tb', "<cmd> Telescope buffers<CR>", { noremap=true, silent=true })
+--vim.api.nvim_set_keymap('n', '<c-p>', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
+--vim.api.nvim_set_keymap('n', '<leader>tf', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
+--vim.api.nvim_set_keymap('n', '<leader>tg', "<cmd> Telescope live_grep<CR>", { noremap=true, silent=true })
+--vim.api.nvim_set_keymap('n', '<leader>tb', "<cmd> Telescope buffers<CR>", { noremap=true, silent=true })
 

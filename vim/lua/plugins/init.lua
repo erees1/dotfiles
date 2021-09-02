@@ -111,18 +111,12 @@ return require('packer').startup(function()
     'tpope/vim-fugitive', config = function() require('plugins/fugitive') end
   }
 
-  -- File navigation with telescope or fzf, telescope is nicer but fzf is faster
-  use {
-    'nvim-telescope/telescope.nvim',
-    cmd={'Telescope'},
-    config = function() require('plugins/telescope') end, 
-    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  use { 'ibhagwan/fzf-lua',
+    requires = {
+      'vijaymarupudi/nvim-fzf',
+      'kyazdani42/nvim-web-devicons' }, -- optional for icons
+      config = function() require('plugins/fzf-lua') end,
   }
-  use {
-    'junegunn/fzf',
-    config = function() require('plugins/fzf') end
-  }
-
   -- Misc
   use {
     'norcalli/nvim-colorizer.lua',
