@@ -9,7 +9,7 @@ fun! Start()
     enew
 
     " Open fzf
-    call fzf#run({'sink': 'e', 'window': {'width': 0.9, 'height': 0.6}})
+    :FzfLua files
 endfun
 
 " Run after "doing all the startup stuff"
