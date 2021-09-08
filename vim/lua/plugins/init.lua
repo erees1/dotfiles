@@ -4,6 +4,10 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
+local function is_not_vscode()
+    return vim.api.nvim_eval('exists("g:vscode")')
+end
+--not vim.api.nvim_eval('exists("g:vscode")')
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -42,22 +46,13 @@ return require('packer').startup(function()
 
   use {
       '907th/vim-auto-save',
+      cond = is_not_vscode,
       config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
   }
-  -- Appearance
-  use {
-    'hoob3rt/lualine.nvim',
-    opt=true,
-    config = function() require('plugins/lualine') end
-  }
-  use {
-    'jeffkreeftmeijer/vim-numbertoggle',
-    opt=true
-  }
-
   -- CoC
   use {
     'neoclide/coc.nvim',
+    cond=is_not_vscode,
     opt=true,
     ft = {'python', 'sh'},
     config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
@@ -65,18 +60,20 @@ return require('packer').startup(function()
 
   -- Shortucts etc
   use {
-    'preservim/nerdcommenter', config = function() require('plugins/nerdcommenter') end
+    'preservim/nerdcommenter',
+    cond = is_not_vscode,
+    config = function() require('plugins/nerdcommenter') end
   }
   use {
-    'christoomey/vim-tmux-navigator'
+    'christoomey/vim-tmux-navigator',
+    cond = is_not_vscode,
   }
 
   -- Nvim tree / explorer stuff
   use {
-    'kyazdani42/nvim-web-devicons'
-  }
-  use {
-    'kyazdani42/nvim-tree.lua', 
+    'kyazdani42/nvim-tree.lua',
+    requires = {'kyazdani42/nvim-web-devicons' }, -- optional for icons
+    cond = is_not_vscode,
     config = function() 
       require('plugins/nv-tree')
     end
@@ -90,6 +87,7 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ":TSUpdate",
+    cond = is_not_vscode,
     ft = {'python'},
     config = function() 
       require'nvim-treesitter.configs'.setup {
@@ -104,17 +102,21 @@ return require('packer').startup(function()
   -- Git
   use {
     'lewis6991/gitsigns.nvim',
+    cond = is_not_vscode,
     requires={'nvim-lua/plenary.nvim'},
     config = function() require('plugins/gitsigns') end
   }
   use {
-    'tpope/vim-fugitive', config = function() require('plugins/fugitive') end
+    'tpope/vim-fugitive', 
+    cond = is_not_vscode,
+    config = function() require('plugins/fugitive') end
   }
 
   use { 'ibhagwan/fzf-lua',
     requires = {
       'vijaymarupudi/nvim-fzf',
       'kyazdani42/nvim-web-devicons' }, -- optional for icons
+      cond = is_not_vscode,
       config = function() require('plugins/fzf-lua') end,
   }
   -- Misc
@@ -125,6 +127,9 @@ return require('packer').startup(function()
   }
 
   -- Copy to OSC52
-  use {'ojroques/vim-oscyank'}
+  use {
+    'ojroques/vim-oscyank',
+    cond = is_not_vscode,
+  }
 end)
 
