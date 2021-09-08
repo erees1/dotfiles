@@ -41,15 +41,10 @@ PARAMS=($PARAMS)
 LOC=${PARAMS[0]}
 
 # Set any variables
-source vars.sh
-
-if [ $LOC == "local" ] || [ $LOC == "remote" ] || [ $LOC == "ucl" ] ; then
+if [ $LOC == "local" ] || [ $LOC == "remote" ] ; then
 
     # Tmux setup
     echo "source $HOME/git/dotfiles/tmux/tmux.conf" > $HOME/.tmux.conf
-
-    # Kitty setup
-    source "$HOME/git/dotfiles/kitty/setup_kitty.sh"
 
     # Vim / Neovim setup
     source "$HOME/git/dotfiles/vim/setup_init.sh"
