@@ -11,4 +11,5 @@ function git_prepare() {
    zle accept-line
 }
 zle -N git_prepare
-bindkey "^g" git_prepare
+bindkey -r "^G"
+bindkey "^G" git_prepare
