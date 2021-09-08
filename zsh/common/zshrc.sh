@@ -1,6 +1,6 @@
-source $HOME/git/dotfiles/vars.sh
 ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH=$HOME/.oh-my-zsh
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search)
 #KEYTIMEOUT=20
@@ -12,6 +12,7 @@ if [[ "$PATH" != *"$p"* ]]; then
 fi
 
 # Source fzf file
+bindkey -r "^R"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 VI_MODE_SET_CURSOR=true
