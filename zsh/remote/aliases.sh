@@ -16,5 +16,7 @@ alias p5="cd /perish_aml05"
 
 # Change to aladdin directory and activate SIF
 alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
+alias msa2="make -C /home/$(whoami)/git/aladdin2/ shell"
 # Activate aladdin SIF in current directory
 alias msad="/home/$(whoami)/git/aladdin/env/singularity.sh -c "$SHELL""
+alias msad2="/home/$(whoami)/git/aladdin2/env/singularity.sh -c "$SHELL""
