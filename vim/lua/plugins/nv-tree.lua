@@ -1,3 +1,4 @@
+require'nvim-tree'.setup()
 vim.api.nvim_set_var('nvim_tree_ignore', {'.git', 'node_modules', '.cache' })
 vim.api.nvim_set_var('nvim_tree_auto_open', 0)
 vim.api.nvim_set_var('nvim_tree_quit_on_open',0)
@@ -12,6 +13,5 @@ vim.g.nvim_tree_icons = {
     git = {unstaged = "", staged = "✓", unmerged = "", renamed = "➜", untracked = ""},
     folder = {default = "", open = "", empty = "", empty_open = "", symlink = ""}
 }
-
 
 vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
