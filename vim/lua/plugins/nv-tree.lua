@@ -1,6 +1,6 @@
 vim.api.nvim_set_var('nvim_tree_ignore', {'.git', 'node_modules', '.cache' })
 vim.api.nvim_set_var('nvim_tree_auto_open', 0)
-vim.api.nvim_set_var('nvim_tree_quit_on_open',1)
+vim.api.nvim_set_var('nvim_tree_quit_on_open',0)
 vim.api.nvim_set_var('nvim_tree_indent_markers',1)
 vim.api.nvim_set_var('nvim_tree_hide_dotfiles',1)
 vim.api.nvim_set_var('nvim_tree_update_cwd', 1)
