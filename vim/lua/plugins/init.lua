@@ -77,10 +77,17 @@ return require('packer').startup(function()
       require('plugins/nv-tree')
     end
   }
+  use {
+    'romgrk/barbar.nvim',
+    requires = {'kyazdani42/nvim-web-devicons'},
+    config = function()
+      require('plugins/barbar')
+      require('plugins/tree')
+    end
+  }
 
   -- Colors schemes
   local_use 'color-schemes.vim'
-   
 
   -- Treesitter for better highlighting
   use {

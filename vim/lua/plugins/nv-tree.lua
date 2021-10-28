@@ -13,7 +13,6 @@ vim.g.nvim_tree_icons = {
     folder = {default = "", open = "", empty = "", empty_open = "", symlink = ""}
 }
 
-vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
 require'nvim-tree'.setup {
   update_focused_file = {
     -- enables the feature
@@ -25,4 +24,9 @@ require'nvim-tree'.setup {
     -- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
     ignore_list = {}
   },
+
+  view = {
+    -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
+    width = tree_width,
+  }
 }

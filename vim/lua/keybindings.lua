@@ -28,11 +28,14 @@ vim.api.nvim_set_keymap('i', '<A-Up>' , ':m .-2<CR>==gi', {noremap=true, silent=
 vim.api.nvim_set_keymap('v', '<A-Down>', ":m '>+1<CR>gv=gv", {noremap=true, silent=true })
 vim.api.nvim_set_keymap('v', '<A-Up>' , ":m '<-2<CR>gv=gv", {noremap=true, silent=true })
 
--- Don't cut - delete when using d or c, x will still cut
-vim.api.nvim_set_keymap('n', 'd', '"_d', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'c', '"_c', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'd', '"_d', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'c', '"_c', {noremap=true, silent=true })
+-- Copy paste from system buffers to make copy paste behaviour more sane
+vim.api.nvim_set_keymap('v', 'y', '"+y', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'y', '"+y', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('v', 'x', '"+x', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'x', '"+x', {noremap=true, silent=true })
+
+vim.api.nvim_set_keymap('v', 'p', '"+p', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'p', '"+p', {noremap=true, silent=true })
 
 -- Quick fix navigation
 vim.api.nvim_set_keymap('n', '<M-n>', ':cn<CR>', {noremap=true, silent=true })
@@ -41,13 +44,5 @@ vim.api.nvim_set_keymap('n', '<M-p>', ':cp<CR>', {noremap=true, silent=true })
 -- <leader><space> to clear highlighing after search
 vim.api.nvim_set_keymap('n', '<Leader><space>', ':noh<CR>', {noremap=true, silent=true })
 
-
--- Keybindgs for plugins, optional plugin need to have their keybinds specified here, or can specify them
--- in keys= of packer
-
---Telescope
---vim.api.nvim_set_keymap('n', '<c-p>', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
---vim.api.nvim_set_keymap('n', '<leader>tf', "<cmd> Telescope find_files<CR>", { noremap=true, silent=true })
---vim.api.nvim_set_keymap('n', '<leader>tg', "<cmd> Telescope live_grep<CR>", { noremap=true, silent=true })
---vim.api.nvim_set_keymap('n', '<leader>tb', "<cmd> Telescope buffers<CR>", { noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua _tree_toggle()<CR>', { noremap=true, silent=true })
 

@@ -1,8 +1,11 @@
  vim.api.nvim_command([[
-autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg + | endif
+autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif
 ]])
-
+ vim.api.nvim_command([[
+autocmd TextYankPost * if v:event.operator is 'x' && v:event.regname is '+' | OSCYankReg + | endif
+]])
 vim.api.nvim_command([[
+
 function! YankNameToOsc()
 let @+ = expand('%:p')
 OSCYankReg +
