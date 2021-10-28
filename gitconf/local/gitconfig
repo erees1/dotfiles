@@ -16,3 +16,5 @@
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [init]
     defaultBranch = main
+[pull]
+	ff = only
