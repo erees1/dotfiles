@@ -18,11 +18,12 @@
 	  email = edwardr@speechmatics.com
 [pager]
     diff = delta
-    reflog = delta
+    log = delta
+    reflog = delta  
     show = delta
 [delta]
     line-numbers = true
-    syntax-theme = gruvbox
+    syntax-theme = 1337
     side-by-side = false
     file-modified-label = modified:
 [interactive]
