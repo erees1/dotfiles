@@ -51,12 +51,14 @@ return require('packer').startup(function()
   -- CoC
   use {
     'neoclide/coc.nvim',
+    branch = 'release',
     cond=is_not_vscode,
     opt=true,
     ft = {'python', 'sh'},
     config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
   } 
-
+  --Plug 'neovim/nvim-lspconfig'
+  --Plug 'tamago324/nlsp-settings.nvim'
   -- Shortucts etc
   use {
     'preservim/nerdcommenter',
@@ -93,7 +95,7 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ":TSUpdate",
-    cond = is_not_vscode,
+    opt=true,
     ft = {'python'},
     config = function() 
       require'nvim-treesitter.configs'.setup {
@@ -108,13 +110,11 @@ return require('packer').startup(function()
   -- Git
   use {
     'lewis6991/gitsigns.nvim',
-    cond = is_not_vscode,
     requires={'nvim-lua/plenary.nvim'},
     config = function() require('plugins/gitsigns') end
   }
   use {
     'tpope/vim-fugitive', 
-    cond = is_not_vscode,
     config = function() require('plugins/fugitive') end
   }
 
@@ -122,7 +122,6 @@ return require('packer').startup(function()
     requires = {
       'vijaymarupudi/nvim-fzf',
       'kyazdani42/nvim-web-devicons' }, -- optional for icons
-      cond = is_not_vscode,
       config = function() require('plugins/fzf-lua') end,
   }
   -- Misc
