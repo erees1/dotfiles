@@ -4,9 +4,6 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local function is_not_vscode()
-    return vim.api.nvim_eval('exists("g:vscode")') == 0
-end
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -45,24 +42,24 @@ return require('packer').startup(function()
 
   use {
       '907th/vim-auto-save',
-      cond = is_not_vscode,
+      cond = { require('funcs').is_not_vscode },
       config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
   }
+
   -- CoC
   use {
     'neoclide/coc.nvim',
     branch = 'release',
-    cond=is_not_vscode,
+    cond = { require('funcs').is_not_vscode },
     opt=true,
     ft = {'python', 'sh'},
     config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
   } 
-  --Plug 'neovim/nvim-lspconfig'
-  --Plug 'tamago324/nlsp-settings.nvim'
+
   -- Shortucts etc
   use {
     'preservim/nerdcommenter',
-    cond = is_not_vscode,
+    cond = { require('funcs').is_not_vscode },
     config = function() require('plugins/nerdcommenter') end
   }
   use {
@@ -74,7 +71,7 @@ return require('packer').startup(function()
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {'kyazdani42/nvim-web-devicons' }, -- optional for icons
-    cond = is_not_vscode,
+    cond = { require('funcs').is_not_vscode },
     config = function() 
       require('plugins/nv-tree')
     end
@@ -82,20 +79,18 @@ return require('packer').startup(function()
   use {
     'romgrk/barbar.nvim',
     requires = {'kyazdani42/nvim-web-devicons'},
+    cond = { require('funcs').is_not_vscode },
     config = function()
       require('plugins/barbar')
       require('plugins/tree')
     end
   }
 
-  -- Colors schemes
-  local_use 'color-schemes.vim'
-
   -- Treesitter for better highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ":TSUpdate",
-    opt=true,
+    cond = { require('funcs').is_not_vscode },
     ft = {'python'},
     config = function() 
       require'nvim-treesitter.configs'.setup {
@@ -110,11 +105,13 @@ return require('packer').startup(function()
   -- Git
   use {
     'lewis6991/gitsigns.nvim',
+    cond = { require('funcs').is_not_vscode },
     requires={'nvim-lua/plenary.nvim'},
     config = function() require('plugins/gitsigns') end
   }
   use {
     'tpope/vim-fugitive', 
+    cond = { require('funcs').is_not_vscode },
     config = function() require('plugins/fugitive') end
   }
 
@@ -122,19 +119,21 @@ return require('packer').startup(function()
     requires = {
       'vijaymarupudi/nvim-fzf',
       'kyazdani42/nvim-web-devicons' }, -- optional for icons
+      cond = { require('funcs').is_not_vscode },
       config = function() require('plugins/fzf-lua') end,
   }
   -- Misc
   use {
     'norcalli/nvim-colorizer.lua',
     opt=true,
+    cond = { require('funcs').is_not_vscode },
     config = function() require'colorizer'.setup() end
   }
 
   -- Copy to OSC52
   use {
     'ojroques/vim-oscyank',
-    cond = is_not_vscode,
+    cond = { require('funcs').is_not_vscode },
   }
 end)
 

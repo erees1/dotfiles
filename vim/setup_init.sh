@@ -17,5 +17,6 @@ if [ -f $HOME/.config/nvim/init.vim ]; then
 fi
 
 ln -sf $HOME/git/dotfiles/vim/lua $HOME/.config/nvim
+ln -sf $HOME/git/dotfiles/vim/colors $HOME/.config/nvim
 ln -sf $HOME/git/dotfiles/vim/coc-settings.json $HOME/.config/nvim/coc-settings.json
 

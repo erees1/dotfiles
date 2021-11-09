@@ -63,19 +63,6 @@ function! s:openVSCodeCommandsInVisualMode()
     endif
 endfunction
 
-function! s:openWhichKeyInVisualMode()
-    normal! gv
-    let visualmode = visualmode()
-    if visualmode == "V"
-        let startLine = line("v")
-        let endLine = line(".")
-        call VSCodeNotifyRange("whichkey.show", startLine, endLine, 1)
-    else
-        let startPos = getpos("v")
-        let endPos = getpos(".")
-        call VSCodeNotifyRangePos("whichkey.show", startPos[1], endPos[1], startPos[2], endPos[2], 1)
-    endif
-endfunction
 
 
 command! -complete=file -nargs=? Split call <SID>split('h', <q-args>)
@@ -94,16 +81,11 @@ xnoremap <silent> <C-h> :call VSCodeNotify('workbench.action.navigateLeft')<CR>
 nnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
 xnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
 
-nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
-
 " Bind C-/ to vscode commentary since calling from vscode produces double comments due to multiple cursors
 xnoremap <expr> <C-/> <SID>vscodeCommentary()
 nnoremap <expr> <C-/> <SID>vscodeCommentary() . '_'
 
 nnoremap <silent> <C-w>_ :<C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>
-
-nnoremap <silent> <Space> :call VSCodeNotify('whichkey.show')<CR>
-xnoremap <silent> <Space> :<C-u>call <SID>openWhichKeyInVisualMode()<CR>
 
 xnoremap <silent> <C-P> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
 
@@ -115,3 +97,19 @@ nmap gcc <Plug>VSCodeCommentaryLine
 " Simulate same TAB behavior in VSCode
 nmap <Tab> :Tabnext<CR>
 nmap <S-Tab> :Tabprev<CR>
+
+
+nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
+nnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
+vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
+nnoremap <M-k> <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>
+nnoremap <M-j> <Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')<CR>
+vnoremap <M-k> <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>
+vnoremap <M-j> <Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')<CR>
+
+"line indendation
+vnoremap <S-,> <Cmd>call VSCodeNotify('editor.action.outdentLines')<CR>
+vnoremap <S-.> <Cmd>call VSCodeNotify('editor.action.indentLines')<CR>
+nnoremap <S-,> <Cmd>call VSCodeNotify('editor.action.outdentLines')<CR>
+nnoremap <S-.> <Cmd>call VSCodeNotify('editor.action.indentLines')<CR>
+nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
