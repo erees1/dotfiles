@@ -90,7 +90,6 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ":TSUpdate",
-    opt=true,
     cond = { require('funcs').is_not_vscode },
     ft = {'python'},
     config = function() 
