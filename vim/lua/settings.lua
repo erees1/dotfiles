@@ -8,7 +8,6 @@ vim.bo.smartindent = false
 vim.cmd('set expandtab') -- Converts tabs to spaces
 vim.cmd('set ts=4') -- Insert 2 spaces for a tab
 vim.cmd('set sw=4') -- Change the number of space characters inserted for indentation
-vim.cmd('set nofixendofline')
 
 vim.cmd('set cursorline')
 vim.o.mouse = 'a' -- Enable mouse in all modes
