@@ -6,7 +6,6 @@ vim.o.background = "dark"
 vim.o.termguicolors = true
 vim.g.colors_name = "onedarker"
 
-print('running onedarker.init')
 --Need to set loaded to nil for onedark packages we are overiding
 package.loaded["onedarker.palette"] = nil
 
