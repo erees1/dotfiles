@@ -67,6 +67,11 @@ return require('packer').startup(function()
     cond = is_not_vscode,
   }
 
+  use {
+    'sindrets/diffview.nvim',
+    config = function() require('plugins.diffview') end
+  }
+
   -- Nvim tree / explorer stuff
   use {
     'kyazdani42/nvim-tree.lua',
