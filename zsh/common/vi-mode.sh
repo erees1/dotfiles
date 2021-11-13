@@ -68,7 +68,7 @@ zle -N zle-line-finish
 
 bindkey -v
 
-# allow vv to edit the command line (standard behaviour)
+# allow nv to edit the command line (standard behaviour)
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd 'nv' edit-command-line
