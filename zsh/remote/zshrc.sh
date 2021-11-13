@@ -1,21 +1,20 @@
 #!/bin/zsh
 
+SRC_DIR=$(dirname $(realpath $0))
+
 # -------------------------------------------------------------------
 # Remote Specific settings
 # -------------------------------------------------------------------
 
 # Colors on ls
 alias ls='ls -hF --color' # add colors for filetype recognition
-
-# Make color of directories purple not dark blue
-#LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
-#export LS_COLORS
+source $SRC_DIR/dir_colors.sh
 
 # -------------------------------------------------------------------
 # Speechmatics Specific Aliases
 # -------------------------------------------------------------------
 
-source ~/git/dotfiles/zsh/remote/aliases.sh
+source $SRC_DIR/aliases.sh
 
 # -------------------------------------------------------------------
 # General

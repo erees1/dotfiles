@@ -1,5 +1,10 @@
+
+SRC_DIR=$(dirname $(realpath $0))
+
 # Set array path to only have unique values
 typeset -U path
+
+source $SRC_DIR/dir_colors.sh
 
 # When /etc/profile is run we make sure that the path is empty
 # this prevents tmux from screwing with my path 
