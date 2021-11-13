@@ -10,6 +10,8 @@ function M.init (C)
       NvimTreeNormal = { fg = C.light_gray, bg = C.alt_bg },
       NvimTreeVertSplit = { fg = C.alt_bg, bg = C.alt_bg },
       NvimTreeFolderName = { fg = C.blue },
+      NvimTreeFolderIcon = { fg = C.blue },
+      NvimTreeRootFolder = { fg = C.fg, style = "bold" },
       NvimTreeOpenedFolderName = { fg = C.cyan, style = "italic" },
       NvimTreeImageFile = { fg = C.purple },
       NvimTreeSpecialFile = { fg = C.orange },
@@ -20,9 +22,8 @@ function M.init (C)
       NvimTreeGitDeleted = { fg = C.sign_delete },
       NvimTreeGitMerge = { fg = C.sign_change },
       NvimTreeGitRenamed = { fg = C.sign_change },
-      NvimTreeSymlink = { fg = C.cyan },
-      NvimTreeRootFolder = { fg = C.fg, style = "bold" },
-      NvimTreeExecFile = { fg = C.green },
+      NvimTreeSymlink = { fg = C.purple },
+      NvimTreeExecFile = { fg = C.red },
     }
     return highlights
 end
