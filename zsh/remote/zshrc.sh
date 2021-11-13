@@ -50,11 +50,15 @@ tblink () {
     else
       logdir="$tbdir/0"
     fi
-    mkdir -p $logdir
     # softlink into tensorboard directory
     for linkdir in "$@"; do
       linkdir=$(rl $linkdir)
+      if [ ! -d $linkdir ]; then
+          echo "linkdir $linkdir does not exist"
+          return
+      fi
       echo "linkdir: $linkdir"
+      mkdir -p $logdir
       ln -s $linkdir $logdir
     done
   fi
