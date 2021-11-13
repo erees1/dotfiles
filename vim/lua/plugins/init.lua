@@ -12,8 +12,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 -- End of bootstrap
 
-vim.cmd "autocmd BufWritePost plugins/init.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
-
 -- Specify plugins here
 return require('packer').startup(function()
   local local_use = function(first, second, opts)
@@ -40,11 +38,6 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  use {
-      '907th/vim-auto-save',
-      cond = { require('funcs').is_not_vscode },
-      config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
-  }
 
   -- CoC
   use {
@@ -59,17 +52,13 @@ return require('packer').startup(function()
   -- Shortucts etc
   use {
     'preservim/nerdcommenter',
+    keys="<leader>ci",
     cond = { require('funcs').is_not_vscode },
     config = function() require('plugins/nerdcommenter') end
   }
   use {
     'christoomey/vim-tmux-navigator',
     cond = is_not_vscode,
-  }
-
-  use {
-    'sindrets/diffview.nvim',
-    config = function() require('plugins.diffview') end
   }
 
   -- Nvim tree / explorer stuff
@@ -87,7 +76,6 @@ return require('packer').startup(function()
     cond = { require('funcs').is_not_vscode },
     config = function()
       require('plugins/barbar')
-      require('plugins/tree')
     end
   }
 
@@ -114,12 +102,19 @@ return require('packer').startup(function()
     requires={'nvim-lua/plenary.nvim'},
     config = function() require('plugins/gitsigns') end
   }
+
   use {
     'tpope/vim-fugitive', 
     cond = { require('funcs').is_not_vscode },
     config = function() require('plugins/fugitive') end
   }
+  use {
+    'sindrets/diffview.nvim',
+    cmd = {'DiffviewOpen', 'DiffviewFileHistory'},
+    config = function() require('plugins.diffview') end
+  }
 
+  -- fzf file navigation
   use { 'ibhagwan/fzf-lua',
     requires = {
       'vijaymarupudi/nvim-fzf',
@@ -131,10 +126,18 @@ return require('packer').startup(function()
   use {
     'norcalli/nvim-colorizer.lua',
     opt=true,
-    cond = { require('funcs').is_not_vscode },
     config = function() require'colorizer'.setup() end
   }
-
+  use {
+      '907th/vim-auto-save',
+      cond = { require('funcs').is_not_vscode },
+      config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
+  }
+  use {
+      opt=true,
+      cmd='MarkdownPreview',
+      'https://github.com/iamcco/markdown-preview.nvim'
+  }
   -- Copy to OSC52
   use {
     'ojroques/vim-oscyank',

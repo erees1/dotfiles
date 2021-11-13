@@ -1,3 +1,5 @@
+local util = require("onedark.util")
+
 local colors = {
   none = "NONE",
   fg = "#abb2bf",
@@ -36,10 +38,12 @@ local colors = {
   purple_test = "#ff007c",
   cyan_test = "#00dfff",
   ui_blue = "#264F78",
-  diff_add = "#303d27",
-  diff_delete = "#6e3b40",
-  diff_change = "#18344c",
-  diff_text = "#265478",
 }
+
+colors.diff_add = util.darken(colors.green, 0.15)
+colors.diff_delete = util.darken(colors.red, 0.15)
+colors.diff_change = util.darken(colors.blue, 0.15)
+colors.diff_text = "#265478"
+
 
 return colors

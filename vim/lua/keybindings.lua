@@ -46,3 +46,7 @@ vim.api.nvim_set_keymap('n', '<Leader><space>', ':noh<CR>', {noremap=true, silen
 
 vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua _tree_toggle()<CR>', { noremap=true, silent=true })
 
+vim.api.nvim_set_keymap('n', '<leader>dvo', ':DiffviewOpen<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dvc', ':DiffviewClose<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dvh', ':DiffviewFileHistory<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dvf', ':DiffviewToggleFiles<CR>', {noremap=true, silent=true })
