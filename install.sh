@@ -112,8 +112,4 @@ else
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search 
 fi
 
-if [[ ! -d ~/.tmux-themepack ]]; then
-    git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
-fi
-
 echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "

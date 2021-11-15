@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-USAGE="Usage: ./deploy.sh local or ./deploy.sh remote, optional flag --terminfo to compile kitty terminfo"
+USAGE="Usage: ./deploy.sh local or ./deploy.sh remote" 
 if [ $# -eq 0 ]
   then
     echo "Error: No flags provided"
@@ -9,17 +9,12 @@ if [ $# -eq 0 ]
     exit 1
 fi
 
-terminfo=false
 PARAMS=""
 while (( "$#" )); do
   case "$1" in
     -h|--help)
       echo $USAGE
       exit
-      ;;
-    --terminfo)
-      terminfo=true
-      shift
       ;;
     --) # end argument parsing
       shift
