@@ -12,6 +12,7 @@ function M.init (C)
         DiffviewFilePanelDeletion = { fg = C.sign_delete },
         DiffviewFolderSign = { fg = C.blue },
         DiffviewVertSplit = {fg = C.alt_bg, bg = C.alt_bg },
+        DiffviewEndOfBuffer = {fg = C.alt_bg },
     }
     return DV
 end

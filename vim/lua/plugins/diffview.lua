@@ -10,8 +10,8 @@ require'diffview'.setup {
     folder_open = "",
   },
   signs = {
-    fold_closed = "",
-    fold_open = "",
+    fold_closed = "",
+    fold_open = "",
   },
   file_panel = {
     position = "left",            -- One of 'left', 'right', 'top', 'bottom'
