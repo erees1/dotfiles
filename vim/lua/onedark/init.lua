@@ -20,6 +20,7 @@ local Git = require "onedark.Git".init(C)
 local LSP = require "onedark.LSP".init(C)
 local diff = require "onedark.diff".init(C)
 local tree = require "onedark.Nvimtree".init(C)
+local diffview = require "onedark.diffview".init(C)
 
 local skeletons = {
   highlights,
@@ -31,6 +32,7 @@ local skeletons = {
   LSP,
   diff,
   tree,
+  diffview,
 }
 
 for _, skeleton in ipairs(skeletons) do
