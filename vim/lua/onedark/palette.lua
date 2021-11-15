@@ -38,12 +38,16 @@ local colors = {
   purple_test = "#ff007c",
   cyan_test = "#00dfff",
   ui_blue = "#264F78",
+  --taken from tokyonight
+  green2 = "#41a6b5",
+  red1 = "#db4b4b",
+  blue7 = "#394b70",
 }
 
-colors.diff_add = util.darken(colors.green, 0.15)
-colors.diff_delete = util.darken(colors.red, 0.15)
-colors.diff_change = util.darken(colors.blue, 0.15)
-colors.diff_text = "#265478"
+colors.diff_add = util.darken(colors.green, 0.15, colors.bg)
+colors.diff_delete = util.darken(colors.red, 0.15, colors.bg)
+colors.diff_change = util.darken(colors.blue, 0.15, colors.bg)
+colors.diff_text = colors.blue7
 
 
 return colors
