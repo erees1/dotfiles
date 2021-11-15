@@ -6,5 +6,6 @@ if require('funcs').is_not_vscode then
     require('plugins')
     require('settings')
     require('keybindings')
+    require('statusline')
 end
 
