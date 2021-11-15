@@ -2,8 +2,8 @@ local M = {}
 
 function M.init (C)
     local highlights = {
-      NvimTreeStatusLine = { fg = C.alt_bg, bg = C.alt_bg, style = nil },
-      NvimTreeStatusLineNC = { fg = C.alt_bg, bg = C.alt_bg, style = nil },
+      --NvimTreeStatusLine = { fg = C.fg, bg = C.alt_bg, style = nil },
+      --NvimTreeStatusLineNC = { fg = C.alt_bg, bg = C.alt_bg, style = nil },
       NvimTreeEndOfBuffer = { fg = C.alt_bg },
       NvimTreeFolderIcon = { fg = C.blue },
       NvimTreeIndentMarker = { fg = C.gray },
