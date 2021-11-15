@@ -18,6 +18,8 @@ vim.cmd(':hi NoneText guifg=bg')
 vim.cmd('set undodir=/tmp/.vim-undo-dir')
 vim.cmd('set undofile')
 
+vim.cmd('set fillchars=diff:/')
+
 tree_width = 35
 
 vim.api.nvim_command([[
