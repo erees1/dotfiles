@@ -1,3 +1,12 @@
+-- Config
+local M = {}
+
+M.tree_width = 35
+M.fzf_on_startup = false
+M.open_tree_on_startup = true
+
+-- Vim options
+
 vim.o.termguicolors = true -- Needed for colors
 vim.cmd('colorscheme onedark')
 
@@ -20,8 +29,8 @@ vim.cmd('set undofile')
 
 vim.cmd('set fillchars=diff:/')
 
-tree_width = 35
-
 vim.api.nvim_command([[
 au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
 ]])
+
+return M
