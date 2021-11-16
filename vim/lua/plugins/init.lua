@@ -110,7 +110,7 @@ return require('packer').startup(function()
   }
   use {
     'sindrets/diffview.nvim',
-    cmd = {'DiffviewOpen', 'DiffviewFileHistory'},
+    keys = {'<leader>dvo', '<leader>dvf'},
     config = function() require('plugins.diffview') end
   }
 

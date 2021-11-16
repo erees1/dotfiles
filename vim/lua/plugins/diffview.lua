@@ -104,3 +104,23 @@ require'diffview'.setup {
   },
 }
 
+function _DiffviewOpen()
+    require'bufferline.state'.set_offset(require('settings').tree_width + 1, 'FileTree')
+    vim.cmd("DiffviewOpen")
+end
+
+function _DiffviewFileHistory()
+    require'bufferline.state'.set_offset(require('settings').tree_width + 1, 'FileTree')
+    vim.cmd("DiffviewFileHistory")
+end
+
+function _DiffviewClose()
+    require'bufferline.state'.set_offset(0)
+    vim.cmd("DiffviewClose")
+end
+
+
+vim.api.nvim_set_keymap('n', '<leader>dvo', '<cmd>lua _DiffviewOpen()<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dvc', '<cmd>lua _DiffviewClose()<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dvh', '<cmd>lua _DiffviewFileHistory()<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dvf', ':DiffviewToggleFiles<CR>', {noremap=true, silent=true })
