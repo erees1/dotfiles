@@ -1,5 +1,4 @@
-
-SRC_DIR=$(dirname $(realpath $0))
+ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 
 ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -21,8 +20,8 @@ bindkey -r "^R"
 VI_MODE_SET_CURSOR=true
 
 source $ZSH/oh-my-zsh.sh
-source $SRC_DIR/p10k.zsh
-source $SRC_DIR/aliases.sh
-source $SRC_DIR/extras.sh
-source $SRC_DIR/keybindings.sh
-source $SRC_DIR/vi-mode.sh
+source $ZSH_DOT_DIR/common/p10k.zsh
+source $ZSH_DOT_DIR/common/aliases.sh
+source $ZSH_DOT_DIR/common/extras.sh
+source $ZSH_DOT_DIR/common/keybindings.sh
+source $ZSH_DOT_DIR/common/vi-mode.sh

@@ -1,10 +1,10 @@
-
-SRC_DIR=$(dirname $(realpath $0))
+ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 
 # Set array path to only have unique values
 typeset -U path
 
-source $SRC_DIR/dir_colors.sh
+source $ZSH_DOT_DIR/local/dir_colors.sh
+source $ZSH_DOT_DIR/common/zshrc.sh
 
 # When /etc/profile is run we make sure that the path is empty
 # this prevents tmux from screwing with my path 
