@@ -27,6 +27,7 @@ M.colors = {
   line_col_alt = "%#StatusLineLColAlt#",
   lsp          = "%#StatusLineLSP#",
   filename     = "%#StatusLineFileName#",
+  highlight    = "%#StatusLineHighlight#",
 }
 
 M.trunc_width = setmetatable({
@@ -72,7 +73,8 @@ M.modes = setmetatable({
 
 M.get_current_mode = function(self)
   local current_mode = api.nvim_get_mode().mode
-  return string.format(" %s ", self.modes[current_mode]):upper()
+  local color = (current_mode == "i" and M.colors.highlight or M.colors.mode)
+  return string.format("%s %s ", color, self.modes[current_mode]:upper()) 
 end
 
 M.get_git_status = function(self)
@@ -147,7 +149,7 @@ end
 M.set_active = function(self)
   local colors = self.colors
 
-  local mode = colors.mode .. self:get_current_mode()
+  local mode = self:get_current_mode()
   local mode_alt = colors.mode_alt .. self.separators[active_sep][1]
   local git = colors.git .. self:get_git_status()
   local git_alt = colors.git_alt .. self.separators[active_sep][1]
@@ -168,7 +170,6 @@ M.set_active = function(self)
   local lsp = colors.lsp .. self:lsp_progress()
 
   return table.concat {
-    colors.active,
     mode,
     mode_alt,
     filename,
@@ -192,12 +193,6 @@ M.set_explorer = function(self)
 
   return self.colors.active .. title .. title_alt
 end
-
---Statusline = setmetatable(M, {
-  --__call = function(self, mode, arg)
-    --return self(self, arg)
-  --end,
---})
 
 function Statusline (mode, arg)
     return M["set_" .. mode](M, arg)

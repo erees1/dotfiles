@@ -105,6 +105,7 @@ function M.init (C)
       CmpItemKind = { fg = C.blue, bg = C.none },
       CmpItemMenu = { fg = C.light_gray, bg = C.none },
       StatusLine = { fg = C.fg, bg = C.context, style = "bold" },
+      StatusLineHighlight = {fg = C.bg, bg = C.blue, style = "bold" },
       StatusLineNC = { fg = C.fg, bg = C.context, style = nil },
       StatusLineTerm = { fg = C.fg, bg = C.context, style = "bold" },
       StatusLineTermNC = { fg = C.fg, bg = C.context, style = nil },
