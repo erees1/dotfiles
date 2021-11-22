@@ -12,3 +12,5 @@ Deploy (e.g. source aliases for .zshrc, apply oh-my-zsh settings etc..)
 ./deploy.sh --remote  # Remote linux machine
 ./deploy.sh --local   # Local mac machine
 ```
+
+Install tmux plugins with `ctrl+a I`
