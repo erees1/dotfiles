@@ -1,58 +1,46 @@
 #!/bin/bash
 set -euo pipefail
+USAGE=$(cat <<-END
+    Usage: ./deploy.sh [OPTION]
+    Creates ~/.zshrc and ~/.tmux.conf with location
+    specific config
 
-USAGE="Usage: ./deploy.sh local or ./deploy.sh remote" 
-if [ $# -eq 0 ]
-  then
-    echo "Error: No flags provided"
-    echo $USAGE
-    exit 1
-fi
+    OPTIONS:
+        --remote (DEFAULT)      deploy remote config, all aliases are sourced
+        --local                 deploy local config, only common aliases are sourced
+END
+)
 
-PARAMS=""
+export DOT_DIR=$(dirname $(realpath $0))
+
+LOC="remote"
 while (( "$#" )); do
-  case "$1" in
-    -h|--help)
-      echo $USAGE
-      exit
-      ;;
-    --) # end argument parsing
-      shift
-      break
-      ;;
-    -*|--*=) # unsupported flags
-      echo "Error: Unsupported flag $1" >&2
-      exit 1
-      ;;
-    *) # preserve positional arguments
-      PARAMS="$PARAMS $1"
-      shift
-      ;;
-  esac
+    case "$1" in
+        -h|--help)
+            echo "$USAGE" && exit 1 ;;
+        --remote)
+            LOC="remote" && shift ;;
+        --local)
+            LOC="local" && shift ;;
+        --) # end argument parsing
+            shift && break ;;
+        -*|--*=) # unsupported flags
+            echo "Error: Unsupported flag $1" >&2 && exit 1 ;;
+    esac
 done
-# set positional arguments in their proper place
-eval set -- "$PARAMS"
-PARAMS=($PARAMS)
-LOC=${PARAMS[0]}
 
-# Set any variables
-if [ $LOC == "local" ] || [ $LOC == "remote" ] ; then
 
-    # Tmux setup
-    echo "source $HOME/git/dotfiles/tmux/tmux.conf" > $HOME/.tmux.conf
+echo "deploying on $LOC machine..."
 
-    # Vim / Neovim setup
-    source "$HOME/git/dotfiles/vim/setup_init.sh"
+# Tmux setup
+echo "source $HOME/git/dotfiles/tmux/tmux.conf" > $HOME/.tmux.conf
 
-    # zshrc setup
-    source "$HOME/git/dotfiles/zsh/setup_zshrc.sh"
+# Vim / Neovim setup
+source "$HOME/git/dotfiles/vim/setup_init.sh"
 
-    # Gitconfig setup
-    source "$HOME/git/dotfiles/gitconf/setup_gitconfig.sh"
+# zshrc setup
+source "$HOME/git/dotfiles/zsh/setup_zshrc.sh"
+
+# Gitconfig setup
+source "$HOME/git/dotfiles/gitconf/setup_gitconfig.sh"
     
-else
-    echo "Error: Unsupported flags provided"
-    echo $USAGE
-    exit 1
-fi
-zsh

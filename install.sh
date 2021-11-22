@@ -1,52 +1,41 @@
 #!/bin/bash
 set -euo pipefail
 USAGE=$(cat <<-END
-    Usage: ./install.sh [p1] [p2]
-    where p1, p2 are from the following options:
-    tmux, pyenv, zsh (they wont all work on linux) 
+    Usage: ./install.sh [OPTION]
+    Install dotfile dependencies on mac or linux
+
+    OPTIONS:
+        --tmux       install tmux
+        --zsh        install zsh 
+
+    If OPTIONS are passed they will be installed
+    with apt if on linux or brew if on OSX
 END
 )
 
-root_access=true
+DOT_DIR=$(dirname $(realpath $0))
+
+zsh=false
+tmux=false
+force=false
 PARAMS=""
 while (( "$#" )); do
     case "$1" in
         -h|--help)
-            echo "$USAGE"
-            exit
-            ;;
+            echo "$USAGE" && exit 1 ;;
+        --zsh)
+            zsh=true && shift ;;
+        --tmux)
+            tmux=true && shift ;;
+        --force)
+            force=true && shift ;;
         --) # end argument parsing
-            shift
-            break
-            ;;
+            shift && break ;;
         -*|--*=) # unsupported flags
-            echo "Error: Unsupported flag $1" >&2
-            exit 1
-            ;;
-        *) # preserve positional arguments
-            PARAMS="$PARAMS $1"
-            shift
-            ;;
+            echo "Error: Unsupported flag $1" >&2 && exit 1 ;;
     esac
 done
-# set positional arguments in their proper place
-eval set -- "$PARAMS"
-PARAMS=($PARAMS)
 
-
-zsh=false
-tmux=false
-pyenv=false
-kitty=false
-if [[ " ${PARAMS[@]} " =~ " zsh " ]]; then
-    zsh=true 
-fi
-if [[ " ${PARAMS[@]} " =~ " tmux " ]]; then
-    tmux=true 
-fi
-if [[ " ${PARAMS[@]} " =~ " pyenv " ]]; then
-    pyenv=true 
-fi
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
@@ -59,57 +48,40 @@ esac
 
 # Installing on linux with apt
 if [ $machine == "Linux" ]; then
-    if [ $zsh == true ]; then
-        sudo apt-get install zsh
-    fi
-    if [ $tmux == true ]; then
-        sudo apt-get install tmux 
-    fi
-    if [ $pyenv == true ]; then
-        echo "pyenv install not setup for linux - install manually"
-        exit 1
-    fi
+    [ $zsh == true ] && sudo apt-get install zsh
+    [ $tmux == true ] && sudo apt-get install tmux 
 
 # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
     brew install wget # wget required for later downloads
-    brew install node # Node required for coc
-    if [ $zsh == true ]; then
-        brew install zsh
-    fi
-    if [ $tmux == true ]; then
-        brew install tmux
-    fi
-    if [ $pyenv == true ]; then
-        brew install pyenv
-    fi
+    [ $zsh == true ] && brew install zsh
+    [ $tmux == true ] && brew install tmux
 fi
 
 # Setting up oh my zsh and oh my zsh plugins
 ZSH=~/.oh-my-zsh
 ZSH_CUSTOM=$ZSH/custom
-if [[ -d $ZSH ]]; then
-    echo "Skipping download of oh-my-zsh and related plugins, remove $ZSH to force"
+if [ -d $ZSH ] && [ "$force" = "false" ]; then
+    echo "Skipping download of oh-my-zsh and related plugins, pass --force to force redeownload"
 else
-    echo "------------------------------------------------------------"
-    echo "You will need to ctrl-d out of the next step as install oh-my-zsh spawns a new zsh shell"
-    echo "------------------------------------------------------------"
-    sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    rm -f ~/.zshrc.pre-*
-    git clone --quiet https://github.com/romkatv/powerlevel10k.git \
+    echo " --------- INSTALLING DEPENDENCIES ⏳ ----------- "
+    rm -rf $ZSH
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+    git clone https://github.com/romkatv/powerlevel10k.git \
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k 
 
-    git clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 
 
-    git clone --quiet https://github.com/zsh-users/zsh-autosuggestions \
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 
 
-    git clone --quiet https://github.com/zsh-users/zsh-completions \
+    git clone https://github.com/zsh-users/zsh-completions \
         ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions 
 
-    git clone  --quiet https://github.com/zsh-users/zsh-history-substring-search \
+    git clone https://github.com/zsh-users/zsh-history-substring-search \
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search 
+    
+    echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "
 fi
-
-echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "

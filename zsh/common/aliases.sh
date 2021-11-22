@@ -1,18 +1,16 @@
-#!/bin/zsh
-
 # -------------------------------------------------------------------
 # personal
 # -------------------------------------------------------------------
 
 alias cdg="cd ~/git"
 alias spy="tail -f"
-alias zrc="cd ~/git/dotfiles/zsh"
-alias dot="cd ~/git/dotfiles"
+alias zrc="cd $DOT_DIR/zsh"
+alias dot="cd $DOT_DIR"
 alias mkve="virtualenv -p python3"
 alias jpl="jupyter lab"
 alias mkipy="python -m ipykernel install --user --name"
 alias rmipy="jupyter kernelspec uninstall"
-alias vdot="nvim ${HOME}/git/dotfiles"
+alias vdot="nvim $DOT_DIR"
 
 function ve () {
     if [ -f ./venv/bin/activate ]; then
