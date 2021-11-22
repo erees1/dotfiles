@@ -7,6 +7,10 @@ USAGE=$(cat <<-END
     OPTIONS:
         --tmux       install tmux
         --zsh        install zsh 
+        
+        Linux only
+        --delta      install delta (nicer git diff)
+        --nvim       install nvim
 
     If OPTIONS are passed they will be installed
     with apt if on linux or brew if on OSX
@@ -17,8 +21,9 @@ DOT_DIR=$(dirname $(realpath $0))
 
 zsh=false
 tmux=false
+delta=false
+nvim=false
 force=false
-PARAMS=""
 while (( "$#" )); do
     case "$1" in
         -h|--help)
@@ -27,7 +32,11 @@ while (( "$#" )); do
             zsh=true && shift ;;
         --tmux)
             tmux=true && shift ;;
-        --force)
+        --delta)
+            delta=true && shift ;;
+        --nvim)
+            nvim=true && shift ;;
+        -f|--force)
             force=true && shift ;;
         --) # end argument parsing
             shift && break ;;
@@ -37,19 +46,19 @@ while (( "$#" )); do
 done
 
 
-unameOut="$(uname -s)"
-case "${unameOut}" in
+operating_system="$(uname -s)"
+case "${operating_system}" in
     Linux*)     machine=Linux;;
     Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
+    *)          machine="UNKNOWN:${operating_system}"
 esac
 
 # Installing on linux with apt
 if [ $machine == "Linux" ]; then
     [ $zsh == true ] && sudo apt-get install zsh
     [ $tmux == true ] && sudo apt-get install tmux 
+    [ $delta == true ] && $DOT_DIR/install_scripts/install_delta.sh
+    [ $nvim == true ] && $DOT_DIR/install_scripts/install_nvim.sh
 
 # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
