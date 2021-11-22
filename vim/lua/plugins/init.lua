@@ -46,6 +46,7 @@ return require('packer').startup(function()
     cond = { require('funcs').is_not_vscode },
     opt=true,
     ft = {'python', 'sh'},
+    cmd = '<leader>f',
     config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
   } 
 
