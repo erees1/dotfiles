@@ -5,8 +5,10 @@ ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH=$HOME/.oh-my-zsh
 
+# Must source colors before loading plugins
+source $ZSH_DOT_DIR/common/dir_colors.sh
+
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search)
-#KEYTIMEOUT=20
 
 # add ./local/bin to path
 p="${HOME}/.local/bin"
