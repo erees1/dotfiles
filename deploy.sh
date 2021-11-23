@@ -33,14 +33,16 @@ done
 echo "deploying on $LOC machine..."
 
 # Tmux setup
-echo "source $HOME/git/dotfiles/tmux/tmux.conf" > $HOME/.tmux.conf
+echo "source $DOT_DIR/tmux/tmux.conf" > $HOME/.tmux.conf
 
 # Vim / Neovim setup
-source "$HOME/git/dotfiles/vim/setup_init.sh"
+source "$DOT_DIR/vim/setup_init.sh"
 
 # zshrc setup
-source "$HOME/git/dotfiles/zsh/setup_zshrc.sh"
+source "$DOT_DIR/zsh/setup_zshrc.sh"
 
 # Gitconfig setup
-source "$HOME/git/dotfiles/gitconf/setup_gitconfig.sh"
-    
+source "$DOT_DIR/gitconf/setup_gitconfig.sh"
+
+# Relaunch zsh
+zsh
