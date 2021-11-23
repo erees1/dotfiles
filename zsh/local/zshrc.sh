@@ -5,6 +5,7 @@ typeset -U path
 
 source $ZSH_DOT_DIR/local/dir_colors.sh
 source $ZSH_DOT_DIR/common/zshrc.sh
+zstyle ':completion:*' list-colors $LS_COLORS
 
 # When /etc/profile is run we make sure that the path is empty
 # this prevents tmux from screwing with my path 
