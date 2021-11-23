@@ -7,8 +7,6 @@ USAGE=$(cat <<-END
     OPTIONS:
         --tmux       install tmux
         --zsh        install zsh 
-        
-        Linux only
         --delta      install delta (nicer git diff)
         --nvim       install nvim
 
@@ -62,9 +60,10 @@ if [ $machine == "Linux" ]; then
 
 # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
-    brew install wget # wget required for later downloads
     [ $zsh == true ] && brew install zsh
     [ $tmux == true ] && brew install tmux
+    [ $delta == true ] && brew install git-delta
+    [ $nvim == true ] && brew install neovim
 fi
 
 # Setting up oh my zsh and oh my zsh plugins
