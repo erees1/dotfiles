@@ -18,3 +18,15 @@
     defaultBranch = main
 [pull]
 	ff = only
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta  
+    show = delta
+[delta]
+    line-numbers = true
+    syntax-theme = 1337
+    side-by-side = false
+    file-modified-label = modified:
+[interactive]
+    diffFilter = delta --color-only
