@@ -169,7 +169,6 @@ qlog () {
     echo "Usage: qlog <array_jobid> <sub_jobid>" >&2
   fi
 }
-
 qdesc () {
   qstat | tail -n +3 | while read line; do
     job=$(echo $line | awk '{print $1}')
@@ -187,13 +186,14 @@ qdesc () {
     fi
   done
 }
-
 qrecycle () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qrecycle $@" || command qrecycle "$@";
 }
 
-qupdate () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qupdate"|| command qupdate ;
+}
+makeallp() {
+    qstat -u "*" | grep $1 | awk '{print $1}' | while read job; do qmakep $job; done
 }
 
 # Only way to get a gpu is via queue
