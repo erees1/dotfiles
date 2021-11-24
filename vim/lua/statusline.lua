@@ -73,8 +73,9 @@ M.modes = setmetatable({
 
 M.get_current_mode = function(self)
   local current_mode = api.nvim_get_mode().mode
-  local color = (current_mode == "i" and M.colors.highlight or M.colors.mode)
-  return string.format("%s %s ", color, self.modes[current_mode]:upper()) 
+  local mode_indicator = self.modes[current_mode]
+  local color = (mode_indicator == "I" and M.colors.highlight or M.colors.mode)
+  return string.format("%s %s ", color, mode_indicator) 
 end
 
 M.get_git_status = function(self)
