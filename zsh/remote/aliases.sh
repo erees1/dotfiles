@@ -189,7 +189,7 @@ qdesc () {
 qrecycle () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qrecycle $@" || command qrecycle "$@";
 }
-
+qupdate () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qupdate"|| command qupdate ;
 }
 makeallp() {
