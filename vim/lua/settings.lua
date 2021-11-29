@@ -3,7 +3,7 @@ local M = {}
 
 M.tree_width = 35
 M.fzf_on_startup = false
-M.open_tree_on_startup = true
+M.open_tree_on_startup = false
 
 -- Vim options
 
