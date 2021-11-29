@@ -2,6 +2,7 @@ vim.api.nvim_set_keymap('n', '<leader>tf', ":FzfLua files<CR>", { noremap=true, 
 vim.api.nvim_set_keymap('n', '<leader>tb', ":FzfLua buffers<CR>", { noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', '<leader>tg', ":FzfLua live_grep<CR>", { noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', '<leader>tt', ":FzfLua git_files<CR>", { noremap=true, silent=true })
+
 require'fzf-lua'.setup {
     fzf_layout          = 'reverse',
     winopts = {
@@ -9,6 +10,6 @@ require'fzf-lua'.setup {
     win_border       = true,           -- window border? or borderchars?
   },
     files = {
-        cmd = "find . -type d -name '.git' -prune -o -type f -print"
+        find_opts = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
     },
 }
