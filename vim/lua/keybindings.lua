@@ -43,6 +43,7 @@ vim.api.nvim_set_keymap('n', '<M-p>', ':cp<CR>', {noremap=true, silent=true })
 
 -- <leader><space> to clear highlighing after search
 vim.api.nvim_set_keymap('n', '<Leader><space>', ':noh<CR>', {noremap=true, silent=true })
-
 vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua _tree_toggle()<CR>', { noremap=true, silent=true })
 
+-- I always seem to delete stuff at the bottom of the file with d k so remove
+vim.api.nvim_set_keymap('n', 'dk', '<Nop>', {noremap=true, silent=true })
