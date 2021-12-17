@@ -37,10 +37,12 @@ alias mkdir='mkdir -p'
 # find/read files
 alias h='head'
 alias t='tail'
-alias rl="readlink -f"
+#alias rl="readlink -f"
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 alias which='type -a'
+
+
 
 # storage
 alias du='du -kh' # file space
@@ -174,20 +176,8 @@ alias tree='tree -Csu'    # nice alternative to 'recursive ls'
 # chmod
 #-------------------------------------------------------------
 
-chw () {
-  if [ "$#" -eq 1 ]; then
-    chmod a+w $1
-  else
-    echo "Usage: chw <dir>" >&2
-  fi
-}
-chx () {
-  if [ "$#" -eq 1 ]; then
-    chmod a+x $1
-  else
-    echo "Usage: chx <dir>" >&2
-  fi
-}
+alias chw='chmod a+w'
+alias chx='chmod u+x'
 
 #-------------------------------------------------------------
 # vim 

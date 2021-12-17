@@ -8,6 +8,7 @@ TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboar
 # Quick navigation add more here
 alias cda="cd ~/git/aladdin"
 alias cda2="cd ~/git/aladdin2"
+alias cda3="cd ~/git/aladdin3"
 alias cdh="cd ~/git/hydra"
 alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
 alias cde="cd /exp/$(whoami)"
@@ -34,9 +35,10 @@ alias b5="ssh b5"
 # Change to aladdin directory and activate SIF
 alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
 alias msa2="make -C /home/$(whoami)/git/aladdin2/ shell"
+alias msa3="make -C /home/$(whoami)/git/aladdin3/ shell"
 # Activate aladdin SIF in current directory
 alias msad="/home/$(whoami)/git/aladdin/env/singularity.sh -c "$SHELL""
-alias msad2="/home/$(whoami)/git/aladdin2/env/singularity.sh -c "$SHELL""
+alias msad3="/home/$(whoami)/git/aladdin3/env/singularity.sh -c "$SHELL""
 
 # Misc
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
@@ -146,8 +148,12 @@ qtail () {
 qlast () {
   # Tail the last running job
   job_id=$(qstat | awk '$5=="r" {print $1}' | grep -E '[0-9]' | sort -r | head -n 1)
-  echo "qtail of most recent job ${job_id}"
-  qtail ${job_id} 
+  if [ ! -z $job_id ]; then
+    echo "qtail of most recent job ${job_id}"
+    qtail ${job_id} $@ 
+  else
+    echo "no jobs found"
+  fi
 }
 qless () {
   less $(qlog $@)
@@ -163,7 +169,11 @@ qlog () {
     log_path=$(qlog $1)
     base_dir=$(echo $log_path | rev | cut -d "/" -f3- | rev)
     filename=$(basename $log_path)
-    echo ${base_dir}/log/${filename%.log}.${2}.log
+    if [ "$2" = "-p" ]; then
+        echo ${base_dir}/log/${filename}
+    else
+        echo ${base_dir}/log/${filename%.log}${2}.log
+    fi
   else
     echo "Usage: qlog <jobid>" >&2
     echo "Usage: qlog <array_jobid> <sub_jobid>" >&2
