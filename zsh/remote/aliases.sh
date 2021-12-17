@@ -15,7 +15,7 @@ alias cde="cd /exp/$(whoami)"
 alias cdco="cd /perish_aml02/$(whoami)/coreasr"
 alias cdt="cd ~/tb"
 alias cdn="cd ~/notebooks"
-alias cdn="cd ~/scripts"
+alias cds="cd ~/scripts"
 
 # Perish machines
 alias p1="cd /perish_aml01"
