@@ -1,5 +1,9 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 
+# Local aliases
+alias vm='ssh vm'
+alias rl='greadlink -f'
+
 # Set array path to only have unique values
 typeset -U path
 

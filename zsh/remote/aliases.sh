@@ -56,6 +56,9 @@ alias mtest="make test"
 alias mft="make functest"
 alias mut="make unittest"
 
+# Unix specific commands (that don't work on mac)
+alias rl="readlink -f"
+
 # -------------------------------------------------------------------
 # Tensorboard
 # -------------------------------------------------------------------
