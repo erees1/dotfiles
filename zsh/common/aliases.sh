@@ -41,8 +41,6 @@ alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 alias which='type -a'
 
-
-
 # storage
 alias du='du -kh' # file space
 alias df='df -kTh' # disk space
@@ -63,6 +61,9 @@ alias hist='history | grep'
 alias path='echo -e ${PATH//:/\\n}'
 alias man="man -a"
 alias busy="cat /dev/urandom | hexdump -C | grep "ca fe""
+alias p="python"
+alias p3="python3"
+alias p2="python2"
 
 #-------------------------------------------------------------
 # cd
