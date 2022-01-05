@@ -65,6 +65,8 @@ endfunction
 
 
 
+
+
 command! -complete=file -nargs=? Split call <SID>split('h', <q-args>)
 command! -complete=file -nargs=? Vsplit call <SID>split('v', <q-args>)
 command! -complete=file -nargs=? New call <SID>split('h', '__vscode_new__')
@@ -100,6 +102,13 @@ nmap <S-Tab> :Tabprev<CR>
 
 
 nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
+nnoremap <leader>e <Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>
+nnoremap <leader>tf <Cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>
+nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
+nnoremap <leader>ci <Cmd>call VSCodeNotify('editor.action.commentLine')<CR>
+"nnoremap <C-h> <Cmd>call VSCodeNotify('workbench.action.focusSideBar')<CR>
+"nnoremap <C-l> <Cmd>call VSCodeNotify('workbench.action.focusEditor')<CR>
+
 nnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 nnoremap <M-k> <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>
