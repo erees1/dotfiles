@@ -77,7 +77,7 @@ function M.init (C)
       Label = { fg = C.blue },
       Exception = { fg = C.purple },
       Include = { fg = C.purple },
-      PreProc = { fg = C.yellow },
+      PreProc = { fg = C.red },
       Define = { fg = C.purple },
       Macro = { fg = C.purple },
       PreCondit = { fg = C.blue },
