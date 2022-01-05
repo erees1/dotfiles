@@ -2,5 +2,5 @@
 lua << EOF
 package.loaded['onedark'] = nil
 
-require("onedark")
+require("themes.onedark")
 EOF
