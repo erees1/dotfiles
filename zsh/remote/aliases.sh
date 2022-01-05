@@ -128,20 +128,21 @@ qlogin () {
   # Function to request gpu or cpu access
   # example:
   #    qlogin 2                request 2 gpus
-  #    qlogin cpu 1            request 1 cpu slot
+  #    qlogin 1 cpu            request 1 cpu slot
   #    qlogin 1 aml-gpu.q@b5   request 1 gpu on b5
   if [ "$#" -eq 1 ]; then
     /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -N D_$(whoami)
   elif [ "$#" -eq 2 ]; then
-    if [ "$1" = "cpu" ]; then
-      /usr/bin/qlogin -now n -pe smp $2 -q aml-cpu.q -N D_$(whoami) 
+    if [ "$2" = "cpu" ]; then
+      queue="aml-cpu.q"
     else
-    /usr/bin/qlogin -now n -pe smp $1 -q $2 -l gpu=$1 -N D_$(whoami)
+      queue="$2"
     fi
+    /usr/bin/qlogin -now n -pe smp $1 -q $queue -l gpu=$1 -N D_$(whoami)
   else
     echo "Usage: qlogin <num_gpus>" >&2
     echo "Usage: qlogin <num_gpus> <queue>" >&2
-    echo "Usage: qlogin cpu <num_slots>" >&2
+    echo "Usage: qlogin <num_slots> cpu" >&2
   fi
 }
 qtail () {
