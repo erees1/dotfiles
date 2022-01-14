@@ -164,19 +164,22 @@ qless () {
 qcat () {
   cat $(qlog $@)
 }
+echo_if_exist() {
+    [ -f $1 ] && echo $1
+}
 qlog () {
   # Get log path of job
   if [ "$#" -eq 1 ]; then
     echo $(qstat -j $1 | grep stdout_path_list | cut -d ":" -f4)
   elif [ "$#" -eq 2 ]; then
+    # Array jobs are a little tricky
     log_path=$(qlog $1)
     base_dir=$(echo $log_path | rev | cut -d "/" -f3- | rev)
     filename=$(basename $log_path)
-    if [ "$2" = "-p" ]; then
-        echo ${base_dir}/log/${filename}
-    else
-        echo ${base_dir}/log/${filename%.log}${2}.log
-    fi
+    # Could be a number of schemes so just try them all
+    echo_if_exist ${base_dir}/log/${filename}
+    echo_if_exist ${base_dir}/log/${filename%.log}${2}.log
+    echo_if_exist ${base_dir}/${filename%.log}${2}.log
   else
     echo "Usage: qlog <jobid>" >&2
     echo "Usage: qlog <array_jobid> <sub_jobid>" >&2
