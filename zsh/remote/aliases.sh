@@ -179,6 +179,8 @@ qlog () {
     # Could be a number of schemes so just try them all
     echo_if_exist ${base_dir}/log/${filename}
     echo_if_exist ${base_dir}/log/${filename%.log}${2}.log
+    echo_if_exist ${base_dir}/log/${filename%.log}.${2}.log
+    echo_if_exist ${base_dir}/${filename%.log}.${2}.log
     echo_if_exist ${base_dir}/${filename%.log}${2}.log
   else
     echo "Usage: qlog <jobid>" >&2
