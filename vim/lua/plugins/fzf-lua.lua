@@ -10,6 +10,6 @@ require'fzf-lua'.setup {
     win_border       = true,           -- window border? or borderchars?
   },
     files = {
-        find_opts = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
+        find_opts = [[-type f -not -path '*/\.git/*' -not -path '*/resources/*' -not -path '*/testsets/*' -printf '%P\n']],
     },
 }
