@@ -59,7 +59,7 @@ return require('packer').startup(function()
   }
   use {
     'christoomey/vim-tmux-navigator',
-    cond = is_not_vscode,
+    cond = { require('funcs').is_not_vscode },
   }
 
   -- Nvim tree / explorer stuff

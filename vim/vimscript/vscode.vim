@@ -1,33 +1,4 @@
-" TODO there is a more contemporary version of this file
-" TODO Also some of it is redundant
-" packadd quickscope
-
-" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-" highlight QuickScopePrimary guifg='#00C7DF' gui=underline ctermfg=155 cterm=underline
-" highlight QuickScopeSecondary guifg='#eF5F70' gui=underline ctermfg=81 cterm=underline
-" let g:qs_max_chars=150
-
 "VSCode
-function! s:split(...) abort
-    let direction = a:1
-    let file = a:2
-    call VSCodeCall(direction == 'h' ? 'workbench.action.splitEditorDown' : 'workbench.action.splitEditorRight')
-    if file != ''
-        call VSCodeExtensionNotify('open-file', expand(file), 'all')
-    endif
-endfunction
-
-function! s:splitNew(...)
-    let file = a:2
-    call s:split(a:1, file == '' ? '__vscode_new__' : file)
-endfunction
-
-function! s:closeOtherEditors()
-    call VSCodeNotify('workbench.action.closeEditorsInOtherGroups')
-    call VSCodeNotify('workbench.action.closeOtherEditors')
-endfunction
-
 function! s:manageEditorSize(...)
     let count = a:1
     let to = a:2
@@ -36,85 +7,46 @@ function! s:manageEditorSize(...)
     endfor
 endfunction
 
-function! s:vscodeCommentary(...) abort
-    if !a:0
-        let &operatorfunc = matchstr(expand('<sfile>'), '[^. ]*$')
-        return 'g@'
-    elseif a:0 > 1
-        let [line1, line2] = [a:1, a:2]
-    else
-        let [line1, line2] = [line("'["), line("']")]
-    endif
-
-    call VSCodeCallRange("editor.action.commentLine", line1, line2, 0)
-endfunction
-
-function! s:openVSCodeCommandsInVisualMode()
-    normal! gv
-    let visualmode = visualmode()
-    if visualmode == "V"
-        let startLine = line("v")
-        let endLine = line(".")
-        call VSCodeNotifyRange("workbench.action.showCommands", startLine, endLine, 1)
-    else
-        let startPos = getpos("v")
-        let endPos = getpos(".")
-        call VSCodeNotifyRangePos("workbench.action.showCommands", startPos[1], endPos[1], startPos[2], endPos[2], 1)
-    endif
-endfunction
-
-
-
-
-
-command! -complete=file -nargs=? Split call <SID>split('h', <q-args>)
-command! -complete=file -nargs=? Vsplit call <SID>split('v', <q-args>)
-command! -complete=file -nargs=? New call <SID>split('h', '__vscode_new__')
-command! -complete=file -nargs=? Vnew call <SID>split('v', '__vscode_new__')
-command! -bang Only if <q-bang> == '!' | call <SID>closeOtherEditors() | else | call VSCodeNotify('workbench.action.joinAllGroups') | endif
-
-" Better Navigation
-nnoremap <silent> <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
-xnoremap <silent> <C-j> :call VSCodeNotify('workbench.action.navigateDown')<CR>
-nnoremap <silent> <C-k> :call VSCodeNotify('workbench.action.navigateUp')<CR>
-xnoremap <silent> <C-k> :call VSCodeNotify('workbench.action.navigateUp')<CR>
-nnoremap <silent> <C-h> :call VSCodeNotify('workbench.action.navigateLeft')<CR>
-xnoremap <silent> <C-h> :call VSCodeNotify('workbench.action.navigateLeft')<CR>
-nnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
-xnoremap <silent> <C-l> :call VSCodeNotify('workbench.action.navigateRight')<CR>
-
-" Bind C-/ to vscode commentary since calling from vscode produces double comments due to multiple cursors
-xnoremap <expr> <C-/> <SID>vscodeCommentary()
-nnoremap <expr> <C-/> <SID>vscodeCommentary() . '_'
+" Better Navigation 
+nnoremap <silent> <C-j> <Cmd>call VSCodeNotify('workbench.action.navigateDown')<CR>
+xnoremap <silent> <C-j> <Cmd>call VSCodeNotify('workbench.action.navigateDown')<CR>
+nnoremap <silent> <C-k> <Cmd>call VSCodeNotify('workbench.action.navigateUp')<CR>
+xnoremap <silent> <C-k> <Cmd>call VSCodeNotify('workbench.action.navigateUp')<CR>
+nnoremap <silent> <C-h> <Cmd>call VSCodeNotify('workbench.action.navigateLeft')<CR>
+xnoremap <silent> <C-h> <Cmd>call VSCodeNotify('workbench.action.navigateLeft')<CR>
+nnoremap <silent> <C-l> <Cmd>call VSCodeNotify('workbench.action.navigateRight')<CR>
+xnoremap <silent> <C-l> <Cmd>call VSCodeNotify('workbench.action.navigateRight')<CR>
 
 nnoremap <silent> <C-w>_ :<C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>
 
-xnoremap <silent> <C-P> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
-
-xmap gc  <Plug>VSCodeCommentary
-nmap gc  <Plug>VSCodeCommentary
-omap gc  <Plug>VSCodeCommentary
-nmap gcc <Plug>VSCodeCommentaryLine
+xmap <leader>gc  <Plug>VSCodeCommentary
+omap <leader>gc  <Plug>VSCodeCommentary
+nmap <leader>gc <Plug>VSCodeCommentaryLine
 
 " Simulate same TAB behavior in VSCode
 nmap <Tab> :Tabnext<CR>
 nmap <S-Tab> :Tabprev<CR>
 
-
 nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
 nnoremap <leader>e <Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>
 nnoremap <leader>tf <Cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>
 nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
-nnoremap <leader>ci <Cmd>call VSCodeNotify('editor.action.commentLine')<CR>
-"nnoremap <C-h> <Cmd>call VSCodeNotify('workbench.action.focusSideBar')<CR>
-"nnoremap <C-l> <Cmd>call VSCodeNotify('workbench.action.focusEditor')<CR>
+nnoremap <leader>q <Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>
+
+nnoremap <leader>gf <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>
+nnoremap <leader>gff <Cmd>call VSCodeNotify('copyFilePath')<CR>
 
 nnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
-nnoremap <M-k> <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>
-nnoremap <M-j> <Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')<CR>
-vnoremap <M-k> <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')<CR>
-vnoremap <M-j> <Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')<CR>
+nnoremap ∆ <Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')j<CR>
+nnoremap ˚ <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')k<CR>
+
+" TODO this dosn't work
+vnoremap ∆ <Cmd>call VSCodeNotifyVisual('editor.action.moveLinesDownAction', 1)<CR>
+vnoremap ˚ <Cmd>call VSCodeNotifyVisual('editor.action.moveLinesUpAction', 1)<CR>
+
+nnoremap <leader>hn <Cmd>call VSCodeNotify('workbench.action.editor.nextChange')<CR>
+nnoremap <leader>hp <Cmd>call VSCodeNotify('git.timeline.openDiff')<CR>
 
 "line indendation
 vnoremap <S-,> <Cmd>call VSCodeNotify('editor.action.outdentLines')<CR>
