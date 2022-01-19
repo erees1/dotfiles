@@ -13,11 +13,12 @@ zstyle ':completion:*' list-colors $LS_COLORS
 
 # When /etc/profile is run we make sure that the path is empty
 # this prevents tmux from screwing with my path 
-if [ -f /etc/profile ] ; then
-    TMPPATH=$PATH
-    source /etc/profile
-    PATH=$TMPPATH
-fi
+# seeing if removing this affects anything
+#if [ -f /etc/profile ] ; then
+    #TMPPATH=$PATH
+    #source /etc/profile
+    #PATH=$TMPPATH
+#fi
 
 # Need to remember to install miniconda to opt
 conda_loc="${HOME}/opt/miniconda3"
