@@ -1,8 +1,4 @@
-vim.api.nvim_set_var('nvim_tree_ignore', {'.git', 'node_modules', '.cache' })
 vim.api.nvim_set_var('nvim_tree_indent_markers',1)
-vim.api.nvim_set_var('nvim_tree_update_cwd', 1)
-vim.api.nvim_set_var('nvim_tree_follow', 1)
-vim.api.nvim_set_var('nvim_tree_hijack_cursor', 0)
 vim.g.nvim_tree_icons = {
     default = '',
     symlink = '',
@@ -11,9 +7,15 @@ vim.g.nvim_tree_icons = {
 }
 
 require'nvim-tree'.setup {
+  update_cwd = true, 
+  hijack_cursor = false,
   filters = {
     dotfiles = true,
     custom = {}
+  },
+  filters = {
+    dotfiles = true,
+    custom = {'node_modules'}
   },
   update_focused_file = {
     -- enables the feature
