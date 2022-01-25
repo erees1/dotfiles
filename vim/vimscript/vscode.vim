@@ -34,8 +34,8 @@ nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
 nnoremap <leader>q <Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>
 nnoremap <leader>f <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 
-nnoremap <leader>gf <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>
-nnoremap <leader>gff <Cmd>call VSCodeNotify('copyFilePath')<CR>
+nnoremap <leader>gf <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>:echo 'YANKED RELATIVE FILE PATH'<CR>
+nnoremap <leader>gff <Cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FILE PATH'<CR>
 
 nnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
