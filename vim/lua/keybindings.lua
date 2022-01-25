@@ -5,10 +5,10 @@
 vim.api.nvim_set_keymap('n', '<leader>s', ':update<CR>', {noremap=true, silent=true }) -- leader s to save
 
 -- Always use g mode which moves through wrapped lines as if they were actual lines
-vim.api.nvim_set_keymap('n', 'j', 'gj', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'k', 'gk', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'gj', 'j', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'gk', 'k', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'j', 'gj', {noremap=false, silent=true })
+vim.api.nvim_set_keymap('n', 'k', 'gk', {noremap=false, silent=true })
+--vim.api.nvim_set_keymap('n', 'gj', 'j', {noremap=true, silent=true })
+--vim.api.nvim_set_keymap('n', 'gk', 'k', {noremap=true, silent=true })
 
 -- jk or kj in to escape insert mode
 vim.api.nvim_set_keymap('i', 'jk', '<esc>', {noremap=true, silent=true })

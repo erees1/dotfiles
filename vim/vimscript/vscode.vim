@@ -32,6 +32,7 @@ nnoremap <leader>e <Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibil
 nnoremap <leader>tf <Cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>
 nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
 nnoremap <leader>q <Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>
+nnoremap <leader>f <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 
 nnoremap <leader>gf <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>
 nnoremap <leader>gff <Cmd>call VSCodeNotify('copyFilePath')<CR>
@@ -41,7 +42,7 @@ vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 nnoremap ∆ <Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')j<CR>
 nnoremap ˚ <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')k<CR>
 
-" TODO this dosn't work
+" TODO this dosn't work due to interaction between vscode and nvim selection
 vnoremap ∆ <Cmd>call VSCodeNotifyVisual('editor.action.moveLinesDownAction', 1)<CR>
 vnoremap ˚ <Cmd>call VSCodeNotifyVisual('editor.action.moveLinesUpAction', 1)<CR>
 
@@ -54,3 +55,7 @@ vnoremap <S-.> <Cmd>call VSCodeNotify('editor.action.indentLines')<CR>
 nnoremap <S-,> <Cmd>call VSCodeNotify('editor.action.outdentLines')<CR>
 nnoremap <S-.> <Cmd>call VSCodeNotify('editor.action.indentLines')<CR>
 nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
+
+"Move through wrapped lines
+nnoremap gk :<C-u>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
+nnoremap gj :<C-u>call VSCodeCall('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
