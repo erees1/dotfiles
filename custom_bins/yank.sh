@@ -1,6 +1,6 @@
 #!/bin/bash
 # Source: https://github.com/samoshkin/tmux-config/blob/af2efd9561f41f30c51c9deeeab9451308c4086b/tmux/yank.sh
-set -eu
+set -euo pipefail
 
 is_app_installed() {
   type "$1" &>/dev/null
