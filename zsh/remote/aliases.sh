@@ -153,8 +153,7 @@ qlast () {
   # Tail the last running job
   job_id=$(qstat | awk '$5=="r" {print $1}' | grep -E '[0-9]' | sort -r | head -n 1)
   if [ ! -z $job_id ]; then
-    echo "qtail of most recent job ${job_id}"
-    qtail ${job_id} $@ 
+    echo $job_id
   else
     echo "no jobs found"
   fi
@@ -170,11 +169,16 @@ echo_if_exist() {
 }
 qlog () {
   # Get log path of job
+  if [ "$1" = "-l" ]; then
+      job_id=$(qlast)
+  else
+      job_id=$1
+  fi
   if [ "$#" -eq 1 ]; then
-    echo $(qstat -j $1 | grep stdout_path_list | cut -d ":" -f4)
+    echo $(qstat -j $job_id | grep stdout_path_list | cut -d ":" -f4)
   elif [ "$#" -eq 2 ]; then
     # Array jobs are a little tricky
-    log_path=$(qlog $1)
+    log_path=$(qlog $job_id)
     base_dir=$(echo $log_path | rev | cut -d "/" -f3- | rev)
     filename=$(basename $log_path)
     # Could be a number of schemes so just try them all
