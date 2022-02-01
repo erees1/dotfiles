@@ -1,0 +1,2 @@
+#!/bin/bash
+ssh -o RemoteCommand="/home/edwardr/git/aladdin/env/singularity.sh" -o RequestTTY=force "$@"
