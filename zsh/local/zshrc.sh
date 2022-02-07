@@ -19,7 +19,6 @@ zstyle ':completion:*' list-colors $LS_COLORS
     #source /etc/profile
     #PATH=$TMPPATH
 #fi
-echo $PATH
 # Need to remember to install miniconda to opt
 conda_loc="${HOME}/opt/miniconda3"
 if command -v conda 2>/dev/null 2>&1; then
