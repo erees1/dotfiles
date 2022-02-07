@@ -50,6 +50,7 @@ case "${operating_system}" in
     *)          machine="UNKNOWN:${operating_system}"
 esac
 
+echo " ------------ INSTALLING ON $machine MACHINE ------------ "
 # Installing on linux with apt
 if [ $machine == "Linux" ]; then
     DOT_DIR=$(dirname $(realpath $0))
@@ -68,13 +69,13 @@ elif [ $machine == "Mac" ]; then
     [ $nvim == true ] && brew install neovim
 fi
 
+echo " --------- INSTALLING DEPENDENCIES ⏳ ----------- "
 # Setting up oh my zsh and oh my zsh plugins
 ZSH=~/.oh-my-zsh
 ZSH_CUSTOM=$ZSH/custom
 if [ -d $ZSH ] && [ "$force" = "false" ]; then
     echo "Skipping download of oh-my-zsh and related plugins, pass --force to force redeownload"
 else
-    echo " --------- INSTALLING DEPENDENCIES ⏳ ----------- "
     rm -rf $ZSH
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     rm -f $HOME/.zshrc.pre-oh-my-zsh  # I don't want t a backup
@@ -94,5 +95,11 @@ else
     git clone https://github.com/zsh-users/zsh-history-substring-search \
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search 
     
-    echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "
 fi
+if [ -d $HOME/.tmux/plugins/tpm ] && [ "$force" = "false" ]; then
+    echo "Skipping download of tmux plugin manager, pass --force to force redeownload"
+else
+    # Tmux plugin manager
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "
