@@ -1,13 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 USAGE=$(cat <<-END
-    Usage: ./deploy.sh [OPTION]
-    Creates ~/.zshrc and ~/.tmux.conf with location
-    specific config
+Usage: ./deploy.sh [OPTION]
+Creates ~/.zshrc and ~/.tmux.conf with location
+specific config
 
-    OPTIONS:
-        --remote (DEFAULT)      deploy remote config, all aliases are sourced
-        --local                 deploy local config, only common aliases are sourced
+OPTIONS:
+    --remote (DEFAULT)      deploy remote config, all aliases are sourced
+    --local                 deploy local config, only common aliases are sourced
 END
 )
 
