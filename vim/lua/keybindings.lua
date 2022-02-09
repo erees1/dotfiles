@@ -14,6 +14,9 @@ vim.api.nvim_set_keymap('n', 'k', 'gk', {noremap=false, silent=true })
 vim.api.nvim_set_keymap('i', 'jk', '<esc>', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('i', 'kj', '<esc>', {noremap=true, silent=true })
 
+vim.api.nvim_set_keymap('n', 'H', '^', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'L', '$', {noremap=true, silent=true })
+
 -- Move lines up and down with the alt key a-la vscode
 vim.api.nvim_set_keymap('n', '<A-j>' , ':m .+1<CR>==', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', '<A-k>' , ':m .-2<CR>==', {noremap=true, silent=true })
