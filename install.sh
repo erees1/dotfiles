@@ -28,6 +28,7 @@ if [ $machine == "Mac" ]; then
     USAGE+=$(cat <<-END
 
     --pyenv      install pyenv
+    --fzf        install fzf
 END
 )
 fi
@@ -37,6 +38,7 @@ tmux=false
 delta=false
 nvim=false
 pyenv=false
+fzf=false
 force=false
 while (( "$#" )); do
     case "$1" in
@@ -52,6 +54,8 @@ while (( "$#" )); do
             nvim=true && shift ;;
         --pyenv)
             pyenv=true && shift ;;
+        --fzf)
+            fzf=true && shift ;;
         -f|--force)
             force=true && shift ;;
         --) # end argument parsing
@@ -83,6 +87,10 @@ elif [ $machine == "Mac" ]; then
     if [ $pyenv == true ]; then
         brew install pyenv
         brew install pyenv-virtualenv
+    fi
+    if [ $fzf == true ]; then
+        brew install fzf
+        $(brew --prefix)/opt/fzf/install
     fi
 fi
 
