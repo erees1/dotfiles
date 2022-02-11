@@ -12,9 +12,11 @@ alias cda3="cd ~/git/aladdin3"
 alias cdh="cd ~/git/hydra"
 alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
 alias cde="cd /exp/$(whoami)"
-alias cdco="cd /perish_aml02/$(whoami)/coreasr"
+alias cdco="cd /perish_aml02/$(whoami)/git/coreasr"
+alias core="cd /perish_aml02/$(whoami)/git/coreasr"
+alias cdg2="cd /perish_aml02/$(whoami)/git"
 alias cdt="cd ~/tb"
-alias cdn="cd ~/notebooks"
+alias cdn="cd ~/git/notebooks"
 alias cds="cd ~/scripts"
 
 # Perish machines
@@ -223,7 +225,19 @@ makeallp() {
 if [ -z $CUDA_VISIBLE_DEVICES ]; then
   export CUDA_VISIBLE_DEVICES=
 fi
+fdel() {
+  job_id=$(qstat | grep 'edwardr' | fzf -m --ansi --color fg:-1,bg:-1,hl:46,fg+:40,bg+:233,hl+:46 --color prompt:166,border:46 --height 40%  --border=sharp --prompt="➤  " --pointer="➤ " --marker="➤ " | awk '{print $1}')
 
+  if [ "x$job_id" != "x" ]; then
+    echo "deleting $job_id"
+    qdel $job_id
+  fi
+}
+select_file() {
+    given_file="$1"
+    #fd --type file --follow --hidden --exclude .git | fzf --query="$given_file"
+    fzf --query="$given_file"
+}
 # -------------------------------------------------------------------
 # Cleaning processes
 # -------------------------------------------------------------------
