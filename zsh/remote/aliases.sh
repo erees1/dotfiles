@@ -226,7 +226,7 @@ if [ -z $CUDA_VISIBLE_DEVICES ]; then
   export CUDA_VISIBLE_DEVICES=
 fi
 fdel() {
-  job_id=$(qstat | grep 'edwardr' | fzf -m --ansi --color fg:-1,bg:-1,hl:46,fg+:40,bg+:233,hl+:46 --color prompt:166,border:46 --height 40%  --border=sharp --prompt="➤  " --pointer="➤ " --marker="➤ " | awk '{print $1}')
+  job_id=$(qstat | grep 'edwardr' | fzf -m --ansi | awk '{print $1}')
 
   if [ "x$job_id" != "x" ]; then
     echo "deleting $job_id"
