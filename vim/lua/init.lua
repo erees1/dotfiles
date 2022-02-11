@@ -7,5 +7,6 @@ if require('funcs').is_not_vscode then
     require('plugins')
     require('settings')
 end
+-- Keybindings need to be compatible with vscode
 require('keybindings')
 

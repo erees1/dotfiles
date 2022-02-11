@@ -1,13 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 USAGE=$(cat <<-END
-    Usage: ./deploy.sh [OPTION]
-    Creates ~/.zshrc and ~/.tmux.conf with location
-    specific config
+Usage: ./deploy.sh [OPTION]
+Creates ~/.zshrc and ~/.tmux.conf with location
+specific config
 
-    OPTIONS:
-        --remote (DEFAULT)      deploy remote config, all aliases are sourced
-        --local                 deploy local config, only common aliases are sourced
+OPTIONS:
+    --remote (DEFAULT)      deploy remote config, all aliases are sourced
+    --local                 deploy local config, only common aliases are sourced
 END
 )
 
@@ -45,5 +45,7 @@ source "$DOT_DIR/zsh/setup_zshrc.sh"
 # Gitconfig setup
 source "$DOT_DIR/gitconf/setup_gitconfig.sh"
 
+# Karabiner elements mapping
+ln -sf "$DOT_DIR/config/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 # Relaunch zsh
 zsh

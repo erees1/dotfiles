@@ -3,6 +3,7 @@ ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 # Local aliases
 alias vm='ssh vm'
 alias rl='greadlink -f'
+alias cdm='cd ~/Documents/md-notes'
 
 # Set array path to only have unique values
 typeset -U path
@@ -19,29 +20,32 @@ zstyle ':completion:*' list-colors $LS_COLORS
     #source /etc/profile
     #PATH=$TMPPATH
 #fi
-
 # Need to remember to install miniconda to opt
 conda_loc="${HOME}/opt/miniconda3"
-if [[ "$PATH" != *"${conda_loc}"* ]]; then
-  # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!  - not any more
-  __conda_setup=$("${conda_loc}/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "${conda_loc}/etc/profile.d/conda.sh" ]; then
-          . "${conda_loc}/etc/profile.d/conda.sh"
+if command -v conda 2>/dev/null 2>&1; then
+    echo 'found conda'
+    if [[ "$PATH" != *"${conda_loc}"* ]]; then
+      # >>> conda initialize >>>
+      # !! Contents within this block are managed by 'conda init' !!  - not any more
+      __conda_setup=$("${conda_loc}/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)
+      if [ $? -eq 0 ]; then
+          eval "$__conda_setup"
       else
-          export PATH="${conda_loc}/bin:$PATH"
+          if [ -f "${conda_loc}/etc/profile.d/conda.sh" ]; then
+              . "${conda_loc}/etc/profile.d/conda.sh"
+          else
+              export PATH="${conda_loc}/bin:$PATH"
+          fi
       fi
-  fi
-  unset __conda_setup
-  # <<< conda initialize <<<
+      unset __conda_setup
+      # <<< conda initialize <<<
+    fi
 fi
 
 # add pyenv if pyenv isntalled
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
   SUB='.pyenv/shims'
   if [[ "$PATH" != *"$SUB"* ]]; then
     eval "$(pyenv init --path)"

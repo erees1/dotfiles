@@ -1,25 +1,42 @@
 #!/bin/bash
 set -euo pipefail
 USAGE=$(cat <<-END
-    Usage: ./install.sh [OPTION]
-    Install dotfile dependencies on mac or linux
+Usage: ./install.sh [OPTION]
+Install dotfile dependencies on mac or linux
 
-    OPTIONS:
-        --tmux       install tmux
-        --zsh        install zsh 
-        --delta      install delta (nicer git diff)
-        --nvim       install nvim
+If OPTIONS are passed they will be installed
+with apt if on linux or brew if on OSX
 
-    If OPTIONS are passed they will be installed
-    with apt if on linux or brew if on OSX
+OPTIONS:
+    --tmux       install tmux
+    --zsh        install zsh 
+    --delta      install delta (nicer git diff)
+    --nvim       install nvim
 END
 )
 
+operating_system="$(uname -s)"
+case "${operating_system}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    *)          machine="UNKNOWN:${operating_system}"
+esac
+
+
+# There are some extra options for mac
+if [ $machine == "Mac" ]; then
+    USAGE+=$(cat <<-END
+
+    --pyenv      install pyenv
+END
+)
+fi
 
 zsh=false
 tmux=false
 delta=false
 nvim=false
+pyenv=false
 force=false
 while (( "$#" )); do
     case "$1" in
@@ -33,6 +50,8 @@ while (( "$#" )); do
             delta=true && shift ;;
         --nvim)
             nvim=true && shift ;;
+        --pyenv)
+            pyenv=true && shift ;;
         -f|--force)
             force=true && shift ;;
         --) # end argument parsing
@@ -43,12 +62,6 @@ while (( "$#" )); do
 done
 
 
-operating_system="$(uname -s)"
-case "${operating_system}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    *)          machine="UNKNOWN:${operating_system}"
-esac
 
 echo " ------------ INSTALLING ON $machine MACHINE ------------ "
 # Installing on linux with apt
@@ -67,6 +80,10 @@ elif [ $machine == "Mac" ]; then
     [ $tmux == true ] && brew install tmux
     [ $delta == true ] && brew install git-delta
     [ $nvim == true ] && brew install neovim
+    if [ $pyenv == true ]; then
+        brew install pyenv
+        brew install pyenv-virtualenv
+    fi
 fi
 
 echo " --------- INSTALLING DEPENDENCIES ⏳ ----------- "
@@ -97,6 +114,7 @@ else
     
 fi
 if [ -d $HOME/.tmux/plugins/tpm ] && [ "$force" = "false" ]; then
+    rm -rf $HOME/.tmux/plugins/tpm
     echo "Skipping download of tmux plugin manager, pass --force to force redeownload"
 else
     # Tmux plugin manager

@@ -6,7 +6,6 @@ M.fzf_on_startup = false
 M.open_tree_on_startup = false
 
 -- Vim options
-
 vim.o.termguicolors = true -- Needed for colors
 vim.cmd('colorscheme onedark')
 
@@ -21,6 +20,8 @@ vim.cmd('set cursorline')
 vim.o.mouse = 'a' -- Enable mouse in all modes
 vim.wo.number = true
 vim.cmd(':hi NoneText guifg=bg')
+
+vim.cmd('set ttimeoutlen=0')
 
 --Persistent history
 vim.cmd('set undodir=/tmp/.vim-undo-dir')
