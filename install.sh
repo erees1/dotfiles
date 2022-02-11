@@ -12,6 +12,7 @@ OPTIONS:
     --zsh        install zsh 
     --delta      install delta (nicer git diff)
     --nvim       install nvim
+    --fzf        install fzf
 END
 )
 
@@ -28,7 +29,6 @@ if [ $machine == "Mac" ]; then
     USAGE+=$(cat <<-END
 
     --pyenv      install pyenv
-    --fzf        install fzf
 END
 )
 fi
@@ -75,7 +75,11 @@ if [ $machine == "Linux" ]; then
     [ $tmux == true ] && sudo apt-get install tmux 
     [ $delta == true ] && $DOT_DIR/install_scripts/install_delta.sh
     [ $nvim == true ] && $DOT_DIR/install_scripts/install_nvim.sh
-
+    if [ $fzf == true ]; then
+        rm -rf $HOME/.fzf
+        git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+        $HOME/.fzf/install
+    fi
 # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
     brew install coreutils  # Mac won't have realpath before coreutils installed

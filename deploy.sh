@@ -46,6 +46,8 @@ source "$DOT_DIR/zsh/setup_zshrc.sh"
 source "$DOT_DIR/gitconf/setup_gitconfig.sh"
 
 # Karabiner elements mapping
-ln -sf "$DOT_DIR/config/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+if [ $LOC == 'local' ]; then
+    ln -sf "$DOT_DIR/config/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+fi
 # Relaunch zsh
 zsh
