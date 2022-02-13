@@ -1,5 +1,5 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
-DOT_DIR=$ZSH_DOT_DIR/../
+export DOT_DIR=$ZSH_DOT_DIR/../
 
 ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel10k/powerlevel10k"
