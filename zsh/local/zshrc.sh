@@ -4,6 +4,8 @@ ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 alias vm='ssh vm'
 alias rl='greadlink -f'
 alias cdm='cd ~/Documents/md-notes'
+alias cdj='cd ~/git/jamming'
+alias cdn='cd ~/git/jamming/notebooks'
 
 # Set array path to only have unique values
 typeset -U path
