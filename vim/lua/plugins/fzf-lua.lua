@@ -5,6 +5,9 @@ vim.api.nvim_set_keymap('n', '<leader>tt', ":FzfLua git_files<CR>", { noremap=tr
 
 require'fzf-lua'.setup {
     fzf_layout       = 'reverse',
+    fzf_opts         = {
+        ['--border'] = 'none',
+    },
     winopts = {
     win_height       = 0.80,           -- window height
     win_border       = true,           -- window border? or borderchars?
