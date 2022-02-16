@@ -3,7 +3,7 @@ ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 # Local aliases
 alias vm='ssh vm'
 alias rl='greadlink -f'
-alias cdm='cd ~/Documents/md-notes'
+alias cdm='cd ~/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/md-notes'
 alias cdj='cd ~/git/jamming'
 alias cdn='cd ~/git/jamming/notebooks'
 
