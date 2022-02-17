@@ -91,6 +91,9 @@ bindkey '^s' history-incremental-search-forward
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 
+bindkey -M vicmd 'H' beginning-of-line
+bindkey -M vicmd 'L' end-of-line
+
 function wrap_clipboard_widgets() {
   # NB: Assume we are the first wrapper and that we only wrap native widgets
   # See zsh-autosuggestions.zsh for a more generic and more robust wrapper
