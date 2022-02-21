@@ -16,10 +16,14 @@ vim.api.nvim_set_keymap('i', 'kj', '<esc>', {noremap=true, silent=true })
 -- Shift + HL to move to start and end of visual line
 vim.api.nvim_set_keymap('n', 'H', 'g^', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'L', 'g$', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('v', 'H', 'g^', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('v', 'L', 'g$', {noremap=true, silent=true })
 
 -- Shift + JK to move to top and bottom of the screen
 vim.api.nvim_set_keymap('n', 'J', 'L', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'K', 'H', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('v', 'J', 'L', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('v', 'K', 'H', {noremap=true, silent=true })
 
 -- Move lines up and down with the alt key a-la vscode
 vim.api.nvim_set_keymap('n', '<A-j>' , ':m .+1<CR>==', {noremap=true, silent=true })
