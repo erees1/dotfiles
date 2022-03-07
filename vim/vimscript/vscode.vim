@@ -23,10 +23,6 @@ xmap <leader>gc  <Plug>VSCodeCommentary
 omap <leader>gc  <Plug>VSCodeCommentary
 nmap <leader>gc <Plug>VSCodeCommentaryLine
 
-" Simulate same TAB behavior in VSCode
-nmap <Tab> :Tabnext<CR>
-nmap <S-Tab> :Tabprev<CR>
-
 nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
 nnoremap <leader>e <Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>
 nnoremap <leader>tf <Cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>
