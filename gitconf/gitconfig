@@ -27,3 +27,5 @@
     diffFilter = delta --color-only
 [credential]
     helper = cache
+[pull]
+    rebase = true
