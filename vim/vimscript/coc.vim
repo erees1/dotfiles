@@ -78,8 +78,8 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Use gh to show documentation in preview window (i.e get hover).
+nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 " This makes it so that enter inserts new line if action window is showing
 function! s:show_documentation()
