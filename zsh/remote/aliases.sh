@@ -49,6 +49,7 @@ alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
 alias ls='ls -hF --color' # add colors for filetype recognition
 alias nv='nvidia-smi'
 function jonah() { docker run -v $HOME:$HOME --entrypoint bash -it $@ ;} # Enter docker
+alias net="netron --host $HOST_IP_ADDR"
 
 # make file
 alias m='make'
