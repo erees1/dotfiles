@@ -2,20 +2,19 @@
 # zsh extra settings
 #-------------------------------------------------------------
 
-setopt RM_STAR_WAIT  # Wait 10 seconds when doing rm *
-setopt NO_BEEP       # No bell sound
-skip_global_compinit=1   # Speeds up start time
-setopt HIST_REDUCE_BLANKS  # Remove blank lines from history
-setopt HIST_IGNORE_SPACE
-setopt HIST_NO_STORE
-setopt EXTENDED_HISTORY
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FIND_NO_DUPS
+setopt RM_STAR_WAIT               # Wait when typing `rm *` before being able to confirm
+setopt NO_BEEP                    # Don't beep on errors in ZLE
+setopt HIST_REDUCE_BLANKS         # Remove superfluous blanks before recording entry.
+setopt HIST_IGNORE_SPACE          # Don't record an entry starting with a space.
+setopt HIST_NO_STORE              # Remove the history (fc -l) command from the history.
+setopt EXTENDED_HISTORY           # Write the history file in the ":start:elapsed;command" format.
+setopt HIST_SAVE_NO_DUPS          # Don't write duplicate entries in the history file.
+setopt HIST_EXPIRE_DUPS_FIRST     # Expire duplicate entries first when trimming history.
+setopt HIST_FIND_NO_DUPS          # Do not display a line previously found.
 setopt always_to_end
 setopt list_ambiguous
-export HISTSIZE=100000 # big big history
-export HISTFILESIZE=100000 # big big history
+export HISTSIZE=100000            # big big history
+export HISTFILESIZE=100000        # big big history
 zstyle ':completion:*' hosts off  # Don't autocomple ssh host names
  
 # FZF options - might also affect fzf-lua extenstion in vim
