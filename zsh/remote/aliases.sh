@@ -48,7 +48,6 @@ alias msad3="/home/$(whoami)/git/aladdin3/env/singularity.sh -c "$SHELL""
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
 alias ls='ls -hF --color' # add colors for filetype recognition
 alias nv='nvidia-smi'
-function jonah() { docker run -v $HOME:$HOME --entrypoint bash -it $@ ;} # Enter docker
 alias net="netron --host $HOST_IP_ADDR"
 
 # make file
@@ -60,11 +59,16 @@ alias mtest="make test"
 alias mft="make functest"
 alias mut="make unittest"
 
+# docker
+function jonah() { docker run -v $HOME:$HOME --entrypoint bash -it $@ ;} # Enter docker
+alias d='docker'
+alias dcl='docker container ls'
+
 # -------------------------------------------------------------------
 # Tensorboard
 # -------------------------------------------------------------------
-
 alias tb="singularity exec $TENSOR_BOARD_SIF tensorboard --host=$HOST_IP_ADDR --reload_multifile true --logdir=."
+
 tblink () {
   # Creates simlinks from specified folders to ~/tb/x where x is an incrmenting number
   # and luanches tensorboard
@@ -239,12 +243,21 @@ select_file() {
     #fd --type file --follow --hidden --exclude .git | fzf --query="$given_file"
     fzf --query="$given_file"
 }
+fkill() {
+  pid=$(ps -ef | sed 1d | fzf -m --ansi | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo "killing processes $pid"
+    kill -${1:-9} $pid
+  fi
+}
 # -------------------------------------------------------------------
 # Cleaning processes
 # -------------------------------------------------------------------
 
 clean_vm () {
-    ps -ef | grep zsh | awk '{print $2}' | xargs sudo kill
-    ps -ef | grep vscode | awk '{print $2}' | xargs sudo kill
+    ps -ef | grep [z]sh | awk '{print $2}' | xargs sudo kill
+    ps -ef | grep [v]scode | awk '{print $2}' | xargs sudo kill
 }
 
