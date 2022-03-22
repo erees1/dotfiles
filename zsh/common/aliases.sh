@@ -113,8 +113,7 @@ alias ga="git add"
 alias gaa="git add ."
 alias gau="git add -u"
 alias gc="git commit -m"
-alias gp="make format && git push"
-alias gpn="git push"
+alias gp="git push"
 alias gpf="git push -f"
 
 alias gg='git gui'
