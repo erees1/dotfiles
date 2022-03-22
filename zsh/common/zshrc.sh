@@ -8,7 +8,8 @@ ZSH=$HOME/.oh-my-zsh
 # Must source colors before loading plugins
 source $ZSH_DOT_DIR/common/dir_colors.sh
 
-plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions history-substring-search)
+plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search)
+
 
 # add ./local/bin to path
 p="${HOME}/.local/bin"
