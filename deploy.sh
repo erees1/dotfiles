@@ -6,7 +6,6 @@ Creates ~/.zshrc and ~/.tmux.conf with location
 specific config
 
 OPTIONS:
-    --remote (DEFAULT)      deploy remote config, all aliases are sourced
     --local                 deploy local config, only common aliases are sourced
 END
 )
@@ -18,8 +17,6 @@ while (( "$#" )); do
     case "$1" in
         -h|--help)
             echo "$USAGE" && exit 1 ;;
-        --remote)
-            LOC="remote" && shift ;;
         --local)
             LOC="local" && shift ;;
         --) # end argument parsing
