@@ -257,7 +257,7 @@ fkill() {
 # -------------------------------------------------------------------
 
 clean_vm () {
-    ps -ef | grep [z]sh | awk '{print $2}' | xargs sudo kill
-    ps -ef | grep [v]scode | awk '{print $2}' | xargs sudo kill
+    ps -ef | grep '[v]scode' | awk '{print $2}' | xargs sudo kill
+    ps -ef | grep '[z]sh' | awk '{print $2}' | xargs sudo kill
 }
 
