@@ -6,13 +6,10 @@ HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
 TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboard:20210213"
 
 # Quick navigation add more here
-alias cda="cd ~/git/aladdin"
-alias cda2="cd ~/git/aladdin2"
-alias cda3="cd ~/git/aladdin3"
-alias cdh="cd ~/git/hydra"
-alias cdvad="cd /perish_aml02/$(whoami)/vad_workspace"
+alias a="cd ~/git/aladdin"
+alias a2="cd ~/git/aladdin2"
+alias a3="cd ~/git/aladdin3"
 alias cde="cd /exp/$(whoami)"
-alias cdco="cd /perish_aml02/$(whoami)/git/coreasr"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
 alias cdg2="cd /perish_aml02/$(whoami)/git"
 alias cdt="cd ~/tb"
@@ -87,32 +84,32 @@ tblink () {
       logdir="$tbdir/0"
     fi
     # softlink into tensorboard directory
-    for linkdir in "$@"; do
-      linkdir=$(rl $linkdir)
+    _linkdirs "$logdir" "$@"
+  fi
+  singularity exec "$TENSOR_BOARD_SIF" tensorboard --host=$HOST_IP_ADDR --reload_multifile true --logdir=$logdir
+}
+_linkdirs() {
+    logdir="$1"
+    mkdir -p $logdir
+    for linkdir in "${@:2}"; do
+      linkdir=$(readlink -f $linkdir)
       if [ ! -d $linkdir ]; then
           echo "linkdir $linkdir does not exist"
           return
       fi
-      echo "linkdir: $linkdir"
-      mkdir -p $logdir
+      echo "symlinked $linkdir into $logdir"
       ln -s $linkdir $logdir
     done
-  fi
-  echo "logdir: $logdir"
-  singularity exec "$TENSOR_BOARD_SIF" tensorboard --host=$HOST_IP_ADDR --reload_multifile true --logdir=$logdir
 }
 tbadd() {
   # Add experiment folder to existing tensorboard directory (see tblink)
   # example: `tbadd ./lm/20210825 25` will symlink ./lm/20210824 to ~/tb/25
-  if [ "$#" -eq 2 ]; then
+  if [ "$#" -gt 1 ]; then
     tbdir="$HOME/tb"
-    linkdir=$(rl $1)
-    logdir=$tbdir/$2
-    ln -s $linkdir $logdir
-    echo "linkdir: $linkdir"
-    echo "logdir: $logdir"
+    logdir=$tbdir/$1
+    _linkdirs $logdir "${@:2}"
   else
-    echo "tbadd <exp_dir> <tb number>"
+    echo "tbadd <tb number> <exp dirs>"
   fi
 }
 
