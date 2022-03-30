@@ -35,12 +35,6 @@ nnoremap <leader>gff <Cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FIL
 
 nnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
-nnoremap ∆ <Cmd>call VSCodeNotify('editor.action.moveLinesDownAction')j<CR>
-nnoremap ˚ <Cmd>call VSCodeNotify('editor.action.moveLinesUpAction')k<CR>
-
-" TODO this dosn't work due to interaction between vscode and nvim selection
-vnoremap ∆ <Cmd>call VSCodeNotifyVisual('editor.action.moveLinesDownAction', 1)<CR>
-vnoremap ˚ <Cmd>call VSCodeNotifyVisual('editor.action.moveLinesUpAction', 1)<CR>
 
 nnoremap <leader>hn <Cmd>call VSCodeNotify('workbench.action.editor.nextChange')<CR>
 nnoremap <leader>hp <Cmd>call VSCodeNotify('git.timeline.openDiff')<CR>
