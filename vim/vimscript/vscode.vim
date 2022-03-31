@@ -19,8 +19,9 @@ xnoremap <silent> <C-l> <Cmd>call VSCodeNotify('workbench.action.navigateRight')
 
 nnoremap <silent> <C-w>_ :<C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>
 
-xmap <leader>gc  <Plug>VSCodeCommentary
-omap <leader>gc  <Plug>VSCodeCommentary
+# Something has broken these
+xmap <leader>gc <Plug>VSCodeCommentary
+omap <leader>gc <Plug>VSCodeCommentary
 nmap <leader>gc <Plug>VSCodeCommentaryLine
 
 nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
