@@ -27,7 +27,11 @@ require'nvim-tree'.setup {
     -- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
     ignore_list = {}
   },
-
+  actions={
+    open_file={
+      resize_window = true,
+    }
+  },
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
     width = require('settings').tree_width,
@@ -36,10 +40,10 @@ require'nvim-tree'.setup {
 
 
 function _tree_toggle()
-    if require'nvim-tree.view'.win_open() then
-        require'bufferline.state'.set_offset(0)
-    else
-        require'bufferline.state'.set_offset(require('settings').tree_width + 1, 'FileTree')
-    end
-    require'nvim-tree'.toggle()
+  if require'nvim-tree.view'.is_visible() then
+    require'bufferline.state'.set_offset(0)
+  else
+    require'bufferline.state'.set_offset(require('settings').tree_width + 1, 'FileTree')
+  end
+  require'nvim-tree'.toggle()
 end
