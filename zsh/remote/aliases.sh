@@ -139,12 +139,16 @@ qlogin () {
   if [ "$#" -eq 1 ]; then
     /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -N D_$(whoami)
   elif [ "$#" -eq 2 ]; then
+    gpu_args=""
     if [ "$2" = "cpu" ]; then
       queue="aml-cpu.q"
+    elif [ "$2" = "*gpu*" ]; then
+      queue="$2"
+      gpu_args="gpu=$1"
     else
       queue="$2"
     fi
-    /usr/bin/qlogin -now n -pe smp $1 -q $queue -l gpu=$1 -N D_$(whoami)
+    /usr/bin/qlogin -now n -pe smp $1 -q $queue -l "$gpu_args" -N D_$(whoami)
   else
     echo "Usage: qlogin <num_gpus>" >&2
     echo "Usage: qlogin <num_gpus> <queue>" >&2
@@ -152,67 +156,67 @@ qlogin () {
   fi
 }
 qtail () {
-  tail -f $(qlog $@)
+    tail -f $(qlog $@)
 }
 qlast () {
-  # Tail the last running job
-  job_id=$(qstat | awk '$5=="r" {print $1}' | grep -E '[0-9]' | sort -r | head -n 1)
-  if [ ! -z $job_id ]; then
-    echo $job_id
-  else
-    echo "no jobs found"
-  fi
+    # Tail the last running job
+    job_id=$(qstat | awk '$5=="r" {print $1}' | grep -E '[0-9]' | sort -r | head -n 1)
+    if [ ! -z $job_id ]; then
+        echo $job_id
+    else
+        echo "no jobs found"
+    fi
 }
 qless () {
-  less $(qlog $@)
+    less $(qlog $@)
 }
 qcat () {
-  cat $(qlog $@)
+    cat $(qlog $@)
 }
 echo_if_exist() {
     [ -f $1 ] && echo $1
 }
 qlog () {
-  # Get log path of job
-  if [ "$1" = "-l" ]; then
-      job_id=$(qlast)
-  else
-      job_id=$1
-  fi
-  if [ "$#" -eq 1 ]; then
-    echo $(qstat -j $job_id | grep stdout_path_list | cut -d ":" -f4)
-  elif [ "$#" -eq 2 ]; then
-    # Array jobs are a little tricky
-    log_path=$(qlog $job_id)
-    base_dir=$(echo $log_path | rev | cut -d "/" -f3- | rev)
-    filename=$(basename $log_path)
-    # Could be a number of schemes so just try them all
-    echo_if_exist ${base_dir}/log/${filename}
-    echo_if_exist ${base_dir}/log/${filename%.log}${2}.log
-    echo_if_exist ${base_dir}/log/${filename%.log}.${2}.log
-    echo_if_exist ${base_dir}/${filename%.log}.${2}.log
-    echo_if_exist ${base_dir}/${filename%.log}${2}.log
-  else
-    echo "Usage: qlog <jobid>" >&2
-    echo "Usage: qlog <array_jobid> <sub_jobid>" >&2
-  fi
+    # Get log path of job
+    if [ "$1" = "-l" ]; then
+        job_id=$(qlast)
+    else
+        job_id=$1
+    fi
+    if [ "$#" -eq 1 ]; then
+        echo $(qstat -j $job_id | grep stdout_path_list | cut -d ":" -f4)
+    elif [ "$#" -eq 2 ]; then
+        # Array jobs are a little tricky
+        log_path=$(qlog $job_id)
+        base_dir=$(echo $log_path | rev | cut -d "/" -f3- | rev)
+        filename=$(basename $log_path)
+        # Could be a number of schemes so just try them all
+        echo_if_exist ${base_dir}/log/${filename}
+        echo_if_exist ${base_dir}/log/${filename%.log}${2}.log
+        echo_if_exist ${base_dir}/log/${filename%.log}.${2}.log
+        echo_if_exist ${base_dir}/${filename%.log}.${2}.log
+        echo_if_exist ${base_dir}/${filename%.log}${2}.log
+    else
+        echo "Usage: qlog <jobid>" >&2
+        echo "Usage: qlog <array_jobid> <sub_jobid>" >&2
+    fi
 }
 qdesc () {
-  qstat | tail -n +3 | while read line; do
+    qstat | tail -n +3 | while read line; do
     job=$(echo $line | awk '{print $1}')
     if [[ ! $(qstat -j $job | grep "job-array tasks") ]]; then
-      echo $job $(qlog $job)
+        echo $job $(qlog $job)
     else
-      qq_dir=$(qlog $job)
-      job_status=$(echo $line | awk '{print $5}')
-      if [ $job_status = 'r' ]; then
-        sub_job=$(echo $line | awk '{print $10}')
-        echo $job $sub_job $(qlog $job $sub_job)
-      else
-        echo $job $qq_dir $job_status
-      fi
+        qq_dir=$(qlog $job)
+        job_status=$(echo $line | awk '{print $5}')
+        if [ $job_status = 'r' ]; then
+            sub_job=$(echo $line | awk '{print $10}')
+            echo $job $sub_job $(qlog $job $sub_job)
+        else
+            echo $job $qq_dir $job_status
+        fi
     fi
-  done
+done
 }
 qrecycle () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qrecycle $@" || command qrecycle "$@";
@@ -226,15 +230,15 @@ makeallp() {
 
 # Only way to get a gpu is via queue
 if [ -z $CUDA_VISIBLE_DEVICES ]; then
-  export CUDA_VISIBLE_DEVICES=
+    export CUDA_VISIBLE_DEVICES=
 fi
 fdel() {
-  job_id=$(qstat | grep 'edwardr' | fzf -m --ansi | awk '{print $1}')
+    job_id=$(qstat | grep 'edwardr' | fzf -m --ansi | awk '{print $1}')
 
-  if [ "x$job_id" != "x" ]; then
-    echo "deleting $job_id"
-    qdel $job_id
-  fi
+    if [ "x$job_id" != "x" ]; then
+        echo "deleting $job_id"
+        qdel $job_id
+    fi
 }
 select_file() {
     given_file="$1"
@@ -242,13 +246,13 @@ select_file() {
     fzf --query="$given_file"
 }
 fkill() {
-  pid=$(ps -ef | sed 1d | fzf -m --ansi | awk '{print $2}')
+    pid=$(ps -ef | sed 1d | fzf -m --ansi | awk '{print $2}')
 
-  if [ "x$pid" != "x" ]
-  then
-    echo "killing processes $pid"
-    kill -${1:-9} $pid
-  fi
+    if [ "x$pid" != "x" ]
+    then
+        echo "killing processes $pid"
+        kill -${1:-9} $pid
+    fi
 }
 # -------------------------------------------------------------------
 # Cleaning processes
