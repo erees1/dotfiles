@@ -74,7 +74,7 @@ if [ $machine == "Linux" ]; then
     [ $zsh == true ] && sudo apt-get install zsh
     [ $tmux == true ] && sudo apt-get install tmux 
     [ $delta == true ] && $DOT_DIR/install_scripts/install_delta.sh
-    [ $nvim == true ] && $DOT_DIR/install_scripts/install_nvim.sh
+    [ $nvim == true ] && $DOT_DIR/install_scripts/install_nvim.sh "release"
     if [ $fzf == true ]; then
         rm -rf $HOME/.fzf
         git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf

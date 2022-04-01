@@ -1,20 +1,28 @@
 #! /bin/bash
 set -euo pipefail
-# install_nvim.sh <url> where url is an optional url
+# install_nvim.sh <command> where comamnd is either release or nightly
 
-release_version="https://github.com/neovim/neovim/releases/download/v0.5.1/nvim.appimage"
+release_version=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest \
+    | grep "browser_download_url.*appimage\"" \
+    | cut -d : -f 2,3 \
+    | tr -d \")
 nightly="https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage"
 
-if [ "$#" -lt 1 ]; then
-  url=$nightly # YEAH BUDDY!
+if [ "$1" == "nightly" ]; then
+  url="$nightly" 
 else
-  url=$1
+  url="$release_version"
 fi
 
+dir="$HOME/.local/nvim" 
 # Nfs hangs so mv before deleting
-mv ~/.local/nvim .nvim.old && rm -rf .nvim.old
-mkdir -p ~/.local/nvim && cd ~/.local/nvim
+if [ -d $dir ]; then
+    mv $dir .nvim.old && rm -rf .nvim.old
+fi
+mkdir -p $dir
+pushd $dir
 wget $url
 chmod u+x ./nvim.appimage
 ./nvim.appimage --appimage-extract
 ln -sf ~/.local/nvim/squashfs-root/usr/bin/nvim ~/.local/bin/nvim
+popd
