@@ -53,7 +53,7 @@ return require('packer').startup(function()
   -- Shortucts etc
   use {
     'preservim/nerdcommenter',
-    keys="<leader>gc",
+    keys="<leader>c",
     cond = { require('funcs').is_not_vscode },
     config = function() require('plugins/nerdcommenter') end
   }
