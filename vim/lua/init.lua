@@ -4,9 +4,9 @@ vim.g.mapleader = ' '
 
 if require('funcs').is_not_vscode then
     require('statusline')
-    require('plugins')
     require('settings')
 end
 -- Keybindings need to be compatible with vscode
+require('plugins')
 require('keybindings')
 

@@ -1,4 +1,3 @@
-vim.api.nvim_set_var('NERDCreateDefaultMappings', 0)
 vim.api.nvim_set_var('NERDSpaceDelims', 1)
 vim.api.nvim_set_var('NERDDefaultAlign', 'left')
 

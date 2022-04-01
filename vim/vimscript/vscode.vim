@@ -19,11 +19,6 @@ xnoremap <silent> <C-l> <Cmd>call VSCodeNotify('workbench.action.navigateRight')
 
 nnoremap <silent> <C-w>_ :<C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>
 
-# Something has broken these
-xmap <leader>gc <Plug>VSCodeCommentary
-omap <leader>gc <Plug>VSCodeCommentary
-nmap <leader>gc <Plug>VSCodeCommentaryLine
-
 nnoremap gr <Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>
 nnoremap <leader>e <Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>
 nnoremap <leader>tf <Cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>
@@ -37,6 +32,7 @@ nnoremap <leader>gff <Cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FIL
 nnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 
+" Git navigation
 nnoremap <leader>hn <Cmd>call VSCodeNotify('workbench.action.editor.nextChange')<CR>
 nnoremap <leader>hp <Cmd>call VSCodeNotify('git.timeline.openDiff')<CR>
 

@@ -1,18 +1,17 @@
--- Plugins using packer
-
 -- Bootstrap install packer
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+-- Variables that must be set before plugin loaded here
+vim.api.nvim_set_var('NERDCreateDefaultMappings', 0)
 
+-- Packer bootstrap
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
   fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
   execute 'packadd packer.nvim'
 end
--- End of bootstrap
 
--- Specify plugins here
 return require('packer').startup(function()
   local local_use = function(first, second, opts)
     opts = opts or {}
@@ -38,8 +37,7 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-
-  -- CoC
+  -- Completion
   use {
     'neoclide/coc.nvim',
     branch = 'release',
@@ -49,12 +47,10 @@ return require('packer').startup(function()
     cmd = '<leader>f',
     config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
   } 
-
   -- Shortucts etc
   use {
     'preservim/nerdcommenter',
     keys="<leader>c",
-    cond = { require('funcs').is_not_vscode },
     config = function() require('plugins/nerdcommenter') end
   }
   use {
@@ -135,9 +131,9 @@ return require('packer').startup(function()
       config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
   }
   use {
+      'https://github.com/iamcco/markdown-preview.nvim'
       opt=true,
       cmd='MarkdownPreview',
-      'https://github.com/iamcco/markdown-preview.nvim'
   }
   use {
     'karb94/neoscroll.nvim',
