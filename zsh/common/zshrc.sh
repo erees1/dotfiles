@@ -8,8 +8,8 @@ ZSH=$HOME/.oh-my-zsh
 # Must source colors before loading plugins
 source $ZSH_DOT_DIR/common/dir_colors.sh
 
-plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search)
-
+VI_MODE_SET_CURSOR=true
+plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search vi-mode)
 
 # add ./local/bin to path
 p="${HOME}/.local/bin"
@@ -17,13 +17,10 @@ if [[ "$PATH" != *"$p"* ]]; then
   export PATH="$p:$PATH"
 fi
 
-VI_MODE_SET_CURSOR=true
-
 source $ZSH/oh-my-zsh.sh
 source $ZSH_DOT_DIR/common/p10k.zsh
 source $ZSH_DOT_DIR/common/aliases.sh
 source $ZSH_DOT_DIR/common/extras.sh
-source $ZSH_DOT_DIR/common/vi-mode.sh
 source $ZSH_DOT_DIR/common/keybindings.sh
 
 # Source fzf file
