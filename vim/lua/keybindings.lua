@@ -19,6 +19,7 @@ vim.api.nvim_set_keymap('n', 'J', 'L', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'K', 'H', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('v', 'J', 'L', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('v', 'K', 'H', {noremap=true, silent=true })
+
 -- Copy paste from system buffers to make copy paste behaviour more sane
 vim.api.nvim_set_keymap('v', 'y', '"+y', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'y', '"+y', {noremap=true, silent=true })

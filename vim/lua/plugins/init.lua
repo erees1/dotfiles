@@ -126,14 +126,14 @@ return require('packer').startup(function()
     config = function() require('colorizer').setup() end
   }
   use {
-      '907th/vim-auto-save',
-      cond = { require('funcs').is_not_vscode },
-      config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
+    '907th/vim-auto-save',
+    cond = { require('funcs').is_not_vscode },
+    config = function() vim.api.nvim_set_var('auto_save', 1) vim.api.nvim_set_var('auto_save_events', {'InsertLeave'}) end
   }
   use {
-      'https://github.com/iamcco/markdown-preview.nvim'
-      opt=true,
-      cmd='MarkdownPreview',
+    'https://github.com/iamcco/markdown-preview.nvim',
+    opt=true,
+    cmd='MarkdownPreview',
   }
   use {
     'karb94/neoscroll.nvim',
@@ -142,7 +142,7 @@ return require('packer').startup(function()
       require('neoscroll').setup({
         -- All these keys will be mapped to their corresponding default scrolling animation
         mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-                    '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+        '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
         hide_cursor = true,          -- Hide cursor while scrolling
         stop_eof = true,             -- Stop at <EOF> when scrolling downwards
         use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
@@ -153,12 +153,11 @@ return require('packer').startup(function()
         post_hook = nil,             -- Function to run after the scrolling animation ends
         performance_mode = true,    -- Disable "Performance Mode" on all buffers.
       }) end
-     }
+    }
 
-  -- Copy to OSC52
-  use {
-    'ojroques/vim-oscyank',
-    cond = { require('funcs').is_not_vscode },
-  }
-end)
-
+    -- Copy to OSC52
+    use {
+      'ojroques/vim-oscyank',
+      cond = { require('funcs').is_not_vscode },
+    }
+  end)
