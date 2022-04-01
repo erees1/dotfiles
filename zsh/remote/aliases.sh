@@ -58,7 +58,9 @@ alias mft="make functest"
 alias mut="make unittest"
 
 # docker
-function jonah() { docker run -v $HOME:$HOME --entrypoint bash -it $@ ;} # Enter docker
+function jonah() { 
+    docker run -v "$(readlink -f ./):/src" -v $HOME:$HOME --entrypoint bash -it $@
+} # Enter docker
 alias d='docker'
 alias dcl='docker container ls'
 
