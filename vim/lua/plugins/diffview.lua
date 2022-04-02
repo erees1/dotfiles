@@ -120,7 +120,7 @@ function _DiffviewClose()
 end
 
 
-vim.api.nvim_set_keymap('n', '<leader>dvo', '<cmd>lua _DiffviewOpen()<CR>', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>dvc', '<cmd>lua _DiffviewClose()<CR>', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>dvh', '<cmd>lua _DiffviewFileHistory()<CR>', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>dvf', ':DiffviewToggleFiles<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua _DiffviewOpen()<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>lua _DiffviewClose()<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>dh', '<cmd>lua _DiffviewFileHistory()<CR>', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', '<leader>df', ':DiffviewToggleFiles<CR>', {noremap=true, silent=true })

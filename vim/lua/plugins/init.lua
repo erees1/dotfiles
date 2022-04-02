@@ -106,7 +106,7 @@ return require('packer').startup(function()
   }
   use {
     'sindrets/diffview.nvim',
-    keys = {'<leader>dvo', '<leader>dvf'},
+    keys = {'<leader>do', '<leader>df', '<leader>dh'},
     config = function() require('plugins.diffview') end
   }
 
