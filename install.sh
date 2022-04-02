@@ -65,8 +65,6 @@ while (( "$#" )); do
     esac
 done
 
-
-
 echo " ------------ INSTALLING ON $machine MACHINE ------------ "
 # Installing on linux with apt
 if [ $machine == "Linux" ]; then
@@ -80,7 +78,7 @@ if [ $machine == "Linux" ]; then
         git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
         $HOME/.fzf/install
     fi
-# Installing on mac with homebrew
+    # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
     brew install coreutils  # Mac won't have realpath before coreutils installed
     DOT_DIR=$(dirname $(realpath $0))
@@ -123,7 +121,7 @@ else
 
     git clone https://github.com/zsh-users/zsh-history-substring-search \
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search 
-    
+
 fi
 if [ -d $HOME/.tmux/plugins/tpm ] && [ "$force" = "false" ]; then
     rm -rf $HOME/.tmux/plugins/tpm
