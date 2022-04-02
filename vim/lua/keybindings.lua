@@ -23,6 +23,7 @@ vim.api.nvim_set_keymap('v', 'K', 'H', {noremap=true, silent=true })
 -- Copy paste from system buffers to make copy paste behaviour more sane
 vim.api.nvim_set_keymap('v', 'y', '"+y', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'y', '"+y', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('n', 'Y', '"+y$', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('v', 'x', '"+x', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', 'x', '"+x', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('v', 'p', '"+p', {noremap=true, silent=true })
@@ -40,3 +41,14 @@ vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua _tree_toggle()<CR>', { norem
 
 -- I always seem to delete stuff at the bottom of the file with d k so remove
 vim.api.nvim_set_keymap('n', 'dk', '<Nop>', {noremap=true, silent=true })
+
+-- Keep it centered
+vim.api.nvim_set_keymap('n', 'n', 'nzzzv', {noremap=true, silent=true })
+
+-- Undo these breakpoints when in insert mode
+vim.api.nvim_set_keymap('i', ',', ',<c-g>u', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('i', '.', '.<c-g>u', {noremap=true, silent=true })
+vim.api.nvim_set_keymap('i', '(', '(<c-g>u', {noremap=true, silent=true })
+
+-- Add new line without entering insert mode
+vim.api.nvim_set_keymap('n', '<leader>o', ':<C-u>call append(line("."), repeat([""], v:count1))<CR>', { noremap = true, silent = true })

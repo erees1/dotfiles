@@ -5,6 +5,7 @@ local M = {}
 M.tree_width = 35
 M.fzf_on_startup = false
 M.open_tree_on_startup = false
+M.git_window_width = 60
 
 -- Vim options
 vim.o.termguicolors = true -- Needed for colors
@@ -18,6 +19,7 @@ vim.cmd('set ts=4') -- Insert 2 spaces for a tab
 vim.cmd('set sw=4') -- Change the number of space characters inserted for indentation
 vim.cmd('set smartindent')
 vim.cmd('set autoindent')
+vim.cmd('set formatoptions-=o') -- Don't continue comments when pressing o or O
 
 vim.cmd('set cursorline')
 vim.o.mouse = 'a' -- Enable mouse in all modes

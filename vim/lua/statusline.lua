@@ -206,8 +206,11 @@ vim.cmd [[
   au!
   au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline('active')
   au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline('inactive')
-  au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline('explorer')
-  au WinEnter,BufEnter, *Diffview* setlocal statusline=%!v:lua.Statusline('explorer')
-  au WinLeave,BufLeave, *Diffview* setlocal statusline=%!v:lua.Statusline('inactive','DiffView')
+  au WinEnter,BufEnter *NvimTree* setlocal statusline=%!v:lua.Statusline('explorer')
+  au WinLeave,BufLeave *NvimTree* setlocal statusline=%!v:lua.Statusline('inactive','NvimTree')
+  au WinEnter,BufEnter *.git/index* setlocal statusline=%!v:lua.Statusline('explorer')
+  au WinLeave,BufLeave *.git/index* setlocal statusline=%!v:lua.Statusline('inactive','GitStatus')
+  au WinEnter,BufEnter *Diffview* setlocal statusline=%!v:lua.Statusline('explorer')
+  au WinLeave,BufLeave *Diffview* setlocal statusline=%!v:lua.Statusline('inactive','DiffView')
   augroup END
 ]]

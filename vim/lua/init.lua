@@ -6,7 +6,8 @@ if require('funcs').is_not_vscode then
     require('statusline')
     require('settings')
 end
--- Keybindings need to be compatible with vscode
+-- Packer plugins should use vscode checks
 require('plugins')
+-- Keybindings need to be compatible with vscode
 require('keybindings')
 

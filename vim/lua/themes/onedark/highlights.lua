@@ -3,7 +3,7 @@ function M.init (C)
     local highlights = {
       Normal = { fg = C.fg, bg = Config.transparent_background and "NONE" or C.bg },
       SignColumn = { bg = C.bg },
-      MsgArea = { fg = C.fg, bg = Config.transparent_background and "NONE" or C.bg },
+      MsgArea = { fg = C.fg, bg = Config.transparent_background and "NONE" or C.alt_bg },
       ModeMsg = { fg = C.fg, bg = C.bg },
       MsgSeparator = { fg = C.fg, bg = C.bg },
       SpellBad = { fg = C.error_red, style = "underline" },

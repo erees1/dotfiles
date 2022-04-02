@@ -13,26 +13,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 return require('packer').startup(function()
-  local local_use = function(first, second, opts)
-    opts = opts or {}
-
-    local plug_path, home
-    if second == nil then
-      plug_path = first
-      home = "erees1"
-    else
-      plug_path = second
-      home = first
-    end
-
-    if vim.fn.isdirectory(vim.fn.expand("~/git/" .. plug_path)) == 1 then
-      opts[1] = "~/git/" .. plug_path
-    else
-      opts[1] = string.format("%s/%s", home, plug_path)
-    end
-
-    use(opts)
-  end
 
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
