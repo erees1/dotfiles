@@ -15,7 +15,7 @@ return require('packer').startup({function()
   use 'wbthomason/packer.nvim'
 
   -- Completion
-  use {
+ use {
     'neoclide/coc.nvim',
     branch = 'release',
     cond = { require('funcs').is_not_vscode },

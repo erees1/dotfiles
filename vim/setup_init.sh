@@ -5,6 +5,7 @@ fi
 
 # Neovim setup
 echo "require('init')" > $HOME/.config/nvim/init.lua
+echo "require('init-light')" > $HOME/.config/nvim/init-light.lua
 echo "vim.cmd('source $HOME/git/dotfiles/vim/vimscript/init.vim')" >> $HOME/.config/nvim/init.lua
 
 if [ $LOC == "remote" ] ; then

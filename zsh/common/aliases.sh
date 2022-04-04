@@ -197,6 +197,7 @@ vf () {
   fi
 }
 alias v="nvim"
+alias vl="nvim -u ~/.config/nvim/init-light.lua --noplugin"
 alias vim="nvim"
 alias vimdiff='nvim -d'
 export EDITOR=nvim
