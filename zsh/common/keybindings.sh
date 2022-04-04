@@ -27,6 +27,8 @@ bindkey '^N' history-substring-search-down
 # Make sure you don't have mac input source switch
 bindkey '^ ' autosuggest-accept  
 
+bindkey -s ^f "tsesh\n"
+
 # To match my custom vim bindings
 bindkey -M vicmd 'H' beginning-of-line
 bindkey -M vicmd 'L' end-of-line
