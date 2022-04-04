@@ -15,6 +15,7 @@ if luaeval('require("funcs").is_not_vscode()')
             :FzfLua files
         endif
         if luaeval('require("settings").open_tree_on_startup')
+            :PackerLoad nvim-tree.lua
             "Statusline doesn't seem to work on startup 
             setlocal statusline=%!v:lua.Statusline('inactive')
             :lua _tree_toggle()

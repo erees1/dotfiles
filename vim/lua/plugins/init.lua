@@ -2,9 +2,6 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
--- Variables that must be set before plugin loaded here
-vim.api.nvim_set_var('NERDCreateDefaultMappings', 0)
-
 -- Packer bootstrap
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -12,7 +9,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute 'packadd packer.nvim'
 end
 
-return require('packer').startup(function()
+return require('packer').startup({function()
 
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
@@ -23,14 +20,14 @@ return require('packer').startup(function()
     branch = 'release',
     cond = { require('funcs').is_not_vscode },
     opt=true,
-    ft = {'python', 'sh'},
-    cmd = '<leader>f',
+    keys = {'<leader>f', 'gd', 'gr', 'gh', 'gi'},
     config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
   } 
   -- Shortucts etc
   use {
     'preservim/nerdcommenter',
-    keys="<leader>c",
+    keys={"<leader>cc", "<leader>cip"},
+    setup = function() vim.api.nvim_set_var('NERDCreateDefaultMappings', 0) end,
     config = function() require('plugins/nerdcommenter') end
   }
   use {
@@ -41,8 +38,9 @@ return require('packer').startup(function()
   -- Nvim tree / explorer stuff
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = {'kyazdani42/nvim-web-devicons' }, -- optional for icons
+    requires = {'kyazdani42/nvim-web-devicons'}, -- optional for icons
     cond = { require('funcs').is_not_vscode },
+    keys = {'<leader>e'},
     config = function() 
       require('plugins/nv-tree')
     end
@@ -59,11 +57,12 @@ return require('packer').startup(function()
   -- Treesitter for better highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
+    opt=true,
     run = ":TSUpdate",
     cond = { require('funcs').is_not_vscode },
     ft = {'python'},
     config = function() 
-      require'nvim-treesitter.configs'.setup {
+      require('nvim-treesitter.configs').setup {
         ensure_installed = {"python"},
         highlight = {
           enable = true,
@@ -82,7 +81,9 @@ return require('packer').startup(function()
   use {
     'tpope/vim-fugitive', 
     cond = { require('funcs').is_not_vscode },
-    config = function() require('plugins/fugitive') end
+    config = function() require('plugins/fugitive') end,
+    keys = {'gs', '<leader>ds'},
+    cmd = {'Git', 'G'}
   }
   use {
     'sindrets/diffview.nvim',
@@ -92,13 +93,14 @@ return require('packer').startup(function()
 
   -- fzf file navigation
   use { 'ibhagwan/fzf-lua',
-    requires = {
-      'vijaymarupudi/nvim-fzf',
-      'kyazdani42/nvim-web-devicons' }, -- optional for icons
-      cond = { require('funcs').is_not_vscode },
-      config = function() require('plugins/fzf-lua') end,
+  keys = {'<leader>tf', '<leader>tb', '<leader>tg', '<leader>tt'},
+  requires = {
+      {'vijaymarupudi/nvim-fzf', opt=true},
+    'kyazdani42/nvim-web-devicons' }, -- optional for icons
+    cond = { require('funcs').is_not_vscode },
+    config = function() require('plugins/fzf-lua') end,
   }
-  
+
   -- Misc
   use {
     'norcalli/nvim-colorizer.lua',
@@ -115,29 +117,14 @@ return require('packer').startup(function()
     opt=true,
     cmd='MarkdownPreview',
   }
+  -- Copy to OSC52
   use {
-    'karb94/neoscroll.nvim',
+    'ojroques/vim-oscyank',
     cond = { require('funcs').is_not_vscode },
-    config = function() 
-      require('neoscroll').setup({
-        -- All these keys will be mapped to their corresponding default scrolling animation
-        mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-        '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
-        hide_cursor = true,          -- Hide cursor while scrolling
-        stop_eof = true,             -- Stop at <EOF> when scrolling downwards
-        use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-        respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-        cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-        easing_function = nil,       -- Default easing function
-        pre_hook = nil,              -- Function to run before the scrolling animation starts
-        post_hook = nil,             -- Function to run after the scrolling animation ends
-        performance_mode = true,    -- Disable "Performance Mode" on all buffers.
-      }) end
-    }
-
-    -- Copy to OSC52
-    use {
-      'ojroques/vim-oscyank',
-      cond = { require('funcs').is_not_vscode },
-    }
-  end)
+  }
+end, 
+config = {
+  display = {
+    open_fn = require('packer.util').float,
+  }
+}})

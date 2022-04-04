@@ -47,3 +47,4 @@ function _tree_toggle()
     end
     require'nvim-tree'.toggle()
 end
+vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua _tree_toggle()<CR>', { noremap=true, silent=true })
