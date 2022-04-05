@@ -247,15 +247,6 @@ select_file() {
     #fd --type file --follow --hidden --exclude .git | fzf --query="$given_file"
     fzf --query="$given_file"
 }
-fkill() {
-    pid=$(ps -ef | sed 1d | fzf -m --ansi | awk '{print $2}')
-
-    if [ "x$pid" != "x" ]
-    then
-        echo "killing processes $pid"
-        kill -${1:-9} $pid
-    fi
-}
 # -------------------------------------------------------------------
 # Cleaning processes
 # -------------------------------------------------------------------

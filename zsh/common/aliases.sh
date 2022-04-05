@@ -66,6 +66,15 @@ alias p="python"
 alias p3="python3"
 alias p2="python2"
 
+fkill() {
+    pid=$(ps -ef | sed 1d | fzf -m --ansi | awk '{print $2}')
+
+    if [ "x$pid" != "x" ]
+    then
+        echo "killing processes $pid"
+        kill -${1:-9} $pid
+    fi
+}
 #-------------------------------------------------------------
 # cd
 #-------------------------------------------------------------
