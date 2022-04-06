@@ -1,16 +1,22 @@
 #!/bin/bash
 
+possible_options="$HOME/git"
+
+if [ -d "/perish_aml02" ]; then
+    possible_options+=" /perish_aml02/edwardr/git"
+fi
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/git /perish_aml02/edwardr/git -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find $possible_options -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
     exit 0
 fi
 
-is_running=$(ps -aux | grep '[t]mux new-session')
+is_running=$(ps aux | grep '[t]mux new-session')
 if tmux info &> /dev/null; then 
     is_inside="true"
 fi
