@@ -5,7 +5,7 @@ local M = {}
 M.tree_width = 35
 M.fzf_on_startup = false
 M.open_tree_on_startup = false
-M.git_window_width = 60
+M.git_window_width = 50
 
 -- Vim options
 vim.o.termguicolors = true -- Needed for colors
