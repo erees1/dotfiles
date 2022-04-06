@@ -13,6 +13,7 @@ OPTIONS:
     --delta      install delta (nicer git diff)
     --nvim       install nvim
     --fzf        install fzf
+    --exa        install exa (nicer ls)
 END
 )
 
@@ -39,6 +40,7 @@ delta=false
 nvim=false
 pyenv=false
 fzf=false
+exa=false
 force=false
 while (( "$#" )); do
     case "$1" in
@@ -56,6 +58,8 @@ while (( "$#" )); do
             pyenv=true && shift ;;
         --fzf)
             fzf=true && shift ;;
+        --exa)
+            exa=true && shift ;;
         -f|--force)
             force=true && shift ;;
         --) # end argument parsing
@@ -73,6 +77,7 @@ if [ $machine == "Linux" ]; then
     [ $tmux == true ] && sudo apt-get install tmux 
     [ $delta == true ] && $DOT_DIR/install_scripts/install_delta.sh
     [ $nvim == true ] && $DOT_DIR/install_scripts/install_nvim.sh "release"
+    [ $exa == true ] && $DOT_DIR/install_scripts/install_exa.sh
     if [ $fzf == true ]; then
         rm -rf $HOME/.fzf
         git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
@@ -86,6 +91,7 @@ elif [ $machine == "Mac" ]; then
     [ $tmux == true ] && brew install tmux
     [ $delta == true ] && brew install git-delta
     [ $nvim == true ] && brew install neovim
+    [ $exa == true ] && brew install exa
     if [ $pyenv == true ]; then
         brew install pyenv
         brew install pyenv-virtualenv
