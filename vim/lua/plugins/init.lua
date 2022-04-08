@@ -15,14 +15,13 @@ return require('packer').startup({function()
   use 'wbthomason/packer.nvim'
 
   -- Completion
- use {
-    'neoclide/coc.nvim',
-    branch = 'release',
-    cond = { require('funcs').is_not_vscode },
-    opt=true,
-    keys = {'<leader>f', 'gd', 'gr', 'gh', 'gi'},
-    config = function() vim.cmd('source $HOME/git/dotfiles/vim/vimscript/coc.vim') end
-  } 
+  use {
+    'neovim/nvim-lspconfig',
+    config = function() require('plugins/lspconfig') end
+  }
+  use {
+    'ms-jpq/coq_nvim'
+  }
   -- Shortucts etc
   use {
     'preservim/nerdcommenter',

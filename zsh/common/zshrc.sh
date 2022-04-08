@@ -11,8 +11,13 @@ source $ZSH_DOT_DIR/common/dir_colors.sh
 VI_MODE_SET_CURSOR=true
 plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search vi-mode)
 
-# add ./local/bin to path
+# add ~/.local/bin to path
 p="${HOME}/.local/bin"
+if [[ "$PATH" != *"$p"* ]]; then
+  export PATH="$p:$PATH"
+fi
+# add ~/.npm-global/bin to path
+p="${HOME}/.npm-global/bin"
 if [[ "$PATH" != *"$p"* ]]; then
   export PATH="$p:$PATH"
 fi

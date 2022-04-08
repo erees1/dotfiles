@@ -40,7 +40,50 @@
             ]
           },
           {
-            "description": "Change left_option +hjkl to arrow keys",
+            "description": "Change ctrl-n and ctrl-p + up and down arrow keys",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "n",
+                  "modifiers": {
+                    "mandatory": ["left_control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "down_arrow"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "p",
+                  "modifiers": {
+                    "mandatory": ["left_control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "up_arrow"
+                  }
+                ],
+                "type": "basic",
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com.microsoft.VSCode"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Change left_option + hjkl to arrow keys",
             "manipulators": [
               {
                 "from": {
@@ -107,7 +150,7 @@
                 ],
                 "type": "basic",
                 "conditions": [
-                {
+                  {
                     "type": "frontmost_application_unless",
                     "bundle_identifiers": [
                       "^org\\.vim\\.",
@@ -123,7 +166,7 @@
                   "modifiers": {
                     "mandatory": ["left_option"],
                     "optional": ["any"]
-                }
+                  }
                 },
                 "to": [
                   {
@@ -145,13 +188,13 @@
             ]
           },
           {
-            "description": "Use shift+left_option+,/. to switch tabs in an application.",
+            "description": "Use left_option + ,/. to switch tabs in an application.",
             "manipulators": [
               {
                 "from": {
                   "key_code": "period",
                   "modifiers": {
-                    "mandatory": ["left_option", "left_shift"]
+                    "mandatory": ["left_option"]
                   }
                 },
                 "to": [
@@ -160,13 +203,23 @@
                     "modifiers": ["left_control"]
                   }
                 ],
-                "type": "basic"
+                "type": "basic",
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com.microsoft.VSCode"
+                    ]
+                  }
+                ]
               },
               {
                 "from": {
                   "key_code": "comma",
                   "modifiers": {
-                    "mandatory": ["left_option", "left_shift"]
+                    "mandatory": ["left_option"]
                   }
                 },
                 "to": [
@@ -175,7 +228,17 @@
                     "modifiers": ["left_control", "left_shift"]
                   }
                 ],
-                "type": "basic"
+                "type": "basic",
+                "conditions": [
+                  {
+                    "type": "frontmost_application_unless",
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com.microsoft.VSCode"
+                    ]
+                  }
+                ]
               }
             ]
           }
