@@ -11,8 +11,30 @@ function git_prepare() {
    zle accept-line
 }
 zle -N git_prepare
-bindkey -r "^G"
-bindkey "^G" git_prepare
+bindkey -r "\eg"
+bindkey "\eg" git_prepare
+
+function prepend-sudo {
+  if [[ $BUFFER != "sudo "* ]]; then
+    BUFFER="sudo $BUFFER"; CURSOR+=5
+    zle reset-prompt
+  fi
+}
+zle -N prepend-sudo
+bindkey "\es" prepend-sudo
+
+function fzf-vim {
+    selected=$(__fsel)
+      if [[ -z "$selected" ]]; then
+        zle redisplay
+        return 0
+      fi
+    zle push-line # Clear buffer
+    BUFFER="v $selected";
+    zle accept-line
+}
+zle -N fzf-vim
+bindkey "^v" fzf-vim
 
 # Set Up and Down arrow keys to the (zsh-)history-substring-search plugin
 # `-n` means `not empty`, equivalent to `! -z`
