@@ -16,6 +16,7 @@ _GDiffOpen = function()
     vim.api.nvim_set_current_win(cur_win)
 end
 
+
 vim.cmd [[
 augroup fugitive_au
   autocmd!
@@ -24,7 +25,8 @@ augroup fugitive_au
   autocmd FileType fugitive setlocal winhighlight=Normal:DiffViewNormal,VertSplit:DiffviewVertSplit,EndOfBuffer:DiffviewEndOfBuffer,SignColumn:DiffViewNormal
   autocmd FileType fugitive nnoremap <buffer> gs <cmd>lua _GClose()<CR> 
   autocmd FileType fugitive nnoremap <buffer> dd <cmd>lua _GDiffOpen()<CR>
-augroup END
+  autocmd FileType gitcommit wincmd J 
+  augroup END
 ]]
 
 vim.api.nvim_set_keymap('n', 'gs', '<cmd>lua _VertGStatus()<CR>', {noremap = true, silent = true})

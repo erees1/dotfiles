@@ -120,6 +120,14 @@ function _DiffviewClose()
 end
 
 
+-- Mappings specific to when you are in the viewer
+vim.cmd [[
+augroup diffview_au
+  autocmd!
+  autocmd FileType DiffviewFiles nnoremap <buffer> cc <cmd>Git commit<CR>
+augroup END
+]]
+
 vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua _DiffviewOpen()<CR>', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>lua _DiffviewClose()<CR>', {noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', '<leader>dh', '<cmd>lua _DiffviewFileHistory()<CR>', {noremap=true, silent=true })
