@@ -26,8 +26,8 @@ nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
 nnoremap <leader>q <Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>
 nnoremap <leader>f <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
 
-nnoremap <leader>gf <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>:echo 'YANKED RELATIVE FILE PATH'<CR>
-nnoremap <leader>gff <Cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FILE PATH'<CR>
+nnoremap <leader>yr <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>:echo 'YANKED RELATIVE FILE PATH'<CR>
+nnoremap <leader>yf <Cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FILE PATH'<CR>
 
 nnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 vnoremap <leader>rn <Cmd>call VSCodeNotify('editor.action.rename')<CR>
@@ -41,7 +41,6 @@ vnoremap <S-,> <Cmd>call VSCodeNotify('editor.action.outdentLines')<CR>
 vnoremap <S-.> <Cmd>call VSCodeNotify('editor.action.indentLines')<CR>
 nnoremap <S-,> <Cmd>call VSCodeNotify('editor.action.outdentLines')<CR>
 nnoremap <S-.> <Cmd>call VSCodeNotify('editor.action.indentLines')<CR>
-nnoremap <leader>s <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
 
 "Move through wrapped lines
 nnoremap gk :<C-u>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
