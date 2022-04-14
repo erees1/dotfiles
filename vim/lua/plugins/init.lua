@@ -9,7 +9,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute 'packadd packer.nvim'
 end
 
-return require('packer').startup({function()
+local packer = require('packer').startup({function()
 
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
@@ -17,10 +17,9 @@ return require('packer').startup({function()
   -- Completion
   use {
     'neovim/nvim-lspconfig',
-    config = function() require('plugins/lspconfig') end
-  }
-  use {
-    'ms-jpq/coq_nvim'
+    requires = {'ms-jpq/coq_nvim', opt=true},
+    config = function() require('plugins/lspconfig') end,
+    cond = { require('funcs').is_not_vscode },
   }
   -- Shortucts etc
   use {
@@ -39,7 +38,7 @@ return require('packer').startup({function()
     'kyazdani42/nvim-tree.lua',
     requires = {'kyazdani42/nvim-web-devicons'}, -- optional for icons
     cond = { require('funcs').is_not_vscode },
-    keys = {'<leader>e'},
+    opt = true,
     config = function() 
       require('plugins/nv-tree')
     end
@@ -92,7 +91,7 @@ return require('packer').startup({function()
 
   -- fzf file navigation
   use { 'ibhagwan/fzf-lua',
-  keys = {'<leader>tf', '<leader>tb', '<leader>tg', '<leader>tt'},
+  keys = {'<leader>tb', '<leader>tg', '<leader>tt'},
   requires = {
       {'vijaymarupudi/nvim-fzf', opt=true},
     'kyazdani42/nvim-web-devicons' }, -- optional for icons
@@ -127,3 +126,19 @@ config = {
     open_fn = require('packer.util').float,
   }
 }})
+
+
+function custom_load_map(binding, plugin)
+    local r = {noremap=true, silent=true}
+    cmd = string.format('<Cmd> lua require("packer.load")({\'%1s\'}, { keys = "%2s", prefix = "" }, _G.packer_plugins)<CR>', plugin, binding)
+    remap('n', binding, cmd, r)
+end
+
+if require('funcs').is_not_vscode then
+    -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
+    -- keys option provided by packer as that overides the vscode specific shortcut
+    custom_load_map('<leader>e', 'nvim-tree.lua')
+    custom_load_map('<leader>tf', 'fzf-lua')
+end
+
+return packer
