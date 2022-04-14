@@ -1,53 +1,54 @@
 -- Key Mappings
 -- Note this is not all key mappings, generally ones specific to a plugin are in the plug-config folder
+local r = {noremap=true, silent=true}
 
 -- <leader>s to save
-vim.api.nvim_set_keymap('n', '<leader>s', ':update<CR>', {noremap=true, silent=true }) -- leader s to save
+remap('n', '<leader>s', ':update<CR>', r) -- leader s to save
 
 -- Always use g mode which moves through wrapped lines as if they were actual lines
-vim.api.nvim_set_keymap('n', 'j', 'gj', {noremap=false, silent=true })
-vim.api.nvim_set_keymap('n', 'k', 'gk', {noremap=false, silent=true })
+remap('n', 'j', 'gj', {noremap=false, silent=true })
+remap('n', 'k', 'gk', {noremap=false, silent=true })
 
 -- Shift + HL to move to start and end of visual line
-vim.api.nvim_set_keymap('n', 'H', 'g^', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'L', 'g$', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'H', 'g^', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'L', 'g$', {noremap=true, silent=true })
+remap('n', 'H', 'g^', r)
+remap('n', 'L', 'g$', r)
+remap('v', 'H', 'g^', r)
+remap('v', 'L', 'g$', r)
 
 -- Shift + JK to move to top and bottom of the screen
-vim.api.nvim_set_keymap('n', 'J', 'L', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'K', 'H', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'J', 'L', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'K', 'H', {noremap=true, silent=true })
+remap('n', 'J', 'L', r)
+remap('n', 'K', 'H', r)
+remap('v', 'J', 'L', r)
+remap('v', 'K', 'H', r)
 
 -- Copy paste from system buffers to make copy paste behaviour more sane
-vim.api.nvim_set_keymap('v', 'y', '"+y', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'y', '"+y', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'Y', '"+y$', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'x', '"+x', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'x', '"+x', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'p', '"+p', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'p', '"+p', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', 'd', '"+d', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', 'd', '"+d', {noremap=true, silent=true })
+remap('v', 'y', '"+y', r)
+remap('n', 'y', '"+y', r)
+remap('n', 'Y', '"+y$', r)
+remap('v', 'x', '"+x', r)
+remap('n', 'x', '"+x', r)
+remap('v', 'p', '"+p', r)
+remap('n', 'p', '"+p', r)
+remap('v', 'd', '"+d', r)
+remap('n', 'd', '"+d', r)
 
 -- Quick fix navigation
-vim.api.nvim_set_keymap('n', '<M-n>', ':cn<CR>', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<M-p>', ':cp<CR>', {noremap=true, silent=true })
+remap('n', '<M-n>', ':cn<CR>', r)
+remap('n', '<M-p>', ':cp<CR>', r)
 
 -- <leader><space> to clear highlighing after search
-vim.api.nvim_set_keymap('n', '<Leader><space>', ':noh<CR>', {noremap=true, silent=true })
+remap('n', '<Leader><space>', ':noh<CR>', r)
 
 -- I always seem to delete stuff at the bottom of the file with d k so remove
-vim.api.nvim_set_keymap('n', 'dk', '<Nop>', {noremap=true, silent=true })
+remap('n', 'dk', '<Nop>', r)
 
 -- Keep it centered
-vim.api.nvim_set_keymap('n', 'n', 'nzzzv', {noremap=true, silent=true })
+remap('n', 'n', 'nzzzv', r)
 
 -- Undo these breakpoints when in insert mode
-vim.api.nvim_set_keymap('i', ',', ',<c-g>u', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('i', '.', '.<c-g>u', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('i', '(', '(<c-g>u', {noremap=true, silent=true })
+remap('i', ',', ',<c-g>u', r)
+remap('i', '.', '.<c-g>u', r)
+remap('i', '(', '(<c-g>u', r)
 
 -- Add new line without entering insert mode
-vim.api.nvim_set_keymap('n', '<leader>o', ':<C-u>call append(line("."), repeat([""], v:count1))<CR>', { noremap = true, silent = true })
+remap('n', '<leader>o', ':<C-u>call append(line("."), repeat([""], v:count1))<CR>', r)
