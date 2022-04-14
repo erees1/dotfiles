@@ -1,6 +1,6 @@
 
 lua << EOF
-package.loaded['onedark'] = nil
+package.loaded['themes.onedark'] = nil
 
 require("themes.onedark")
 EOF
