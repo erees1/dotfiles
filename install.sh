@@ -90,7 +90,11 @@ elif [ $machine == "Mac" ]; then
     [ $zsh == true ] && brew install zsh
     [ $tmux == true ] && brew install tmux
     [ $delta == true ] && brew install git-delta
-    [ $nvim == true ] && brew install neovim
+    if [ $nvim == true ]; then 
+        brew install neovim
+        # Node is used to install language servers in vim/setup_init.sh
+        brew install node
+    fi
     [ $exa == true ] && brew install exa
     if [ $pyenv == true ]; then
         brew install pyenv
