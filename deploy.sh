@@ -49,7 +49,10 @@ if [ $LOC == 'local' ]; then
 
     mkdir -p $HOME/.ssh
     ln -sf "$DOT_DIR/config/ssh_config" "$HOME/.ssh/config"
-    
+
+    # By default when you hold a key on mac it brings up the accents menu
+    # This means you can't hold vim keys in vscode so disable it
+    defaults write -g ApplePressAndHoldEnabled -bool false  
 fi
 # Relaunch zsh
 zsh
