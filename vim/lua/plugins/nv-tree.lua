@@ -40,7 +40,15 @@ require'nvim-tree'.setup {
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
     width = require('settings').tree_width,
-  }
+    mappings = {
+      list = {
+        { key = "<C-s>", action = "split" },
+      }
+    }
+  },
+  renderer = {
+  indent_markers = {enable = false}
+}
 }
 
 
