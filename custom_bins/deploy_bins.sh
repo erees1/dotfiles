@@ -1,3 +1,4 @@
+mkdir -p $HOME/.local/bin
 rm -f $HOME/.local/bin/yk $HOME/.local/bin/rl
 
 ln -sf $DOT_DIR/custom_bins/yank.sh $HOME/.local/bin/yk
