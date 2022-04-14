@@ -1,16 +1,16 @@
 Host vm
   HostName edwardr.dev-vms.speechmatics.io
   User edwardr
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_rsa
 Host vm-no-singularity
   HostName edwardr.dev-vms.speechmatics.io
   User edwardr
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_rsa
 Host b2
   HostName b2.aml.speechmatics.io
   User edwardr
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_rsa
 Host b5
   HostName b5.aml.speechmatics.io
   User edwardr
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_rsa

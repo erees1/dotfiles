@@ -46,6 +46,10 @@ if [ $LOC == 'local' ]; then
     # Karabiner elements mapping
     mkdir -p $HOME/.config/karabiner
     ln -sf "$DOT_DIR/config/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+
+    mkdir -p $HOME/.ssh
+    ln -sf "$DOT_DIR/config/ssh_config" "$HOME/.ssh/config"
+    
 fi
 # Relaunch zsh
 zsh
