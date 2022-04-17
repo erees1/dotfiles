@@ -43,4 +43,8 @@ vim.api.nvim_command([[
 au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
 ]])
 
+-- Use neovim 0.7 filetype.lua for matching filetypes and don't use fallback (for speed)
+vim.g.do_filetype_lua = 1  
+vim.g.did_load_filetypes = 0
+
 return M

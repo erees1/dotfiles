@@ -9,6 +9,7 @@ function M.init (C)
       NvimTreeIndentMarker = { fg = C.gray },
       NvimTreeNormal = { fg = C.light_gray, bg = C.alt_bg },
       NvimTreeVertSplit = { fg = C.alt_bg, bg = C.alt_bg },
+      NvimTreeWinSeparator = { fg = C.alt_bg, bg = C.alt_bg },
       NvimTreeFolderName = { fg = C.blue },
       NvimTreeFolderIcon = { fg = C.blue },
       NvimTreeRootFolder = { fg = C.fg, style = "bold" },

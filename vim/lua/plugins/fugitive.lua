@@ -22,7 +22,7 @@ augroup fugitive_au
   autocmd!
   autocmd FileType fugitive setlocal winfixwidth
   autocmd FileType fugitive setlocal nonumber | setlocal norelativenumber
-  autocmd FileType fugitive setlocal winhighlight=Normal:DiffViewNormal,VertSplit:DiffviewVertSplit,EndOfBuffer:DiffviewEndOfBuffer,SignColumn:DiffViewNormal
+  autocmd FileType fugitive setlocal winhighlight=Normal:DiffViewNormal,WinSeparator:DiffviewVertSplit,EndOfBuffer:DiffviewEndOfBuffer,SignColumn:DiffViewNormal
   autocmd FileType fugitive nnoremap <buffer> gs <cmd>lua _GClose()<CR> 
   autocmd FileType fugitive nnoremap <buffer> dd <cmd>lua _GDiffOpen()<CR>
   autocmd FileType gitcommit wincmd J 
