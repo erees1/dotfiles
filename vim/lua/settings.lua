@@ -3,6 +3,7 @@ local M = {}
 
 -- Config options
 M.tree_width = 35
+M.diff_view_width = 45
 M.fzf_on_startup = false
 M.open_tree_on_startup = false
 M.git_window_width = 50

@@ -1,5 +1,6 @@
 -- Lua
 local cb = require'diffview.config'.diffview_callback
+width = require'settings'.diff_view_width
 
 require'diffview'.setup {
   diff_binaries = false,    -- Show diffs for binaries
@@ -15,7 +16,7 @@ require'diffview'.setup {
   },
   file_panel = {
     position = "left",            -- One of 'left', 'right', 'top', 'bottom'
-    width = 35,                   -- Only applies when position is 'left' or 'right'
+    width = width,                   -- Only applies when position is 'left' or 'right'
     height = 10,                  -- Only applies when position is 'top' or 'bottom'
     listing_style = "tree",       -- One of 'list' or 'tree'
     tree_options = {              -- Only applies when listing_style is 'tree'
@@ -25,7 +26,7 @@ require'diffview'.setup {
   },
   file_history_panel = {
     position = "bottom",
-    width = 35,
+    width = width,
     height = 16,
     log_options = {
       max_count = 256,      -- Limit the number of commits
@@ -105,12 +106,12 @@ require'diffview'.setup {
 }
 
 function _DiffviewOpen()
-    require'bufferline.state'.set_offset(require('settings').tree_width + 1, 'FileTree')
+    require'bufferline.state'.set_offset(require('settings').diff_view_width + 1, 'FileTree')
     vim.cmd("DiffviewOpen")
 end
 
 function _DiffviewFileHistory()
-    require'bufferline.state'.set_offset(require('settings').tree_width + 1, 'FileTree')
+    require'bufferline.state'.set_offset(require('settings').diff_view_width + 1, 'FileTree')
     vim.cmd("DiffviewFileHistory")
 end
 
