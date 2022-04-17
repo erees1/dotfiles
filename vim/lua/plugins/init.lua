@@ -21,22 +21,18 @@ local packer = require('packer').startup({function()
     config = function() require('plugins/lspconfig') end,
     cond = { require('funcs').is_not_vscode },
   }
+
   -- Shortucts etc
-  use {
-    'preservim/nerdcommenter',
-    keys={"<leader>cc", "<leader>cip"},
-    setup = function() vim.api.nvim_set_var('NERDCreateDefaultMappings', 0) end,
-    config = function() require('plugins/nerdcommenter') end
-  }
+  use{'tpope/vim-commentary'}
   use {
     'christoomey/vim-tmux-navigator',
     cond = { require('funcs').is_not_vscode },
   }
 
   -- Nvim tree / explorer stuff
+  use {'kyazdani42/nvim-web-devicons'}
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = {'kyazdani42/nvim-web-devicons'}, -- optional for icons
     cond = { require('funcs').is_not_vscode },
     opt = true,
     config = function() 
@@ -45,7 +41,6 @@ local packer = require('packer').startup({function()
   }
   use {
     'romgrk/barbar.nvim',
-    requires = {'kyazdani42/nvim-web-devicons'},
     cond = { require('funcs').is_not_vscode },
     config = function()
       require('plugins/barbar')
@@ -115,6 +110,7 @@ local packer = require('packer').startup({function()
     opt=true,
     cmd='MarkdownPreview',
   }
+
   -- Copy to OSC52
   use {
     'ojroques/vim-oscyank',
@@ -128,17 +124,17 @@ config = {
 }})
 
 
-function custom_load_map(binding, plugin)
+
+if require('funcs').is_not_vscode then
+  function custom_load_map(binding, plugin)
     local r = {noremap=true, silent=true}
     cmd = string.format('<Cmd> lua require("packer.load")({\'%1s\'}, { keys = "%2s", prefix = "" }, _G.packer_plugins)<CR>', plugin, binding)
     remap('n', binding, cmd, r)
-end
-
-if require('funcs').is_not_vscode then
-    -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
-    -- keys option provided by packer as that overides the vscode specific shortcut
-    custom_load_map('<leader>e', 'nvim-tree.lua')
-    custom_load_map('<leader>tf', 'fzf-lua')
+  end
+  -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
+  -- keys option provided by packer as that overides the vscode specific shortcut
+  custom_load_map('<leader>e', 'nvim-tree.lua')
+  custom_load_map('<leader>tf', 'fzf-lua')
 end
 
 return packer
