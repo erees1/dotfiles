@@ -122,14 +122,15 @@ end
 
 
 -- Mappings specific to when you are in the viewer
-vim.cmd [[
-augroup diffview_au
-  autocmd!
-  autocmd FileType DiffviewFiles nnoremap <buffer> cc <cmd>Git commit<CR>
-augroup END
-]]
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "DiffviewFiles",
+    callback = function(args)
+        vim.api.nvim_buf_set_keymap(0, 'n', 'cc', '<cmd>Git commit<CR>', {silent=true, noremap = true})
+    end,
+})
 
-vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua _DiffviewOpen()<CR>', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>lua _DiffviewClose()<CR>', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>dh', '<cmd>lua _DiffviewFileHistory()<CR>', {noremap=true, silent=true })
-vim.api.nvim_set_keymap('n', '<leader>df', ':DiffviewToggleFiles<CR>', {noremap=true, silent=true })
+
+vim.api.nvim_set_keymap('n', '<leader>do', '', {noremap=true, silent=true, callback = _DiffviewOpen})
+vim.api.nvim_set_keymap('n', '<leader>dc', '', {noremap=true, silent=true, callback = _DiffviewClose})
+vim.api.nvim_set_keymap('n', '<leader>dh', '', {noremap=true, silent=true, callback = _DiffviewFileHistory})
+vim.api.nvim_set_keymap('n', '<leader>df', ':DiffviewToggleFiles<CR>', {noremap=true, silent=true})

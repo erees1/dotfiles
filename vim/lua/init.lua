@@ -3,7 +3,7 @@ vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true}
 vim.g.mapleader = ' '
 remap = vim.api.nvim_set_keymap
 
-if require('funcs').is_not_vscode then
+if require('funcs').is_not_vscode() then
     require('statusline')
     require('settings')
 end
@@ -12,3 +12,7 @@ require('plugins')
 -- Keybindings need to be compatible with vscode
 require('keybindings')
 
+if not require('funcs').is_not_vscode() then
+    -- Do this at the end
+    require('vscode-keys')
+end

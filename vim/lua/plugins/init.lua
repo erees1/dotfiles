@@ -33,11 +33,10 @@ local packer = require('packer').startup({function()
   use {'kyazdani42/nvim-web-devicons'}
   use {
     'kyazdani42/nvim-tree.lua',
-    cond = { require('funcs').is_not_vscode },
     opt = true,
-    config = function() 
+    config = function()
       require('plugins/nv-tree')
-    end
+  end
   }
   use {
     'romgrk/barbar.nvim',

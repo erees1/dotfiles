@@ -1,44 +1,35 @@
--- Config
-local M = {}
-
--- Config options
-M.tree_width = 35
-M.diff_view_width = 45
-M.fzf_on_startup = false
-M.open_tree_on_startup = false
-M.git_window_width = 50
-
 -- Vim options
 vim.o.termguicolors = true -- Needed for colors
 vim.cmd('colorscheme onedark')
 
-vim.cmd('set shm+=I') -- don't show intro screen
-vim.cmd('set noshowmode') -- don't show --INSERT--
-
-vim.cmd('set expandtab') -- Converts tabs to spaces
-vim.cmd('set ts=4') -- Insert 2 spaces for a tab
-vim.cmd('set sw=4') -- Change the number of space characters inserted for indentation
-vim.cmd('set smartindent')
-vim.cmd('set autoindent')
+vim.opt.shortmess:append "sI" -- Disable nvim intro
+vim.cmd("set noshowmode")-- don't show --INSERT--
+vim.o.lazyredraw = true       -- Faster scrolling
+vim.o.expandtab = true -- Converts tabs to spaces
+vim.o.ts = 4 -- Insert 4 spaces for a tab
+vim.o.sw = 4 -- Change the number of space characters inserted for indentation
+vim.o.smartindent = true
+vim.o.autoindent = true
 vim.cmd('set formatoptions-=o') -- Don't continue comments when pressing o or O
 
-vim.cmd('set cursorline')
+vim.o.cursorline = true
 vim.o.mouse = 'a' -- Enable mouse in all modes
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.cmd(':hi NoneText guifg=bg')
 
-vim.cmd('set ttimeoutlen=0')
+vim.o.ttimeoutlen = 0
 
 -- When searching ignore case of search term unless it has caps
-vim.cmd('set smartcase')
-vim.cmd('set ignorecase')
+vim.o.smartcase = true
+vim.o.ignorecase = true
 
 --Persistent history
-vim.cmd('set undodir=/tmp/.vim-undo-dir')
-vim.cmd('set undofile')
+vim.o.undodir = "/tmp/.vim-undo-dir"
+vim.o.undofile = true
 
-vim.cmd('set fillchars=diff:/')
+vim.o.fillchars = "diff:/"
+
 
 vim.api.nvim_command([[
 au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
@@ -48,4 +39,11 @@ au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeo
 vim.g.do_filetype_lua = 1  
 vim.g.did_load_filetypes = 0
 
+-- Config
+local M = {}
+
+-- Config options
+M.tree_width = 35
+M.diff_view_width = 45
+M.git_window_width = 50
 return M

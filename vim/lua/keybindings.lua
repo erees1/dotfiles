@@ -52,3 +52,6 @@ remap('i', '(', '(<c-g>u', r)
 
 -- Add new line without entering insert mode
 remap('n', '<leader>o', ':<C-u>call append(line("."), repeat([""], v:count1))<CR>', r)
+
+-- Only window and reset bufferline to 0 offset
+remap('n', 'mo', '<C-W><C-O>', {callback = require('funcs').reset_bufferline, r[0], r[1]})
