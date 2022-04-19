@@ -5,6 +5,7 @@ local M = {}
 
 -- possible values are 'arrow' | 'rounded' | 'blank'
 local active_sep = "blank"
+vim.cmd('set laststatus=3')
 
 -- change them if you want to different separator
 M.separators = {
@@ -15,19 +16,18 @@ M.separators = {
 
 -- highlight groups
 M.colors = {
-  active       = "%#StatusLine#",
+  active       = "%#StatusLineCentre#",
   inactive     = "%#StatusLineNC#",
   mode         = "%#StatusLineMode#",
   mode_alt     = "%#StatusLineModeAlt#",
   git          = "%#StatusLineGit#",
   git_alt      = "%#StatusLineGitAlt#",
-  filetype     = "%#StatusLineFT#",
+  filetype     = "%#StatusLineFiletype#",
   filetype_alt = "%#StatusLineFTAlt#",
-  line_col     = "%#StatusLineLCol#",
-  line_col_alt = "%#StatusLineLColAlt#",
+  line_col     = "%#StatusLineCentre#",
+  line_col_alt = "%#StatusLineCentre#",
   lsp          = "%#StatusLineLSP#",
-  filename     = "%#StatusLineFileName#",
-  highlight    = "%#StatusLineHighlight#",
+  filename     = "%#StatusLineCentre#",
 }
 
 M.trunc_width = setmetatable({
@@ -74,7 +74,7 @@ M.modes = setmetatable({
 M.get_current_mode = function(self)
   local current_mode = api.nvim_get_mode().mode
   local mode_indicator = self.modes[current_mode]
-  local color = (mode_indicator == "I" and M.colors.highlight or M.colors.mode)
+  local color = M.colors.mode
   return string.format("%s %s ", color, mode_indicator) 
 end
 
@@ -89,8 +89,8 @@ M.get_git_status = function(self)
   end
 
   return is_head_empty and string.format(
-    " +%s ~%s -%s |  %s ",
-    signs.added, signs.changed, signs.removed, signs.head
+    "  %s | +%s ~%s -%s ",
+    signs.head, signs.added, signs.changed, signs.removed
   ) or ""
 end
 
@@ -157,11 +157,11 @@ M.set_active = function(self)
 
   local filename = string.format(
     "%s%s%s%s%s",
-    colors.inactive,
+    colors.filename,
     self:get_filepath(),
-    colors.inactive,
+    colors.filename,
     self:get_filename(),
-    colors.inactive
+    colors.active
   )
 
   local filetype_alt = colors.filetype_alt .. self.separators[active_sep][2]
@@ -173,44 +173,20 @@ M.set_active = function(self)
   return table.concat {
     mode,
     mode_alt,
+    git,
+    git_alt,
     filename,
     "%=",
     lsp,
+    line_col,
+    line_col_alt,
     filetype_alt,
     filetype,
-    git,
-    git_alt,
   }
 end
 
-M.set_inactive = function(self, name)
-  name = name or "%F"
-  return self.colors.inactive .. "%= " .. name .. "%="
+function Statusline()
+    return M.set_active(M)
 end
 
-M.set_explorer = function(self)
-  local title = self.colors.mode .. "   "
-  local title_alt = self.colors.mode_alt .. self.separators[active_sep][2]
-
-  return self.colors.active .. title .. title_alt
-end
-
-function Statusline (mode, arg)
-    return M["set_" .. mode](M, arg)
-end
-
--- set statusline
--- TODO(elianiva): replace this once we can define autocmd using lua
-vim.cmd [[
-  augroup Statusline
-  au!
-  au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline('active')
-  au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline('inactive')
-  au WinEnter,BufEnter *NvimTree* setlocal statusline=%!v:lua.Statusline('explorer')
-  au WinLeave,BufLeave *NvimTree* setlocal statusline=%!v:lua.Statusline('inactive','NvimTree')
-  au WinEnter,BufEnter *.git/index* setlocal statusline=%!v:lua.Statusline('explorer')
-  au WinLeave,BufLeave *.git/index* setlocal statusline=%!v:lua.Statusline('inactive','GitStatus')
-  au WinEnter,BufEnter *Diffview* setlocal statusline=%!v:lua.Statusline('explorer')
-  au WinLeave,BufLeave *Diffview* setlocal statusline=%!v:lua.Statusline('inactive','DiffView')
-  augroup END
-]]
+vim.cmd [[set statusline=%!v:lua.Statusline()]]
