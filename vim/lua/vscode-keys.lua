@@ -8,7 +8,7 @@ remap('n', '<C-h>', "<cmd>call VSCodeNotify('workbench.action.navigateLeft')<CR>
 remap('n', '<C-l>', "<cmd>call VSCodeNotify('workbench.action.navigateRight')<CR>", r)
 remap('n', '<C-w>_',  "<cmd><C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>", r)
 
-remap('n', 'gr', "call VSCodeNotify('editor.action.goToReferences')<CR>", r)
+remap('n', 'gr', "<cmd>call VSCodeNotify('editor.action.goToReferences')<CR>", r)
 remap('n', '<leader>e', "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>", r)
 remap('n', '<leader>tf', "<cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>", r)
 remap('n', '<leader>s', "<cmd>call VSCodeNotify('workbench.action.files.save')<CR>", r)
