@@ -50,7 +50,7 @@ function M.init (C)
       Title = { fg = C.blue, style = "bold" },
       ErrorMsg = { fg = C.error_red, bg = C.bg, style = "bold" },
       Search = { fg = C.light_gray, bg = C.search_blue },
-      IncSearch = { fg = C.light_gray, bg = C.search_blue },
+      IncSearch = { fg = C.light_gray, bg = C.search_blue, style = "NONE" },
       Substitute = { fg = C.light_gray, bg = C.search_orange },
       MoreMsg = { fg = C.orange },
       Question = { fg = C.orange },
@@ -106,12 +106,12 @@ function M.init (C)
       CmpItemMenu = { fg = C.light_gray, bg = C.none },
       StatusLine = { fg = C.gray, bg = C.fg, style = "bold" },
       StatusLineCentre = { fg = C.fg, bg = C.fg_gutter, style = "bold" },
-      StatusLineNC = { fg = C.fg, bg = C.context, style = nil },
+      StatusLineNC = { fg = C.context, bg = C.bg, style = "NONE" },
       StatusLineGit = { fg = C.fg, bg = C.context, style = "bold" },
       StatusLineMode = { fg = C.bg, bg = C.orange, style = "bold" },
       StatusLineModeAlt = { fg = C.bg, bg = C.blue, style = "bold" },
       StatusLineTerm = { fg = C.fg, bg = C.context, style = "bold" },
-      StatusLineTermNC = { fg = C.fg, bg = C.context, style = nil },
+      StatusLineTermNC = { fg = C.context, bg = C.bg, style = "NONE" },
     }
     return highlights
 end
