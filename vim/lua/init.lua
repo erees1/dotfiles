@@ -1,18 +1,18 @@
 -- Set leader
-vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true, silent = true})
-vim.g.mapleader = ' '
+vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true })
+vim.g.mapleader = " "
 remap = vim.api.nvim_set_keymap
 
-if require('funcs').is_not_vscode() then
-    require('statusline')
-    require('settings')
+if require("funcs").is_not_vscode() then
+	require("statusline")
+	require("settings")
 end
 -- Packer plugins should use vscode checks
-require('plugins')
+require("plugins")
 -- Keybindings need to be compatible with vscode
-require('keybindings')
+require("keybindings")
 
-if not require('funcs').is_not_vscode() then
-    -- Do this at the end
-    require('vscode-keys')
+if not require("funcs").is_not_vscode() then
+	-- Do this at the end
+	require("vscode-keys")
 end
