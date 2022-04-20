@@ -16,6 +16,28 @@
                 },
                 "rules": [
                     {
+                        "description": "Hold tab for right command",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "tab"
+                                    
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_command"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "tab"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Change caps_lock to control when used as modifier, escape when used alone",
                         "manipulators": [
                             {
