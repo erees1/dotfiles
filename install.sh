@@ -134,10 +134,10 @@ else
 
 fi
 if [ -d $HOME/.tmux/plugins/tpm ] && [ "$force" = "false" ]; then
-    rm -rf $HOME/.tmux/plugins/tpm
     echo "Skipping download of tmux plugin manager, pass --force to force redeownload"
 else
     # Tmux plugin manager
+    rm -rf $HOME/.tmux/plugins/tpm
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "

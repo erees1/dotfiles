@@ -11,6 +11,7 @@ vim.o.sw = 4 -- Change the number of space characters inserted for indentation
 vim.o.smartindent = true
 vim.o.autoindent = true
 vim.cmd("set formatoptions-=o") -- Don't continue comments when pressing o or O
+vim.o.scrolloff = 3
 
 vim.o.cursorline = true
 vim.o.mouse = "a" -- Enable mouse in all modes
