@@ -53,8 +53,6 @@ local packer = require("packer").startup({
             "nvim-treesitter/nvim-treesitter",
             opt = true,
             run = ":TSUpdate",
-            cond = { require("funcs").is_not_vscode },
-            ft = { "python" },
             config = function()
                 require("nvim-treesitter.configs").setup({
                     ensure_installed = { "python" },
