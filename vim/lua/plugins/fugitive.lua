@@ -30,6 +30,5 @@ augroup fugitive_au
 
 vim.api.nvim_set_keymap("n", "gs", "<cmd>lua _VertGStatus()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ds", ":Gvdiffsplit!<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "mo", ":call ResetBarBarOffset()<CR> <C-W><C-O>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "mh", ":diffget //2<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "ml", ":diffget //3<CR>", { noremap = true, silent = true })

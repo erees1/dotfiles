@@ -54,4 +54,7 @@ remap("i", "(", "(<c-g>u", r)
 remap("n", "<leader>o", ':<C-u>call append(line("."), repeat([""], v:count1))<CR>', r)
 
 -- Only window and reset bufferline to 0 offset
-remap("n", "mo", "<C-W><C-O>", { callback = require("funcs").reset_bufferline, r[0], r[1] })
+remap("n", "mo", "", { callback = function() 
+    vim.cmd(':wincmd o')
+    require("funcs").reset_bufferline()
+end, r[0], r[1] })
