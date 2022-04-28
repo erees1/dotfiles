@@ -122,6 +122,7 @@ alias ga="git add"
 alias gaa="git add ."
 alias gau="git add -u"
 alias gc="git commit -m"
+alias gcane='git commit --amend --no-edit'
 alias gp="git push"
 alias gpf="git push -f"
 
