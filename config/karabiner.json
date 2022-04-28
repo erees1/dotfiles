@@ -33,6 +33,11 @@
                                         "key_code": "tab"
                                     }
                                 ],
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "tab"
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
