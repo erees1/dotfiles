@@ -6,9 +6,10 @@ HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
 TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboard:20210213"
 
 # Quick navigation add more here
-alias a="cd ~/git/aladdin"
-alias a2="cd ~/git/aladdin2"
-alias a3="cd ~/git/aladdin3"
+# Started using worktrees in aladdin so updated here
+alias a="cd ~/git/aladdin/master"
+alias a2="cd ~/git/aladdin/rtd"
+alias a3="cd ~/git/aladdin/vad"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
 alias core2="cd /perish_aml02/$(whoami)/git/coreasr2"
@@ -35,12 +36,8 @@ alias b5="ssh b5"
 
 # Change to aladdin directory and activate SIF
 alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
-alias msa2="make -C /home/$(whoami)/git/aladdin2/ shell"
-alias msa3="make -C /home/$(whoami)/git/aladdin3/ shell"
 # Activate aladdin SIF in current directory
 alias msad="/home/$(whoami)/git/aladdin/env/singularity.sh -c "$SHELL""
-alias msad2="/home/$(whoami)/git/aladdin2/env/singularity.sh -c "$SHELL""
-alias msad3="/home/$(whoami)/git/aladdin3/env/singularity.sh -c "$SHELL""
 
 # Misc
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
