@@ -34,4 +34,5 @@ fi
 
 ln -sf $HOME/git/dotfiles/vim/lua $HOME/.config/nvim
 ln -sf $HOME/git/dotfiles/vim/colors $HOME/.config/nvim
+ln -sf $HOME/git/dotfiles/vim/after $HOME/.config/nvim
 

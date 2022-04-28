@@ -66,7 +66,7 @@ function M.init(C)
 		Identifier = { fg = C.fg },
 		Function = { fg = C.blue },
 		Operator = { fg = C.purple },
-		Type = { fg = C.yellow },
+		Type = { fg = C.yellow , style = "NONE"},
 		StorageClass = { fg = C.cyan },
 		Structure = { fg = C.yellow },
 		Typedef = { fg = C.yellow },
