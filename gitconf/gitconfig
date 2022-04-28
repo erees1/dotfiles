@@ -29,3 +29,6 @@
     helper = cache
 [pull]
     rebase = true
+[alias]
+	clone-for-worktrees = "!/bin/bash $HOME/git/dotfiles/custom_bins/clone_for_worktree.sh"
+
