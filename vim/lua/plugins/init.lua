@@ -48,21 +48,6 @@ local packer = require("packer").startup({
             end,
         })
 
-        -- Treesitter for better highlighting
-        use({
-            "nvim-treesitter/nvim-treesitter",
-            opt = true,
-            run = ":TSUpdate",
-            config = function()
-                require("nvim-treesitter.configs").setup({
-                    ensure_installed = { "python" },
-                    highlight = {
-                        enable = true,
-                    },
-                })
-            end,
-        })
-
         -- Git
         use({
             "lewis6991/gitsigns.nvim",
