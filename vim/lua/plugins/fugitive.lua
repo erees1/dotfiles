@@ -25,7 +25,8 @@ augroup fugitive_au
   autocmd FileType fugitive nnoremap <buffer> gs <cmd>lua _GClose()<CR> 
   autocmd FileType fugitive nnoremap <buffer> dd <cmd>lua _GDiffOpen()<CR>
   autocmd FileType gitcommit wincmd J 
-  augroup END
+  autocmd BufReadPost fugitive://* set bufhidden=delete
+augroup END
 ]])
 
 vim.api.nvim_set_keymap("n", "gs", "<cmd>lua _VertGStatus()<CR>", { noremap = true, silent = true })
