@@ -1,5 +1,7 @@
 -- Language servers for lsp
 local nvim_lsp = require("lspconfig")
+
+-- Coq for autocomplete
 local coq = require("coq")
 vim.cmd("let g:coq_settings = { 'keymap.jump_to_mark' : '' }")
 
@@ -39,7 +41,8 @@ nvim_lsp.pyright.setup({
 })
 
 -- Bit of a hack to disable the pyright diagnostics as I use flake8 instead
--- Assuming this must come before I register any other diagnostics 
+-- Assuming this must come before I register any other diagnostics
+-- TODO: prevent this from disabling clangd diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
 
 nvim_lsp.bashls.setup({
@@ -58,3 +61,8 @@ require("null-ls").setup({
         require("null-ls").builtins.formatting.black,
     },
 })
+
+nvim_lsp.clangd.setup({
+    on_attch = on_attach,
+})
+nvim_lsp.clangd.setup(coq.lsp_ensure_capabilities({}))

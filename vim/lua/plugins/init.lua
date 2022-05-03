@@ -8,7 +8,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
     execute("packadd packer.nvim")
 end
-
+vim.g.coq_settings = {
+    auto_start =  'shut-up'
+}
 local packer = require("packer").startup({
     function()
         -- Packer can manage itself
@@ -17,7 +19,11 @@ local packer = require("packer").startup({
         -- Completion
         use({
             "neovim/nvim-lspconfig",
-            requires = { "ms-jpq/coq_nvim", opt = true, "jose-elias-alvarez/null-ls.nvim", opt = true },
+            requires = {
+                { "ms-jpq/coq_nvim" },
+                { "ms-jpq/coq.artifacts", branch = "artifacts" },
+                { "jose-elias-alvarez/null-ls.nvim" },
+            },
             config = function()
                 require("plugins/lspconfig")
             end,
