@@ -58,3 +58,5 @@ remap("n", "mo", "", { callback = function()
     vim.cmd(':wincmd o')
     require("funcs").reset_bufferline()
 end, r[0], r[1] })
+
+remap("n", "q:", ":q<CR>", r)
