@@ -59,4 +59,13 @@ remap("n", "mo", "", { callback = function()
     require("funcs").reset_bufferline()
 end, r[0], r[1] })
 
+-- Quit with q: instead of bringing up cmd mode
 remap("n", "q:", ":q<CR>", r)
+
+-- Start/end of line with ctrl-q ctrl-e in insert mode
+remap("i", "<c-q>", "<c-o>^", r)
+remap("i", "<c-e>", "<c-o>$", r)
+
+-- Ctrl-delete insert mode to delte forward a word
+-- remap("i", "<c-del>", "<space><esc>ce", r)
+-- remap("i", "<c-s-del>", "<esc>lcW", r)
