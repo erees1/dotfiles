@@ -54,3 +54,10 @@ bindkey -s ^f "tsesh\n"
 # To match my custom vim bindings
 bindkey -M vicmd 'H' beginning-of-line
 bindkey -M vicmd 'L' end-of-line
+
+# Use c-q to go to start of line c-a as tmux leader
+bindkey -r "^a"
+bindkey -r '^q'
+bindkey -M viins '^q' beginning-of-line
+
+bindkey -s '^a' "tsesh ~/git/aladdin\n"
