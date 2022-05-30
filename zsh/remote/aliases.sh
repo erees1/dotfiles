@@ -9,7 +9,6 @@ TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboar
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
 alias a="cd ~/git/aladdin/rtd"
-alias a2="cd ~/git/aladdin/vad"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
 alias core2="cd /perish_aml02/$(whoami)/git/coreasr2"
@@ -34,10 +33,8 @@ alias b3="ssh b3"
 alias b4="ssh b4"
 alias b5="ssh b5"
 
-# Change to aladdin directory and activate SIF
-alias msa="make -C /home/$(whoami)/git/aladdin/ shell"
-# Activate aladdin SIF in current directory
-alias msad="/home/$(whoami)/git/aladdin/env/singularity.sh -c "$SHELL""
+# Activate aladdin master SIF in current directory
+alias msam="/home/$(whoami)/git/aladdin/master/env/singularity.sh -c "$SHELL""
 
 # Misc
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
