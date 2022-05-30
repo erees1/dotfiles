@@ -1532,7 +1532,7 @@
   # behavior where they contain the end times of their preceding commands.
   typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=false
   # Custom icon.
-  # typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=''
   # Custom prefix.
   #typeset -g POWERLEVEL9K_TIME_PREFIX='%fat '
 
@@ -1548,7 +1548,8 @@
   function prompt_singularity() {
     if [ ! -z "$SINGULARITY_CONTAINER" ]; then
       name=$(echo ${SINGULARITY_CONTAINER} | awk -F/ '{print $(NF-0)}')
-      p10k segment -f 031 -i '💫' -t "${name}"
+      code_dir=$(basename $CODE_DIR)
+      p10k segment -f 031 -i '💫' -t "$code_dir - ${name}"
     fi
   }
 
