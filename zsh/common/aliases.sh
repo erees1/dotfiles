@@ -138,6 +138,10 @@ alias grbc="git rebase --continue"
 alias grbs="git rebase --skip"
 alias grba="git rebase --abort"
 
+alias gm="git merge"
+alias gmm="git merge master"
+alias gmom="git pull --rebase=false origin master"
+
 alias gd="git diff"
 alias gdt="git difftool"
 alias gs="git status"
@@ -146,7 +150,7 @@ alias gco="git checkout"
 alias gcb="git checkout -b"
 alias gcm="git checkout master"
 
-alias grhead="git reset HEAD^"
+alias grhead="git reset HEAD"
 alias grewind="git reset HEAD^1"
 alias grhard="git fetch origin && git reset --hard"
 
@@ -178,7 +182,7 @@ alias tdel="tmux kill-session -t"
 #-------------------------------------------------------------
 
 alias l="ls -CF --color=auto"
-alias ll="exa -bghl --git --color=automatic --group-directories-first"
+alias ll="exa -bghla --git --color=automatic --group-directories-first"
 alias la='ls -Al'         # show hidden files
 alias lx='ls -lXB'        # sort by extension
 alias lk='ls -lSr'        # sort by size, biggest last
