@@ -9,6 +9,7 @@ TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboar
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
 alias a="cd ~/git/aladdin/rtd"
+alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
 alias core2="cd /perish_aml02/$(whoami)/git/coreasr2"
@@ -124,6 +125,9 @@ alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding
 alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
 alias wq="watch qstat"
 alias wqq="watch $full_queue"
+alias qt="qtail"
+alias qtf="qtail -f"
+alias qtl="qtail -l"
 
 # Queue functions
 qlogin () {
@@ -176,8 +180,8 @@ qlog () {
     # Get log path of job
     if [ "$1" = "-l" ]; then
         job_id=$(qlast)
-    else
-        job_id=$1
+    elif [ "$1" = "-f" ]; then
+        job_id=$(qf)
     fi
     if [ "$#" -eq 1 ]; then
         echo $(qstat -j $job_id | grep stdout_path_list | cut -d ":" -f4)
@@ -228,8 +232,12 @@ makeallp() {
 if [ -z $CUDA_VISIBLE_DEVICES ]; then
     export CUDA_VISIBLE_DEVICES=
 fi
-fdel() {
+qf () {
     job_id=$(qstat | grep 'edwardr' | fzf -m --ansi | awk '{print $1}')
+    echo $job_id
+}
+fdel() {
+    job_id=$(qf)
 
     if [ "x$job_id" != "x" ]; then
         echo "deleting $job_id"
