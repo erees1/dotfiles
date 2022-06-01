@@ -31,7 +31,6 @@ echo "deploying on $LOC machine..."
 
 # Tmux setup
 echo "source $DOT_DIR/tmux/tmux.conf" > $HOME/.tmux.conf
-source $DOT_DIR/custom_bins/deploy_bins.sh
 
 # Vim / Neovim setup
 source "$DOT_DIR/vim/setup_init.sh"
