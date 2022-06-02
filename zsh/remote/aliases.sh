@@ -142,7 +142,7 @@ qlogin () {
     gpu_args=""
     if [ "$2" = "cpu" ]; then
       queue="aml-cpu.q"
-    elif [ "$2" = "*gpu*" ]; then
+    elif  echo "$2" | grep -q "gpu" ; then
       queue="$2"
       gpu_args="gpu=$1"
     else
@@ -182,6 +182,9 @@ qlog () {
         job_id=$(qlast)
     elif [ "$1" = "-f" ]; then
         job_id=$(qf)
+        if [ "x$job_id" = "x" ]; then
+            return 0
+        fi
     fi
     if [ "$#" -eq 1 ]; then
         echo $(qstat -j $job_id | grep stdout_path_list | cut -d ":" -f4)
