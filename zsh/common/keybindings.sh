@@ -23,12 +23,27 @@ function prepend-sudo {
 zle -N prepend-sudo
 bindkey "\es" prepend-sudo
 
+# Copied from .fzf.zsh and modifed to only return files
+__fsel_files() {
+  local cmd="${FZF_CTRL_T_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+    -o -type f -print \
+    -o -type l -print 2> /dev/null | cut -b3-"}"
+  setopt localoptions pipefail no_aliases 2> /dev/null
+  local item
+  eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) -m "$@" | while read item; do
+    echo -n "${(q)item} "
+  done
+  local ret=$?
+  echo
+  return $ret
+}
+
 function fzf-vim {
-    selected=$(__fsel)
-      if [[ -z "$selected" ]]; then
+    selected=$(__fsel_files)
+    if [[ -z "$selected" ]]; then
         zle redisplay
         return 0
-      fi
+    fi
     zle push-line # Clear buffer
     BUFFER="v $selected";
     zle accept-line
