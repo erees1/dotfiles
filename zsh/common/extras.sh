@@ -41,3 +41,12 @@ wt()
         cd $directory
     fi
 }
+msa()
+{
+    pushd $HOME/git/aladdin > /dev/null
+    directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
+    popd > /dev/null
+    if [ ! -z $directory ]; then
+        $directory/env/singularity.sh -c "$SHELL"
+    fi
+}
