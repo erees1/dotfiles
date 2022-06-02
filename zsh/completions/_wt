@@ -4,7 +4,7 @@
 # Reference: https://zsh.sourceforge.io/Doc/Release/Completion-Widgets.html
 
 local -a opts
-list="$(git worktree list | awk '{ print $1; }' | tr "\n" " ")"
+list="$(git worktree list | awk '{ print $1; }' | grep -v '\.bare' | tr "\n" " ")"
 
 setopt shwordsplit
 for item in $list; do
