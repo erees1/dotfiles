@@ -8,7 +8,7 @@ TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboar
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
-alias a="cd ~/git/aladdin/rtd"
+alias a="cd ~/git/aladdin/split_everywhere"
 alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
@@ -120,6 +120,7 @@ full_queue='qstat -q "aml*.q@*" -f -u \*'
 alias q='qstat'
 alias qtop='qalter -p 1024'
 alias qq=$full_queue # Display full queue
+alias qu='qstat -q "aml*.q@*" -u ' # take username after
 alias gq='qstat -q aml-gpu.q -f -u \*' # Display just the gpu queues
 alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding|Hard|Soft|Requested|Granted"' # Display the gpu queues, including showing the preemption state of each job
 alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
@@ -156,7 +157,18 @@ qlogin () {
   fi
 }
 qtail () {
-    tail -f $(qlog $@)
+    if [ "$#" -gt 0 ]; then
+        b=$(qlog $@)
+        if [ ! -z "$b" ]; then
+            tail -f $b
+        else
+            echo "log file not found"
+        fi
+    else
+        echo "Usage: qtail <jobid>" >&2
+        echo "Usage: qtail <array_jobid> <sub_jobid>" >&2
+        exit 1
+    fi
 }
 qlast () {
     # Tail the last running job
@@ -185,6 +197,8 @@ qlog () {
         if [ "x$job_id" = "x" ]; then
             return 0
         fi
+    else
+        job_id=$1
     fi
     if [ "$#" -eq 1 ]; then
         echo $(qstat -j $job_id | grep stdout_path_list | cut -d ":" -f4)
@@ -202,6 +216,7 @@ qlog () {
     else
         echo "Usage: qlog <jobid>" >&2
         echo "Usage: qlog <array_jobid> <sub_jobid>" >&2
+        exit 1
     fi
 }
 qdesc () {
