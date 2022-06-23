@@ -11,7 +11,7 @@ vim.o.sw = 4 -- Change the number of space characters inserted for indentation
 vim.o.smartindent = true
 vim.o.autoindent = true
 vim.cmd("set formatoptions-=o") -- Don't continue comments when pressing o or O
-vim.o.scrolloff = 3
+vim.o.scrolloff = 1000
 
 vim.o.cursorline = true
 vim.o.mouse = "a" -- Enable mouse in all modes
@@ -31,8 +31,10 @@ vim.o.undofile = true
 
 vim.o.fillchars = "diff:/"
 
+-- TODO convert to lua
 vim.api.nvim_command([[
 au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
+autocmd FileType c,cpp,java setlocal commentstring=//\ %s
 ]])
 
 -- Use neovim 0.7 filetype.lua for matching filetypes and don't use fallback (for speed)
