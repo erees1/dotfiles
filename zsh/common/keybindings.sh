@@ -75,4 +75,4 @@ bindkey -r "^a"
 bindkey -r '^q'
 bindkey -M viins '^q' beginning-of-line
 
-bindkey -s '^a' "tsesh ~/git/aladdin\n"
+bindkey -s '^a' "tsesh default\n"
