@@ -2,15 +2,27 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
+if require("funcs").is_not_vscode() then
+    vim.g.coq_settings = {
+        auto_start = "shut-up",
+    }
+end
+
 -- Packer bootstrap
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
-    execute("packadd packer.nvim")
+    packer_bootstrap = fn.system({
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        install_path,
+    })
 end
 
 local packer = require("packer").startup({
-    function()
+    function(use)
         -- Packer can manage itself
         use("wbthomason/packer.nvim")
 
@@ -20,7 +32,7 @@ local packer = require("packer").startup({
             requires = {
                 { "ms-jpq/coq_nvim" },
                 { "ms-jpq/coq.artifacts", branch = "artifacts" },
-                { "jose-elias-alvarez/null-ls.nvim" },
+                { "jose-elias-alvarez/null-ls.nvim", cond = { require("funcs").is_not_vscode } },
             },
             config = function()
                 require("plugins/lspconfig")
@@ -119,6 +131,10 @@ local packer = require("packer").startup({
             "ojroques/vim-oscyank",
             cond = { require("funcs").is_not_vscode },
         })
+
+        if packer_bootstrap then
+            require("packer").sync()
+        end
     end,
     config = {
         display = {
