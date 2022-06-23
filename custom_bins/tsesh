@@ -1,14 +1,15 @@
 #!/bin/bash
 
+
+# Selection using fzf ---
+
 possible_options="$HOME/git"
 possible_options+=" $HOME/git/aladdin"
-
 if [ -d "/perish_aml02" ]; then
     possible_options+=" /perish_aml02/edwardr/git"
 fi
 exact=" /exp/$(whoami)"
 exact2=" $HOME/tb"
-
 
 if [[ $# -eq 1 ]]; then
     selected=$1
@@ -17,52 +18,63 @@ else
 fi
 
 sesh_name=$(basename "$selected" | tr . _)
-args=""
 if [[ $selected == "/exp/$(whoami)" ]] ; then
     sesh_name="exp"
 elif [[ $selected == *"/git/aladdin/"* ]] ; then
     sesh_name="aladdin-$sesh_name"
-    args="make shell 2> /dev/null"
 fi
 
 if [[ -z $selected ]]; then
     exit 0
 fi
 
+# Session switching ---
+
+# accept tsesh default
+if [[ $sesh_name == "default" ]]; then
+    was_default=true
+    if [[ $LOC == "remote " ]]; then
+        sesh_name="aladdin-feature"
+        selected="$HOME/git/aladdin/feature"
+        args="make shell 2> /dev/null"
+    else
+        sesh_name="local"
+        selected="$HOME"
+    fi
+else
+    was_default=false
+fi
+
+# Make shell if an aladdin worktree is selected
+args=""
+if [[ $selected == *"/git/aladdin/"* ]] ; then
+    args="make shell 2> /dev/null"
+fi
+
 is_running=$(ps aux | grep '[t]mux new-session')
-if tmux info &> /dev/null; then 
+if tmux info &> /dev/null; then
     is_inside="true"
 fi
 
 # If tmux is not running at all
 if [[ -z $TMUX ]] && [[ -z $is_running ]]; then
-    if [[ $sesh_name == "default" ]]; then
-        sesh_name="aladdin-feature"
-        selected="$HOME/git/aladdin/feature"
-        args="make shell 2> /dev/null"
-    fi
     tmux new-session -s $sesh_name -c $selected $args
     exit 0
 fi
 
-# If tmux does not have a session with that name
+# If tmux is running but does not have a session with that name
 if ! tmux has-session -t=$sesh_name 2> /dev/null; then
-    if [[ $sesh_name == "default" ]]; then
-        sesh_name="aladdin-feature"
-        selected="$HOME/git/aladdin/feature"
-        args="make shell 2> /dev/null"
-    fi
     tmux new-session -ds $sesh_name -c $selected $args
 fi
 
-# If tmux is running but we are not currently attached
+# If tmux is running, has a session with that name but we are not currently attached
 if [[ -z $is_inside ]]; then
-    if [[ $sesh_name == "default" ]]; then
+    if [[ $was_default == "true" ]]; then
         tmux attach
     else
         tmux attach -t $sesh_name
     fi
 fi
 
-# If we are inside tmux
+# If we are inside tmux and there is a session with that name
 tmux switch-client -t $sesh_name
