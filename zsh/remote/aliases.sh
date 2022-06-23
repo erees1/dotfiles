@@ -8,7 +8,7 @@ TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboar
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
-alias a="cd ~/git/aladdin/split_everywhere"
+alias a="cd ~/git/aladdin/feature"
 alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
