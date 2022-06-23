@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ "${@: -1}" == vm ]; then
     # use singularity
-    ssh -o RemoteCommand="/home/edwardr/git/aladdin/env/singularity.sh" -o RequestTTY=force "$@"
+    ssh -o RemoteCommand="/home/edwardr/git/aladdin/master/env/singularity.sh" -o RequestTTY=force "$@"
 else
     # don't use singularity so we can use containers
     ssh "$@"
