@@ -53,11 +53,11 @@ require("nvim-tree").setup({
 })
 
 function _tree_toggle()
-	if require("nvim-tree.view").is_visible() then
-		require("bufferline.state").set_offset(0)
-	else
-		require("bufferline.state").set_offset(require("settings").tree_width + 1, "FileTree")
-	end
-	require("nvim-tree").toggle()
+    if require("nvim-tree.view").is_visible() then
+        require("bufferline.state").set_offset(0)
+    else
+        require("bufferline.state").set_offset(require("settings").tree_width + 1, "FileTree")
+    end
+    require("nvim-tree").toggle()
 end
 vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>lua _tree_toggle()<CR>", { noremap = true, silent = true })
