@@ -20,7 +20,7 @@ sesh_name=$(basename "$selected" | tr . _)
 args=""
 if [[ $selected == "/exp/$(whoami)" ]] ; then
     sesh_name="exp"
-elif echo $selected | grep "$HOME/git/aladdin/.*" ; then
+elif [[ $selected == *"/git/aladdin/"* ]] ; then
     sesh_name="aladdin-$sesh_name"
     args="make shell 2> /dev/null"
 fi
@@ -35,19 +35,33 @@ if tmux info &> /dev/null; then
 fi
 
 # If tmux is not running at all
-if [[ -z $TMUX ]] && [[  -z $is_running ]]; then
+if [[ -z $TMUX ]] && [[ -z $is_running ]]; then
+    if [[ $sesh_name == "default" ]]; then
+        sesh_name="aladdin-feature"
+        selected="$HOME/git/aladdin/feature"
+        args="make shell 2> /dev/null"
+    fi
     tmux new-session -s $sesh_name -c $selected $args
     exit 0
 fi
 
-# If tmux is running
+# If tmux does not have a session with that name
 if ! tmux has-session -t=$sesh_name 2> /dev/null; then
+    if [[ $sesh_name == "default" ]]; then
+        sesh_name="aladdin-feature"
+        selected="$HOME/git/aladdin/feature"
+        args="make shell 2> /dev/null"
+    fi
     tmux new-session -ds $sesh_name -c $selected $args
 fi
 
 # If tmux is running but we are not currently attached
 if [[ -z $is_inside ]]; then
-    tmux attach -t $sesh_name
+    if [[ $sesh_name == "default" ]]; then
+        tmux attach
+    else
+        tmux attach -t $sesh_name
+    fi
 fi
 
 # If we are inside tmux
