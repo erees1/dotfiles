@@ -53,7 +53,7 @@ make_nice() {
             status="create?"
         fi
         echo "$name $line $status"
-    done | sort -r -k3,3 -k1,1
+    done | sort -k3,3r -k1,1
 }
 
 find_directories(){
