@@ -8,7 +8,7 @@ TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboar
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
-alias a="cd ~/git/aladdin/feature"
+alias a="cd ~/git/aladdin/WIP_feature"
 alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
@@ -36,7 +36,15 @@ alias b5="ssh b5"
 
 # Activate aladdin master SIF in current directory
 alias msam="/home/$(whoami)/git/aladdin/master/env/singularity.sh -c "$SHELL""
-
+msa()
+{
+    pushd $HOME/git/aladdin > /dev/null
+    directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
+    popd > /dev/null
+    if [ ! -z $directory ]; then
+        $directory/env/singularity.sh -c "$SHELL"
+    fi
+}
 # Misc
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
 alias ls='ls -hF --color' # add colors for filetype recognition
@@ -242,7 +250,7 @@ qrecycle () {
 qupdate () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qupdate"|| command qupdate ;
 }
-makeallp() {
+getfucked() {
     qstat -u "*" | grep $1 | awk '{print $1}' | while read job; do qmakep $job; done
 }
 
@@ -251,7 +259,7 @@ if [ -z $CUDA_VISIBLE_DEVICES ]; then
     export CUDA_VISIBLE_DEVICES=
 fi
 qf () {
-    job_id=$(qstat | grep 'edwardr' | fzf -m --ansi | awk '{print $1}')
+    job_id=$(qstat | sed '1,2s/^/  /' | fzf -m --ansi --header-lines=2 | awk '{print $1}')
     echo $job_id
 }
 fdel() {

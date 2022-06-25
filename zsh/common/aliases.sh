@@ -164,6 +164,14 @@ alias gsts="git stash show -p"
 alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
 alias gpsup='git push --set-upstream origin $(git_current_branch)'
 
+wt() {
+    # function to change git worktrees easily
+    directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
+    if [ ! -z $directory ]; then
+	    echo Changing to worktree at: "$directory"
+        cd $directory
+    fi
+}
 #-------------------------------------------------------------
 # tmux
 #-------------------------------------------------------------
