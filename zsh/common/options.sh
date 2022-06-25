@@ -33,20 +33,3 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-wt()
-{
-    directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
-    if [ ! -z $directory ]; then
-	    echo Changing to worktree at: "$directory"
-        cd $directory
-    fi
-}
-msa()
-{
-    pushd $HOME/git/aladdin > /dev/null
-    directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
-    popd > /dev/null
-    if [ ! -z $directory ]; then
-        $directory/env/singularity.sh -c "$SHELL"
-    fi
-}

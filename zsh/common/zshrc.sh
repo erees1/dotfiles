@@ -28,7 +28,7 @@ fpath=($ZSH_DOT_DIR/completions $fpath)
 source $ZSH/oh-my-zsh.sh
 source $ZSH_DOT_DIR/common/p10k.zsh
 source $ZSH_DOT_DIR/common/aliases.sh
-source $ZSH_DOT_DIR/common/extras.sh
+source $ZSH_DOT_DIR/common/options.sh
 source $ZSH_DOT_DIR/common/keybindings.sh
 
 
