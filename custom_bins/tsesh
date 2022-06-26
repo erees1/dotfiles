@@ -33,8 +33,8 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 # Selection using fzf ---
 transform_name(){
-   name="$1"
-   sesh_name=$(basename "$name")
+    name="$1"
+    sesh_name=$(basename "$name")
     if [[ $name == "/exp/$(whoami)" ]] ; then
         sesh_name="exp"
     elif [[ $name == *"/git/aladdin/"* ]] ; then
@@ -63,14 +63,16 @@ find_directories(){
     possible_options+=" $HOME/git/aladdin"
     find  $possible_options -mindepth 1 -maxdepth 1 -type d -not -path '*/.*';
 }
+fzf_bin="fzf"
 fzf_args="--header-lines=1"
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    if [ ! -z $POPUP ]; then
+    if [[ ! -z $POPUP  && $TERM_PROGRAM == "tmux" ]] ; then
         fzf_args+=" --border=none --height=100%"
+        fzf_bin="fzf-tmux -p"
     fi
-    selected=$(find_directories | make_nice | column -t -s' '| sed '1s/^/  /' | fzf $fzf_args )
+    selected=$(find_directories | make_nice | column -t -s' '| sed '1s/^/  /' | $fzf_bin $fzf_args )
     selected=$(echo $selected | awk '{ print $2 }')
 fi
 
