@@ -33,6 +33,8 @@ alias b2="ssh b2"
 alias b3="ssh b3"
 alias b4="ssh b4"
 alias b5="ssh b5"
+alias b6="ssh b6"
+alias b7="ssh b7"
 
 # Activate aladdin master SIF in current directory
 alias msam="/home/$(whoami)/git/aladdin/master/env/singularity.sh -c "$SHELL""
