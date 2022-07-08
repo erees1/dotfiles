@@ -44,15 +44,6 @@ if command -v conda 2>/dev/null 2>&1; then
     fi
 fi
 
-# add pyenv if pyenv isntalled
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-  SUB='.pyenv/shims'
-  if [[ "$PATH" != *"$SUB"* ]]; then
-    eval "$(pyenv init --path)"
-  fi
-fi
 
 
 # inserts shim for .rbenv if its not there already

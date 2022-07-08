@@ -49,7 +49,7 @@ msa()
 }
 # Misc
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
-alias ls='ls -hF --color' # add colors for filetype recognition
+alias ls='ls -h --color' # add colors for filetype recognition
 alias nv='nvidia-smi'
 alias net="netron --host $HOST_IP_ADDR"
 
@@ -127,15 +127,17 @@ tbadd() {
 
 # Short aliases
 full_queue='qstat -q "aml*.q@*" -f -u \*'
+gpu_queue='qstat -q aml-gpu.q -f -u \*'
 alias q='qstat'
 alias qtop='qalter -p 1024'
 alias qq=$full_queue # Display full queue
 alias qu='qstat -q "aml*.q@*" -u ' # take username after
-alias gq='qstat -q aml-gpu.q -f -u \*' # Display just the gpu queues
+alias gq=$gpu_queue # Display just the gpu queues
 alias gqf='qstat -q aml-gpu.q -u \* -r -F gpu | egrep -v "jobname|Master|Binding|Hard|Soft|Requested|Granted"' # Display the gpu queues, including showing the preemption state of each job
 alias cq='qstat -q "aml-cpu.q@gpu*" -f -u \*' # Display just the cpu queues
 alias wq="watch qstat"
 alias wqq="watch $full_queue"
+alias wgq="watch $gpu_queue"
 alias qt="qtail"
 alias qtf="qtail -f"
 alias qtl="qtail -l"
@@ -172,7 +174,6 @@ qtail () {
     else
         echo "Usage: qtail <jobid>" >&2
         echo "Usage: qtail <array_jobid> <sub_jobid>" >&2
-        exit 1
     fi
 }
 qlast () {
@@ -222,7 +223,6 @@ qlog () {
     else
         echo "Usage: qlog <jobid>" >&2
         echo "Usage: qlog <array_jobid> <sub_jobid>" >&2
-        exit 1
     fi
 }
 qdesc () {
@@ -241,6 +241,10 @@ qdesc () {
         fi
     fi
 done
+}
+qexp () {
+    # Get exp dir of job
+    echo $(dirname $(qlog $@))
 }
 qrecycle () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qrecycle $@" || command qrecycle "$@";

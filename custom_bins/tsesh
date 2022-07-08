@@ -18,6 +18,8 @@ while (( "$#" )); do
             echo "$USAGE" && exit 1 ;;
         --popup)
             POPUP=true && shift ;;
+        --full_screen)
+            FULL_SCREEN=true && shift ;;
         --) # end argument parsing
             shift && break ;;
         -*|--*=) # unsupported flags
@@ -44,16 +46,16 @@ transform_name(){
 }
 
 make_nice() {
-    echo "Session Directory Status"  #Headings
+    printf "\x1b[1mSession Directory Status\x1b[0m\n"  #Headings
     while IFS=$'\n' read -r line; do
         name="$(transform_name $line)"
         if tmux has-session -t="$name" 2> /dev/null ; then
-            status="running"
+            status="\x1b[32mrunning\x1b[0m"
         else
             status="create?"
         fi
-        echo "$name $line $status"
-    done | sort -k3,3r -k1,1
+        printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
+    done | sort -k3,3 -k1,1
 }
 
 find_directories(){
@@ -64,13 +66,15 @@ find_directories(){
     find  $possible_options -mindepth 1 -maxdepth 1 -type d -not -path '*/.*';
 }
 fzf_bin="fzf"
-fzf_args="--header-lines=1"
+fzf_args="--header-lines=1 --ansi"
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
     if [[ ! -z $POPUP  && $TERM_PROGRAM == "tmux" ]] ; then
-        fzf_args+=" --border=none --height=100%"
         fzf_bin="fzf-tmux -p"
+    fi
+    if [[ $FULL_SCREEN == "true" ]]; then
+        fzf_args+=" --border=none --height=100%"
     fi
     selected=$(find_directories | make_nice | column -t -s' '| sed '1s/^/  /' | $fzf_bin $fzf_args )
     selected=$(echo $selected | awk '{ print $2 }')

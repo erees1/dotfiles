@@ -32,7 +32,7 @@ local packer = require("packer").startup({
             requires = {
                 { "ms-jpq/coq_nvim" },
                 { "ms-jpq/coq.artifacts", branch = "artifacts" },
-                { "jose-elias-alvarez/null-ls.nvim", cond = { require("funcs").is_not_vscode } },
+                { "jose-elias-alvarez/null-ls.nvim" },
             },
             config = function()
                 require("plugins/lspconfig")
@@ -51,7 +51,6 @@ local packer = require("packer").startup({
         use({ "kyazdani42/nvim-web-devicons" })
         use({
             "kyazdani42/nvim-tree.lua",
-            opt = true,
             config = function()
                 require("plugins/nv-tree")
             end,
@@ -125,11 +124,21 @@ local packer = require("packer").startup({
             opt = true,
             cmd = "MarkdownPreview",
         })
+        use({
+            "thaerkh/vim-workspace",
+            -- config = function()
+            --     vim.g.workspace_session_directory = fn.stdpath("data") .. "sessions"
+            --     vim.g.undo_dir=fn.stdpath("data") .. "undodir"
+            -- end
+        })
 
         -- Copy to OSC52
         use({
             "ojroques/vim-oscyank",
             cond = { require("funcs").is_not_vscode },
+            config = function()
+                vim.g.oscyank_term="default"
+            end,
         })
 
         if packer_bootstrap then
@@ -155,7 +164,7 @@ if require("funcs").is_not_vscode then
     end
     -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
     -- keys option provided by packer as that overides the vscode specific shortcut
-    custom_load_map("<leader>e", "nvim-tree.lua")
+    -- custom_load_map("<leader>e", "nvim-tree.lua")
     custom_load_map("<leader>tf", "fzf-lua")
 end
 

@@ -83,6 +83,9 @@ if [ $machine == "Linux" ]; then
         git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
         $HOME/.fzf/install
     fi
+    if [ $pyenv == true ]; then
+        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    fi
     # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
     brew install coreutils  # Mac won't have realpath before coreutils installed
