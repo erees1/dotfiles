@@ -10,7 +10,23 @@ Host b2
   HostName b2.aml.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
+Host b2-no-singularity
+  HostName b2.aml.speechmatics.io
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
 Host b5
   HostName b5.aml.speechmatics.io
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b5-no-singularity
+  HostName b5.aml.speechmatics.io
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b6
+  HostName b6.aml.speechmatics.io
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b6-no-singularity
+  HostName b6.aml.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
