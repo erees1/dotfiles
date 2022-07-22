@@ -35,6 +35,7 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 # Selection using fzf ---
 transform_name(){
+    # Set of rules to transform directories into sesh_names
     name="$1"
     sesh_name=$(basename "$name")
     if [[ $name == "/exp/$(whoami)" ]] ; then
@@ -46,30 +47,47 @@ transform_name(){
 }
 
 make_nice() {
+    # Reads a list of directories from find command and processes them to 
+    # a table for fzf to display, it also prepends all the running tmux sessions
+    # to the list so they can also be selected
     printf "\x1b[1mSession Directory Status\x1b[0m\n"  #Headings
-    while IFS=$'\n' read -r line; do
-        name="$(transform_name $line)"
-        if tmux has-session -t="$name" 2> /dev/null ; then
+    {
+        for name in $(tmux list-sessions | awk '{print $1}' | sed 's/:$//'); do
             status="\x1b[32mrunning\x1b[0m"
-        else
-            status="create?"
-        fi
-        printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
-    done | sort -k3,3 -k1,1
+            line="-"
+            printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
+        done
+        while IFS=$'\n' read -r line; do
+            name="$(transform_name $line)"
+            if ! tmux has-session -t="$name" 2> /dev/null ; then
+                # Don't process running ones
+                # status="\x1b[32mrunning\x1b[0m"
+                status="create?"
+                printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
+            fi
+        done | sort -k1,1
+    }
 }
 
 find_directories(){
+    # Responsible for chosing which directories to display
     echo "/exp/$(whoami)"
     echo "$HOME/tb"
     possible_options="$HOME/git"
     possible_options+=" $HOME/git/aladdin"
     find  $possible_options -mindepth 1 -maxdepth 1 -type d -not -path '*/.*';
 }
-fzf_bin="fzf"
-fzf_args="--header-lines=1 --ansi"
+
+# This section gets the selected and sesh_name from cmd line of from fzf if no cmd line args are provided
 if [[ $# -eq 1 ]]; then
     selected=$1
+    sesh_name=$(basename $selected)
+    if [[ ! -d $selected ]]; then
+        selected=$HOME
+    fi
 else
+    fzf_bin="fzf"
+    fzf_args="--header-lines=1 --ansi"
     if [[ ! -z $POPUP  && $TERM_PROGRAM == "tmux" ]] ; then
         fzf_bin="fzf-tmux -p 85%,50%"
     fi
@@ -77,10 +95,9 @@ else
         fzf_args+=" --border=none --height=100%"
     fi
     selected=$(find_directories | make_nice | column -t -s' '| sed '1s/^/  /' | $fzf_bin $fzf_args )
+    sesh_name=$(echo $selected | awk '{ print $1 }')
     selected=$(echo $selected | awk '{ print $2 }')
 fi
-
-sesh_name=$(transform_name $selected)
 
 if [[ -z $selected ]]; then
     exit 0
@@ -88,7 +105,7 @@ fi
 
 # Session switching ---
 
-# accept tsesh default
+# Can accept special argument default this block handles that
 if [[ $sesh_name == "default" ]]; then
     was_default=true
     if [[ $LOC == "remote" ]]; then
@@ -103,9 +120,9 @@ else
     was_default=false
 fi
 
-# Make shell if an aladdin worktree is selected
+# Make shell if a GLOBA_SIF file exists at selected 
 args=""
-if [[ $selected == *"/git/aladdin/"* ]] ; then
+if [[ -f $selected/env/GLOBAL_SIF  ]] ; then
     args="make shell 2> /dev/null"
 fi
 
@@ -122,18 +139,17 @@ fi
 
 # If tmux is running but does not have a session with that name
 # create new session but dont attach
-if ! tmux has-session -t=$sesh_name 2> /dev/null; then
+if ! tmux has-session -t=$sesh_name 2> /dev/null && [[ $was_default == false ]]; then
     tmux new-session -ds $sesh_name -c $selected $args
 fi
 
-# If tmux is running, has a session with that name but we are not currently attached
-if [[ -z $is_inside ]]; then
+if [[ $is_inside == true ]]; then
+    tmux switch-client -t $sesh_name
+else
     if [[ $was_default == "true" ]]; then
         tmux attach
     else
+        # If tmux is running, has a session with that name but we are not currently attached
         tmux attach -t $sesh_name
     fi
 fi
-
-# If we are inside tmux and there is a session with that name
-tmux switch-client -t $sesh_name
