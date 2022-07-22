@@ -124,13 +124,13 @@ local packer = require("packer").startup({
             opt = true,
             cmd = "MarkdownPreview",
         })
-        use({
-            "thaerkh/vim-workspace",
-            -- config = function()
-            --     vim.g.workspace_session_directory = fn.stdpath("data") .. "sessions"
-            --     vim.g.undo_dir=fn.stdpath("data") .. "undodir"
-            -- end
-        })
+        -- use({
+        --     "thaerkh/vim-workspace",
+        --     -- config = function()
+        --     --     vim.g.workspace_session_directory = fn.stdpath("data") .. "sessions"
+        --     --     vim.g.undo_dir=fn.stdpath("data") .. "undodir"
+        --     -- end
+        -- })
 
         -- Copy to OSC52
         use({
