@@ -9,6 +9,7 @@ export DEFAULT_WORK_DIR=$HOME/git/aladdin/wip_feature
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
+alias ab="cd ~/git/aladdin"
 alias a="cd $DEFAULT_WORK_DIR"
 alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
