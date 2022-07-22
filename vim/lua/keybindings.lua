@@ -62,9 +62,11 @@ end, r[0], r[1] })
 -- Quit with q: instead of bringing up cmd mode
 remap("n", "q:", ":q<CR>", r)
 
--- Start/end of line with ctrl-q ctrl-e in insert mode
-remap("i", "<c-q>", "<c-o>^", r)
+-- Start/end of line with ctrl-b ctrl-e in insert mode
+remap("i", "<c-b>", "<c-o>^", r)
 remap("i", "<c-e>", "<c-o>$", r)
+remap("n", "<c-a>", "<Nop>", r)  -- ctrl a is tmux leader
+remap("n", "<c-q>", "<c-a>", r)  -- ctrl q to increment
 
 -- Ctrl-delete insert mode to delte forward a word
 -- remap("i", "<c-del>", "<space><esc>ce", r)
