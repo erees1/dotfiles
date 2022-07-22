@@ -71,7 +71,7 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     if [[ ! -z $POPUP  && $TERM_PROGRAM == "tmux" ]] ; then
-        fzf_bin="fzf-tmux -p"
+        fzf_bin="fzf-tmux -p 85%,50%"
     fi
     if [[ $FULL_SCREEN == "true" ]]; then
         fzf_args+=" --border=none --height=100%"
@@ -92,8 +92,8 @@ fi
 if [[ $sesh_name == "default" ]]; then
     was_default=true
     if [[ $LOC == "remote" ]]; then
-        sesh_name="aladdin-WIP_feature"
-        selected="$HOME/git/aladdin/WIP_feature"
+        selected="$DEFAULT_WORK_DIR"
+        sesh_name="aladdin-$(basename $selected)"
         args="make shell 2> /dev/null"
     else
         sesh_name="local"
