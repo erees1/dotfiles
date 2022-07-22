@@ -4,11 +4,12 @@
 
 HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
 TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboard:20210213"
+export DEFAULT_WORK_DIR=$HOME/git/aladdin/wip_feature
 
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
-alias a="cd ~/git/aladdin/WIP_feature"
+alias a="cd $DEFAULT_WORK_DIR"
 alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
