@@ -4,13 +4,12 @@
 
 HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
 TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboard:20210213"
-export DEFAULT_WORK_DIR=$HOME/git/aladdin/wip_feature
+export DEFAULT_WORK_DIR=$HOME/git/aladdin/body_comparison
 
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
 alias ab="cd ~/git/aladdin"
-alias a="cd $DEFAULT_WORK_DIR"
 alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
@@ -37,11 +36,13 @@ alias b4="ssh b4"
 alias b5="ssh b5"
 alias b6="ssh b6"
 alias b7="ssh b7"
+alias b8="ssh b8"
+alias b9="ssh b9"
+alias b10="ssh b10"
 
 # Activate aladdin master SIF in current directory
 alias msam="/home/$(whoami)/git/aladdin/master/env/singularity.sh -c "$SHELL""
-msa()
-{
+msa() {
     pushd $HOME/git/aladdin > /dev/null
     directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
     popd > /dev/null
@@ -49,6 +50,20 @@ msa()
         $directory/env/singularity.sh -c "$SHELL"
     fi
 }
+a() {
+    if [ "$#" -eq 0 ]; then
+        dir=$DEFAULT_WORK_DIR
+    elif [ "$#" -eq 1 ]; then
+        pushd $HOME/git/aladdin > /dev/null
+        dir=$(git worktree list | awk '{print $1}' | grep "/$1$")
+        popd > /dev/null
+    else
+        echo "a <optional wt>" && return 1
+    fi
+    cd $dir
+}
+compdef a=msa
+
 # Misc
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
 alias ls='ls -h --color' # add colors for filetype recognition
@@ -229,20 +244,20 @@ qlog () {
 }
 qdesc () {
     qstat | tail -n +3 | while read line; do
-    job=$(echo $line | awk '{print $1}')
-    if [[ ! $(qstat -j $job | grep "job-array tasks") ]]; then
-        echo $job $(qlog $job)
-    else
-        qq_dir=$(qlog $job)
-        job_status=$(echo $line | awk '{print $5}')
-        if [ $job_status = 'r' ]; then
-            sub_job=$(echo $line | awk '{print $10}')
-            echo $job $sub_job $(qlog $job $sub_job)
+        job=$(echo $line | awk '{print $1}')
+        if [[ ! $(qstat -j $job | grep "job-array tasks") ]]; then
+            echo $job $(qlog $job)
         else
-            echo $job $qq_dir $job_status
+            qq_dir=$(qlog $job)
+            job_status=$(echo $line | awk '{print $5}')
+            if [ $job_status = 'r' ]; then
+                sub_job=$(echo $line | awk '{print $10}')
+                echo $job $sub_job $(qlog $job $sub_job)
+            else
+                echo $job $qq_dir $job_status
+            fi
         fi
-    fi
-done
+    done
 }
 qexp () {
     # Get exp dir of job
@@ -263,7 +278,7 @@ if [ -z $CUDA_VISIBLE_DEVICES ]; then
     export CUDA_VISIBLE_DEVICES=
 fi
 qf () {
-    job_id=$(qstat | sed '1,2s/^/  /' | fzf -m --ansi --header-lines=2 | awk '{print $1}')
+    job_id=$(qdesc | fzf -m --ansi --header-lines=0 | awk '{print $1}')
     echo $job_id
 }
 fdel() {
