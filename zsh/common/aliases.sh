@@ -193,7 +193,7 @@ alias tdel="tmux kill-session -t"
 #-------------------------------------------------------------
 
 alias l="ls -CF --color=auto"
-alias ll="exa -bghla --git --color=automatic --group-directories-first"
+alias ll="exa -bghla --color=automatic --group-directories-first"
 alias la='ls -Al'         # show hidden files
 alias lx='ls -lXB'        # sort by extension
 alias lk='ls -lSr'        # sort by size, biggest last
