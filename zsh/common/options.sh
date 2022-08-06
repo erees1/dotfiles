@@ -16,6 +16,7 @@ setopt list_ambiguous
 export HISTSIZE=100000            # big big history
 export HISTFILESIZE=100000        # big big history
 export HISTTIMEFORMAT="%F %T "
+export EDITOR=nvim
 zstyle ':completion:*' hosts off  # Don't autocomple ssh host names
  
 # FZF options - might also affect fzf-lua extenstion in vim
