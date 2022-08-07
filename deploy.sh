@@ -44,7 +44,20 @@ source "$DOT_DIR/gitconf/setup_gitconfig.sh"
 if [ $LOC == 'local' ]; then
     # Karabiner elements mapping
     mkdir -p $HOME/.config/karabiner
-    ln -sf "$DOT_DIR/config/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+    karabiner_path=$HOME/.config/karabiner/karabiner.json
+    if [ -f $karabiner_path ]; then
+        read -p "karabiner.json found do you want to overwrite? (y/n) " yn
+        case $yn in 
+            y )
+                mv $karabiner_path $karabiner_path.backup
+                ln -sf "$DOT_DIR/config/karabiner.json" "$karabiner_path" ;
+                ;;
+            n ) echo skipping...;
+                exit;;
+        esac
+    else
+        ln -sf "$DOT_DIR/config/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+    fi
 
     mkdir -p $HOME/.ssh
     ln -sf "$DOT_DIR/config/ssh_config" "$HOME/.ssh/config"
