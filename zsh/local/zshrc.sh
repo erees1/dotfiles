@@ -1,4 +1,5 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
+export LOC="local"
 
 # Local aliases
 alias vm='ssh vm'

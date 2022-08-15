@@ -36,7 +36,7 @@ echo "source $DOT_DIR/tmux/tmux.conf" > $HOME/.tmux.conf
 source "$DOT_DIR/vim/setup_init.sh"
 
 # zshrc setup
-source "$DOT_DIR/zsh/setup_zshrc.sh"
+echo "source $DOT_DIR/zsh/$LOC/zshrc.sh" > $HOME/.zshrc
 
 # Gitconfig setup
 source "$DOT_DIR/gitconf/setup_gitconfig.sh"
