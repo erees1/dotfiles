@@ -15,7 +15,6 @@ VI_MODE_SET_CURSOR=true
 plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search vi-mode)
 
 
-add_to_path "${HOME}/.local/bin"
 add_to_path "${DOT_DIR}/custom_bins"
 add_to_path "${HOME}/.npm-global/bin"
 
