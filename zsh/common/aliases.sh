@@ -38,6 +38,7 @@ alias mkdir='mkdir -p'
 # find/read files
 alias h='head'
 alias t='tail'
+alias tf='tail -f'
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 alias which='type -a'
@@ -185,7 +186,10 @@ alias tad="tmux attach -d -t"
 alias td="tmux detach"
 alias ts="tmux new-session -s"
 alias tl="tmux list-sessions"
-alias tkill="tmux kill-server"
+tkill(){
+    tmux kill-server
+    ps aux | grep '[t]mux' | awk '{print $2}' | xargs kill -9
+}
 alias tdel="tmux kill-session -t"
 
 #-------------------------------------------------------------
