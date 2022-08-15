@@ -3,14 +3,13 @@
 # -------------------------------------------------------------------
 
 HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
-TENSOR_BOARD_SIF="oras://singularity-master.artifacts.speechmatics.io/tensorboard:20210213"
+TENSOR_BOARD_SIF="/env/tensorboard_2.9.1.sif"
 export DEFAULT_WORK_DIR=$HOME/git/aladdin/body_comparison
 
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
 alias ab="cd ~/git/aladdin"
-alias cdsk="cd ~/git/aladdin/skunk"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
 alias core2="cd /perish_aml02/$(whoami)/git/coreasr2"
@@ -39,6 +38,9 @@ alias b7="ssh b7"
 alias b8="ssh b8"
 alias b9="ssh b9"
 alias b10="ssh b10"
+alias b11="ssh b11"
+alias b12="ssh b12"
+alias b13="ssh b13"
 
 # Activate aladdin master SIF in current directory
 alias msam="/home/$(whoami)/git/aladdin/master/env/singularity.sh -c "$SHELL""
@@ -111,6 +113,7 @@ tblink () {
         # softlink into tensorboard directory
         _linkdirs "$logdir" "$@"
     fi
+    cd $logdir
     singularity exec "$TENSOR_BOARD_SIF" tensorboard --host=$HOST_IP_ADDR --reload_multifile true --logdir=$logdir
 }
 _linkdirs() {
@@ -243,6 +246,12 @@ qlog () {
     fi
 }
 qdesc () {
+    # qstat | tail -n +3 | awk '{print $1" "$5}' | while read line; do
+    #     id=$(echo $line | awk '{print $1}')
+    #     job_status=$(echo $line | awk '{print $2}')
+    #     log=$(qlog $id)
+    #     echo $id $log $job_status
+    # done
     qstat | tail -n +3 | while read line; do
         job=$(echo $line | awk '{print $1}')
         if [[ ! $(qstat -j $job | grep "job-array tasks") ]]; then
