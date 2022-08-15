@@ -14,6 +14,7 @@ OPTIONS:
     --nvim       install nvim
     --fzf        install fzf
     --exa        install exa (nicer ls)
+    --all        install all of the above
 END
 )
 
@@ -41,6 +42,7 @@ nvim=false
 pyenv=false
 fzf=false
 exa=false
+all=false
 force=false
 while (( "$#" )); do
     case "$1" in
@@ -60,6 +62,8 @@ while (( "$#" )); do
             fzf=true && shift ;;
         --exa)
             exa=true && shift ;;
+        --all)
+            all=true && shift ;;
         -f|--force)
             force=true && shift ;;
         --) # end argument parsing
@@ -68,6 +72,16 @@ while (( "$#" )); do
             echo "Error: Unsupported flag $1" >&2 && exit 1 ;;
     esac
 done
+
+if [[ $all == true ]]; then
+    zsh=true
+    tmux=true
+    delta=true
+    nvim=true
+    exa=true
+    fzf=true
+    pyenv=true
+fi
 
 echo " ------------ INSTALLING ON $machine MACHINE ------------ "
 # Installing on linux with apt
