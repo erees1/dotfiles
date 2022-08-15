@@ -2,6 +2,8 @@
 set -euo pipefail
 # Helper script to download and install .debs in .local/bin
 
+. $DOT_DIR/install_scripts/util.sh
+
 url=$1
 name=$2
 
@@ -13,4 +15,4 @@ file=$(find ./ -name '*.deb')
 echo $file
 dpkg -x $file $HOME/.local/$name
 rm -rf $tmp_dir
-ln -sf $(readlink -f $HOME/.local/$name/usr/bin/$name) $HOME/.local/bin/$name
+ln -sf $(readlink -f $HOME/.local/$name/usr/bin/$name) $MY_BIN_LOC/$name
