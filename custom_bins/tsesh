@@ -136,19 +136,19 @@ if [[ -z $TMUX ]] && [[ -z $is_running ]]; then
     exit 0
 fi
 
+if [[ $was_default == "true" ]]; then
+    tmux attach
+    exit 0
+fi
 # If tmux is running but does not have a session with that name
 # create new session but dont attach
-if ! tmux has-session -t=$sesh_name 2> /dev/null && [[ $was_default == false ]]; then
+if ! tmux has-session -t=$sesh_name 2> /dev/null; then
     tmux new-session -ds $sesh_name -c $selected $args
 fi
 
 if [[ $is_inside == true ]]; then
     tmux switch-client -t $sesh_name
 else
-    if [[ $was_default == "true" ]]; then
-        tmux attach
-    else
-        # If tmux is running, has a session with that name but we are not currently attached
-        tmux attach -t $sesh_name
-    fi
+    # If tmux is running, has a session with that name but we are not currently attached
+    tmux attach -t $sesh_name
 fi
