@@ -4,7 +4,7 @@
 
 HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
 TENSOR_BOARD_SIF="/env/tensorboard_2.9.1.sif"
-export DEFAULT_WORK_DIR=$HOME/git/aladdin/body_comparison
+export DEFAULT_WORK_DIR=$HOME/git/aladdin/feature1
 
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
@@ -44,24 +44,23 @@ alias b13="ssh b13"
 
 # Activate aladdin master SIF in current directory
 alias msam="/home/$(whoami)/git/aladdin/master/env/singularity.sh -c "$SHELL""
-msa() {
-    pushd $HOME/git/aladdin > /dev/null
-    directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
-    popd > /dev/null
-    if [ ! -z $directory ]; then
-        $directory/env/singularity.sh -c "$SHELL"
-    fi
-}
-a() {
+_get_dir() {
     if [ "$#" -eq 0 ]; then
         dir=$DEFAULT_WORK_DIR
     elif [ "$#" -eq 1 ]; then
         pushd $HOME/git/aladdin > /dev/null
         dir=$(git worktree list | awk '{print $1}' | grep "/$1$")
         popd > /dev/null
-    else
-        echo "a <optional wt>" && return 1
     fi
+    echo $dir
+}
+msa() {
+    dir=$(_get_dir $@)
+    echo loading sif from $dir
+    $dir/env/singularity.sh -c $SHELL
+}
+a() {
+    dir=$(_get_dir $@)
     cd $dir
 }
 compdef a=msa
