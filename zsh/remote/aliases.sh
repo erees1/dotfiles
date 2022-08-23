@@ -90,7 +90,23 @@ alias dcl='docker container ls'
 # -------------------------------------------------------------------
 # Tensorboard
 # -------------------------------------------------------------------
-alias tb="singularity exec $TENSOR_BOARD_SIF tensorboard --host=$HOST_IP_ADDR --reload_multifile true --logdir=."
+function tb () {
+    if [ "$#" -eq 0 ]; then
+        logdir=$PWD
+    else
+        logdir=$1
+    fi
+
+    singularity exec $TENSOR_BOARD_SIF tensorboard \
+      --load_fast true \
+      --host=$HOST_IP_ADDR \
+      --reload_multifile true \
+      --logdir=$logdir \
+      --reload_interval 8 \
+      --extra_data_server_flags=--no-checksum \
+      --max_reload_threads 4 \
+      --window_title $PWD |& grep -v "TensorFlow installation not found"
+}
 
 tblink () {
     # Creates simlinks from specified folders to ~/tb/x where x is an incrmenting number
@@ -112,8 +128,7 @@ tblink () {
         # softlink into tensorboard directory
         _linkdirs "$logdir" "$@"
     fi
-    cd $logdir
-    singularity exec "$TENSOR_BOARD_SIF" tensorboard --host=$HOST_IP_ADDR --reload_multifile true --logdir=$logdir
+    tb $logdir
 }
 _linkdirs() {
     logdir="$1"
