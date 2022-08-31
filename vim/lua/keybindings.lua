@@ -68,6 +68,3 @@ remap("i", "<c-e>", "<c-o>$", r)
 remap("n", "<c-a>", "<Nop>", r)  -- ctrl a is tmux leader
 remap("n", "<c-q>", "<c-a>", r)  -- ctrl q to increment
 
--- Ctrl-delete insert mode to delte forward a word
--- remap("i", "<c-del>", "<space><esc>ce", r)
--- remap("i", "<c-s-del>", "<esc>lcW", r)
