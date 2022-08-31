@@ -4,5 +4,5 @@ if [[ "${@: -1}" = *"no-singularity" ]]; then
     ssh "$@"
 else
     # use singularity
-    ssh -o RemoteCommand="/home/edwardr/git/aladdin/master/env/singularity.sh" -o RequestTTY=force "$@"
+    ssh -o RemoteCommand="/home/edwardr/git/aladdin/feature1/env/singularity.sh" -o RequestTTY=force "$@"
 fi
