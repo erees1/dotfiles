@@ -67,7 +67,6 @@ compdef a=msa
 
 # Misc
 alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
-alias ls='ls -h --color' # add colors for filetype recognition
 alias nv='nvidia-smi'
 alias net="netron --host $HOST_IP_ADDR"
 
@@ -317,6 +316,22 @@ select_file() {
     #fd --type file --follow --hidden --exclude .git | fzf --query="$given_file"
     fzf --query="$given_file"
 }
+nzero() {
+    if [ "$#" -eq 0 ]; then
+        dir=./
+    else
+        dir=$1
+    fi
+    for file in $(find $dir -name '*.log'); do
+        if tail -n 1 $file | grep -q -P "status [1-9]+" ; then
+            echo $file
+            tail -n 5 $file
+            echo \n
+        fi
+    done
+}
+
+
 # -------------------------------------------------------------------
 # Cleaning processes
 # -------------------------------------------------------------------
