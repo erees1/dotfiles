@@ -107,7 +107,7 @@ alias 9='cd -9'
 # ls after every cd
 function chpwd() {
  emulate -L zsh
- ls
+ ls --group-directories-first 
 }
 
 # cd into created directory
@@ -196,7 +196,8 @@ alias tdel="tmux kill-session -t"
 # ls
 #-------------------------------------------------------------
 
-alias l="ls -CF --color=auto"
+alias ls="ls --color=auto --group-directories-first"
+alias l="ls --color=auto --group-directories-first"
 alias ll="exa -bghla --color=automatic --group-directories-first"
 alias la='ls -Al'         # show hidden files
 alias lx='ls -lXB'        # sort by extension
