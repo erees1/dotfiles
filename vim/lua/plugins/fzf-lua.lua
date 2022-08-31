@@ -1,7 +1,7 @@
-vim.api.nvim_set_keymap("n", "<leader>tf", ":FzfLua files<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>tb", ":FzfLua buffers<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>tg", ":FzfLua live_grep<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>tt", ":FzfLua git_files<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>t", ":FzfLua files<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>tb", ":FzfLua buffers<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>tg", ":FzfLua live_grep<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<leader>tt", ":FzfLua git_files<CR>", { noremap = true, silent = true })
 
 require("fzf-lua").setup({
 	fzf_layout = "reverse",

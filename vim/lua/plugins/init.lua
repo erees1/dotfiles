@@ -92,12 +92,11 @@ local packer = require("packer").startup({
         -- fzf file navigation
         use({
             "ibhagwan/fzf-lua",
-            keys = { "<leader>tb", "<leader>tg", "<leader>tt" },
+            opt = true,
             requires = {
                 { "vijaymarupudi/nvim-fzf", opt = true },
                 "kyazdani42/nvim-web-devicons",
             }, -- optional for icons
-            cond = { require("funcs").is_not_vscode },
             config = function()
                 require("plugins/fzf-lua")
             end,
@@ -165,7 +164,7 @@ if require("funcs").is_not_vscode then
     -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
     -- keys option provided by packer as that overides the vscode specific shortcut
     -- custom_load_map("<leader>e", "nvim-tree.lua")
-    custom_load_map("<leader>tf", "fzf-lua")
+    custom_load_map("<leader>t", "fzf-lua")
 end
 
 return packer
