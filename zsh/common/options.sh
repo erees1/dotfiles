@@ -11,6 +11,7 @@ setopt EXTENDED_HISTORY           # Write the history file in the ":start:elapse
 setopt HIST_SAVE_NO_DUPS          # Don't write duplicate entries in the history file.
 setopt HIST_EXPIRE_DUPS_FIRST     # Expire duplicate entries first when trimming history.
 setopt HIST_FIND_NO_DUPS          # Do not display a line previously found.
+setopt INC_APPEND_HISTORY         # New lines are added to $HISTFILE incrementally, rather than waiting until the shell exits
 setopt always_to_end
 setopt list_ambiguous
 export HISTSIZE=100000            # big big history
@@ -18,6 +19,7 @@ export HISTFILESIZE=100000        # big big history
 export HISTTIMEFORMAT="%F %T "
 export EDITOR=nvim
 zstyle ':completion:*' hosts off  # Don't autocomple ssh host names
+ZSH_DISABLE_COMPFIX=true
  
 # FZF options - might also affect fzf-lua extenstion in vim
 export FZF_DEFAULT_OPTS='--color=16,bg:-1,bg+:15,hl:4,hl+:4,fg:-1,fg+:-1,gutter:-1,pointer:-1,marker:-1,prompt:1 --height 40% --reverse --color border:46 --border=sharp --prompt="➤  " --pointer="➤ " --marker="➤ "'
