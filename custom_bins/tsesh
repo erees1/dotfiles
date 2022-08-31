@@ -72,9 +72,9 @@ make_nice() {
 
 find_directories(){
     # Responsible for chosing which directories to display
-    echo "/exp/$(whoami)"
     echo "$HOME/tb"
-    possible_options="$HOME/git"
+    echo "$HOME/git/dotfiles"
+    echo "$HOME/git/notebooks"
     possible_options+=" $HOME/git/aladdin"
     find  $possible_options -mindepth 1 -maxdepth 1 -type d -not -path '*/.*';
 }
