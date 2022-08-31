@@ -104,11 +104,6 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
-# ls after every cd
-function chpwd() {
- emulate -L zsh
- ls --group-directories-first 
-}
 
 # cd into created directory
 function mkcd () {
@@ -196,18 +191,7 @@ alias tdel="tmux kill-session -t"
 # ls
 #-------------------------------------------------------------
 
-alias ls="ls --color=auto --group-directories-first"
-alias l="ls --color=auto --group-directories-first"
 alias ll="exa -bghla --color=automatic --group-directories-first"
-alias la='ls -Al'         # show hidden files
-alias lx='ls -lXB'        # sort by extension
-alias lk='ls -lSr'        # sort by size, biggest last
-alias lc='ls -ltcr'       # sort by and show change time, most recent last
-alias lu='ls -ltur'       # sort by and show access time, most recent last
-alias lt='ls -ltr'        # sort by date, most recent last
-alias lm='ls -al |more'   # pipe through 'more'
-alias lr='ls -lR'         # recursive ls
-alias tree='tree -Csu'    # nice alternative to 'recursive ls'
 
 #-------------------------------------------------------------
 # chmod

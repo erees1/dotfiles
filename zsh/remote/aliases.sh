@@ -86,6 +86,13 @@ function jonah() {
 alias d='docker'
 alias dcl='docker container ls'
 
+# ls after every cd
+function chpwd() {
+ emulate -L zsh
+ ls --group-directories-first 
+}
+alias ls="ls --color=auto --group-directories-first"
+
 # -------------------------------------------------------------------
 # Tensorboard
 # -------------------------------------------------------------------

@@ -1,19 +1,24 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 export LOC="local"
 
-# Local aliases
-alias vm='ssh vm'
-alias rl='greadlink -f'
-alias cdm='cd ~/git/md-notes'
-alias cdj='cd ~/git/jamming'
-alias cdn='cd ~/git/jamming/notebooks'
-
 # Set array path to only have unique values
 typeset -U path
 
 source $ZSH_DOT_DIR/local/dir_colors.sh
 source $ZSH_DOT_DIR/common/zshrc.sh
 zstyle ':completion:*' list-colors $LS_COLORS
+
+# Local aliases
+alias vm='ssh vm'
+alias rl='greadlink -f'
+alias cdm='cd ~/git/md-notes'
+alias cdj='cd ~/git/jamming'
+alias cdn='cd ~/git/jamming/notebooks'
+function chpwd() {
+ emulate -L zsh
+ gls --color=auto --group-directories-first
+}
+alias ls="gls --color=auto --group-directories-first"
 
 # Need to remember to install miniconda to opt
 conda_loc="${HOME}/opt/miniconda3"
