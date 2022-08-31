@@ -1,4 +1,5 @@
 _VertGStatus = function()
+    require('funcs').tree_close()
 	s = require("settings").git_window_width
 	vim.cmd("vert Git")
 	cmd = string.format("vert resize %s", s)
