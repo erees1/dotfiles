@@ -4,16 +4,13 @@ export DOT_DIR=$(realpath $ZSH_DOT_DIR/../)
 
 . $ZSH_DOT_DIR/utils.sh
 
-ZSH_DISABLE_COMPFIX=true
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH=$HOME/.oh-my-zsh
 
 # Must source colors before loading plugins
 source $ZSH_DOT_DIR/common/dir_colors.sh
 
-VI_MODE_SET_CURSOR=true
-plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search vi-mode)
-
+plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search)
 
 add_to_path "${DOT_DIR}/custom_bins"
 add_to_path "${HOME}/.npm-global/bin"
@@ -45,3 +42,5 @@ if [[ -z $SINGULARITY_CONTAINER ]]; then
       fi
     fi
 fi
+
+
