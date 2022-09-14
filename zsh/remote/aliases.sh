@@ -3,8 +3,16 @@
 # -------------------------------------------------------------------
 
 HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
-TENSOR_BOARD_SIF="/env/tensorboard_2.9.1.sif"
 export DEFAULT_WORK_DIR=$HOME/git/aladdin/feature1
+export DEFAULT_SIF=$(cat $DEFAULT_WORK_DIR/env/GLOBAL_SIF)
+
+function maybe_singularity_exec() {
+    cmd=''
+    if [ -z $SINGULARITY_CONTAINER ]; then
+        cmd+="apptainer exec $DEFAULT_SIF"
+    fi
+    echo $cmd
+}
 
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
@@ -66,7 +74,10 @@ a() {
 compdef a=msa
 
 # Misc
-alias jpl="jupyter lab --no-browser --ip $HOST_IP_ADDR"
+function jpl() {
+    $(maybe_singularity_exec) jupyter lab --no-browser --ip $HOST_IP_ADDR
+}
+alias jpn='pushd ~/git/notebooks/ && jpl'
 alias nv='nvidia-smi'
 alias net="netron --host $HOST_IP_ADDR"
 
@@ -102,8 +113,8 @@ function tb () {
     else
         logdir=$1
     fi
-
-    singularity exec $TENSOR_BOARD_SIF tensorboard \
+    
+    $(maybe_singularity_exec) tensorboard \
       --load_fast true \
       --host=$HOST_IP_ADDR \
       --reload_multifile true \

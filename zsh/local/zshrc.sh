@@ -1,9 +1,6 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 export LOC="local"
 
-# Set array path to only have unique values
-typeset -U path
-
 source $ZSH_DOT_DIR/local/dir_colors.sh
 source $ZSH_DOT_DIR/common/zshrc.sh
 zstyle ':completion:*' list-colors $LS_COLORS
@@ -14,6 +11,8 @@ alias rl='greadlink -f'
 alias cdm='cd ~/git/md-notes'
 alias cdj='cd ~/git/jamming'
 alias cdn='cd ~/git/jamming/notebooks'
+alias jpl="jupyter lab"
+
 function chpwd() {
  emulate -L zsh
  gls --color=auto --group-directories-first
@@ -43,7 +42,7 @@ if command -v conda 2>/dev/null 2>&1; then
 fi
 
 # inserts shim for .rbenv if its not there already
-if hash rbenv 2>/dev/null; then 
+if hash rbenv 2>/dev/null; then
   SUB='rbenv/shims'
   if [[ "$PATH" != *"$SUB"* ]]; then
     eval "$(rbenv init -)"
