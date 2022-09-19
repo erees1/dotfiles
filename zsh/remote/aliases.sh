@@ -9,7 +9,7 @@ export DEFAULT_SIF=$(cat $DEFAULT_WORK_DIR/env/GLOBAL_SIF)
 function maybe_singularity_exec() {
     cmd=''
     if [ -z $SINGULARITY_CONTAINER ]; then
-        cmd+="apptainer exec $DEFAULT_SIF"
+        cmd+="singularity exec $DEFAULT_SIF"
     fi
     echo $cmd
 }
@@ -77,7 +77,12 @@ compdef a=msa
 function jpl() {
     $(maybe_singularity_exec) jupyter lab --no-browser --ip $HOST_IP_ADDR
 }
-alias jpn='pushd ~/git/notebooks/ && jpl'
+function jpn(){
+    pushd ~/git/notebooks/ &> /dev/null
+    jpl
+    popd &> /dev/null
+}
+
 alias nv='nvidia-smi'
 alias net="netron --host $HOST_IP_ADDR"
 

@@ -106,4 +106,5 @@ bindkey -r "^a"
 bindkey -s '^a' "tsesh default\n"
 bindkey -r '^b'
 bindkey -M viins '^b' beginning-of-line
+bindkey -M viins '^e' end-of-line
 
