@@ -65,6 +65,6 @@ remap("n", "q:", ":q<CR>", r)
 -- Start/end of line with ctrl-b ctrl-e in insert mode
 remap("i", "<c-b>", "<c-o>^", r)
 remap("i", "<c-e>", "<c-o>$", r)
-remap("n", "<c-a>", "<Nop>", r)  -- ctrl a is tmux leader
+-- remap("n", "<c-a>", "<Nop>", r)  -- ctrl a is tmux leader
 remap("n", "<c-q>", "<c-a>", r)  -- ctrl q to increment
 
