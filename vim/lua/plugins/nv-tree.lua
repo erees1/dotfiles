@@ -56,5 +56,5 @@ require("nvim-tree").setup({
 
 
 if require("funcs").is_not_vscode() then
-    vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>lua require('funcs').tree_toggle()<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", { noremap = true, silent = true })
 end
