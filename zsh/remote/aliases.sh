@@ -152,6 +152,15 @@ tblink () {
     fi
     tb $logdir
 }
+tbrunning () {
+     jobs=$(qdesc | awk '{print $1}')
+     args=()
+     for job in ${=jobs}; do
+         exp_dir="$(qexp "$job")"
+         args+=($exp_dir)
+     done
+     tblink $args
+ }
 _linkdirs() {
     logdir="$1"
     mkdir -p $logdir
@@ -197,6 +206,8 @@ alias wgq="watch $gpu_queue"
 alias qt="qtail"
 alias qtf="qtail -f"
 alias qtl="qtail -l"
+
+compdef qalter=qstat
 
 # Queue functions
 qlogin () {
@@ -306,7 +317,7 @@ qdesc () {
 }
 qexp () {
     # Get exp dir of job
-    echo $(dirname $(qlog $@))
+    echo $(dirname $(qlog $1))
 }
 qrecycle () {
     [ ! -z $SINGULARITY_CONTAINER ] && ssh localhost "qrecycle $@" || command qrecycle "$@";
@@ -317,6 +328,28 @@ qupdate () {
 getfucked() {
     qstat -u "*" | grep $1 | awk '{print $1}' | while read job; do qmakep $job; done
 }
+qbump() {
+    jobs=$(qdesc | awk '{print $1}')
+    args=()
+    for job in ${=jobs}; do
+        qremovep $job
+        qtop $job
+    done
+}
+qall() {
+    # Make any pendings jobs run on all queues
+    jobs=$(qstat | grep qw |awk '{print $1}')
+    args=()
+    for job in ${=jobs}; do
+        qalter $job -q aml-gpu.q@@a100,aml-gpu.q@b1,aml-gpu.q@b4,aml-gpu.q@b7
+    done
+}
+
+compdef qlog=qstat
+compdef qcat=qstat
+compdef qexp=qstat
+compdef qrecycle=qstat
+compdef qtail=qstat
 
 # Only way to get a gpu is via queue
 if [ -z $CUDA_VISIBLE_DEVICES ]; then

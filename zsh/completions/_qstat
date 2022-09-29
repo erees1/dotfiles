@@ -1,0 +1,14 @@
+#compdef qstat
+
+# AUTOCOMPLETION FOR ZSH
+# Reference: https://zsh.sourceforge.io/Doc/Release/Completion-Widgets.html
+
+local -a opts
+list="$(/usr/bin/qstat | tail -n +3 | awk '{print $1}')"
+
+setopt shwordsplit
+for item in $list; do
+    opts+=("$item")
+done
+
+_describe 'command' opts
