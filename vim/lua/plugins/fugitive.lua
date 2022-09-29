@@ -21,6 +21,7 @@ vim.cmd([[
 augroup fugitive_au
   autocmd!
   autocmd FileType fugitive setlocal winfixwidth
+  autocmd FileType fugitive setlocal nobuflisted
   autocmd FileType fugitive setlocal nonumber | setlocal norelativenumber
   autocmd FileType fugitive setlocal winhighlight=Normal:DiffViewNormal,WinSeparator:DiffviewVertSplit,EndOfBuffer:DiffviewEndOfBuffer,SignColumn:DiffViewNormal
   autocmd FileType fugitive nnoremap <buffer> gs <cmd>lua _GClose()<CR> 
@@ -32,5 +33,5 @@ augroup END
 
 vim.api.nvim_set_keymap("n", "gs", "<cmd>lua _VertGStatus()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ds", ":Gvdiffsplit!<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "mh", ":diffget //2<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "ml", ":diffget //3<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>mh", ":diffget //2<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ml", ":diffget //3<CR>", { noremap = true, silent = true })
