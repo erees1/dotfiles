@@ -4,28 +4,13 @@ function M.is_not_vscode()
 end
 
 function M.reset_bufferline()
-	require("bufferline.state").set_offset(0)
-end
-
-
-function M.tree_close()
-    require("bufferline.state").set_offset(0)
-    if require("nvim-tree.view").is_visible() then
-        require("nvim-tree").toggle()
-    end
-end
-
-function M.tree_open()
-    require("bufferline.state").set_offset(require("settings").tree_width + 1, "FileTree")
-    require("nvim-tree").open()
+	require("bufferline.api").set_offset(0)
 end
 
 function M.tree_toggle()
-    if require("nvim-tree.view").is_visible() then
-        M.tree_close()
-    else
-        M.tree_open()
-    end
+    vim.api.nvim_command('NvimTreeFindFileToggle')
+    -- if package.loaded["fugitive"] then
+       
+    -- end
 end
-
 return M
