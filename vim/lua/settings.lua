@@ -31,12 +31,14 @@ vim.o.undofile = true
 
 vim.o.fillchars = "diff:/"
 
--- TODO convert to lua
-vim.api.nvim_command([[
-au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=1000 }
-autocmd FileType c,cpp,java setlocal commentstring=//\ %s
-]])
+-- Highlight on yank
+local yankGrp = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+  command = "silent! lua vim.highlight.on_yank(timeout=1000)",
+  group = yankGrp,
+})
 
+-- autocmd FileType c,cpp,java setlocal commentstring=//\ %s
 -- Use neovim 0.7 filetype.lua for matching filetypes and don't use fallback (for speed)
 vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0
