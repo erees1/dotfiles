@@ -302,7 +302,9 @@ qdesc () {
     qstat | tail -n +3 | while read line; do
         job=$(echo $line | awk '{print $1}')
         if [[ ! $(qstat -j $job | grep "job-array tasks") ]]; then
-            echo $job $(qlog $job)
+            job_status=$(echo $line | awk '{print $5}')
+            echo $job $job_status $(qlog $job) 
+
         else
             qq_dir=$(qlog $job)
             job_status=$(echo $line | awk '{print $5}')
@@ -310,7 +312,7 @@ qdesc () {
                 sub_job=$(echo $line | awk '{print $10}')
                 echo $job $sub_job $(qlog $job $sub_job)
             else
-                echo $job $qq_dir $job_status
+                echo $job $job_status $qq_dir 
             fi
         fi
     done
