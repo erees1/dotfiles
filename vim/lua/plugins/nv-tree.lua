@@ -3,11 +3,10 @@ require("nvim-tree").setup({
     hijack_cursor = false,
     filters = {
         dotfiles = true,
-        custom = {},
-    },
-    filters = {
-        dotfiles = true,
         custom = { "node_modules" },
+    },
+    git = {
+        ignore = false,
     },
     update_focused_file = {
         -- enables the feature
@@ -53,8 +52,11 @@ require("nvim-tree").setup({
     },
 })
 
-
-
 if require("funcs").is_not_vscode() then
-    vim.api.nvim_set_keymap("n", "<leader>e", ":lua require('funcs').tree_toggle()<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap(
+        "n",
+        "<leader>e",
+        ":lua require('funcs').tree_toggle()<CR>",
+        { noremap = true, silent = true }
+    )
 end
