@@ -217,7 +217,7 @@ qlogin () {
     #    qlogin 1 cpu            request 1 cpu slot
     #    qlogin 1 aml-gpu.q@b5   request 1 gpu on b5
     if [ "$#" -eq 1 ]; then
-        /usr/bin/qlogin -now n -pe smp $1 -q aml-gpu.q -l gpu=$1 -N D_$(whoami)
+        /usr/bin/qlogin -now n -p 1024 -pe smp $1 -q aml-gpu.q -l gpu=$1 -N D_$(whoami)
     elif [ "$#" -eq 2 ]; then
         gpu_args=""
         if [ "$2" = "cpu" ]; then
@@ -228,7 +228,7 @@ qlogin () {
         else
             queue="$2"
         fi
-        /usr/bin/qlogin -now n -pe smp $1 -q $queue -l "$gpu_args" -N D_$(whoami)
+        /usr/bin/qlogin -now n -p 1024 -pe smp $1 -q $queue -l "$gpu_args" -N D_$(whoami)
     else
         echo "Usage: qlogin <num_gpus>" >&2
         echo "Usage: qlogin <num_gpus> <queue>" >&2
