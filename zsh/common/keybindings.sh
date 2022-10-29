@@ -65,8 +65,19 @@ __fsel_files() {
   return $ret
 }
 
+__fsel_files2() {
+  setopt localoptions pipefail no_aliases 2> /dev/null
+  eval "find ./ -not -path '*/\.git/*' -type f -print" | fzf -m "$@" | while read item; do
+    echo -n "${(q)item} "
+  done
+  local ret=$?
+  echo
+  return $ret
+
+}
+
 function fzf-vim {
-    selected=$(__fsel_files)
+    selected=$(__fsel_files2)
     if [[ -z "$selected" ]]; then
         zle redisplay
         return 0
@@ -99,7 +110,7 @@ bindkey -M vicmd 'L' end-of-line
 
 # Use c-b to go to start of line c-a as tmux leader
 bindkey -r "^a"
-bindkey -s '^a' "tsesh default\n"
+bindkey -s '^a' "tsesh\n"
 bindkey -r '^b'
 bindkey -M viins '^b' beginning-of-line
 bindkey -M viins '^e' end-of-line
