@@ -8,7 +8,7 @@ list="$(/usr/bin/qstat | tail -n +3 | awk '{print $1}' | uniq)"
 
 setopt shwordsplit
 for item in $list; do
-    description=${$(qlog $item)#"/exp/edwardr"}
+    description=${$(qlog $item)#"/exp/edwardr/"}
     opts+=("$item:$description")
 done
 
