@@ -27,6 +27,11 @@ else
   echo "VIM - found bash-language-server binary - skipping install"
 fi
 
+if ! command -v vscode-langservers-extracted 1>/dev/null 2>&1; then
+  npm i -g vscode-langservers-extracted
+else
+  echo "VIM - found html-language-server binary - skipping install"
+fi
 # Remove init.vim if exists as it will conflict with init.lua
 if [ -f $HOME/.config/nvim/init.vim ]; then
   rm $HOME/.config/nvim/init.vim

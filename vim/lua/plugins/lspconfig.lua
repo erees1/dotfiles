@@ -66,3 +66,7 @@ nvim_lsp.clangd.setup({
     on_attch = on_attach,
 })
 nvim_lsp.clangd.setup(coq.lsp_ensure_capabilities({}))
+nvim_lsp.html.setup({
+    on_attach = on_attach,
+    provideFormatter = true
+})
