@@ -7,6 +7,10 @@ remap("n", "<C-k>", "<cmd>call VSCodeNotify('workbench.action.navigateUp')<CR>",
 remap("n", "<C-h>", "<cmd>call VSCodeNotify('workbench.action.navigateLeft')<CR>", r)
 remap("n", "<C-l>", "<cmd>call VSCodeNotify('workbench.action.navigateRight')<CR>", r)
 remap("n", "<C-w>_", "<cmd><C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>", r)
+-- remap("n", "<c-d>", "30jzz", r)
+-- remap("n", "<c-u>", "30kzz", r)
+-- remap("n", "j", "jzz", r)
+-- remap("n", "k", "kzz", r)
 
 remap("n", "gr", "<cmd>call VSCodeNotify('editor.action.goToReferences')<CR>", r)
 remap("n", "<leader>e", "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>", r)
