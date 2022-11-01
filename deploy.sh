@@ -41,6 +41,9 @@ echo "source $DOT_DIR/zsh/$LOC/zshrc.sh" > $HOME/.zshrc
 # Gitconfig setup
 source "$DOT_DIR/gitconf/setup_gitconfig.sh"
 
+echo "c.TerminalInteractiveShell.editing_mode = 'vi'" > ~/.ipython/profile_default/ipython_config.py
+cat "$DOT_DIR/config/keybindings.py" > $HOME/.ipython/profile_default/startup/keybindings.py
+
 if [ $LOC == 'local' ]; then
     # Karabiner elements mapping
     mkdir -p $HOME/.config/karabiner
