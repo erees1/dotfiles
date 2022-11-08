@@ -18,8 +18,6 @@ while (( "$#" )); do
             echo "$USAGE" && exit 1 ;;
         --popup)
             POPUP=true && shift ;;
-        --activate_sif)
-            activate_sif=true && shift ;;
         --) # end argument parsing
             shift && break ;;
         -*|--*=) # unsupported flags
@@ -33,30 +31,8 @@ done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 
-# Is tmux running and are we inside a tmux session
-is_running=$(ps aux | grep '[t]mux new-session')
-if tmux info &> /dev/null; then
-    is_inside="true"
-fi
-
 # Selection using fzf ---
-
-find_directories(){
-    # Responsible for chosing which directories to display
-    if [ $LOC == "remote" ]; then
-        # echo "$HOME/tb"
-        # echo "$HOME/git/dotfiles"
-        # echo "$HOME/git/notebooks"
-        possible_options+=" $HOME/git"
-        possible_options+=" $HOME/git/aladdin"
-        find  $possible_options -mindepth 1 -maxdepth 1 -type d -not -path '*/.*';
-    else
-        possible_options+=" $HOME/git"
-        find  $possible_options -mindepth 1 -maxdepth 1 -type d -not -path '*/.*';
-    fi
-}
-
-dir2name(){
+transform_name(){
     # Set of rules to transform directories into sesh_names
     name="$1"
     sesh_name=$(basename "$name")
@@ -68,26 +44,25 @@ dir2name(){
     echo "$sesh_name"
 }
 
-tabulate() {
+make_nice() {
     # Reads a list of directories from find command and processes them to 
     # a table for fzf to display, it also prepends all the running tmux sessions
-    # to the list so they can also be selected, ouputs a colored table
-    if [[ $is_inside == "true" ]]; then
-        current_session=$(tmux display-message -p '#S')
-    fi
-    printf "\x1b[1mSession Directory Status\x1b[0m\n"  #Headings
+    # to the list so they can also be selected
+    current_session=$(tmux display-message -p '#W')
+    printf "\x1b[1mWindow Directory Status\x1b[0m\n"  #Headings
     {
-        for name in $(tmux list-sessions | awk '{print $1}' | sed 's/:$//'); do
-            status="\x1b[32mrunning\x1b[0m"
+        for name in $(tmux list-windows | awk '{print $1$2}' | sed 's/:$//'); do
+            status="\x1b[32mopen\x1b[0m"
             line="-"
-            if [[ ! $name == $current_session ]]; then
+            if [[ ! $name == "$current_session*" ]]; then
                 printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
             fi
         done
         while IFS=$'\n' read -r line; do
-            name="$(dir2name $line)"
-            if ! tmux has-session -t="$name" 2> /dev/null ; then
+            name="$(transform_name $line)"
+            if ! tmux list-windows | awk '{print $2}' | grep -q "$name" 2> /dev/null ; then
                 # Don't process running ones
+                # status="\x1b[32mrunning\x1b[0m"
                 status="create?"
                 printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
             fi
@@ -95,6 +70,17 @@ tabulate() {
     }
 }
 
+find_directories(){
+    # Responsible for chosing which directories to display
+    if [ $LOC == "remote" ]; then
+        echo "$HOME/tb"
+        echo "/exp/$(whoami)"
+        echo "$HOME/git/notebooks"
+    else
+        possible_options+=" $HOME/git"
+        find  $possible_options -mindepth 1 -maxdepth 1 -type d -not -path '*/.*';
+    fi
+}
 
 # This section gets the selected and sesh_name from cmd line of from fzf if no cmd line args are provided
 if [[ $# -eq 1 ]]; then
@@ -110,9 +96,10 @@ else
         fzf_bin="fzf-tmux -p 50%,50%"
         fzf_args+=" --border=none --height=100%"
     fi
-    selected=$(find_directories | tabulate | column -t -s' '| sed '1s/^/  /' | $fzf_bin $fzf_args )
-    sesh_name=$(echo $selected | awk '{ print $1 }')
+    selected=$(find_directories | make_nice | column -t -s' '| sed '1s/^/  /' | $fzf_bin $fzf_args )
+    sesh_name=$(echo $selected | awk '{ print $1 }' | sed 's/.*://')
     selected=$(echo $selected | awk '{ print $2 }')
+    window_number=$(tmux list-window | awk '{print $1" "$2}' | grep $sesh_name | sed 's/:.*//')
 fi
 
 if [[ -z $selected ]]; then
@@ -121,14 +108,31 @@ fi
 
 # Session switching ---
 
-# Make shell if a GLOBAL_SIF file exists at selected 
-args=""
-if [[ ! -z $activate_sif ]]; then
-    if [[ -f $selected/env/GLOBAL_SIF  ]] ; then
+# Can accept special argument default this block handles that
+if [[ $sesh_name == "default" ]]; then
+    was_default=true
+    if [[ $LOC == "remote" ]]; then
+        selected="$DEFAULT_WORK_DIR"
+        sesh_name="aladdin-$(basename $selected)"
         args="make shell 2> /dev/null"
+    else
+        sesh_name="local"
+        selected="$HOME"
     fi
+else
+    was_default=false
 fi
 
+# Make shell if a GLOBAL_SIF file exists at selected 
+args=""
+if [[ -f $selected/env/GLOBAL_SIF  ]] ; then
+    args="make shell 2> /dev/null"
+fi
+
+is_running=$(ps aux | grep '[t]mux new-session')
+if tmux info &> /dev/null; then
+    is_inside="true"
+fi
 
 # If tmux is not running at all
 if [[ -z $TMUX ]] && [[ -z $is_running ]]; then
@@ -136,16 +140,20 @@ if [[ -z $TMUX ]] && [[ -z $is_running ]]; then
     exit 0
 fi
 
+if [[ $was_default == "true" ]]; then
+    tmux attach
+    exit 0
+fi
 # If tmux is running but does not have a session with that name
 # create new session but dont attach
-if ! tmux has-session -t=$sesh_name 2> /dev/null; then
-    tmux new-session -ds $sesh_name -c $selected $args
+if ! tmux list-windows | grep -q $sesh_name 2> /dev/null; then
+    tmux new-window -c $selected \; rename-window $sesh_name
 fi
 
 if [[ $is_inside == true ]]; then
-    # Switiching from one session to another when already inside tmux
-    tmux switch-client -t $sesh_name
+    tmux select-window -t $window_number
 else
     # If tmux is running, has a session with that name but we are not currently attached
     tmux attach -t $sesh_name
 fi
+
