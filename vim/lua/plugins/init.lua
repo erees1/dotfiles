@@ -153,13 +153,12 @@ local packer = require("packer").startup({
 
 if require("funcs").is_not_vscode then
     function custom_load_map(binding, plugin)
-        local r = { noremap = true, silent = true }
         cmd = string.format(
             '<Cmd> lua require("packer.load")({\'%1s\'}, { keys = "%2s", prefix = "" }, _G.packer_plugins)<CR>',
             plugin,
             binding
         )
-        remap("n", binding, cmd, r)
+        nnoremap(binding, cmd)
     end
     -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
     -- keys option provided by packer as that overides the vscode specific shortcut

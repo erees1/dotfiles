@@ -31,10 +31,6 @@ vim.o.undofile = true
 
 vim.o.fillchars = "diff:/"
 
--- Use neovim 0.7 filetype.lua for matching filetypes and don't use fallback (for speed)
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
-
 -- Autocommands
 vim.api.nvim_create_augroup("Misc", { clear = true })
 
