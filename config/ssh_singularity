@@ -1,8 +1,12 @@
 #!/bin/bash
-if [[ "${@: -1}" = *"no-singularity" ]]; then
-    # don't use singularity so we can use containers
-    ssh "$@"
-else
-    # use singularity
-    ssh -o RemoteCommand="/home/edwardr/git/aladdin/feature1/env/singularity.sh" -o RequestTTY=force "$@"
-fi
+echo "calling ssh_singularity with args $@"
+ssh "$@"
+# if [[ "${@: -1}" = *"no-singularity" ]]; then
+#     # don't use singularity so we can use containers
+#     echo "connecting without singularity"
+#     ssh "$@"
+# else
+#     # use singularity
+#     echo "connecting with singularity"
+#     ssh -o RemoteCommand="/home/edwardr/git/aladdin/feature1/env/singularity.sh" -o RequestTTY=force "$@"
+# fi
