@@ -1554,7 +1554,10 @@
 
   function prompt_singularity() {
     if [ ! -z "$SINGULARITY_CONTAINER" ]; then
-      name=$(echo ${SINGULARITY_CONTAINER} | awk -F/ '{print $(NF-0)}')
+      name=${SINGULARITY_CONTAINER##*/}
+        if [ ! -z "$SIF_OVERLAY" ]; then
+            name="$name+"${SIF_OVERLAY##*/}
+        fi
       p10k segment -t "${name}"
     fi
   }
