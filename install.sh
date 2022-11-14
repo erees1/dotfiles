@@ -99,6 +99,7 @@ if [ $machine == "Linux" ]; then
     fi
     if [ $pyenv == true ]; then
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+        git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
     fi
     # Installing on mac with homebrew
 elif [ $machine == "Mac" ]; then
