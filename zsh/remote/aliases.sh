@@ -74,12 +74,15 @@ a() {
 compdef a=msa
 
 # Misc
-function jpl() {
-    $(maybe_singularity_exec) jupyter lab --no-browser --ip $HOST_IP_ADDR
+function jp {
+    jupyter lab --no-browser --ip $HOST_IP_ADDR
+}
+function jps() {
+    $(maybe_singularity_exec) jp
 }
 function jpn(){
     pushd ~/git/notebooks/ &> /dev/null
-    jpl
+    jps
     popd &> /dev/null
 }
 
