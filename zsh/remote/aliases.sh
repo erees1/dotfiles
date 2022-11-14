@@ -351,6 +351,7 @@ qall() {
 }
 
 compdef qlog=qstat
+compdef qdel=qstat
 compdef qcat=qstat
 compdef qexp=qstat
 compdef qrecycle=qstat
