@@ -6,17 +6,14 @@ Host vm-singularity
   HostName edwardr.dev-vms.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
-  RemoteCommand  /home/edwardr/git/aladdin/feature1/env/singularity.sh
 Host vm-singularity2
   HostName edwardr.dev-vms.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
-  RemoteCommand  /home/edwardr/git/aladdin/feature2/env/singularity.sh
 Host vm-singularity3
   HostName edwardr.dev-vms.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
-  RemoteCommand  /home/edwardr/git/aladdin/feature3/env/singularity.sh
 Host b2
   HostName b2.aml.speechmatics.io
   User edwardr
@@ -25,16 +22,13 @@ Host b2-singularity
   HostName b2.aml.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
-  RemoteCommand  /home/edwardr/git/aladdin/feature1/env/singularity.sh
 Host b5
   HostName b5.aml.speechmatics.io
   User edwardr
-  IdentityFile ~/.ssh/id_rsa
 Host b5-singularity
   HostName b5.aml.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
-  RemoteCommand  /home/edwardr/git/aladdin/feature1/env/singularity.sh
 Host b6
   HostName b6.aml.speechmatics.io
   User edwardr
@@ -43,4 +37,3 @@ Host b6-singularity
   HostName b6.aml.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
-  RemoteCommand  /home/edwardr/git/aladdin/feature1/env/singularity.sh
