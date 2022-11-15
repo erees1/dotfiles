@@ -399,7 +399,10 @@ nzero() {
 # -------------------------------------------------------------------
 
 clean_vm () {
-    ps -ef | grep '[v]scode' | awk '{print $2}' | xargs sudo kill
+    kill_vscode
     ps -ef | grep '[z]sh' | awk '{print $2}' | xargs sudo kill
 }
-
+kill_vscode () {
+    echo "killing vscode processes"
+    ps -ef | grep '[v]scode' | awk '{print $2}' | xargs sudo kill
+}
