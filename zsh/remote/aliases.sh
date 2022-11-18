@@ -112,6 +112,14 @@ function chpwd() {
 }
 alias ls="ls --color=auto --group-directories-first"
 
+# remote debugging
+open_tunnel() {
+  host=$1
+  remote_ip=$(ssh $host hostname -I | awk '{print $1}')
+  echo "$remote_ip"
+  ssh -2 -L 5678:$remote_ip:5678 $(whoami)@$host
+}
+compdef open_tunnel=ssh
 # -------------------------------------------------------------------
 # Tensorboard
 # -------------------------------------------------------------------

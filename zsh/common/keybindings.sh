@@ -25,6 +25,41 @@ _fix_cursor() {
 }
 precmd_functions+=(_fix_cursor)
 
+# Yank to the system clipboard
+function vi-yank-yk {
+    zle vi-yank
+   echo "$CUTBUFFER" | yk 2> /dev/null
+}
+
+zle -N vi-yank-yk
+bindkey -M vicmd 'y' vi-yank-yk
+
+# Set Up and Down arrow keys to the (zsh-)history-substring-search plugin
+# `-n` means `not empty`, equivalent to `! -z`
+[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
+[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+
+# Accept zsh autosggestions with ctrl + space
+# Make sure you don't have mac input source switch
+bindkey '^ ' autosuggest-accept  
+
+bindkey -s ^f "tsesh --popup\n"
+
+# To match my custom vim bindings
+bindkey -M vicmd 'H' beginning-of-line
+bindkey -M vicmd 'L' end-of-line
+
+# Use c-b to go to start of line c-a as tmux leader
+bindkey -r "^a"
+bindkey -s '^a' "tsesh\n"
+bindkey -r '^b'
+bindkey -M viins '^b' beginning-of-line
+bindkey -M viins '^e' end-of-line
+
 # git add ci and push
 function git_prepare() {
    if [ -n "$BUFFER" ]; then
@@ -74,29 +109,16 @@ function fzf-vim {
 zle -N fzf-vim
 bindkey "^v" fzf-vim
 
-# Set Up and Down arrow keys to the (zsh-)history-substring-search plugin
-# `-n` means `not empty`, equivalent to `! -z`
-[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
-[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
 
-# Accept zsh autosggestions with ctrl + space
-# Make sure you don't have mac input source switch
-bindkey '^ ' autosuggest-accept  
-
-bindkey -s ^f "tsesh --popup\n"
-
-# To match my custom vim bindings
-bindkey -M vicmd 'H' beginning-of-line
-bindkey -M vicmd 'L' end-of-line
-
-# Use c-b to go to start of line c-a as tmux leader
-bindkey -r "^a"
-bindkey -s '^a' "tsesh\n"
-bindkey -r '^b'
-bindkey -M viins '^b' beginning-of-line
-bindkey -M viins '^e' end-of-line
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
 
