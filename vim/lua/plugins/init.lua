@@ -39,6 +39,7 @@ local packer = require("packer").startup({
             end,
             cond = { require("funcs").is_not_vscode },
         })
+        use({ "github/copilot.vim", cond = { require("funcs").is_not_vscode } })
 
         -- Shortucts etc
         use({ "tpope/vim-commentary" })
@@ -136,7 +137,7 @@ local packer = require("packer").startup({
             "ojroques/vim-oscyank",
             cond = { require("funcs").is_not_vscode },
             config = function()
-                vim.g.oscyank_term="default"
+                vim.g.oscyank_term = "default"
             end,
         })
 

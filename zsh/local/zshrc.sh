@@ -1,8 +1,9 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 export LOC="local"
 
-source $ZSH_DOT_DIR/local/dir_colors.sh
-source $ZSH_DOT_DIR/common/zshrc.sh
+. $ZSH_DOT_DIR/utils.sh
+. $ZSH_DOT_DIR/local/dir_colors.sh
+. $ZSH_DOT_DIR/common/zshrc.sh
 zstyle ':completion:*' list-colors $LS_COLORS
 
 # Local aliases
@@ -48,4 +49,4 @@ if hash rbenv 2>/dev/null; then
     eval "$(rbenv init -)"
   fi
 fi
-
+add_to_path "/opt/homebrew/opt/node@16/bin"

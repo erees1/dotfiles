@@ -42,17 +42,19 @@ echo "source $DOT_DIR/zsh/$LOC/zshrc.sh" > $HOME/.zshrc
 source "$DOT_DIR/gitconf/setup_gitconfig.sh"
 
 echo "c.TerminalInteractiveShell.editing_mode = 'vi'" > ~/.ipython/profile_default/ipython_config.py
-cat "$DOT_DIR/config/keybindings.py" > $HOME/.ipython/profile_default/startup/keybindings.py
+# cat "$DOT_DIR/config/keybindings.py" > $HOME/.ipython/profile_default/startup/keybindings.py
 
 if [ $LOC == 'local' ]; then
     # Karabiner elements mapping
     mkdir -p $HOME/.config/karabiner
     karabiner_path=$HOME/.config/karabiner/karabiner.json
-    if [ -f $karabiner_path ]; then
-        read -p "karabiner.json found do you want to overwrite? (y/n) " yn
+    dd_karabiner_path=$DOT_DIR/config/karabiner.json
+
+    if ! cmp -s $karabiner_path $dd_karabiner_path; then
+        read -p "karabiner.json differs from dotfiles v do you want to overwrite? (y/n) " yn
         case $yn in 
             y )
-                mv $karabiner_path $karabiner_path.backup
+                cat $karabiner_path > $karabiner_path.backup
                 ln -sf "$DOT_DIR/config/karabiner.json" "$karabiner_path" ;
                 ;;
             n ) echo skipping...;

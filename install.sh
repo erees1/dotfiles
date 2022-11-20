@@ -18,6 +18,16 @@ OPTIONS:
 END
 )
 
+
+
+
+
+
+
+
+
+
+
 operating_system="$(uname -s)"
 case "${operating_system}" in
     Linux*)     machine=Linux;;
@@ -111,7 +121,10 @@ elif [ $machine == "Mac" ]; then
     if [ $nvim == true ]; then 
         brew install neovim
         # Node is used to install language servers in vim/setup_init.sh
-        brew install node
+        # also requried for vim copilot extension
+        brew install node@16
+        # Ensure vim language servers are installed
+        $DOT_DIR/vim/install_ls.sh
     fi
     [ $exa == true ] && brew install exa
     if [ $pyenv == true ]; then

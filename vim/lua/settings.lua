@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- Filetype autocommands
 vim.api.nvim_create_autocmd("FileType", {
     group = "Misc",
-    pattern = { "html", "sh" },
+    pattern = { "html" },
     callback = function()
         vim.opt_local.sw = 2
         vim.opt_local.ts = 2
