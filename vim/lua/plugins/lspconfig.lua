@@ -3,7 +3,7 @@ local nvim_lsp = require("lspconfig")
 
 -- Coq for autocomplete
 local coq = require("coq")
-vim.cmd("let g:coq_settings = { 'keymap.jump_to_mark' : '' }")
+vim.cmd("let g:coq_settings = { 'keymap.jump_to_mark' : '' , 'keymap.manual_complete' : ''}")
 
 -- Mappings.
 local opts = { noremap = true, silent = true }

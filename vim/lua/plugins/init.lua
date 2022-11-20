@@ -7,7 +7,6 @@ if require("funcs").is_not_vscode() then
         auto_start = "shut-up",
     }
 end
-
 -- Packer bootstrap
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -39,7 +38,14 @@ local packer = require("packer").startup({
             end,
             cond = { require("funcs").is_not_vscode },
         })
-        use({ "github/copilot.vim", cond = { require("funcs").is_not_vscode } })
+        use({
+            "github/copilot.vim",
+            config = function()
+                vim.g.copilot_no_tab_map = true
+                vim.cmd([[imap <silent><script><expr> <C-space> copilot#Accept("\<CR>")]])
+            end,
+            cond = { require("funcs").is_not_vscode },
+        })
 
         -- Shortucts etc
         use({ "tpope/vim-commentary" })
@@ -167,4 +173,3 @@ if require("funcs").is_not_vscode then
     custom_load_map("<leader>t", "fzf-lua")
 end
 
-return packer
