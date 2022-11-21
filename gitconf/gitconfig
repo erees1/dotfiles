@@ -31,4 +31,5 @@
     rebase = true
 [alias]
 	clone-for-worktrees = "!/bin/bash $HOME/git/dotfiles/gitconf/clone_for_worktree.sh"
-
+[alias]
+	new-branch = "!/bin/bash $HOME/git/dotfiles/gitconf/new_branch.sh"
