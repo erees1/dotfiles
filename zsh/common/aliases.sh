@@ -10,7 +10,7 @@ alias mkve="virtualenv -p python3"
 alias mkipy="python -m ipykernel install --user --name"
 alias rmipy="jupyter kernelspec uninstall"
 alias vdot="nvim $DOT_DIR"
-alias pydebug="python3 -m debugpy --listen 5678 --wait-for-client"
+alias debugpy_listen="python3 -m debugpy --listen 5678 --wait-for-client"
 
 function ve () {
     if [ -f ./venv/bin/activate ]; then
