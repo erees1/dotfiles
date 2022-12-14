@@ -56,7 +56,7 @@ require("null-ls").setup({
     sources = {
         require("null-ls").builtins.formatting.stylua,
         require("null-ls").builtins.diagnostics.flake8.with({
-            extra_args = { "--max-line-length=120", '--ignore="E203, W503, E712"' },
+            extra_args = { "--max-line-length=120", '--ignore=E203,W503,E712' },
         }),
         require("null-ls").builtins.formatting.black,
     },
