@@ -13,7 +13,7 @@ syn keyword Number             None
 " Now make seperate syntax groups for the class.
 syn keyword pythonClassStmt class nextgroup=pythonClass skipwhite
 syn match   pythonClass "\h\w*" display contained
-syn match   pythonInstantion /[A-Z]\w\+(/he=e-1
+syn match   pythonInstantion /(\s\|^)[A-Z]\w\+(/he=e-1
 syn match   pythonSelf "\(\W\|^\)\zsself\ze\W"
 syn match   pythonDunder /__\w\+__/
 syn match   pythonConstant "\(\s\|^\)[A-Z]\+[A-Z_]*[A-Z]\+"
