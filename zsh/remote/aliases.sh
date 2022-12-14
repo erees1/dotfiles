@@ -1,18 +1,13 @@
 # -------------------------------------------------------------------
 # General and Navigation
 # -------------------------------------------------------------------
+ZSH_DOT_DIR=$(realpath $(dirname $(realpath ${(%):-%x}))/..)
+
+. $ZSH_DOT_DIR/utils.sh
 
 HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
 export DEFAULT_WORK_DIR=$HOME/git/aladdin/feature1
 export DEFAULT_SIF=$(cat $DEFAULT_WORK_DIR/env/GLOBAL_SIF)
-
-function maybe_singularity_exec() {
-    cmd=''
-    if [ -z $SINGULARITY_CONTAINER ]; then
-        cmd+="singularity exec $DEFAULT_SIF"
-    fi
-    echo $cmd
-}
 
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here

@@ -4,3 +4,10 @@ function add_to_path() {
       export PATH="$p:$PATH"
     fi
 }
+function maybe_singularity_exec() {
+    cmd=''
+    if [ -z $SINGULARITY_CONTAINER ]; then
+        cmd+="singularity exec $DEFAULT_SIF"
+    fi
+    echo $cmd
+}
