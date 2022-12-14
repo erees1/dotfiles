@@ -19,15 +19,6 @@ END
 )
 
 
-
-
-
-
-
-
-
-
-
 operating_system="$(uname -s)"
 case "${operating_system}" in
     Linux*)     machine=Linux;;
