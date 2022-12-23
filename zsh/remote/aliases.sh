@@ -345,9 +345,13 @@ qbump() {
     done
 }
 qall() {
+    # get job_id from first arg
+    if [ "$#" -eq 1 ]; then
+        jobs=$1
+    else
+        jobs=$(qstat | grep qw |awk '{print $1}')
+    fi
     # Make any pendings jobs run on all queues
-    jobs=$(qstat | grep qw |awk '{print $1}')
-    args=()
     for job in ${=jobs}; do
         qalter $job -q aml-gpu.q@@a100,aml-gpu.q@b1,aml-gpu.q@b4,aml-gpu.q@b7
     done
