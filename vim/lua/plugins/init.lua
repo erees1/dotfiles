@@ -2,7 +2,7 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-if require("funcs").is_not_vscode() then
+if require("utils").is_not_vscode() then
     vim.g.coq_settings = {
         auto_start = "shut-up",
     }
@@ -36,7 +36,7 @@ local packer = require("packer").startup({
             config = function()
                 require("plugins/lspconfig")
             end,
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
         })
         use({
             "github/copilot.vim",
@@ -44,14 +44,14 @@ local packer = require("packer").startup({
                 vim.g.copilot_no_tab_map = true
                 vim.cmd([[imap <silent><script><expr> <C-space> copilot#Accept("\<CR>")]])
             end,
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
         })
 
         -- Shortucts etc
         use({ "tpope/vim-commentary" })
         use({
             "christoomey/vim-tmux-navigator",
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
         })
 
         -- Nvim tree / explorer stuff
@@ -64,7 +64,7 @@ local packer = require("packer").startup({
         })
         use({
             "romgrk/barbar.nvim",
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
             config = function()
                 require("plugins/barbar")
             end,
@@ -73,7 +73,7 @@ local packer = require("packer").startup({
         -- Git
         use({
             "lewis6991/gitsigns.nvim",
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
             requires = { "nvim-lua/plenary.nvim" },
             config = function()
                 require("plugins/gitsigns")
@@ -81,19 +81,12 @@ local packer = require("packer").startup({
         })
         use({
             "tpope/vim-fugitive",
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
             config = function()
                 require("plugins/fugitive")
             end,
             keys = { "gs", "<leader>ds" },
             cmd = { "Git", "G" },
-        })
-        use({
-            "sindrets/diffview.nvim",
-            keys = { "<leader>do", "<leader>df", "<leader>dh" },
-            config = function()
-                require("plugins.diffview")
-            end,
         })
 
         -- fzf file navigation
@@ -108,7 +101,14 @@ local packer = require("packer").startup({
                 require("plugins/fzf-lua")
             end,
         })
-
+        use({
+            "nvim-telescope/telescope.nvim",
+            branch = "0.1.x",
+            requires = { "nvim-lua/plenary.nvim" },
+            config = function()
+                require("plugins/telescope")
+            end,
+        })
         -- Misc
         use({
             "norcalli/nvim-colorizer.lua",
@@ -119,7 +119,7 @@ local packer = require("packer").startup({
         })
         use({
             "907th/vim-auto-save",
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
             config = function()
                 vim.api.nvim_set_var("auto_save", 1)
                 vim.api.nvim_set_var("auto_save_events", { "InsertLeave" })
@@ -130,18 +130,11 @@ local packer = require("packer").startup({
             opt = true,
             cmd = "MarkdownPreview",
         })
-        -- use({
-        --     "thaerkh/vim-workspace",
-        --     -- config = function()
-        --     --     vim.g.workspace_session_directory = fn.stdpath("data") .. "sessions"
-        --     --     vim.g.undo_dir=fn.stdpath("data") .. "undodir"
-        --     -- end
-        -- })
 
         -- Copy to OSC52
         use({
             "ojroques/vim-oscyank",
-            cond = { require("funcs").is_not_vscode },
+            cond = { require("utils").is_not_vscode },
             config = function()
                 vim.g.oscyank_term = "default"
             end,
@@ -158,18 +151,17 @@ local packer = require("packer").startup({
     },
 })
 
-if require("funcs").is_not_vscode then
+if require("utils").is_not_vscode then
     function custom_load_map(binding, plugin)
         cmd = string.format(
             '<Cmd> lua require("packer.load")({\'%1s\'}, { keys = "%2s", prefix = "" }, _G.packer_plugins)<CR>',
             plugin,
             binding
         )
-        nnoremap(binding, cmd)
+        vim.keymap.set("n", binding, cmd)
     end
     -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
     -- keys option provided by packer as that overides the vscode specific shortcut
     -- custom_load_map("<leader>e", "nvim-tree.lua")
     custom_load_map("<leader>t", "fzf-lua")
 end
-

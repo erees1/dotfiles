@@ -2,71 +2,95 @@
 -- Note this is not all key mappings, generally ones specific to a plugin are in the plug-config folder
 
 -- <leader>s to save
-nnoremap("<leader>s", ":update<CR>") -- leader s to save
+vim.keymap.set("n", "<leader>ss", ":update<CR>") -- leader s to save
 
 -- Always use g mode which moves through wrapped lines as if they were actual lines
-nmap("j", "gj")
-nmap("k", "gk")
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Shift + HL to move to start and end of visual line
-nnoremap("H", "g^")
-nnoremap("L", "g$")
-vnoremap("H", "g^")
-vnoremap("L", "g$")
-
--- Shift + JK to move to top and bottom of the screen
-nnoremap("J", "L")
-nnoremap("K", "H")
-vnoremap("J", "L")
-vnoremap("K", "H")
+vim.keymap.set("n", "H", "g^")
+vim.keymap.set("n", "L", "g$")
+vim.keymap.set("v", "H", "g^")
+vim.keymap.set("v", "L", "g$")
 
 -- Copy paste from system buffers to make copy paste behaviour more sane
-vnoremap("y", '"+y')
-nnoremap("y", '"+y')
-nnoremap("Y", '"+y$')
-vnoremap("x", '"+x')
-nnoremap("x", '"+x')
-vnoremap("p", '"+p')
-nnoremap("p", '"+p')
-vnoremap("d", '"+d')
-nnoremap("d", '"+d')
+vim.keymap.set("v", "y", '"+y')
+vim.keymap.set("v", "x", '"+x')
+vim.keymap.set("v", "p", '"+p')
+vim.keymap.set("v", "d", '"+d')
+
+vim.keymap.set("n", "y", '"+y')
+vim.keymap.set("n", "Y", '"+y$')
+vim.keymap.set("n", "x", '"+x')
+vim.keymap.set("n", "p", '"+p')
+vim.keymap.set("n", "d", '"+d')
 
 -- Quick fix navigation
-nnoremap("<M-n>", ":cn<CR>")
-nnoremap("<M-p>", ":cp<CR>")
+vim.keymap.set("n", "<M-n>", ":cn<CR>")
+vim.keymap.set("n", "<M-p>", ":cp<CR>")
 
 -- <leader><space> to clear highlighing after search
-nnoremap("<Leader><space>", ":noh<CR>")
+vim.keymap.set("n", "<Leader><space>", ":noh<CR>")
 
 -- I always seem to delete stuff at the bottom of the file with d k so remove
-nnoremap("dk", "<Nop>")
+vim.keymap.set("n", "dk", "<Nop>")
 
 -- Keep it centered
-nnoremap("n", "nzzzv")
+vim.keymap.set("n", "n", "nzzzv")
 
 -- Undo these breakpoints when in insert mode
-inoremap(",", ",<c-g>u")
-inoremap(".", ".<c-g>u")
-inoremap("(", "(<c-g>u")
-
--- Add new line without entering insert mode
-nnoremap("<leader>o", ':<C-u>call append(line("."), repeat([""], v:count1))<CR>')
+vim.keymap.set("i", ",", ",<c-g>u")
+vim.keymap.set("i", ".", ".<c-g>u")
+vim.keymap.set("i", "(", "(<c-g>u")
 
 -- Only window and reset bufferline to 0 offset
-vim.api.nvim_set_keymap("n", "mo", "", {
+vim.keymap.set("n", "mo", "", {
     callback = function()
         vim.cmd(":wincmd o")
-        require("funcs").reset_bufferline()
+        require("utils").reset_bufferline()
     end,
     noremap = true,
     silent = true,
 })
 
 -- Quit with q: instead of bringing up cmd mode
-nnoremap("q:", ":q<CR>")
+vim.keymap.set("n", "q:", ":q<CR>")
 
 -- Start/end of line with ctrl-b ctrl-e in insert mode
-inoremap("<c-b>", "<c-o>^")
-inoremap("<c-e>", "<c-o>$")
--- nnoremap("<c-a>", "<Nop>")  -- ctrl a is tmux leader
-nnoremap("<c-q>", "<c-a>") -- ctrl q to increment
+vim.keymap.set("i", "<c-b>", "<c-o>^")
+vim.keymap.set("i", "<c-e>", "<c-o>$")
+
+if not require("utils").is_not_vscode() then
+    -- Better Navigation
+    vim.keymap.set("n", "<C-j>", "<cmd>call VSCodeNotify('workbench.action.navigateDown')<CR>")
+    vim.keymap.set("n", "<C-k>", "<cmd>call VSCodeNotify('workbench.action.navigateUp')<CR>")
+    vim.keymap.set("n", "<C-h>", "<cmd>call VSCodeNotify('workbench.action.navigateLeft')<CR>")
+    vim.keymap.set("n", "<C-l>", "<cmd>call VSCodeNotify('workbench.action.navigateRight')<CR>")
+    vim.keymap.set("n", "<C-w>_", "<cmd><C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>")
+
+    vim.keymap.set("n", "gr", "<cmd>call VSCodeNotify('editor.action.goToReferences')<CR>")
+    vim.keymap.set("n", "<leader>e", "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
+    vim.keymap.set("n", "<leader>t", "<cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>")
+    vim.keymap.set("n", "<leader>s", "<cmd>call VSCodeNotify('workbench.action.files.save')<CR>")
+    vim.keymap.set("n", "<leader>q", "<cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>")
+    vim.keymap.set("n", "<leader>f", "<cmd>call VSCodeNotify('editor.action.formatDocument')<CR>")
+    vim.keymap.set(
+        "n",
+        "<leader>yr",
+        "<cmd>call VSCodeNotify('copyRelativeFilePath')<CR>:echo 'YANKED RELATIVE FILE PATH'<CR>"
+    )
+    vim.keymap.set("n", "<leader>yf", "<cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FILE PATH'<CR>")
+    vim.keymap.set("n", "<leader>rn", "<cmd>call VSCodeNotify('editor.action.rename')<CR>")
+    vnoremap("<leader>rn", "<cmd>call VSCodeNotify('editor.action.rename')<CR>")
+
+    -- Git navigation
+    vim.keymap.set("n", "<leader>hn", "<cmd>call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
+    vim.keymap.set("n", "<leader>hp", "<cmd>call VSCodeNotify('git.timeline.openDiff')<CR>")
+
+    -- line indendation
+    vim.keymap.set("n", "<S-,>", "<cmd>call VSCodeNotify('editor.action.outdentLines')<CR>")
+    vim.keymap.set("n", "<S-.>", "<cmd>call VSCodeNotify('editor.action.indentLines')<CR>")
+    vnoremap("<S-,>", "<cmd>call VSCodeNotify('editor.action.outdentLines')<CR>")
+    vnoremap("<S-.>", "<cmd>call VSCodeNotify('editor.action.indentLines')<CR>")
+end

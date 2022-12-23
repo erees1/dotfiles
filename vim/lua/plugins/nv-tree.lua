@@ -26,7 +26,7 @@ require("nvim-tree").setup({
     },
     view = {
         -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
-        width = require("settings").tree_width,
+        width = require("utils").tree_width,
         mappings = {
             list = {
                 { key = "<C-s>", action = "split" },
@@ -52,11 +52,11 @@ require("nvim-tree").setup({
     },
 })
 
-if require("funcs").is_not_vscode() then
+if require("utils").is_not_vscode() then
     vim.api.nvim_set_keymap(
         "n",
         "<leader>e",
-        ":lua require('funcs').tree_toggle()<CR>",
+        ":lua require('utils').tree_toggle()<CR>",
         { noremap = true, silent = true }
     )
 end

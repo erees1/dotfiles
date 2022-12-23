@@ -1,3 +1,7 @@
+-- Set leader
+vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true })
+vim.g.mapleader = " "
+
 -- Vim options
 vim.o.termguicolors = true -- Needed for colors
 vim.cmd("colorscheme onedark")
@@ -8,8 +12,6 @@ vim.o.lazyredraw = true -- Faster scrolling
 vim.o.expandtab = true -- Converts tabs to spaces
 vim.o.ts = 4 -- Insert 4 spaces for a tab
 vim.o.sw = 4 -- Change the number of space characters inserted for indentation
-vim.o.smartindent = true
-vim.o.autoindent = true
 vim.cmd("set formatoptions-=o") -- Don't continue comments when pressing o or O
 vim.o.scrolloff = 1000
 
@@ -34,10 +36,15 @@ vim.o.fillchars = "diff:/"
 -- Autocommands
 vim.api.nvim_create_augroup("Misc", { clear = true })
 
--- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-    command = "silent! lua vim.highlight.on_yank(timeout=1000)",
-    group = "Misc",
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
 })
 
 -- Filetype autocommands
@@ -49,14 +56,3 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.ts = 2
     end,
 })
-
--- autocmd FileType c,cpp,java setlocal commentstring=//\ %s
-
--- Config
-local M = {}
-
--- Config options
-M.tree_width = 35
-M.diff_view_width = 45
-M.git_window_width = 50
-return M
