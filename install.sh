@@ -116,6 +116,7 @@ elif [ $machine == "Mac" ]; then
         brew install node@16
         # Ensure vim language servers are installed
         $DOT_DIR/vim/install_ls.sh
+        brew install ripgrep
     fi
     [ $exa == true ] && brew install exa
     if [ $pyenv == true ]; then
