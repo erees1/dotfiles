@@ -80,6 +80,13 @@ function jpn(){
     jps
     popd &> /dev/null
 }
+function git(){
+    cmd="$(maybe_singularity_exec)"
+    if [[ $cmd == "" ]]; then
+        cmd="command"
+    fi
+    "${=cmd}" git $@
+}
 
 alias nv='nvidia-smi'
 alias net="netron --host $HOST_IP_ADDR"
