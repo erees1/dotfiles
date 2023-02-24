@@ -6,7 +6,7 @@ ZSH_DOT_DIR=$(realpath $(dirname $(realpath ${(%):-%x}))/..)
 . $ZSH_DOT_DIR/utils.sh
 
 HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
-export DEFAULT_WORK_DIR=$HOME/git/aladdin/feature1
+export DEFAULT_WORK_DIR=$HOME/git/aladdin/master
 export DEFAULT_SIF=$(cat $DEFAULT_WORK_DIR/env/GLOBAL_SIF)
 
 # Quick navigation add more here
@@ -80,13 +80,13 @@ function jpn(){
     jps
     popd &> /dev/null
 }
-function git(){
-    cmd="$(maybe_singularity_exec)"
-    if [[ $cmd == "" ]]; then
-        cmd="command"
-    fi
-    "${=cmd}" git $@
-}
+# function git(){
+#     cmd="$(maybe_singularity_exec)"
+#     if [[ $cmd == "" ]]; then
+#         cmd="command"
+#     fi
+#     "${=cmd}" git $@
+# }
 
 alias nv='nvidia-smi'
 alias net="netron --host $HOST_IP_ADDR"
@@ -133,7 +133,7 @@ function tb () {
     fi
     
     $(maybe_singularity_exec) tensorboard \
-      --load_fast true \
+      --load_fast false \
       --host=$HOST_IP_ADDR \
       --reload_multifile true \
       --logdir=$logdir \
@@ -204,7 +204,7 @@ tbadd() {
 # -------------------------------------------------------------------
 
 # Short aliases
-full_queue='qstat -q "aml*.q@*" -f -u \*'
+full_queue="qstat -f -u '*'"
 gpu_queue='qstat -q aml-gpu.q -f -u \*'
 alias q='qstat'
 alias qtop='qalter -p 1024'

@@ -7,7 +7,7 @@ function add_to_path() {
 function maybe_singularity_exec() {
     cmd=''
     if [ -z $SINGULARITY_CONTAINER ]; then
-        cmd+="singularity exec $DEFAULT_SIF"
+        cmd+="$DEFAULT_WORK_DIR/env/singularity.sh exec"
     fi
     echo $cmd
 }
