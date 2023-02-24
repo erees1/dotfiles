@@ -34,7 +34,7 @@ local packer = require("packer").startup({
                 { "jose-elias-alvarez/null-ls.nvim" },
             },
             config = function()
-                require("plugins/lspconfig")
+                require("plugins/lsp_config")
             end,
             cond = { require("utils").is_not_vscode },
         })
@@ -89,18 +89,6 @@ local packer = require("packer").startup({
             cmd = { "Git", "G" },
         })
 
-        -- fzf file navigation
-        use({
-            "ibhagwan/fzf-lua",
-            opt = true,
-            requires = {
-                { "vijaymarupudi/nvim-fzf", opt = true },
-                "kyazdani42/nvim-web-devicons",
-            }, -- optional for icons
-            config = function()
-                require("plugins/fzf-lua")
-            end,
-        })
         use({
             "nvim-telescope/telescope.nvim",
             branch = "0.1.x",
