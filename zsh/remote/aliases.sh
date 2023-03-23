@@ -73,7 +73,7 @@ function jp {
     jupyter lab --no-browser --ip $HOST_IP_ADDR
 }
 function jps() {
-    $(maybe_singularity_exec) jp
+    $(maybe_singularity_exec) jupyter lab --no-browser --ip $HOST_IP_ADDR
 }
 function jpn(){
     pushd ~/git/notebooks/ &> /dev/null
@@ -137,6 +137,7 @@ function tb () {
       --host=$HOST_IP_ADDR \
       --reload_multifile true \
       --logdir=$logdir \
+      --port=0 \
       --reload_interval 8 \
       --extra_data_server_flags=--no-checksum \
       --max_reload_threads 4 \
