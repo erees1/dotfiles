@@ -25,12 +25,10 @@ local packer = require("packer").startup({
         -- Packer can manage itself
         use("wbthomason/packer.nvim")
 
-        -- Completion
+        -- LSP Completion
         use({
             "neovim/nvim-lspconfig",
             requires = {
-                { "ms-jpq/coq_nvim" },
-                { "ms-jpq/coq.artifacts", branch = "artifacts" },
                 { "jose-elias-alvarez/null-ls.nvim" },
             },
             config = function()

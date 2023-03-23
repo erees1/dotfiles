@@ -22,3 +22,8 @@ if ! command -v vscode-langservers-extracted 1>/dev/null 2>&1; then
 else
   echo "VIM - found html-language-server binary - skipping install"
 fi
+
+if ! command -v stylua 1>/dev/null 2>&1; then
+  npm i -g @johnnymorganz/stylua-bin 
+else
+  echo "VIM - found stylua found - skipping install"

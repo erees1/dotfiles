@@ -43,6 +43,7 @@ nvim=false
 pyenv=false
 fzf=false
 exa=false
+vim_ls=false
 all=false
 force=false
 while (( "$#" )); do
@@ -57,6 +58,8 @@ while (( "$#" )); do
             delta=true && shift ;;
         --nvim)
             nvim=true && shift ;;
+        --nvim_ls)
+            vim_ls=true && shift ;;
         --pyenv)
             pyenv=true && shift ;;
         --fzf)
@@ -92,6 +95,7 @@ if [ $machine == "Linux" ]; then
     [ $tmux == true ] && sudo apt-get install tmux 
     [ $delta == true ] && $DOT_DIR/install_scripts/install_delta.sh
     [ $nvim == true ] && $DOT_DIR/install_scripts/install_nvim.sh "release"
+    [ $vim_ls == true ] && $DOT_DIR/vim/install_ls.sh
     [ $exa == true ] && $DOT_DIR/install_scripts/install_exa.sh
     if [ $fzf == true ]; then
         rm -rf $HOME/.fzf
@@ -115,9 +119,9 @@ elif [ $machine == "Mac" ]; then
         # also requried for vim copilot extension
         brew install node@16
         # Ensure vim language servers are installed
-        $DOT_DIR/vim/install_ls.sh
         brew install ripgrep
     fi
+    [ $vim_ls == true ] && $DOT_DIR/vim/install_ls.sh
     [ $exa == true ] && brew install exa
     if [ $pyenv == true ]; then
         brew install pyenv

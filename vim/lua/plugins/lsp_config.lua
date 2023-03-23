@@ -1,10 +1,6 @@
 -- Language servers for lsp
 local nvim_lsp = require("lspconfig")
 
--- Coq for autocomplete
-local coq = require("coq")
-vim.g.coq_settings = { keymap = { jump_to_mark = '', manual_complete = '<c-l>', manual_complete_insertion_only = true } , completion = {always = false}}
-
 -- Mappings.
 local opts = { noremap = true, silent = true }
 
@@ -48,15 +44,13 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
 nvim_lsp.bashls.setup({
     on_attach = on_attach,
 })
-nvim_lsp.pyright.setup(coq.lsp_ensure_capabilities({}))
-nvim_lsp.bashls.setup(coq.lsp_ensure_capabilities({}))
 
 require("null-ls").setup({
     on_attach = on_attach,
     sources = {
         require("null-ls").builtins.formatting.stylua,
         require("null-ls").builtins.diagnostics.flake8.with({
-            extra_args = { "--max-line-length=120", '--ignore=E203,W503,E712' },
+            extra_args = { "--max-line-length=120", "--ignore=E203,W503,E712" },
         }),
         require("null-ls").builtins.formatting.black,
     },
@@ -65,7 +59,6 @@ require("null-ls").setup({
 nvim_lsp.clangd.setup({
     on_attch = on_attach,
 })
-nvim_lsp.clangd.setup(coq.lsp_ensure_capabilities({}))
 nvim_lsp.html.setup({
     on_attach = on_attach,
     provideFormatter = true,
