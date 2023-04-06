@@ -2,7 +2,7 @@
 -- Note this is not all key mappings, generally ones specific to a plugin are in the plug-config folder
 
 -- <leader>s to save
-vim.keymap.set("n", "<leader>ss", ":update<CR>") -- leader s to save
+vim.keymap.set("n", "<leader>s", ":update<CR>") -- leader s to save
 
 -- Always use g mode which moves through wrapped lines as if they were actual lines
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
