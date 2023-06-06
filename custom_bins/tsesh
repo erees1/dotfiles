@@ -32,10 +32,16 @@ done
 
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
-
 # Is tmux running and are we inside a tmux session
-is_running=$(ps aux | grep '[t]mux new-session')
-if tmux info &> /dev/null; then
+if tmux list-sessions >/dev/null 2>&1; then
+    is_running="true"
+else
+    is_running="false"
+fi
+
+if [ -z "$TMUX" ] ; then
+    is_inside="false"
+else
     is_inside="true"
 fi
 
@@ -131,7 +137,7 @@ fi
 
 
 # If tmux is not running at all
-if [[ -z $TMUX ]] && [[ -z $is_running ]]; then
+if [[ $is_inside == "false" ]] && [[ -z $is_running ]]; then
     tmux new-session -s $sesh_name -c $selected $args
     exit 0
 fi
@@ -142,7 +148,7 @@ if ! tmux has-session -t=$sesh_name 2> /dev/null; then
     tmux new-session -ds $sesh_name -c $selected $args
 fi
 
-if [[ $is_inside == true ]]; then
+if [[ $is_inside == "true" ]]; then
     # Switiching from one session to another when already inside tmux
     tmux switch-client -t $sesh_name
 else
