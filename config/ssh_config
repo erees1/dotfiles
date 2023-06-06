@@ -26,6 +26,10 @@ Host b2-singularity
   HostName b2.aml.speechmatics.io
   User edwardr
   IdentityFile ~/.ssh/id_rsa
+Host b3-singularity
+  HostName 172.21.1.13
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
 Host b5
   HostName b5.aml.speechmatics.io
   User edwardr
@@ -34,10 +38,46 @@ Host b5-singularity
   User edwardr
   IdentityFile ~/.ssh/id_rsa
 Host b6
-  HostName b6.aml.speechmatics.io
+  HostName 172.21.1.16
   User edwardr
   IdentityFile ~/.ssh/id_rsa
 Host b6-singularity
-  HostName b6.aml.speechmatics.io
+  HostName 172.21.1.16
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b6-singularity2
+  HostName 172.21.1.16
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b7-singularity
+  HostName b7.aml.speechmatics.io
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b8-singularity
+  HostName b8.aml.speechmatics.io
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b8-singularity2
+  HostName b8.aml.speechmatics.io
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b9-singularity
+  HostName 172.21.1.19
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b9-singularity2
+  HostName 172.21.1.19
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b10-singularity
+  HostName 172.21.1.20
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host b10-singularity2
+  HostName 172.21.1.20
+  User edwardr
+  IdentityFile ~/.ssh/id_rsa
+Host gpu-aa-singularity
+  HostName 172.21.1.120
   User edwardr
   IdentityFile ~/.ssh/id_rsa
