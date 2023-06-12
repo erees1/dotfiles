@@ -122,6 +122,7 @@ open_tunnel() {
   ssh -2 -L 5678:$remote_ip:5678 $(whoami)@$host
 }
 compdef open_tunnel=ssh
+alias rdebug="./aladdin/utils/port_forward_wrapper.sh $(whoami).dev-vms.speechmatics.io"
 # -------------------------------------------------------------------
 # Tensorboard
 # -------------------------------------------------------------------
