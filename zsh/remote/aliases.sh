@@ -12,6 +12,9 @@ export DEFAULT_SIF=$(cat $DEFAULT_WORK_DIR/env/GLOBAL_SIF)
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"
+alias a1="cd ~/git/aladdin/w1"
+alias a2="cd ~/git/aladdin/w2"
+alias a3="cd ~/git/aladdin/w3"
 alias ab="cd ~/git/aladdin"
 alias cde="cd /exp/$(whoami)"
 alias core="cd /perish_aml02/$(whoami)/git/coreasr"
