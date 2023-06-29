@@ -4,6 +4,7 @@ set -eo pipefail
 . $DOT_DIR/zsh/utils.sh
 
 cat << EOF > /tmp/git-script.sh
+#!/bin/bash
 STASH_MSG=\$(git stash)
 git branch $1 master
 git checkout $1
