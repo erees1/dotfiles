@@ -48,8 +48,8 @@ require("nvim-tree").setup({
         icons = {
             show = {
                 git = true,
-                folder = false,
-                file = false,
+                folder = true,
+                file = true,
                 folder_arrow = false,
             },
             glyphs = {
