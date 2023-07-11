@@ -60,13 +60,6 @@ local packer = require("packer").startup({
                 require("plugins/nv-tree")
             end,
         })
-        use({
-            "romgrk/barbar.nvim",
-            cond = { require("utils").is_not_vscode },
-            config = function()
-                require("plugins/barbar")
-            end,
-        })
 
         -- Git
         use({

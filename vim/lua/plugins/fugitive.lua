@@ -9,12 +9,10 @@ function M.VertGStatus()
 	vim.cmd("vert Git")
 	cmd = string.format("vert resize %s", s)
 	vim.cmd(cmd)
-	require("bufferline.api").set_offset(s + 1)
 end
 
 function M.GClose()
 	vim.cmd("normal gq")
-    require('utils').reset_bufferline()
 end
 
 function M.GDiffOpen()
