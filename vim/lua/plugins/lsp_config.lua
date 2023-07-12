@@ -25,7 +25,9 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.format({async = True})<CR>", opts)
 end
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 nvim_lsp.pyright.setup({
+    capabilities = capabilities,
     on_attch = on_attach,
     settings = {
         python = {

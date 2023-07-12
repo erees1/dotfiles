@@ -8,7 +8,7 @@ vim.g.colors_name = "onedark"
 
 package.loaded["themes.onedark.palette"] = nil
 
-local util = require("themes.onedark.util")
+local util = require("themes.util")
 Config = require("themes.onedark.config")
 local C = require("themes.onedark.palette")
 local highlights = require("themes.onedark.highlights").init(C)

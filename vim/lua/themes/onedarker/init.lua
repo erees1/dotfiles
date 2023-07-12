@@ -9,7 +9,7 @@ vim.g.colors_name = "onedarker"
 --Need to set loaded to nil for onedark packages we are overiding
 package.loaded["themes.onedarker.palette"] = nil
 
-local util = require("themes.onedark.util")
+local util = require("themes.util")
 Config = require("themes.onedark.config")
 local C = require("themes.onedarker.palette")
 local highlights = require("themes.onedark.highlights").init(C)

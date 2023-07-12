@@ -1,146 +1,144 @@
--- Bootstrap install packer
-local execute = vim.api.nvim_command
-local fn = vim.fn
-
-if require("utils").is_not_vscode() then
-    vim.g.coq_settings = {
-        auto_start = "shut-up",
-    }
-end
--- Packer bootstrap
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
         "git",
         "clone",
-        "--depth",
-        "1",
-        "https://github.com/wbthomason/packer.nvim",
-        install_path,
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
     })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer = require("packer").startup({
-    function(use)
-        -- Packer can manage itself
-        use("wbthomason/packer.nvim")
-
-        -- LSP Completion
-        use({
-            "neovim/nvim-lspconfig",
-            requires = {
-                { "jose-elias-alvarez/null-ls.nvim" },
-            },
-            config = function()
-                require("plugins/lsp_config")
-            end,
-            cond = { require("utils").is_not_vscode },
-        })
-        use({
-            "github/copilot.vim",
-            config = function()
-                vim.g.copilot_no_tab_map = true
-                vim.cmd([[imap <silent><script><expr> <C-space> copilot#Accept("\<CR>")]])
-            end,
-            cond = { require("utils").is_not_vscode },
-        })
-
-        -- Shortucts etc
-        use({ "tpope/vim-commentary" })
-        use({
-            "christoomey/vim-tmux-navigator",
-            cond = { require("utils").is_not_vscode },
-        })
-
-        -- Nvim tree / explorer stuff
-        use({ "kyazdani42/nvim-web-devicons" })
-        use({
-            "kyazdani42/nvim-tree.lua",
-            config = function()
-                require("plugins/nv-tree")
-            end,
-        })
-
-        -- Git
-        use({
-            "lewis6991/gitsigns.nvim",
-            cond = { require("utils").is_not_vscode },
-            requires = { "nvim-lua/plenary.nvim" },
-            config = function()
-                require("plugins/gitsigns")
-            end,
-        })
-        use({
-            "tpope/vim-fugitive",
-            cond = { require("utils").is_not_vscode },
-            config = function()
-                require("plugins/fugitive")
-            end,
-            keys = { "gs", "<leader>ds" },
-            cmd = { "Git", "G" },
-        })
-
-        use({
-            "nvim-telescope/telescope.nvim",
-            branch = "0.1.x",
-            requires = { "nvim-lua/plenary.nvim" },
-            config = function()
-                require("plugins/telescope")
-            end,
-        })
-        -- Misc
-        use({
-            "norcalli/nvim-colorizer.lua",
-            opt = true,
-            config = function()
-                require("colorizer").setup()
-            end,
-        })
-        use({
-            "907th/vim-auto-save",
-            cond = { require("utils").is_not_vscode },
-            config = function()
-                vim.api.nvim_set_var("auto_save", 1)
-                vim.api.nvim_set_var("auto_save_events", { "InsertLeave" })
-            end,
-        })
-        use({
-            "https://github.com/iamcco/markdown-preview.nvim",
-            opt = true,
-            cmd = "MarkdownPreview",
-        })
-
-        -- Copy to OSC52
-        use({
-            "ojroques/vim-oscyank",
-            cond = { require("utils").is_not_vscode },
-            config = function()
-                vim.g.oscyank_term = "default"
-            end,
-        })
-
-        if packer_bootstrap then
-            require("packer").sync()
-        end
-    end,
-    config = {
-        display = {
-            open_fn = require("packer.util").float,
-        },
+local plugin_list = {
+    -- Colorschme Or with configuration
+    {
+        "projekt0n/github-nvim-theme",
+        config = function()
+            require("github-theme").setup({
+                options = {
+                    hide_end_of_buffer = true,
+                    transparent = true,
+                },
+            })
+            vim.cmd("colorscheme github_dark_dimmed")
+            require("themes.overrides")
+        end,
     },
-})
 
-if require("utils").is_not_vscode then
-    function custom_load_map(binding, plugin)
-        cmd = string.format(
-            '<Cmd> lua require("packer.load")({\'%1s\'}, { keys = "%2s", prefix = "" }, _G.packer_plugins)<CR>',
-            plugin,
-            binding
-        )
-        vim.keymap.set("n", binding, cmd)
-    end
-    -- Becuase these bindings are also used in vscode we have to load ourselves rather than use
-    -- keys option provided by packer as that overides the vscode specific shortcut
-    -- custom_load_map("<leader>e", "nvim-tree.lua")
-    custom_load_map("<leader>t", "fzf-lua")
-end
+    -- LSP Completion
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = { "jose-elias-alvarez/null-ls.nvim" },
+        cond = { require("utils").is_not_vscode },
+        config = function()
+            require("plugins/lsp_config")
+        end,
+    },
+
+    {
+        "github/copilot.vim",
+        config = function()
+            vim.g.copilot_no_tab_map = true
+            vim.cmd([[imap <silent><script><expr> <C-space> copilot#Accept("\<CR>")]])
+        end,
+        cond = { require("utils").is_not_vscode },
+    },
+
+    {
+        "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
+        dependencies = {
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp",
+            "quangnguyen30192/cmp-nvim-ultisnips",
+            "hrsh7th/cmp-nvim-lua",
+            "octaltree/cmp-look",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-calc",
+            "f3fora/cmp-spell",
+            "hrsh7th/cmp-emoji",
+        },
+        config = function()
+            -- [omitted for brevity]
+        end,
+        cond = { require("utils").is_not_vscode },
+    },
+
+    -- Shortucts etc
+    { "tpope/vim-commentary" },
+
+    {
+        "christoomey/vim-tmux-navigator",
+        cond = { require("utils").is_not_vscode },
+    },
+
+    -- Nvim tree / explorer stuff
+    { "kyazdani42/nvim-web-devicons", lazy = true },
+
+    {
+        "kyazdani42/nvim-tree.lua",
+        config = function()
+            require("plugins/nv-tree")
+        end,
+    },
+
+    -- Git
+    {
+        "lewis6991/gitsigns.nvim",
+        cond = { require("utils").is_not_vscode },
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("plugins/gitsigns")
+        end,
+    },
+
+    {
+        "tpope/vim-fugitive",
+        cond = { require("utils").is_not_vscode },
+        config = function()
+            require("plugins/fugitive")
+        end,
+        keys = { "gs", "<leader>ds" },
+        cmd = { "Git", "G" },
+    },
+
+    {
+        "nvim-telescope/telescope.nvim",
+        branch = "0.1.x",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("plugins/telescope")
+        end,
+    },
+
+    -- Misc
+    {
+        "norcalli/nvim-colorizer.lua",
+        opt = true,
+        config = function()
+            require("colorizer").setup()
+        end,
+    },
+
+    {
+        "907th/vim-auto-save",
+        cond = { require("utils").is_not_vscode },
+        config = function()
+            vim.api.nvim_set_var("auto_save", 1)
+            vim.api.nvim_set_var("auto_save_events", { "InsertLeave" })
+        end,
+    },
+
+    -- Copy to OSC52
+    {
+        "ojroques/vim-oscyank",
+        cond = { require("utils").is_not_vscode },
+        config = function()
+            vim.g.oscyank_term = "default"
+        end,
+    },
+}
+
+require("lazy").setup(plugin_list)

@@ -1,4 +1,4 @@
-local util = require("themes.onedark.util")
+local util = require("themes.util")
 
 local colors = {
 	none = "NONE",

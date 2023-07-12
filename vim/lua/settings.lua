@@ -4,7 +4,6 @@ vim.g.mapleader = " "
 
 -- Vim options
 vim.o.termguicolors = true -- Needed for colors
-vim.cmd("colorscheme onedark")
 
 vim.opt.shortmess:append("sI") -- Disable nvim intro
 vim.cmd("set noshowmode") -- don't show --INSERT--
