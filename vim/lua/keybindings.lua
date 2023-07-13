@@ -48,7 +48,6 @@ vim.keymap.set("i", "(", "(<c-g>u")
 vim.keymap.set("n", "mo", "", {
     callback = function()
         vim.cmd(":wincmd o")
-        require("utils").reset_bufferline()
     end,
     noremap = true,
     silent = true,
