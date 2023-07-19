@@ -85,6 +85,16 @@ function prepend-sudo {
 zle -N prepend-sudo
 bindkey "\es" prepend-sudo
 
+# convert a python command to a debug command
+function replace-python {
+  if [[ $BUFFER =~ ^python\ .* ]]; then
+    BUFFER="python3 -m debugpy --listen 5678 --wait-for-client ${BUFFER#python }"
+    zle reset-prompt
+  fi
+}
+zle -N replace-python
+bindkey "\ed" replace-python
+
 __fsel_files() {
   setopt localoptions pipefail no_aliases 2> /dev/null
   eval "find . -not -path '*/\.git/*' -type f -print" | fzf --preview='less {}' -m "$@" | while read item; do
