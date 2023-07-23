@@ -60,6 +60,24 @@ vim.keymap.set("n", "q:", ":q<CR>")
 vim.keymap.set("i", "<c-b>", "<c-o>^")
 vim.keymap.set("i", "<c-e>", "<c-o>$")
 
+-- Function to yank full path
+_G.yank_full_path = function()
+    local full_path = vim.fn.expand("%:p") -- Get the full path of the current file
+    vim.api.nvim_call_function("setreg", { "+", full_path }) -- Set the clipboard register to the full path
+    print("Full path yanked: " .. full_path) -- Notify the user
+end
+
+-- Function to yank relative path
+_G.yank_relative_path = function()
+    local relative_path = vim.fn.expand("%:~:.") -- Get the relative path of the current file
+    vim.api.nvim_call_function("setreg", { "+", relative_path }) -- Set the clipboard register to the relative path
+    print("Relative path yanked: " .. relative_path) -- Notify the user
+end
+
+-- Map the functions to <leader>yr and <leader>yf
+vim.keymap.set("n", "<leader>yr", ":lua _G.yank_relative_path()<CR>")
+vim.keymap.set("n", "<leader>yf", ":lua _G.yank_full_path()<CR>")
+
 if not require("utils").is_not_vscode() then
     -- Better Navigation
     vim.keymap.set("n", "<C-j>", "<cmd>call VSCodeNotify('workbench.action.navigateDown')<CR>")
