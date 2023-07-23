@@ -38,11 +38,6 @@ nvim_lsp.pyright.setup({
     },
 })
 
--- Bit of a hack to disable the pyright diagnostics as I use flake8 instead
--- Assuming this must come before I register any other diagnostics
--- TODO: prevent this from disabling clangd diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
-
 nvim_lsp.bashls.setup({
     on_attach = on_attach,
 })
