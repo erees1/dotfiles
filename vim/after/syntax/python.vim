@@ -16,7 +16,7 @@ syn match   pythonClass "\h\w*" display contained
 syn match   pythonInstantion /(\s\|^)[A-Z]\w\+(/he=e-1
 syn match   pythonSelf "\(\W\|^\)\zsself\ze\W"
 syn match   pythonDunder /__\w\+__/
-syn match   pythonConstant "\(\s\|^\)[A-Z]\+[A-Z_]*[A-Z]\+"
+syn match   pythonConstant "\(\s\|^\)[A-Z]\+[A-Z_0-9]*[A-Z]\+"
 
 " Avoid highlighting attributes as builtins – just added "pythonClass" here.
 syn clear pythonAttribute
