@@ -33,9 +33,10 @@ done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 # Is tmux running and are we inside a tmux session
-if tmux list-sessions >/dev/null 2>&1; then
+if tmux list-sessions > /dev/null 2>&1; then
     is_running="true"
 else
+    echo "Tmux not running, will start new session"
     is_running="false"
 fi
 
@@ -78,18 +79,20 @@ tabulate() {
     # Reads a list of directories from find command and processes them to 
     # a table for fzf to display, it also prepends all the running tmux sessions
     # to the list so they can also be selected, ouputs a colored table
-    if [[ $is_inside == "true" ]]; then
+    if [[ $is_running == "true" && $is_inside == "true" ]]; then
         current_session=$(tmux display-message -p '#S')
     fi
     printf "\x1b[1mSession Directory Status\x1b[0m\n"  #Headings
     {
-        for name in $(tmux list-sessions | awk '{print $1}' | sed 's/:$//'); do
-            status="\x1b[32mrunning\x1b[0m"
-            line="-"
-            if [[ ! $name == $current_session ]]; then
-                printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
-            fi
-        done
+        if [[ $is_running == "true" ]]; then
+            for name in $(tmux list-sessions | awk '{print $1}' | sed 's/:$//'); do
+                status="\x1b[32mrunning\x1b[0m"
+                line="-"
+                if [[ ! $name == $current_session ]]; then
+                    printf "\x1b[33m$name \x1b[34m$line\x1b[0m $status\n"
+                fi
+            done
+        fi
         while IFS=$'\n' read -r line; do
             name="$(dir2name $line)"
             if ! tmux has-session -t="$name" 2> /dev/null ; then
@@ -138,6 +141,7 @@ fi
 
 # If tmux is not running at all
 if [[ $is_inside == "false" ]] && [[ -z $is_running ]]; then
+    echo "tmux not running, starting new session"
     tmux new-session -s $sesh_name -c $selected $args
     exit 0
 fi
