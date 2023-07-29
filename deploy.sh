@@ -57,8 +57,14 @@ if [ $LOC == 'local' ]; then
         read -p "karabiner.json differs from dotfiles v do you want to overwrite? (y/n) " yn
         case $yn in 
             y )
-                cat $karabiner_path > $karabiner_path.backup
-                ln -sf "$DOT_DIR/config/karabiner.json" "$karabiner_path" ;
+                # if karabiner_console_user_server running exit
+                if pgrep -x "karabiner_console_user_server" > /dev/null
+                then
+                    echo "karabiner_console_user_server is running, please quit it and try again"
+                    exit
+                fi
+                cat $(readlink -f karabiner_path) > $karabiner_path.backup
+                ln -s "$dd_karabiner_path" "$karabiner_path"
                 ;;
             n ) echo skipping...;
                 exit;;
