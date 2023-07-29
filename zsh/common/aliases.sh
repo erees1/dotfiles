@@ -146,7 +146,7 @@ alias gs="git status"
 
 alias gco="git checkout"
 alias gcb="git checkout -b"
-alias gcm="git checkout master"
+alias gcm='(git show-ref --verify --quiet refs/heads/main && git checkout main) || (git show-ref --verify --quiet refs/heads/master && git checkout master)'
 
 alias grhead="git reset HEAD"
 alias grewind="git reset HEAD^1"
