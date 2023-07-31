@@ -14,19 +14,12 @@ vim.opt.rtp:prepend(lazypath)
 local plugin_list = {
     -- Colorschme Or with configuration
     {
-        "projekt0n/github-nvim-theme",
+        "https://github.com/morhetz/gruvbox",
         config = function()
-            require("github-theme").setup({
-                options = {
-                    hide_end_of_buffer = true,
-                    transparent = true,
-                },
-            })
-            vim.cmd("colorscheme github_dark_dimmed")
+            vim.cmd("colorscheme gruvbox") 
             require("themes.overrides")
         end,
     },
-
     -- LSP Completion
     {
         "neovim/nvim-lspconfig",

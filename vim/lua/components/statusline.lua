@@ -3,31 +3,21 @@ local api = vim.api
 
 local M = {}
 
+
 -- possible values are 'arrow' | 'rounded' | 'blank'
-local active_sep = "blank"
 vim.cmd("set laststatus=3")
 
--- change them if you want to different separator
-M.separators = {
-    arrow = { "", "" },
-    rounded = { "", "" },
-    blank = { "", "" },
-}
 
--- highlight groups
+-- highlight groups, just picked random ones from highlights that looked okay
 M.colors = {
-    active = "%#StatusLineCentre#",
+    active = "%#StatusLine#",
     inactive = "%#StatusLineNC#",
-    mode = "%#StatusLineMode#",
-    mode_alt = "%#StatusLineModeAlt#",
-    git = "%#StatusLineGit#",
-    git_alt = "%#StatusLineGitAlt#",
-    filetype = "%#StatusLineFiletype#",
-    filetype_alt = "%#StatusLineFTAlt#",
-    line_col = "%#StatusLineCentre#",
-    line_col_alt = "%#StatusLineCentre#",
-    lsp = "%#StatusLineCentre#",
-    filename = "%#StatusLineCentre#",
+    mode = "%#PmenuSel#",
+    git = "%#StatusLine#",
+    filetype = "%#PmenuThumb#",
+    line_col = "%#StatusLine#",
+    lsp = "%#StatusLine#",
+    filename = "%#StatusLine#",
 }
 
 M.trunc_width = setmetatable({
@@ -141,9 +131,7 @@ M.set_active = function(self)
     local colors = self.colors
 
     local mode = self:get_current_mode()
-    local mode_alt = colors.mode_alt .. self.separators[active_sep][1]
     local git = colors.git .. self:get_git_status()
-    local git_alt = colors.git_alt .. self.separators[active_sep][1]
 
     local filename = string.format(
         "%s%s%s%s%s",
@@ -154,23 +142,17 @@ M.set_active = function(self)
         colors.active
     )
 
-    local filetype_alt = colors.filetype_alt .. self.separators[active_sep][2]
     local filetype = colors.filetype .. self:get_filetype()
     local line_col = colors.line_col .. self:get_line_col()
-    local line_col_alt = colors.line_col_alt .. self.separators[active_sep][2]
     local lsp = colors.lsp .. self:lsp_progress()
 
     return table.concat({
         mode,
-        mode_alt,
         git,
-        git_alt,
         filename,
         "%=",
         lsp,
         line_col,
-        line_col_alt,
-        filetype_alt,
         filetype,
     })
 end
