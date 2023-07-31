@@ -17,7 +17,6 @@ local plugin_list = {
         "https://github.com/morhetz/gruvbox",
         config = function()
             vim.cmd("colorscheme gruvbox") 
-            require("themes.overrides")
         end,
     },
     -- LSP Completion
