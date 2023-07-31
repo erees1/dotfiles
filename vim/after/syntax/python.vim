@@ -25,7 +25,7 @@ syn match   pythonAttribute /\.\h\w*/hs=s+1
 
 highlight link pythonClassStmt Statement
 highlight link pythonClass TypeDef
-highlight link pythonConstant TypeDef
+highlight link pythonConstant Constant
 highlight link pythonInstantion Type
 highlight link pythonSelf Type
 highlight link pythonAttribute Function
