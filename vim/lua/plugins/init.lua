@@ -16,6 +16,7 @@ local plugin_list = {
     {
         "https://github.com/morhetz/gruvbox",
         config = function()
+            vim.g.gruvbox_sign_column = "bg0"
             vim.cmd("colorscheme gruvbox") 
         end,
     },
