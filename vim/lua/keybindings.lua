@@ -99,7 +99,7 @@ if not require("utils").is_not_vscode() then
     )
     vim.keymap.set("n", "<leader>yf", "<cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FILE PATH'<CR>")
     vim.keymap.set("n", "<leader>rn", "<cmd>call VSCodeNotify('editor.action.rename')<CR>")
-    vnoremap("<leader>rn", "<cmd>call VSCodeNotify('editor.action.rename')<CR>")
+    vim.keymap.set("v", "<leader>rn", "<cmd>call VSCodeNotify('editor.action.rename')<CR>")
 
     -- Git navigation
     vim.keymap.set("n", "<leader>hn", "<cmd>call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
@@ -108,6 +108,6 @@ if not require("utils").is_not_vscode() then
     -- line indendation
     vim.keymap.set("n", "<S-,>", "<cmd>call VSCodeNotify('editor.action.outdentLines')<CR>")
     vim.keymap.set("n", "<S-.>", "<cmd>call VSCodeNotify('editor.action.indentLines')<CR>")
-    vnoremap("<S-,>", "<cmd>call VSCodeNotify('editor.action.outdentLines')<CR>")
-    vnoremap("<S-.>", "<cmd>call VSCodeNotify('editor.action.indentLines')<CR>")
+    vim.keymap.set("v", "<S-,>", "<cmd>call VSCodeNotify('editor.action.outdentLines')<CR>")
+    vim.keymap.set("v", "<S-.>", "<cmd>call VSCodeNotify('editor.action.indentLines')<CR>")
 end
