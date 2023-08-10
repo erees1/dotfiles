@@ -63,14 +63,15 @@ if [ $LOC == 'local' ]; then
                     echo "karabiner_console_user_server is running, please quit it and try again"
                     exit
                 fi
-                cat $(readlink -f karabiner_path) > $karabiner_path.backup
-                ln -s "$dd_karabiner_path" "$karabiner_path"
+                cat $karabiner_path > $karabiner_path.backup
+                echo "linking $dd_karabiner_path to $karabiner_path"
+                ln -sf "$dd_karabiner_path" "$karabiner_path"
                 ;;
             n ) echo skipping...;
                 exit;;
         esac
     else
-        ln -sf "$DOT_DIR/config/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+        ln -sf "$dd_karabiner_path" "$karabiner_path"
     fi
 
     mkdir -p $HOME/.ssh
