@@ -126,7 +126,8 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
-                                            "org.zotero.zotero"
+                                            "org.zotero.zotero",
+                                            "com.google.Chrome"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -153,7 +154,8 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
-                                            "org.zotero.zotero"
+                                            "org.zotero.zotero",
+                                            "com.google.Chrome"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
