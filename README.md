@@ -14,3 +14,5 @@ Deploy (e.g. source aliases for .zshrc, apply oh-my-zsh settings etc..)
 ```
 
 Install tmux plugins with `ctrl+a I`
+
+See also [a simpler version](https://github.com/erees1/simple-dotfiles) which I recomend as a more lightweight starting point.
