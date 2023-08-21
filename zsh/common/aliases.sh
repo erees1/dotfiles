@@ -18,6 +18,7 @@ function ve () {
     fi
 }
 alias vd="deactivate source"
+alias enable_pyenv="source $ZSH_DOT_DIR/common/init_pyenv.sh"
 
 # -------------------------------------------------------------------
 # general
