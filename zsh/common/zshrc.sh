@@ -42,4 +42,4 @@ if [[ -z $SINGULARITY_CONTAINER ]]; then
     fi
 fi
 
-
+cat $ZSH_DOT_DIR/common/start.txt
