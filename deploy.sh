@@ -63,12 +63,14 @@ if [ $LOC == 'local' ]; then
                     echo "karabiner_console_user_server is running, please quit it and try again"
                     exit
                 fi
-                cat $karabiner_path > $karabiner_path.backup
+                if [ -f $karabiner_path ]; then
+                    cat $karabiner_path > $karabiner_path.backup
+                fi
                 echo "linking $dd_karabiner_path to $karabiner_path"
                 ln -sf "$dd_karabiner_path" "$karabiner_path"
                 ;;
             n ) echo skipping...;
-                exit;;
+                ;;
         esac
     else
         ln -sf "$dd_karabiner_path" "$karabiner_path"
