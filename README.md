@@ -6,7 +6,8 @@ Install dependancies (e.g. oh-my-zsh, homebrew etc...), can specify options to i
 ./install.sh --tmux --zsh --nvim --delta
 ```
 
-Deploy (e.g. source aliases for .zshrc, apply oh-my-zsh settings etc..)
+Deploy (e.g. source aliases for .zshrc, apply oh-my-zsh settings etc..), note this is automatically run 
+at the end of `install.sh`
 
 ```bash
 ./deploy.sh

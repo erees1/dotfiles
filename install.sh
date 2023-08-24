@@ -169,3 +169,4 @@ else
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "
+$DOT_DIR/deploy.sh
