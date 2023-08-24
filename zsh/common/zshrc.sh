@@ -12,7 +12,7 @@ source $ZSH_DOT_DIR/common/dir_colors.sh
 
 plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-history-substring-search)
 
-add_to_path "${DOT_DIR}/custom_bins"
+add_to_path "${DOT_DIR}/bins"
 
 # Add any custom completions
 fpath=($ZSH_DOT_DIR/completions $fpath)
