@@ -29,10 +29,7 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias cl="clear"
 
 # file and directories
-alias rm='rm -i'
 alias rmd='rm -rf'
-alias cp='cp -i'
-alias mv='mv -i'
 alias mkdir='mkdir -p'
 
 # find/read files

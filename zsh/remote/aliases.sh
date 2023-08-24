@@ -7,6 +7,12 @@ HOST_IP_ADDR=$(hostname -I | awk '{ print $1 }') # This gets the actual ip addr
 export DEFAULT_WORK_DIR=$HOME/git/aladdin/master
 export DEFAULT_SIF=$(cat $DEFAULT_WORK_DIR/env/GLOBAL_SIF)
 
+
+# Prevent overwriting files
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 # Quick navigation add more here
 # Started using worktrees in aladdin so updated here
 alias am="cd ~/git/aladdin/master"

@@ -12,6 +12,9 @@ alias cdm='cd ~/git/md-notes'
 alias cdj='cd ~/git/jamming'
 alias cdn='cd ~/git/jamming/notebooks'
 alias jpl="jupyter lab"
+alias rm="grm -i"
+alias cp='gcp -i'
+alias mv='gmv -i'
 
 function chpwd() {
  emulate -L zsh
