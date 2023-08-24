@@ -15,6 +15,7 @@ OPTIONS:
     --fzf        install fzf
     --exa        install exa (nicer ls)
     --all        install all of the above
+    --force      force reinstall the zsh and tmux plugins
 END
 )
 
@@ -100,7 +101,7 @@ if [ $machine == "Linux" ]; then
     if [ $fzf == true ]; then
         rm -rf $HOME/.fzf
         git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-        $HOME/.fzf/install
+        $HOME/.fzf/install --all
     fi
     if [ $pyenv == true ]; then
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -129,7 +130,7 @@ elif [ $machine == "Mac" ]; then
     fi
     if [ $fzf == true ]; then
         brew install fzf
-        $(brew --prefix)/opt/fzf/install
+        $(brew --prefix)/opt/fzf/install --all
     fi
 fi
 
@@ -138,7 +139,7 @@ echo " --------- INSTALLING DEPENDENCIES ⏳ ----------- "
 ZSH=~/.oh-my-zsh
 ZSH_CUSTOM=$ZSH/custom
 if [ -d $ZSH ] && [ "$force" = "false" ]; then
-    echo "Skipping download of oh-my-zsh and related plugins, pass --force to force redeownload"
+    echo "Skipping download of oh-my-zsh and related plugins, pass --force to force redownload"
 else
     rm -rf $ZSH
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
