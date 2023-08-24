@@ -9,8 +9,7 @@ Install dependancies (e.g. oh-my-zsh, homebrew etc...), can specify options to i
 Deploy (e.g. source aliases for .zshrc, apply oh-my-zsh settings etc..)
 
 ```bash
-./deploy.sh --remote  # Remote linux machine
-./deploy.sh --local   # Local mac machine
+./deploy.sh
 ```
 
 Install tmux plugins with `ctrl+a I`
