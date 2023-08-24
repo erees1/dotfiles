@@ -2,7 +2,12 @@
 ZSH_DOT_DIR=$(realpath $(dirname $(realpath ${(%):-%x}))/..)
 export DOT_DIR=$(realpath $ZSH_DOT_DIR/../)
 
-. $ZSH_DOT_DIR/utils.sh
+function add_to_path() {
+    p=$1
+    if [[ "$PATH" != *"$p"* ]]; then
+      export PATH="$p:$PATH"
+    fi
+}
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH=$HOME/.oh-my-zsh

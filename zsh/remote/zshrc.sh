@@ -1,6 +1,5 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 
-. $ZSH_DOT_DIR/utils.sh
 . $ZSH_DOT_DIR/../install_scripts/util.sh
 
 export LOC="remote"

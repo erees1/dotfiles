@@ -1,7 +1,6 @@
 ZSH_DOT_DIR=$(dirname $(realpath ${(%):-%x}))/..
 export LOC="local"
 
-. $ZSH_DOT_DIR/utils.sh
 . $ZSH_DOT_DIR/local/dir_colors.sh
 . $ZSH_DOT_DIR/common/zshrc.sh
 zstyle ':completion:*' list-colors $LS_COLORS
