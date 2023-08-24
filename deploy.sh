@@ -2,17 +2,18 @@
 set -euo pipefail
 USAGE=$(cat <<-END
 Usage: ./deploy.sh [OPTION]
-Creates ~/.zshrc and ~/.tmux.conf with location
-specific config
-
-OPTIONS:
-    --local                 deploy local config, only common aliases are sourced
+Creates ~/.zshrc and ~/.tmux.conf with location specific config.
 END
 )
 
 export DOT_DIR=$(dirname $(realpath $0))
 
-LOC="remote"
+LOC="local"
+operating_system="$(uname -s)"
+case "${operating_system}" in
+    Linux*)     LOC="remote";;
+esac
+
 while (( "$#" )); do
     case "$1" in
         -h|--help)
