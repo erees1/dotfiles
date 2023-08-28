@@ -1,2 +1,0 @@
-LSCOLORS='Exfxcxdxbxegedabagacad'
-export $LSCOLORS

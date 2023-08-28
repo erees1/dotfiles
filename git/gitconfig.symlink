@@ -1,0 +1,38 @@
+# Local/private config goes in the include
+[include]
+    path = ~/.gitconfig.local
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[difftool]
+    prompt = true
+    # Be able to abort all diffs with `:cq` or `:cquit`
+    trustExitCode = true
+[diff]
+    tool = nvimdiff
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[init]
+    defaultBranch = main
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta  
+    show = delta
+[delta]
+    line-numbers = true
+    syntax-theme = 1337
+    side-by-side = false
+    file-modified-label = modified:
+[interactive]
+    diffFilter = delta --color-only
+[credential]
+    helper = cache
+[pull]
+    rebase = true
+[alias]
+	clone-for-worktrees = "!git-clone-for-worktree"
+	nb = "!git-new-branch"
+    wtf = "!git-wtf"
