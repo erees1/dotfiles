@@ -20,9 +20,9 @@ export HISTTIMEFORMAT="%F %T "
 export EDITOR=nvim
 zstyle ':completion:*' hosts off  # Don't autocomple ssh host names
 ZSH_DISABLE_COMPFIX=true
- 
+
 # FZF options - might also affect fzf-lua extenstion in vim
-export FZF_DEFAULT_OPTS='--color=16,bg:-1,bg+:8,hl:4,hl+:4,fg:-1,fg+:-1,gutter:-1,pointer:-1,marker:-1,prompt:1 --height 60% --color border:46 --border=rounded --no-scrollbar --no-separator --prompt="➤  " --pointer="➤ " --marker="➤ "'
+export FZF_DEFAULT_OPTS='--color=16,bg:-1,bg+:#635B54,hl:4,hl+:4,fg:-1,fg+:-1,gutter:-1,pointer:-1,marker:-1,prompt:1 --height 60% --color border:-1 --border=rounded --no-scrollbar --no-separator --prompt="➤  " --pointer="➤ " --marker="➤ " --reverse'
 
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
@@ -35,3 +35,4 @@ pastefinish() {
 }
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
+
