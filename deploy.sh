@@ -31,6 +31,7 @@ done
 echo "deploying on $LOC machine..."
 
 # Tmux setup
+rm -rf $HOME/.tmux.conf
 echo "source $DOT_DIR/config/tmux.conf" > $HOME/.tmux.conf
 
 # Vim / Neovim setup
