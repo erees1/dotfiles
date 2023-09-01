@@ -4,6 +4,7 @@ alias ga="git add"
 alias gaa="git add ."
 alias gau="git add -u"
 alias gc="git commit -m"
+alias gcn="git commit --no-verify -m"
 alias gcane='git commit --amend --no-edit'
 alias gp="git push"
 alias gpf="git push -f"
@@ -21,8 +22,8 @@ alias grbs="git rebase --skip"
 alias grba="git rebase --abort"
 
 alias gm="git merge"
-alias gmm="git merge master"
-alias gmom="git pull --rebase=false origin master"
+alias gmm='(git show-ref --verify --quiet refs/heads/main && git merge main) || (git show-ref --verify --quiet refs/heads/master && git merge main)'
+alias gmom='(git show-ref --verify --quiet refs/heads/main && git pull --rebase=false origin main) || (git show-ref --verify --quiet refs/heads/master && git pull --rebase=false origin master)'
 
 alias gd="git diff"
 alias gdt="git difftool"
@@ -55,3 +56,4 @@ wt() {
         cd $directory
     fi
 }
+
