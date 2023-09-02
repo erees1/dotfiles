@@ -1,0 +1,122 @@
+# Tmux lags the esc for some reason which is annoying for vim
+# this makes escape quicker
+set -g escape-time 10
+
+set -g set-clipboard on
+set -g mode-keys vi
+set -g mouse on
+set-option -g history-limit 50000
+
+# remap prefix from 'C-b' to 'C-a'
+unbind C-b
+set-option -g prefix 'C-a'
+bind-key a  send-prefix 
+# theme
+# source-file ${HOME}/git/dotfiles/tmux/theme.conf
+
+set-option -g set-titles on
+set-option -g set-titles-string "#{session_name}:#{s|$HOME|~|:pane_current_path}"
+
+# Pop up windows
+bind N display-popup -w 80% -h 90% -E  "tmux new-session -A -s scratch"
+bind q display-popup -w 80% -h 90% -E 'qstat -q "aml-gpu.q@*" -f -u \* | less'
+bind O display-popup -w 80% -h 90% -E 'cd $DOT_DIR && nvim'
+bind Tab run-shell "tsesh --popup"
+bind g run-shell "twin --popup"
+
+# Match words on whitespace
+set -g word-separators ""
+
+# Use vim keybindings in copy mode
+bind -T copy-mode-vi P paste-buffer
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+bind [ copy-mode \; send-keys ^
+
+bind-key -n DoubleClick1Pane \
+    select-pane \; \
+    copy-mode -M \; \
+    send-keys -X select-word \; \
+    run-shell "sleep .4s" \; \
+    send-keys -X copy-selection-and-cancel \;
+
+# Shift JK to move to top and bottom of screen
+bind -T copy-mode-vi K send -X top-line
+bind -T copy-mode-vi J send -X bottom-line
+
+# Shift HL to move to start and end of line
+bind -T copy-mode-vi H send -X back-to-indentation
+bind -T copy-mode-vi L send -X end-of-line
+
+bind m choose-window -F "#{window_index}: #{window_name}" "join-pane -h -t %%"
+bind M choose-window -F "#{window_index}: #{window_name}" "join-pane -v -t %%"
+
+# Smart pane switching with awareness of Vim splits.
+# See: https://github.com/christoomey/vim-tmux-navigator
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+bind -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
+bind -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
+bind -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
+bind -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
+tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
+if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
+    "bind -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
+if-shell -b '[ "$(echo "$tmux_version = 3.0" | bc)" = 1 ]' \
+    "bind -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
+
+# Pane selection
+bind -T copy-mode-vi 'C-h' select-pane -L
+bind -T copy-mode-vi 'C-j' select-pane -D
+bind -T copy-mode-vi 'C-k' select-pane -U
+bind -T copy-mode-vi 'C-l' select-pane -R
+
+# Pane splitting
+bind - split-window -v -c "#{pane_current_path}"
+bind | split-window -h -c "#{pane_current_path}"
+bind v split-window -h -c "#{pane_current_path}"
+bind r source-file ~/.tmux.conf
+
+# Resize panes with prefix HJKL
+bind 'c-h' resize-pane -L 10
+bind 'C-j' resize-pane -D 10
+bind 'C-k' resize-pane -U 10
+bind 'C-l' resize-pane -R 10
+
+# Renumber windows when one is closed
+set-option -g renumber-windows on
+
+# Use zsh for tmux
+set-option -g default-shell "${SHELL}"
+set -g default-command "${SHELL}"
+
+# default-terminal sets the $TERM env variable inside tmux, the default value is tmux-256color
+# but currently our singularity images don't have this in /etc/terminfo, /lib/terminfo, or /usr/share/terminfo
+# screen.xterm-256-color has the same colors as tmux-256color and xterm-256color but xterm-256color seems to work directly
+# although not sure if this is recomended
+set -g default-terminal "xterm-256color"
+# tell Tmux that outside terminal supports true color
+set -ga terminal-overrides ",xterm-256color*:Tc";
+
+# Start windows and panes at 1, not 0
+set -g base-index 1
+setw -g pane-base-index 1
+
+set-option -g status-position bottom
+#+---------+
+#+ Plugins +
+#+---------+
+set -g @plugin 'tmux-plugins/tpm'  # Tmux plugin manager
+set -g @plugin 'dracula/tmux'
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+
+# Theme
+set -g @dracula-plugins " "
+set -g @dracula-show-powerline false
+set -g @dracula-day-month false
+set -g @dracula-military-time true
+set -g @dracula-show-flags false
+set -g @dracula-show-left-icon session
+
+# Initialize TMUX plugin manager (keep this lin
+run '~/.tmux/plugins/tpm/tpm'

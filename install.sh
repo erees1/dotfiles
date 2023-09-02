@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+SRC_DIR="$(dirname "$0")"
 USAGE=$(cat <<-END
 Usage: ./install.sh [OPTION]
 Install dotfile dependencies on mac or linux
@@ -8,69 +9,22 @@ If OPTIONS are passed they will be installed
 with apt if on linux or brew if on OSX
 
 OPTIONS:
-    --tmux       install tmux
-    --zsh        install zsh 
-    --delta      install delta (nicer git diff)
-    --nvim       install nvim
-    --fzf        install fzf
-    --exa        install exa (nicer ls)
-    --all        install all of the above
     --force      force reinstall the zsh and tmux plugins
+    --no-root    install without root permissions
 END
 )
 
-
-operating_system="$(uname -s)"
-case "${operating_system}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    *)          machine="UNKNOWN:${operating_system}"
-esac
-
-
-# There are some extra options for mac
-if [ $machine == "Mac" ]; then
-    USAGE+=$(cat <<-END
-
-    --pyenv      install pyenv
-END
-)
-fi
-
-zsh=false
-tmux=false
-delta=false
-nvim=false
-pyenv=false
-fzf=false
-exa=false
-vim_ls=false
-all=false
-force=false
+# parse args
+FORCE=false
+NO_ROOT=false
 while (( "$#" )); do
     case "$1" in
         -h|--help)
             echo "$USAGE" && exit 1 ;;
-        --zsh)
-            zsh=true && shift ;;
-        --tmux)
-            tmux=true && shift ;;
-        --delta)
-            delta=true && shift ;;
-        --nvim)
-            nvim=true && shift ;;
-        --nvim_ls)
-            vim_ls=true && shift ;;
-        --pyenv)
-            pyenv=true && shift ;;
-        --fzf)
-            fzf=true && shift ;;
-        --exa)
-            exa=true && shift ;;
-        --all)
-            all=true && shift ;;
         -f|--force)
-            force=true && shift ;;
+            FORCE=true && shift ;;
+        --no-root)
+            NO_ROOT=true && shift ;;
         --) # end argument parsing
             shift && break ;;
         -*|--*=) # unsupported flags
@@ -78,95 +32,19 @@ while (( "$#" )); do
     esac
 done
 
-if [[ $all == true ]]; then
-    zsh=true
-    tmux=true
-    delta=true
-    nvim=true
-    exa=true
-    fzf=true
-    pyenv=true
-fi
 
-echo " ------------ INSTALLING ON $machine MACHINE ------------ "
-# Installing on linux with apt
-if [ $machine == "Linux" ]; then
-    DOT_DIR=$(dirname $(realpath $0))
-    [ $zsh == true ] && sudo apt-get install zsh
-    [ $tmux == true ] && sudo apt-get install tmux 
-    [ $delta == true ] && $DOT_DIR/install_scripts/install_delta.sh
-    [ $nvim == true ] && $DOT_DIR/install_scripts/install_nvim.sh "release"
-    [ $vim_ls == true ] && $DOT_DIR/vim/install_ls.sh
-    [ $exa == true ] && $DOT_DIR/install_scripts/install_exa.sh
-    if [ $fzf == true ]; then
-        rm -rf $HOME/.fzf
-        git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-        $HOME/.fzf/install --all
-    fi
-    if [ $pyenv == true ]; then
-        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-        git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-    fi
-    # Installing on mac with homebrew
-elif [ $machine == "Mac" ]; then
-    brew install coreutils  # Mac won't have realpath before coreutils installed
-    DOT_DIR=$(dirname $(realpath $0))
-    [ $zsh == true ] && brew install zsh
-    [ $tmux == true ] && brew install tmux
-    [ $delta == true ] && brew install git-delta
-    if [ $nvim == true ]; then 
-        brew install neovim
-        # Node is used to install language servers in vim/setup_init.sh
-        # also requried for vim copilot extension
-        brew install node@16
-        # Ensure vim language servers are installed
-        brew install ripgrep
-    fi
-    [ $vim_ls == true ] && $DOT_DIR/vim/install_ls.sh
-    [ $exa == true ] && brew install exa
-    if [ $pyenv == true ]; then
-        brew install pyenv
-        brew install pyenv-virtualenv
-    fi
-    if [ $fzf == true ]; then
-        brew install fzf
-        $(brew --prefix)/opt/fzf/install --all
-    fi
-fi
+cd "$(dirname $0)"
 
-echo " --------- INSTALLING DEPENDENCIES ⏳ ----------- "
-# Setting up oh my zsh and oh my zsh plugins
-ZSH=~/.oh-my-zsh
-ZSH_CUSTOM=$ZSH/custom
-if [ -d $ZSH ] && [ "$force" = "false" ]; then
-    echo "Skipping download of oh-my-zsh and related plugins, pass --force to force redownload"
+# Source all the env files in case thy set variables needed by the installers
+for file in $SRC_DIR/**/*env.zsh; do . $file; done
+
+if [[ $NO_ROOT == "true" ]]; then
+    # find the no root installers and run them iteratively
+    find . -name install_no_root.sh -mindepth 2 | while read installer ; do "${installer}" ; done
 else
-    rm -rf $ZSH
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    rm -f $HOME/.zshrc.pre-oh-my-zsh  # I don't want t a backup
+    # find the installers and run them iteratively, pass args recieved
+    find . -name install_first.sh | while read installer ; do "${installer}" ; done
 
-    git clone https://github.com/romkatv/powerlevel10k.git \
-        ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k 
-
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-        ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 
-
-    git clone https://github.com/zsh-users/zsh-autosuggestions \
-        ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 
-
-    git clone https://github.com/zsh-users/zsh-completions \
-        ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions 
-
-    git clone https://github.com/zsh-users/zsh-history-substring-search \
-        ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search 
-
+    # find the installers and run them iteratively
+    find . -name install.sh -mindepth 2 | while read installer ; do "${installer}" $([ $FORCE = true ] && echo --force) ; done
 fi
-if [ -d $HOME/.tmux/plugins/tpm ] && [ "$force" = "false" ]; then
-    echo "Skipping download of tmux plugin manager, pass --force to force redeownload"
-else
-    # Tmux plugin manager
-    rm -rf $HOME/.tmux/plugins/tpm
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-echo " --------- INSTALLED SUCCESSFULLY ✅ ----------- "
-$DOT_DIR/deploy.sh

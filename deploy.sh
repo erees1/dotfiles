@@ -1,94 +1,159 @@
-#!/bin/bash
-set -euo pipefail
-USAGE=$(cat <<-END
-Usage: ./deploy.sh [OPTION]
-Creates ~/.zshrc and ~/.tmux.conf with location specific config.
-END
-)
+#!/usr/bin/env bash
+#
+# deploy.sh symlink dotfiles to your home directory
 
-export DOT_DIR=$(dirname $(realpath $0))
+cd "$(dirname "$0")"
+DOTFILES_ROOT=$(pwd -P)
 
-LOC="local"
-operating_system="$(uname -s)"
-case "${operating_system}" in
-    Linux*)     LOC="remote";;
-esac
+set -e
 
-while (( "$#" )); do
-    case "$1" in
-        -h|--help)
-            echo "$USAGE" && exit 1 ;;
-        --local)
-            LOC="local" && shift ;;
-        --) # end argument parsing
-            shift && break ;;
-        -*|--*=) # unsupported flags
-            echo "Error: Unsupported flag $1" >&2 && exit 1 ;;
-    esac
-done
+echo ''
 
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
 
-echo "deploying on $LOC machine..."
+user () {
+  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+}
 
-# Tmux setup
-rm -rf $HOME/.tmux.conf
-echo "source $DOT_DIR/config/tmux.conf" > $HOME/.tmux.conf
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
 
-# Vim / Neovim setup
-source "$DOT_DIR/vim/setup_init.sh"
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
 
-# zshrc setup
-echo "source $DOT_DIR/zsh/$LOC/zshrc.sh" > $HOME/.zshrc
+setup_gitconfig () {
+  if ! [ -f git/gitconfig.local.symlink ]
+  then
+    info 'setup gitconfig'
 
-# Gitconfig setup
-source "$DOT_DIR/gitconf/setup_gitconfig.sh"
-
-echo "c.TerminalInteractiveShell.editing_mode = 'vi'" > ~/.ipython/profile_default/ipython_config.py
-echo "c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = False" >> ~/.ipython/profile_default/ipython_config.py
-echo "c.TerminalInteractiveShell.timeoutlen = 0.01" >> ~/.ipython/profile_default/ipython_config.py
-
-cat "$DOT_DIR/config/keybindings.py" > $HOME/.ipython/profile_default/startup/keybindings.py
-
-if [ $LOC == 'local' ]; then
-    # Karabiner elements mapping
-    mkdir -p $HOME/.config/karabiner
-    karabiner_path=$HOME/.config/karabiner/karabiner.json
-    dd_karabiner_path=$DOT_DIR/config/karabiner.json
-
-    if ! cmp -s $karabiner_path $dd_karabiner_path; then
-        read -p "karabiner.json differs from dotfiles v do you want to overwrite? (y/n) " yn
-        case $yn in 
-            y )
-                # if karabiner_console_user_server running exit
-                if pgrep -x "karabiner_console_user_server" > /dev/null
-                then
-                    echo "karabiner_console_user_server is running, please quit it and try again"
-                    exit
-                fi
-                if [ -f $karabiner_path ]; then
-                    cat $karabiner_path > $karabiner_path.backup
-                fi
-                echo "linking $dd_karabiner_path to $karabiner_path"
-                ln -sf "$dd_karabiner_path" "$karabiner_path"
-                ;;
-            n ) echo skipping...;
-                ;;
-        esac
-    else
-        ln -sf "$dd_karabiner_path" "$karabiner_path"
+    git_credential='cache'
+    if [ "$(uname -s)" == "Darwin" ]
+    then
+      git_credential='osxkeychain'
     fi
 
-    mkdir -p $HOME/.ssh
-    ln -sf "$DOT_DIR/config/ssh_config" "$HOME/.ssh/config"
+    user ' - What is your github author name?'
+    read -e git_authorname
+    user ' - What is your github author email?'
+    read -e git_authoremail
 
-    # By default when you hold a key on mac it brings up the accents menu
-    # This means you can't hold vim keys in vscode so disable it
-    defaults write -g ApplePressAndHoldEnabled -bool false  
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
 
-    # Make key repeats faster
-    defaults write -g InitialKeyRepeat -int 13
-    defaults write -g KeyRepeat -int 1
+    success 'gitconfig'
+  fi
+}
 
-fi
-# Relaunch zsh
-zsh
+
+link_file () {
+  local src=$1 dst=$2
+
+  local overwrite= backup= skip=
+  local action=
+
+  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
+  then
+
+    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
+    then
+
+      local currentSrc="$(readlink $dst)"
+
+      if [ "$currentSrc" == "$src" ]
+      then
+
+        skip=true;
+
+      else
+
+        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+        read -n 1 action
+
+        case "$action" in
+          o )
+            overwrite=true;;
+          O )
+            overwrite_all=true;;
+          b )
+            backup=true;;
+          B )
+            backup_all=true;;
+          s )
+            skip=true;;
+          S )
+            skip_all=true;;
+          * )
+            ;;
+        esac
+
+      fi
+
+    fi
+
+    overwrite=${overwrite:-$overwrite_all}
+    backup=${backup:-$backup_all}
+    skip=${skip:-$skip_all}
+
+    if [ "$overwrite" == "true" ]
+    then
+      rm -rf "$dst"
+      success "removed $dst"
+    fi
+
+    if [ "$backup" == "true" ]
+    then
+      mv "$dst" "${dst}.backup"
+      success "moved $dst to ${dst}.backup"
+    fi
+
+    if [ "$skip" == "true" ]
+    then
+      success "skipped $src"
+    fi
+  fi
+
+  if [ "$skip" != "true" ]  # "false" or empty
+  then
+    ln -s "$1" "$2"
+    success "linked $1 to $2"
+  fi
+}
+
+install_dotfiles() {
+  info 'installing dotfiles'
+
+  local overwrite_all=false backup_all=false skip_all=false
+
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
+  do
+    # Extract the first folder name from the $src path
+    folder=$(basename $(dirname $src))
+    echo "folder: $folder"
+    
+    # Check if the folder name ends with ".config"
+    if [[ $folder == *.config ]]; then
+      # Remove the .config suffix from the folder name
+      folder_name_without_config=${folder%.config}
+      
+      # Modify the dst path accordingly
+      dst="$HOME/.config/$folder_name_without_config/$(basename "${src%.*}")"
+    else
+      dst="$HOME/.$(basename "${src%.*}")"
+    fi
+    
+    link_file "$src" "$dst"
+  done
+}
+
+
+setup_gitconfig
+install_dotfiles
+
+echo ''
+echo '  All installed!'
