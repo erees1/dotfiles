@@ -2,12 +2,14 @@
 ZSH_DOT_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
 export DOT_DIR=$(realpath $ZSH_DOT_DIR/../)
 
+. $DOT_DIR/utils/funcs.sh
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
 if [[ -a ~/.localrc ]]
 then
-  source ~/.localrc
+  . ~/.localrc
 fi
 
 ## all of our zsh files that we want to source
@@ -16,21 +18,22 @@ config_files=($DOT_DIR/**/*.zsh)
 
 # load any env files first so that they can be used in other files
 # also defines stuff like $ZSH
-for file in ${(M)config_files:#*/env.zsh}; do source $file; done
+for file in ${(M)config_files:#*/env.zsh}; do . $file; done
 
 # Oh My Zsh plugins
 plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search)
 ZSH_THEME="powerlevel10k/powerlevel10k"
-source $OH_MY_ZSH/oh-my-zsh.sh
-
-fpath=($ZSH_DOT_DIR/completions $fpath)
+add_to_fpath $OH_MY_ZSH/completions/plugins/zsh-completions/src
+add_to_fpath $ZSH_DOT_DIR/completions
+. $OH_MY_ZSH/oh-my-zsh.sh
 
 # Activate vim mode. This needs to happen before loading any other keybinding.zsh files 
 # so we can override them if we want
 bindkey -v
 
 # load everything but env files
-for file in ${${config_files:#*/env.zsh}}; do source $file; done
+for file in ${${config_files:#*/env.zsh}}; do . $file; done
 
+#
 # Print the 🚀
 cat $ZSH_DOT_DIR/start.txt

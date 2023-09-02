@@ -8,6 +8,7 @@ alias vdot="nvim $DOT_DIR"
 alias debugpy_listen="python3 -m debugpy --listen 5678 --wait-for-client"
 alias enable_pyenv="source $ZSH_DOT_DIR/common/init_pyenv.sh"
 alias cl="clear"
+alias l="SKIP=no-commit-to-branch pre-commit run -a --hook-stage commit"
 
 # file and directories
 alias rmd='rm -rf'

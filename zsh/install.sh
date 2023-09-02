@@ -24,9 +24,6 @@ while (( "$#" )); do
 done
 
 
-# Setting up oh my zsh and oh my zsh plugins
-source $SRC_DIR/env.zsh
-
 if [ -d $OH_MY_ZSH ] && [ "$force" = "false" ]; then
     echo "Skipping download of oh-my-zsh and related plugins, pass --force to force redownload"
 else
