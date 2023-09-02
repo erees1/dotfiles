@@ -1,5 +1,5 @@
 #!/bin/bash -eux
-. $DOT_DIR/install_scripts/util.sh
+SRC_DIR=$(dirname "$0")
 
 # Exa
 if ! $(which $MY_BIN_LOC/exa); then
@@ -18,4 +18,9 @@ url=$(curl -s https://api.github.com/repos/sharkdp/fd/releases/latest \
     | cut -d : -f 2,3 \
     | tr -d \")
 
-$DOT_DIR/install_scripts/install_deb.sh "$url" "fd"
+$SRC_DIR/../utils/install_deb.sh "$url" "fd"
+
+
+# FZF
+git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+$HOME/.fzf/install --all

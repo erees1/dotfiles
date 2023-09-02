@@ -1,3 +1,6 @@
+ZSH_DOT_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
+export DOT_DIR=$(realpath $ZSH_DOT_DIR/../)
+
 export OH_MY_ZSH=$HOME/.oh-my-zsh
 export MY_BIN_LOC="$HOME/.local/dotbin"
 export PRO_BASE="$HOME/git"

@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+SRC_DIR="$(dirname "$0")"
 USAGE=$(cat <<-END
 Usage: ./install.sh [OPTION]
 Install dotfile dependencies on mac or linux
@@ -33,6 +34,9 @@ done
 
 
 cd "$(dirname $0)"
+
+# Source all the env files in case thy set variables needed by the installers
+for file in $SRC_DIR/**/*env.zsh; do . $file; done
 
 if [[ $NO_ROOT == "true" ]]; then
     # find the no root installers and run them iteratively

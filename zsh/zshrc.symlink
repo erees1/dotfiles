@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
-ZSH_DOT_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
-export DOT_DIR=$(realpath $ZSH_DOT_DIR/../)
+SRC_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
+DOT_DIR=$SRC_DIR/..
 
 . $DOT_DIR/utils/funcs.sh
 
@@ -18,7 +18,7 @@ config_files=($DOT_DIR/**/*.zsh)
 
 # load any env files first so that they can be used in other files
 # also defines stuff like $ZSH
-for file in ${(M)config_files:#*/env.zsh}; do . $file; done
+for file in ${(M)config_files:#*env.zsh}; do . $file; done
 
 # Oh My Zsh plugins
 plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search)
@@ -32,7 +32,7 @@ add_to_fpath $ZSH_DOT_DIR/completions
 bindkey -v
 
 # load everything but env files
-for file in ${${config_files:#*/env.zsh}}; do . $file; done
+for file in ${${config_files:#*env.zsh}}; do . $file; done
 
 #
 # Print the 🚀

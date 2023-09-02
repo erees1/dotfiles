@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# bootstrap installs things.
+# deploy.sh symlink dotfiles to your home directory
 
 cd "$(dirname "$0")"
 DOTFILES_ROOT=$(pwd -P)

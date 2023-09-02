@@ -1,8 +1,7 @@
 #! /bin/bash -eu
 set -euo pipefail
+SRC_DIR=$(dirname "$0")
 # Helper script to download and install .debs in .local/bin
-
-. $DOT_DIR/install_scripts/util.sh
 
 url=$1
 name=$2
