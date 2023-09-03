@@ -8,7 +8,7 @@ if [ -z $1 ]; then
 fi
 
 function maybe_singularity_exec() {
-    if [ $LOC == "remote" ]; then
+    if [[ $LOC == "remote" ]]; then
         cmd=''
         if [ -z $SINGULARITY_CONTAINER ]; then
             cmd+="$DEFAULT_WORK_DIR/env/singularity.sh exec"
