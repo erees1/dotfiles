@@ -33,7 +33,3 @@ bindkey -v
 
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
-
-#
-# Print the 🚀
-cat $ZSH_DOT_DIR/start.txt
