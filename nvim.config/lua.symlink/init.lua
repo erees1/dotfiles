@@ -6,7 +6,7 @@ vim.g.mapleader = " "
 vim.o.termguicolors = true -- Needed for colors
 
 if require("utils").is_not_vscode() then
-	require("components.statusline")
+	require("statusline")
 	require("settings")
 end
 -- Packer plugins should use vscode checks
