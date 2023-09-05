@@ -1,5 +1,6 @@
 .DS_Store
 *.swp
 .undodir
+git/gitconfig.local.symlink
 Session.vim
 xlstart/~$PERSONAL.XLSB
