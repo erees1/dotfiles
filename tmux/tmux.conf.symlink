@@ -118,5 +118,5 @@ set -g @dracula-military-time true
 set -g @dracula-show-flags false
 set -g @dracula-show-left-icon session
 
-# Initialize TMUX plugin manager (keep this lin
+# Initialize TMUX plugin manager (keep this line at the bottom)
 run '~/.tmux/plugins/tpm/tpm'
