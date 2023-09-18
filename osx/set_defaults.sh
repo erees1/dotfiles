@@ -6,4 +6,13 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g InitialKeyRepeat -int 13
 defaults write -g KeyRepeat -int 1
 
+# Use AirDrop over every interface. srsly this should be a default.
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
+
+# Always open everything in Finder's column view.
+defaults write com.apple.Finder FXPreferredViewStyle clmv
+
+# Show the ~/Library folder
+chflags nohidden ~/Library
+
 echo "Set mac defaults, you will need to logout for them to take effect"
