@@ -1,5 +1,14 @@
-ZSH_DOT_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
-export DOT_DIR=$(realpath $ZSH_DOT_DIR/../)
+if [[ $0 == -*zsh* ]]; then
+    # When sourced by Zsh
+    ZSH_DOT_DIR=$(realpath "$(dirname "${(%):-%x}")")
+elif [[ $0 == *bash* ]]; then
+    # When sourced by Bash
+    ZSH_DOT_DIR=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
+else
+    # When executed directly (not sourced)
+    ZSH_DOT_DIR=$(realpath "$(dirname "$0")")
+fi
+export DOT_DIR=$(realpath "$ZSH_DOT_DIR"/../)
 
 export OH_MY_ZSH=$HOME/.oh-my-zsh
 export MY_BIN_LOC="$HOME/.local/dotbin"

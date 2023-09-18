@@ -23,6 +23,12 @@ local plugin_list = {
     },
     -- LSP Completion
     {
+        "williamboman/mason.nvim",
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+    },
+    {
         "neovim/nvim-lspconfig",
         dependencies = { "jose-elias-alvarez/null-ls.nvim" },
         cond = { require("utils").is_not_vscode },
@@ -30,7 +36,6 @@ local plugin_list = {
             require("plugins/lsp_config")
         end,
     },
-
     {
         "github/copilot.vim",
         config = function()

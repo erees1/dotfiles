@@ -32,6 +32,29 @@ while (( "$#" )); do
     esac
 done
 
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+install () {
+    info "Installing $1"
+    "$@"
+    success "Finished installing $1"
+}
 
 cd "$(dirname $0)"
 
@@ -40,11 +63,13 @@ for file in $SRC_DIR/**/*env.zsh; do . $file; done
 
 if [[ $NO_ROOT == "true" ]]; then
     # find the no root installers and run them iteratively
-    find . -name install_no_root.sh -mindepth 2 | while read installer ; do "${installer}" ; done
+    find . -name install_no_root.sh -mindepth 2 | while read installer ; do 
+        "${installer}"
+    done
 else
     # find the installers and run them iteratively, pass args recieved
-    find . -name install_first.sh | while read installer ; do "${installer}" ; done
+    find . -name install_first.sh | while read installer ; do install "${installer}" ; done
 
     # find the installers and run them iteratively
-    find . -name install.sh -mindepth 2 | while read installer ; do "${installer}" $([ $FORCE = true ] && echo --force) ; done
+    find . -name install.sh -mindepth 2 | while read installer ; do install "${installer}" $([ $FORCE = true ] && echo --force) ; done
 fi

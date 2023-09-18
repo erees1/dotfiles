@@ -140,6 +140,7 @@ install_dotfiles() {
     if [[ $folder == *.config ]]; then
       # Remove the .config suffix from the folder name
       folder_name_without_config=${folder%.config}
+      mkdir -p "$HOME/.config/$folder_name_without_config"
       
       # Modify the dst path accordingly
       dst="$HOME/.config/$folder_name_without_config/$(basename "${src%.*}")"

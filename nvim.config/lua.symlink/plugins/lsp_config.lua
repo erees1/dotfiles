@@ -1,5 +1,11 @@
 -- Language servers for lsp
+require("mason").setup()
+require("mason-lspconfig").setup()
 local nvim_lsp = require("lspconfig")
+
+require("mason-lspconfig").setup {
+    ensure_installed = { "lua_ls", "pyright" , "bashls", "clangd", "html"},
+}
 
 -- Mappings.
 local opts = { noremap = true, silent = true }
@@ -42,16 +48,16 @@ nvim_lsp.bashls.setup({
     on_attach = on_attach,
 })
 
-require("null-ls").setup({
-    on_attach = on_attach,
-    sources = {
-        require("null-ls").builtins.formatting.stylua,
-        require("null-ls").builtins.diagnostics.flake8.with({
-            extra_args = { "--max-line-length=120", "--ignore=E203,W503,E712" },
-        }),
-        require("null-ls").builtins.formatting.black,
-    },
-})
+-- require("null-ls").setup({
+--     on_attach = on_attach,
+--     sources = {
+--         require("null-ls").builtins.formatting.stylua,
+--         require("null-ls").builtins.diagnostics.flake8.with({
+--             extra_args = { "--max-line-length=120", "--ignore=E203,W503,E712" },
+--         }),
+--         require("null-ls").builtins.formatting.black,
+--     },
+-- })
 
 nvim_lsp.clangd.setup({
     on_attch = on_attach,
