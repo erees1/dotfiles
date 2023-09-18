@@ -67,9 +67,8 @@ if [[ $NO_ROOT == "true" ]]; then
         "${installer}"
     done
 else
-    # find the installers and run them iteratively, pass args recieved
+    # find the installers and run them iteratively, pass args recieved, use 1 and 2 to install in order 
+    # in case of dependencies
     find . -name install_first.sh | while read installer ; do install "${installer}" ; done
-
-    # find the installers and run them iteratively
     find . -name install.sh -mindepth 2 | while read installer ; do install "${installer}" $([ $FORCE = true ] && echo --force) ; done
 fi
