@@ -9,10 +9,10 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Shift + HL to move to start and end of visual line
-vim.keymap.set("n", "H", "g^")
-vim.keymap.set("n", "L", "g$")
-vim.keymap.set("v", "H", "g^")
-vim.keymap.set("v", "L", "g$")
+-- vim.keymap.set("n", "H", "g^")
+-- vim.keymap.set("n", "L", "g$")
+-- vim.keymap.set("v", "H", "g^")
+-- vim.keymap.set("v", "L", "g$")
 
 -- Copy paste from system buffers to make copy paste behaviour more sane
 vim.keymap.set("v", "y", '"+y')

@@ -30,8 +30,8 @@ zle -N vi-yank-yk
 bindkey -M vicmd 'y' vi-yank-yk
 
 # To match my custom vim bindings
-bindkey -M vicmd 'H' beginning-of-line
-bindkey -M vicmd 'L' end-of-line
+# bindkey -M vicmd 'H' beginning-of-line
+# bindkey -M vicmd 'L' end-of-line
 
 # Use c-b to go to start of line c-a as tmux leader
 bindkey -r "^a"
