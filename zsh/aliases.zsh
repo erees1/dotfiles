@@ -91,6 +91,9 @@ alias chx='chmod u+x'
 alias v="nvim"
 alias vim="nvim"
 alias vimdiff='nvim -d'
+vs() {
+    nvim /tmp/sratch-$(date +'%Y-%m-%d').txt
+}
 
 #-------------------------------------------------------------
 # Mac specific
