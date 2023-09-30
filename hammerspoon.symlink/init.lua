@@ -146,7 +146,6 @@ end
 
 local function reloadConfig()
     hs.reload()
-    hs.notify.new({ title = "Hammerspoon", informativeText = "Config loaded" }):send()
 end
 
 -- Keybindings
@@ -158,7 +157,6 @@ local keybindings = {
     { key = 'm',      fn = launchApp("Spark Desktop") },
     { key = 's',      fn = launchApp("Slack") },
     { key = 'o',      fn = launchApp("Obsidian") },
-    { key = 'r',      fn = reloadConfig },
 
     -- Windows
     { key = 'h',      fn = moveWindow("left") },
@@ -181,3 +179,5 @@ local keybindings = {
 for _, binding in pairs(keybindings) do
     hs.hotkey.bind(modifiers, binding.key, binding.fn)
 end
+
+hs.alert.show("Config loaded")
