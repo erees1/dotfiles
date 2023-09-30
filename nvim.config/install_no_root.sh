@@ -1,8 +1,7 @@
 #! /bin/bash
-set -euo pipefail
+set -eo pipefail
 # install_nvim.sh <command> where comamnd is either release or nightly
-
-. $DOT_DIR/install_scripts/util.sh
+SRC_DIR=$(dirname "$0")
 
 release_version=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest \
     | grep "browser_download_url.*appimage\"" \

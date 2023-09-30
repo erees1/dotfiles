@@ -14,4 +14,6 @@ file=$(find ./ -name '*.deb')
 echo $file
 dpkg -x $file $HOME/.local/$name
 rm -rf $tmp_dir
+
+mkdir -p $MY_BIN_LOC
 ln -sf $(readlink -f $HOME/.local/$name/usr/bin/$name) $MY_BIN_LOC/$name

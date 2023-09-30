@@ -6,4 +6,7 @@ if [ "$(uname -s)" = "Darwin" ]
 then
   brew install exa
   brew install fzf
+else
+  sudo apt install exa
+  sudo apt install fzf
 fi

@@ -11,12 +11,14 @@ with apt if on linux or brew if on OSX
 OPTIONS:
     --force      force reinstall the zsh and tmux plugins
     --no-root    install without root permissions
+    --vm         assumes you are starting from fresh vm so installs some more utilities
 END
 )
 
 # parse args
 FORCE=false
 NO_ROOT=false
+VM=false
 while (( "$#" )); do
     case "$1" in
         -h|--help)
@@ -25,6 +27,8 @@ while (( "$#" )); do
             FORCE=true && shift ;;
         --no-root)
             NO_ROOT=true && shift ;;
+        --vm)
+            VM=true && shift ;;
         --) # end argument parsing
             shift && break ;;
         -*|--*=) # unsupported flags
@@ -61,14 +65,22 @@ cd "$(dirname $0)"
 # Source all the env files in case thy set variables needed by the installers
 for file in $SRC_DIR/**/*env.zsh; do . $file; done
 
-if [[ $NO_ROOT == "true" ]]; then
-    # find the no root installers and run them iteratively
-    find . -name install_no_root.sh -mindepth 2 | while read installer ; do 
-        "${installer}"
-    done
-else
+# If on linux
+if [ "$(uname -s)" == "Darwin" ]; then
+    # On Mac
     # find the installers and run them iteratively, pass args recieved, use 1 and 2 to install in order 
     # in case of dependencies
-    find . -name install_first.sh | while read installer ; do install "${installer}" ; done
-    find . -name install.sh -mindepth 2 | while read installer ; do install "${installer}" $([ $FORCE = true ] && echo --force) ; done
+    find . -name install_first_osx.sh | while read installer ; do install "${installer}" ; done
+    find . -name install_osx.sh -mindepth 2 | while read installer ; do install "${installer}" $([ $FORCE = true ] && echo --force) ; done
+else
+    if [[ $NO_ROOT == "true" ]]; then
+        # find the no root installers and run them iteratively
+        find . -name install_no_root.sh -mindepth 2 | while read installer ; do 
+            "${installer}"
+        done
+    fi
+    if [[ $VM == "true" ]]; then
+        find . -name install_vm.sh -mindepth 2 | while read installer ; do install "${installer}" $([ $FORCE = true ] && echo --force) ; done
+    fi
 fi
+find . -name install.sh -mindepth 2 | while read installer ; do install "${installer}" $([ $FORCE = true ] && echo --force) ; done
