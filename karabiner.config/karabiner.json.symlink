@@ -133,6 +133,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.vim\\.",
+                      "net.kovidgoyal.kitty",
                       "^com.googlecode.iterm2",
                       "com.microsoft.VSCode"
                     ],
