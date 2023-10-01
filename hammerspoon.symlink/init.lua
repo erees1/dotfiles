@@ -1,6 +1,6 @@
 hs.window.animationDuration = 0;
 local modifiers = { "ctrl", "cmd" } -- all shortcuts use this
-local window_margin = 5             -- border to have around windows, set to 0 if you don't want any
+local window_margin = 0             -- border to have around windows, set to 0 if you don't want any
 
 local function launchApp(App)
     return function()
@@ -19,7 +19,7 @@ local function baseMove(x, y, w, h)
         -- add max.x so it stays on the same screen, works with my second screen
         f.x = max.w * x + max.x + window_margin
         f.y = max.h * y + window_margin + max.y
-        f.w = max.w * w - window_margin / 2
+        f.w = max.w * w - window_margin * 2
         f.h = max.h * h - window_margin
         print('setting frame', f.x, f.y, f.w, f.h)
         win:setFrame(f, 0)
@@ -105,7 +105,7 @@ end
 -- Layouts
 local windowLayout = {
     { "Visual Studio Code", nil, laptopScreen, hs.layout.left50,  nil, nil },
-    { "iTerm",              nil, laptopScreen, hs.layout.right50, nil, nil },
+    { "kitty",              nil, laptopScreen, hs.layout.right50, nil, nil },
     { "Google Chrome",      nil, laptopScreen, hs.layout.right50, nil, nil },
     { "Code",               nil, laptopScreen, hs.layout.left50,  nil, nil },
     { "Obsidian",           nil, laptopScreen, hs.layout.left50,  nil, nil },
@@ -123,7 +123,7 @@ local function executeLastCommand()
     local currentWindow = hs.window.focusedWindow()
 
     -- Focus iTerm
-    hs.application.launchOrFocus("iTerm")
+    hs.application.launchOrFocus("kitty")
 
     -- Give iTerm some time to focus before sending the keys
     hs.timer.doAfter(0.01, function()
@@ -151,7 +151,7 @@ end
 -- Keybindings
 local keybindings = {
     -- Apps
-    { key = 'i',      fn = launchApp("iTerm") },
+    { key = 'i',      fn = launchApp("kitty") },
     { key = 'e',      fn = launchApp("Google Chrome") },
     { key = 'a',      fn = launchApp("Visual Studio Code") },
     { key = 'm',      fn = launchApp("Spark Desktop") },
