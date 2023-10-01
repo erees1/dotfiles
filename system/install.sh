@@ -8,6 +8,6 @@ then
   brew install fzf
   brew install htop
 else
-  sudo apt install exa
-  sudo apt install fzf
+  # Just use the no root versions so that e.g. fzf uses a later version 
+  $SRC_DIR/install_no_root.sh
 fi

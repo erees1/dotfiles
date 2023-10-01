@@ -33,3 +33,5 @@ bindkey -v
 
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

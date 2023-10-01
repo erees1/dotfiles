@@ -17,12 +17,17 @@ bind-key a  send-prefix
 set-option -g set-titles on
 set-option -g set-titles-string "#{session_name}:#{s|$HOME|~|:pane_current_path}"
 
+# Check if the tmux version is 3.2 or above and we can use popup
+run-shell "tmuxVersion=$(tmux -V | cut -c 6-); if [ $(echo \"$tmuxVersion >= 3.2\" | bc) -eq 1 ]; then tmux set-environment -g tmuxVersionGreater true; fi"
+
 # Pop up windows
-bind N display-popup -w 80% -h 90% -E  "tmux new-session -A -s scratch"
-bind q display-popup -w 80% -h 90% -E 'qstat -q "aml-gpu.q@*" -f -u \* | less'
-bind O display-popup -w 80% -h 90% -E 'cd $DOT_DIR && nvim'
-bind Tab run-shell "tsesh --popup"
-bind g run-shell "twin --popup"
+bind Tab run-shell "tsesh"
+if-shell -b '[ -n "$tmuxVersionGreater" ]' \
+    "bind N display-popup -w 80% -h 90% -E  'tmux new-session -A -s scratch'; \
+     bind q display-popup -w 80% -h 90% -E 'qstat -q \"aml-gpu.q@*\" -f -u \* | less'; \
+     bind O display-popup -w 80% -h 90% -E 'cd $DOT_DIR && nvim'; \
+     bind Tab run-shell 'tsesh --popup'"
+
 
 # Match words on whitespace
 set -g word-separators ""

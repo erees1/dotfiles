@@ -13,3 +13,12 @@ end
 require("plugins")
 -- Keybindings need to be compatible with vscode
 require("keybindings")
+
+-- Check if the operating system is Linux
+local isLinux = (os.execute("uname -s | grep -q Linux") == 0)
+
+-- Require a file if on a Linux machine
+if isLinux then
+    require("remote")
+end
+

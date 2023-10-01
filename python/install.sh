@@ -4,4 +4,6 @@ then
   brew install openssl readline sqlite3 xz zlib tcl-tk
   brew install pyenv
   brew install pyenv-virtualenv
+else
+  echo "pyenv install not setup for linux"
 fi

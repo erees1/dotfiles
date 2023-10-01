@@ -1,7 +1,5 @@
 set -e
 
-. $DOT_DIR/install_scripts/util.sh
-
 ROOT_DIR=${HOME}
 mkdir -p $ROOT_DIR
 
@@ -57,3 +55,8 @@ rm -rf tmux-3.3*
 
 echo "[SUCCESS] ${INSTALL_DIR}/bin/tmux is now available"
 ln -sf ${INSTALL_DIR}/bin/tmux $MY_BIN_LOC/tmux
+
+# Install tmux plugin manager
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
