@@ -34,11 +34,11 @@ end
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 nvim_lsp.pyright.setup({
     capabilities = capabilities,
-    on_attch = on_attach,
+    on_attach = on_attach,
     settings = {
         python = {
             analysis = {
-                typeCheckingMode = "off",
+                typeCheckingMode = "on",
             },
         },
     },
@@ -48,17 +48,16 @@ nvim_lsp.bashls.setup({
     on_attach = on_attach,
 })
 
--- require("null-ls").setup({
---     on_attach = on_attach,
---     sources = {
---         require("null-ls").builtins.formatting.stylua,
---         require("null-ls").builtins.diagnostics.flake8.with({
---             extra_args = { "--max-line-length=120", "--ignore=E203,W503,E712" },
---         }),
---         require("null-ls").builtins.formatting.black,
---     },
--- })
-
+nvim_lsp.lua_ls.setup({
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { "vim" },
+            },
+        },
+    },
+})
 nvim_lsp.clangd.setup({
     on_attch = on_attach,
 })

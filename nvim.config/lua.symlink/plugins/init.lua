@@ -14,12 +14,17 @@ vim.opt.rtp:prepend(lazypath)
 local plugin_list = {
     -- Colorschme Or with configuration
     {
-        "https://github.com/morhetz/gruvbox",
-        config = function()
-            vim.g.gruvbox_sign_column = "bg0"
-            vim.g.gruvbox_invert_selection = false
-            vim.cmd("colorscheme gruvbox") 
-        end,
+        'rose-pine/neovim',
+        name = 'rose-pine',
+        config =
+            function()
+                require('rose-pine').setup({
+                    disable_background = true,
+                    disable_float_background = true,
+                    dim_nc_background = false,
+                })
+                vim.cmd('colorscheme rose-pine')
+            end,
     },
     -- LSP Completion
     {
@@ -64,7 +69,7 @@ local plugin_list = {
             local cmp = require("cmp")
             cmp.setup({
                 completion = {
-                    keyword_length = 0, -- Min word length before showing result
+                    keyword_length = 0,   -- Min word length before showing result
                     autocomplete = false, -- Dont auto popup
                 },
                 snippet = {
@@ -114,6 +119,16 @@ local plugin_list = {
             require("plugins/nv-tree")
         end,
     },
+
+    -- Treesitter
+    {
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+        config = function()
+            require("plugins/treesitter")
+        end,
+    },
+
 
     -- Git
     {

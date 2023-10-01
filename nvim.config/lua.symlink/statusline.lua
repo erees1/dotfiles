@@ -110,9 +110,6 @@ M.get_filetype = function()
     return string.format(" %s %s ", icon, filetype):lower()
 end
 
-M.get_line_col = function()
-    return " %l:%c "
-end
 
 M.lsp_progress = function()
     local lsp = vim.lsp.util.get_progress_messages()[1]
@@ -143,7 +140,6 @@ M.set_active = function(self)
     )
 
     local filetype = colors.filetype .. self:get_filetype()
-    local line_col = colors.line_col .. self:get_line_col()
     local lsp = colors.lsp .. self:lsp_progress()
 
     return table.concat({
@@ -152,7 +148,6 @@ M.set_active = function(self)
         filename,
         "%=",
         lsp,
-        line_col,
         filetype,
     })
 end

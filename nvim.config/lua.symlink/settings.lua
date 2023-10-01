@@ -6,7 +6,7 @@ vim.o.expandtab = true -- Converts tabs to spaces
 vim.o.ts = 4 -- Insert 4 spaces for a tab
 vim.o.sw = 4 -- Change the number of space characters inserted for indentation
 vim.cmd("set formatoptions-=o") -- Don't continue comments when pressing o or O
-vim.o.scrolloff = 1000
+vim.o.scrolloff = 8
 
 vim.o.cursorline = true
 vim.o.mouse = "a" -- Enable mouse in all modes
