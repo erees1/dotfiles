@@ -1,6 +1,6 @@
 hs.window.animationDuration = 0;
 local modifiers = { "ctrl", "cmd" } -- all shortcuts use this
-local window_margin = 0             -- border to have around windows, set to 0 if you don't want any
+local window_margin = 4             -- border to have around windows, set to 0 if you don't want any
 
 local function launchApp(App)
     return function()
@@ -78,7 +78,6 @@ local function maximizeWindow()
     local win = hs.window.focusedWindow()
     local f = win:frame()
     local screen = win:screen()
-    local max = screen:frame()
 
     -- if stashed window and currently maximized, restore
     local curFrame = win:frame()
@@ -87,7 +86,7 @@ local function maximizeWindow()
     local didNotMove = (curFrame.x == win:frame().x and curFrame.w == win:frame().w and curFrame.y == win:frame().y and curFrame.h == win:frame().h)
     if didNotMove then
         -- then restore
-        frame = stashed_windows[win:id()]
+        local frame = stashed_windows[win:id()]
         if frame then
             f.x = frame.x
             f.y = frame.y
@@ -157,6 +156,7 @@ local keybindings = {
     { key = 'm',      fn = launchApp("Spark Desktop") },
     { key = 's',      fn = launchApp("Slack") },
     { key = 'o',      fn = launchApp("Obsidian") },
+    { key = 'z',      fn = launchApp("Zotero") },
 
     -- Windows
     { key = 'h',      fn = moveWindow("left") },
@@ -170,8 +170,10 @@ local keybindings = {
     { key = 'return', fn = maximizeWindow },
     { key = 'r',      fn = applyLayout },
 
-    -- misc
+    -- terminal
     { key = 'p',  fn = executeLastCommand },
+
+    -- misc
     { key = '0', fn = reloadConfig}
 }
 
