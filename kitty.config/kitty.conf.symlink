@@ -7,7 +7,7 @@ scrollback_lines 5000
 window_margin_width 5
 adjust_line_height 3
 
-confirm_os_window_close -1
+confirm_os_window_close 0
 
 # BEGIN_KITTY_THEME
 # Rosé Pine
@@ -15,7 +15,8 @@ include current-theme.conf
 # END_KITTY_THEME
 
 
-background_opacity 0.90
-background_blur 40
+background_opacity 0.94
+background_blur 60
 
-
+# Tabs
+tab_bar_edge top
