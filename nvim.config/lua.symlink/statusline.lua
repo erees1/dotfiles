@@ -12,9 +12,9 @@ vim.cmd("set laststatus=3")
 M.colors = {
     active = "%#StatusLine#",
     inactive = "%#StatusLineNC#",
-    mode = "%#PmenuSel#",
-    git = "%#StatusLine#",
-    filetype = "%#PmenuThumb#",
+    mode = "%#IncSearch#",
+    git = "%#Search#",
+    filetype = "%#Search#",
     line_col = "%#StatusLine#",
     lsp = "%#StatusLine#",
     filename = "%#StatusLine#",
@@ -131,7 +131,7 @@ M.set_active = function(self)
     local git = colors.git .. self:get_git_status()
 
     local filename = string.format(
-        "%s%s%s%s%s",
+        "%s%s%s%s %s",
         colors.filename,
         self:get_filepath(),
         colors.filename,

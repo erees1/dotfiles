@@ -4,7 +4,7 @@ require("mason-lspconfig").setup()
 local nvim_lsp = require("lspconfig")
 
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "pyright" , "bashls", "clangd", "html"},
+    ensure_installed = { "lua_ls", "pyright", "bashls", "clangd", "html" },
 }
 
 -- Mappings.
@@ -28,7 +28,19 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
     buf_set_keymap("n", "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
     buf_set_keymap("n", "<CR>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+    buf_set_keymap("n", "do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
     buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.format({async = True})<CR>", opts)
+
+    vim.diagnostic.config({
+        virtual_text = {
+            -- source = "always",  -- Or "if_many"
+            prefix = '●', -- Could be '■', '▎', 'x'
+        },
+        severity_sort = true,
+        float = {
+            source = "always", -- Or "if_many"
+        },
+    })
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -53,7 +65,7 @@ nvim_lsp.lua_ls.setup({
     settings = {
         Lua = {
             diagnostics = {
-                globals = { "vim" },
+                globals = { "vim", "hs" },
             },
         },
     },
