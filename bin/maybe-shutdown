@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if ps aux | grep '[s]tage_one.py' > /dev/null ||
+   ps aux | grep '[s]tage_two.py' > /dev/null
+then
+    echo "Python script is running."
+else
+    echo "Python script is not running. Shutting down..."
+    /sbin/shutdown -h now
+fi
