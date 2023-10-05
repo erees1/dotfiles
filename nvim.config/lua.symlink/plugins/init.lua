@@ -13,18 +13,17 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugin_list = {
     -- Colorschme Or with configuration
+
     {
-        'rose-pine/neovim',
-        name = 'rose-pine',
-        config =
-            function()
-                require('rose-pine').setup({
-                    disable_background = true,
-                    disable_float_background = true,
-                    dim_nc_background = false,
-                })
-                vim.cmd('colorscheme rose-pine')
-            end,
+
+        "https://github.com/ellisonleao/gruvbox.nvim",
+        -- Default options:
+        config = function()
+            require("gruvbox").setup({
+                transparent_mode = true,
+            })
+            vim.cmd("colorscheme gruvbox")
+        end,
     },
     -- LSP Completion
     {
