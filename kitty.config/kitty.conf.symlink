@@ -9,14 +9,15 @@ adjust_line_height 3
 
 confirm_os_window_close 0
 
-# BEGIN_KITTY_THEME
-# Rosé Pine
 include current-theme.conf
-# END_KITTY_THEME
 
-
-background_opacity 0.94
+background_opacity 0.90
 background_blur 60
 
 # Tabs
 tab_bar_edge top
+
+# open urls with cmd
+open_url_modifiers: cmd
+
+map cmd+button1 open_url
