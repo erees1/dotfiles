@@ -11,23 +11,11 @@ set-option -g history-limit 50000
 unbind C-b
 set-option -g prefix 'C-a'
 bind-key a  send-prefix 
-# theme
-# source-file ${HOME}/git/dotfiles/tmux/theme.conf
 
 set-option -g set-titles on
 set-option -g set-titles-string "#{session_name}:#{s|$HOME|~|:pane_current_path}"
 
-# Check if the tmux version is 3.2 or above and we can use popup
-run-shell "tmuxVersion=$(tmux -V | cut -c 6-); if [ $(echo \"$tmuxVersion >= 3.2\" | bc) -eq 1 ]; then tmux set-environment -g tmuxVersionGreater true; fi"
-
-# Pop up windows
-bind Tab run-shell "tsesh"
-if-shell -b '[ -n "$tmuxVersionGreater" ]' \
-    "bind N display-popup -w 80% -h 90% -E  'tmux new-session -A -s scratch'; \
-     bind q display-popup -w 80% -h 90% -E 'qstat -q \"aml-gpu.q@*\" -f -u \* | less'; \
-     bind O display-popup -w 80% -h 90% -E 'cd $DOT_DIR && nvim'; \
-     bind Tab run-shell 'tsesh --popup'"
-
+run-shell "$DOT_DIR/tmux/tmux_popup_bindings.sh"
 
 # Match words on whitespace
 set -g word-separators ""
@@ -37,14 +25,6 @@ bind -T copy-mode-vi P paste-buffer
 bind -T copy-mode-vi v send-keys -X begin-selection
 bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 bind [ copy-mode \; send-keys ^
-
-# This seemed to be breaking double click on mac
-# bind-key -n DoubleClick1Pane \
-#     select-pane \; \
-#     copy-mode -M \; \
-#     send-keys -X select-word \; \
-#     run-shell "sleep .4s" \; \
-#     send-keys -X copy-selection-and-cancel \;
 
 # Shift JK to move to top and bottom of screen
 bind -T copy-mode-vi K send -X top-line
@@ -114,15 +94,15 @@ set-option -g status-position bottom
 #+---------+
 
 set -g @plugin 'tmux-plugins/tpm'  # Tmux plugin manager
-set -g @plugin 'rose-pine/tmux'
+set -g @plugin 'dracula/tmux'
 
 # Theme
-set -g @rose_pine_variant 'main' # Options are 'main', 'moon' or 'dawn'
-set -g @rose_pine_disable_active_window_menu 'on'
-set -g @rose_pine_window_status_separator "  " # Changes the default icon that appears between window names
-set -g @rose_pine_bar_bg_disable 'on'
-set -g @rose_pine_bar_bg_disabled_color_option '0'
-
+set -g @dracula-plugins " "
+set -g @dracula-show-powerline false
+set -g @dracula-day-month false
+set -g @dracula-military-time true
+set -g @dracula-show-flags false
+set -g @dracula-show-left-icon session
 
 # Initialize TMUX plugin manager (keep this line at the bottom)
 run '~/.tmux/plugins/tpm/tpm'
