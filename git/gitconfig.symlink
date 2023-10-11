@@ -24,7 +24,7 @@
 [delta]
     line-numbers = true
     syntax-theme = 1337
-    side-by-side = false
+    side-by-side = true
     file-modified-label = modified:
 [interactive]
     diffFilter = delta --color-only
