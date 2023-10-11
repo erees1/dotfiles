@@ -11,6 +11,7 @@ set-option -g history-limit 50000
 unbind C-b
 set-option -g prefix 'C-a'
 bind-key a  send-prefix 
+bind 'C-a' send-keys 'C-a' 
 
 set-option -g set-titles on
 set-option -g set-titles-string "#{session_name}:#{s|$HOME|~|:pane_current_path}"
