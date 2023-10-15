@@ -66,8 +66,7 @@ local plugin_list = {
             local cmp = require("cmp")
             cmp.setup({
                 completion = {
-                    keyword_length = 0,   -- Min word length before showing result
-                    autocomplete = false, -- Dont auto popup
+                    keyword_length = 3,   -- Min word length before showing result
                 },
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
@@ -94,6 +93,7 @@ local plugin_list = {
 
     -- Shortucts etc
     { "tpope/vim-commentary" },
+
 
     {
         "christoomey/vim-tmux-navigator",
