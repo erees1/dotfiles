@@ -1,35 +1,28 @@
 -- Language servers for lsp
 require("mason").setup()
-require("mason-lspconfig").setup()
-local nvim_lsp = require("lspconfig")
-
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "pyright", "bashls", "clangd", "html" },
+    ensure_installed = { "lua_ls", "pyright", "bashls", "clangd", "html", "rust_analyzer" },
 }
 
--- Mappings.
-local opts = { noremap = true, silent = true }
+local nvim_lsp = require("lspconfig")
 
+-- Mappings.
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
+    local buf_opts = { buffer = bufnr, silent = true }
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap("n", "gf", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-    buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-    buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-    buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-    buf_set_keymap("n", "gh", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    buf_set_keymap("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-    buf_set_keymap("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-    buf_set_keymap("n", "<leader>wl", "<cmd>lua print(vim.inspct(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-    buf_set_keymap("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-    buf_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    buf_set_keymap("n", "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-    buf_set_keymap("n", "<CR>", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-    buf_set_keymap("n", "do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-    buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.format({async = True})<CR>", opts)
+    vim.keymap.set("n", "gf", function() vim.lsp.buf.declaration() end, buf_opts)
+    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, buf_opts)
+    vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, buf_opts)
+    vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, buf_opts)
+    vim.keymap.set("n", "K", function() vim.lsp.buf.signature_help() end, buf_opts)
+    vim.keymap.set("n", "gh", function() vim.lsp.buf.hover() end, buf_opts)
+    vim.keymap.set("n", "<leader>D", function() vim.lsp.buf.type_definition() end, buf_opts)
+    vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, buf_opts)
+    vim.keymap.set("n", "<leader>a", function() vim.lsp.buf.code_action() end, buf_opts)
+    vim.keymap.set("n", "<CR>", function() vim.diagnostic.goto_next() end, buf_opts)
+    vim.keymap.set("n", "do", function() vim.diagnostic.open_float() end, buf_opts)
+    vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, buf_opts)
+    vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, buf_opts)
 
     vim.diagnostic.config({
         virtual_text = {
@@ -57,10 +50,12 @@ nvim_lsp.pyright.setup({
 })
 
 nvim_lsp.bashls.setup({
+    capabilities = capabilities,
     on_attach = on_attach,
 })
 
 nvim_lsp.lua_ls.setup({
+    capabilities = capabilities,
     on_attach = on_attach,
     settings = {
         Lua = {
@@ -71,9 +66,11 @@ nvim_lsp.lua_ls.setup({
     },
 })
 nvim_lsp.clangd.setup({
+    capabilities = capabilities,
     on_attch = on_attach,
 })
 nvim_lsp.html.setup({
+    capabilities = capabilities,
     on_attach = on_attach,
     provideFormatter = true,
 })
