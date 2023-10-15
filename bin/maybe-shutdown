@@ -2,7 +2,6 @@
 
 if ps aux | grep '[s]tage_one.py' > /dev/null ||
    ps aux | grep '[s]tage_two.py' > /dev/null ||
-   ps aux | grep '[s]cripts' > /dev/null ||
    ps aux | grep '[c]affeinate' > /dev/null
 then
     echo "Python script is running."
