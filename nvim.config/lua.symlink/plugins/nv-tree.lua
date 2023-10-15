@@ -63,10 +63,10 @@ require("nvim-tree").setup({
 })
 
 if require("utils").is_not_vscode() then
-    vim.api.nvim_set_keymap(
+    vim.keymap.set(
         "n",
         "<leader>e",
-        ":lua require('utils').tree_toggle()<CR>",
+        function() require("utils").tree_toggle() end,
         { noremap = true, silent = true }
     )
 end
