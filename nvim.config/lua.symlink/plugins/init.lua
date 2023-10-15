@@ -67,6 +67,7 @@ local plugin_list = {
             cmp.setup({
                 completion = {
                     keyword_length = 3,   -- Min word length before showing result
+                    completeopt = 'menu,menuone,noinsert'
                 },
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
@@ -79,7 +80,9 @@ local plugin_list = {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<C-l>"] = cmp.mapping.complete(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ["<Tab>"] = cmp.mapping.select_next_item(),
+                    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
