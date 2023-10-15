@@ -28,9 +28,11 @@ local plugin_list = {
     -- LSP Completion
     {
         "williamboman/mason.nvim",
+        cond = { require("utils").is_not_vscode },
     },
     {
         "williamboman/mason-lspconfig.nvim",
+        cond = { require("utils").is_not_vscode },
     },
     {
         "neovim/nvim-lspconfig",
@@ -55,13 +57,10 @@ local plugin_list = {
         dependencies = {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
-            "quangnguyen30192/cmp-nvim-ultisnips",
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-nvim-lua",
-            "octaltree/cmp-look",
             "hrsh7th/cmp-path",
-            "hrsh7th/cmp-calc",
-            "f3fora/cmp-spell",
-            "hrsh7th/cmp-emoji",
             "hrsh7th/cmp-nvim-lsp-signature-help",
         },
         config = function()
@@ -74,10 +73,7 @@ local plugin_list = {
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
-                        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-                        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-                        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
@@ -89,10 +85,6 @@ local plugin_list = {
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
-                    -- { name = "vsnip" }, -- For vsnip users.
-                    -- { name = 'luasnip' }, -- For luasnip users.
-                    { name = "ultisnips" }, -- For ultisnips users.
-                    -- { name = 'snippy' }, -- For snippy users.
                     { name = "buffer" },
                     { name = "nvim_lsp_signature_help" },
                 }),
