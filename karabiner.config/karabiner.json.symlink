@@ -284,9 +284,9 @@
                 },
                 "to": [
                   {
-                    "key_code": "tab",
+                    "key_code": "open_bracket",
                     "modifiers": [
-                      "left_control",
+                      "left_command",
                       "left_shift"
                     ]
                   }
