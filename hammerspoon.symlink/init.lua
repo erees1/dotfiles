@@ -20,7 +20,7 @@ local function baseMove(x, y, w, h)
         f.x = max.w * x + max.x + window_margin
         f.y = max.h * y + window_margin + max.y
         f.w = max.w * w - window_margin * 2
-        f.h = max.h * h - window_margin
+        f.h = max.h * h - window_margin * 2
         print('setting frame', f.x, f.y, f.w, f.h)
         win:setFrame(f, 0)
     end
@@ -103,16 +103,15 @@ end
 
 -- Layouts
 local windowLayout = {
-    { "Visual Studio Code", nil, laptopScreen, hs.layout.left50,  nil, nil },
-    { "kitty",              nil, laptopScreen, hs.layout.right50, nil, nil },
-    { "Google Chrome",      nil, laptopScreen, hs.layout.right50, nil, nil },
-    { "Code",               nil, laptopScreen, hs.layout.left50,  nil, nil },
-    { "Obsidian",           nil, laptopScreen, hs.layout.left50,  nil, nil },
+    { "Visual Studio Code", snapLeft },
+    { "kitty",              snapRight },
+    { "Google Chrome",      snapLeft },
+    { "Code",               snapLeft },
+    { "Obsidian",           snapLeft },
 }
 
 function applyLayout(layout)
     return function()
-        hs.layout.apply(layout)
     end
 end
 
@@ -152,7 +151,7 @@ local keybindings = {
     -- Apps
     { key = 'i',      fn = launchApp("kitty") },
     { key = 'e',      fn = launchApp("Google Chrome") },
-    { key = 'a',      fn = launchApp("Visual Studio Code") },
+    { key = 'a',      fn = launchApp("Cursor") },
     { key = 'm',      fn = launchApp("Spark Desktop") },
     { key = 's',      fn = launchApp("Slack") },
     { key = 'o',      fn = launchApp("Obsidian") },
@@ -171,10 +170,10 @@ local keybindings = {
     { key = 'r',      fn = applyLayout },
 
     -- terminal
-    { key = 'p',  fn = executeLastCommand },
+    { key = 'p',      fn = executeLastCommand },
 
     -- misc
-    { key = '0', fn = reloadConfig}
+    { key = '0',      fn = reloadConfig }
 }
 
 -- Bind the hotkeys
