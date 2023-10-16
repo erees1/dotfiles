@@ -8,12 +8,6 @@ vim.keymap.set("n", "<leader>s", ":update<CR>") -- leader s to save
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Shift + HL to move to start and end of visual line
--- vim.keymap.set("n", "H", "g^")
--- vim.keymap.set("n", "L", "g$")
--- vim.keymap.set("v", "H", "g^")
--- vim.keymap.set("v", "L", "g$")
-
 -- Copy paste from system buffers to make copy paste behaviour more sane
 vim.keymap.set("v", "y", '"+y')
 vim.keymap.set("v", "x", '"+x')
@@ -38,11 +32,19 @@ vim.keymap.set("n", "dk", "<Nop>")
 
 -- Keep it centered
 vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "<c-d>", "<c-d>zz")
+vim.keymap.set("n", "<c-u>", "<c-u>zz")
 
 -- Undo these breakpoints when in insert mode
 vim.keymap.set("i", ",", ",<c-g>u")
 vim.keymap.set("i", ".", ".<c-g>u")
 vim.keymap.set("i", "(", "(<c-g>u")
+
+-- Make file executable
+vim.keymap.set("n", "<leader>x", ":!chmod +x %<CR>")
+
+-- Replace current word
+vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Only window and reset bufferline to 0 offset
 vim.keymap.set("n", "mo", "", {
@@ -62,16 +64,16 @@ vim.keymap.set("i", "<c-e>", "<c-o>$")
 
 -- Function to yank full path
 _G.yank_full_path = function()
-    local full_path = vim.fn.expand("%:p") -- Get the full path of the current file
+    local full_path = vim.fn.expand("%:p")                   -- Get the full path of the current file
     vim.api.nvim_call_function("setreg", { "+", full_path }) -- Set the clipboard register to the full path
-    print("Full path yanked: " .. full_path) -- Notify the user
+    print("Full path yanked: " .. full_path)                 -- Notify the user
 end
 
 -- Function to yank relative path
 _G.yank_relative_path = function()
-    local relative_path = vim.fn.expand("%:~:.") -- Get the relative path of the current file
+    local relative_path = vim.fn.expand("%:~:.")                 -- Get the relative path of the current file
     vim.api.nvim_call_function("setreg", { "+", relative_path }) -- Set the clipboard register to the relative path
-    print("Relative path yanked: " .. relative_path) -- Notify the user
+    print("Relative path yanked: " .. relative_path)             -- Notify the user
 end
 
 -- Map the functions to <leader>yr and <leader>yf
