@@ -2,8 +2,11 @@
 # general
 # -------------------------------------------------------------------
 
+# projects
 alias cdg="cd ~/git"
 alias dot="cd $DOT_DIR"
+alias cot="cd ~/git/cot"
+
 alias vdot="nvim $DOT_DIR"
 alias debugpy_listen="python3 -m debugpy --listen 5678 --wait-for-client"
 alias enable_pyenv="source $ZSH_DOT_DIR/common/init_pyenv.sh"
