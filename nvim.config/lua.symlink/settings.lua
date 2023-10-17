@@ -21,8 +21,13 @@ vim.o.smartcase = true
 vim.o.ignorecase = true
 
 --Persistent history
-vim.o.undodir = "/tmp/.vim-undo-dir"
-vim.o.undofile = true
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+
+vim.opt.updatetime = 50
+vim.opt.signcolumn = "yes"
 
 vim.o.fillchars = "diff:/"
 
