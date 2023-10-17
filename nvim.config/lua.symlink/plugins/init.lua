@@ -66,7 +66,7 @@ local plugin_list = {
             local cmp = require("cmp")
             cmp.setup({
                 completion = {
-                    keyword_length = 3,   -- Min word length before showing result
+                    keyword_length = 3, -- Min word length before showing result
                     completeopt = 'menu,menuone,noinsert'
                 },
                 snippet = {
@@ -169,7 +169,15 @@ local plugin_list = {
             vim.api.nvim_set_var("auto_save_events", { "InsertLeave" })
         end,
     },
+    -- undo tree
+    {
+        "mbbill/undotree",
+        config = function()
+            -- set <leader>u to toggle undo tree
+            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+        end,
 
+    },
     -- Copy to OSC52
     {
         "ojroques/vim-oscyank",
