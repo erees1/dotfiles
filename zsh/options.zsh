@@ -2,6 +2,7 @@
 # zsh extra settings
 #-------------------------------------------------------------
 
+unsetopt completealiases          # Complete aliases as if they were commands
 setopt RM_STAR_WAIT               # Wait when typing `rm *` before being able to confirm
 setopt NO_BEEP                    # Don't beep on errors in ZLE
 setopt HIST_REDUCE_BLANKS         # Remove superfluous blanks before recording entry.
