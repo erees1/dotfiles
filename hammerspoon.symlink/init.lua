@@ -1,13 +1,12 @@
-hs.window.animationDuration = 0;
+hs.window.animationDuration = 0
 local modifiers = { "ctrl", "cmd" } -- all shortcuts use this
-local window_margin = 4             -- border to have around windows, set to 0 if you don't want any
+local window_margin = 4 -- border to have around windows, set to 0 if you don't want any
 
 local function launchApp(App)
     return function()
         hs.application.launchOrFocus(App)
     end
 end
-
 
 local function baseMove(x, y, w, h)
     return function()
@@ -21,7 +20,7 @@ local function baseMove(x, y, w, h)
         f.y = max.h * y + window_margin + max.y
         f.w = max.w * w - window_margin * 2
         f.h = max.h * h - window_margin * 2
-        print('setting frame', f.x, f.y, f.w, f.h)
+        print("setting frame", f.x, f.y, f.w, f.h)
         win:setFrame(f, 0)
     end
 end
@@ -34,23 +33,26 @@ local snapMax = baseMove(0, 0, 1, 1)
 
 local stashed_windows = {}
 
-
 local function moveWindow(direction)
     return function()
         local win = hs.window.focusedWindow()
         local screen = win:screen()
         local max = screen:frame()
 
-
         -- work out if we are already on the left or right by moving it and
         -- checking if the x position or width has changed
         local curFrame = win:frame()
-        if (direction == "left") then
+        if direction == "left" then
             snapLeft()
         else
             snapRight()
         end
-        local didNotMove = (curFrame.x == win:frame().x and curFrame.w == win:frame().w and curFrame.y == win:frame().y and curFrame.h == win:frame().h)
+        local didNotMove = (
+            curFrame.x == win:frame().x
+            and curFrame.w == win:frame().w
+            and curFrame.y == win:frame().y
+            and curFrame.h == win:frame().h
+        )
 
         if not didNotMove then
             -- if we did move then we are done so return
@@ -59,7 +61,7 @@ local function moveWindow(direction)
 
         -- if we didn't move then we are already on the left or right so need to move to the next screen
         local win = hs.window.focusedWindow()
-        if (direction == "right") then
+        if direction == "right" then
             local nextScreen = win:screen():next()
             win:moveToScreen(nextScreen)
             snapLeft()
@@ -70,7 +72,6 @@ local function moveWindow(direction)
         end
     end
 end
-
 
 local function maximizeWindow()
     -- maximize window and remember original size
@@ -83,7 +84,12 @@ local function maximizeWindow()
     local curFrame = win:frame()
     print("calling maximize")
     snapMax()
-    local didNotMove = (curFrame.x == win:frame().x and curFrame.w == win:frame().w and curFrame.y == win:frame().y and curFrame.h == win:frame().h)
+    local didNotMove = (
+        curFrame.x == win:frame().x
+        and curFrame.w == win:frame().w
+        and curFrame.y == win:frame().y
+        and curFrame.h == win:frame().h
+    )
     if didNotMove then
         -- then restore
         local frame = stashed_windows[win:id()]
@@ -104,15 +110,14 @@ end
 -- Layouts
 local windowLayout = {
     { "Visual Studio Code", snapLeft },
-    { "kitty",              snapRight },
-    { "Google Chrome",      snapLeft },
-    { "Code",               snapLeft },
-    { "Obsidian",           snapLeft },
+    { "kitty", snapRight },
+    { "Google Chrome", snapLeft },
+    { "Code", snapLeft },
+    { "Obsidian", snapLeft },
 }
 
 function applyLayout(layout)
-    return function()
-    end
+    return function() end
 end
 
 -- Execute last  command in iterm
@@ -141,7 +146,6 @@ local function executeLastCommand()
     end)
 end
 
-
 local function reloadConfig()
     hs.reload()
 end
@@ -149,34 +153,46 @@ end
 -- Keybindings
 local keybindings = {
     -- Apps
-    { key = 'i',      fn = launchApp("kitty") },
-    { key = 'e',      fn = launchApp("Google Chrome") },
-    { key = 'a',      fn = launchApp("Visual Studio Code") },
-    { key = 'm',      fn = launchApp("Spark Desktop") },
-    { key = 's',      fn = launchApp("Slack") },
-    { key = 'o',      fn = launchApp("Obsidian") },
-    { key = 'z',      fn = launchApp("Zotero") },
-    { key = 't',      fn = launchApp("Timing") },
-    { key = 'n',      fn = launchApp("Anki") },
-    { key = 'd',      fn = function() launchApp("Dash")() hs.eventtap.keyStroke({"cmd"}, "L") end },
+    { key = "i", fn = launchApp("kitty") },
+    { key = "e", fn = launchApp("Google Chrome") },
+    { key = "a", fn = launchApp("Visual Studio Code") },
+    { key = "m", fn = launchApp("Spark Desktop") },
+    { key = "s", fn = launchApp("Slack") },
+    { key = "z", fn = launchApp("Zotero") },
+    { key = "t", fn = launchApp("Timing") },
+    {
+        key = "n",
+        fn = function()
+            launchApp("Obsidian")()
+            hs.eventtap.keyStroke({ "cmd" }, "D")
+        end,
+    },
+    {
+        key = "d",
+        fn = function()
+            launchApp("Dash")()
+            hs.eventtap.keyStroke({ "cmd" }, "L")
+        end,
+    },
+    { key = "f", fn = launchApp("Anki") },
 
     -- Windows
-    { key = 'h',      fn = moveWindow("left") },
-    { key = 'l',      fn = moveWindow("right") },
-    { key = 'j',      fn = snapBottom },
-    { key = 'k',      fn = snapTop },
-    { key = "1",      fn = baseMove(0, 0, 0.5, 0.5) },
-    { key = "2",      fn = baseMove(0.5, 0, 0.5, 0.5) },
-    { key = "3",      fn = baseMove(0, 0.5, 0.5, 0.5) },
-    { key = "4",      fn = baseMove(0.5, 0.5, 0.5, 0.5) },
-    { key = 'return', fn = maximizeWindow },
-    { key = 'r',      fn = applyLayout },
+    { key = "h", fn = moveWindow("left") },
+    { key = "l", fn = moveWindow("right") },
+    { key = "j", fn = snapBottom },
+    { key = "k", fn = snapTop },
+    { key = "1", fn = baseMove(0, 0, 0.5, 0.5) },
+    { key = "2", fn = baseMove(0.5, 0, 0.5, 0.5) },
+    { key = "3", fn = baseMove(0, 0.5, 0.5, 0.5) },
+    { key = "4", fn = baseMove(0.5, 0.5, 0.5, 0.5) },
+    { key = "return", fn = maximizeWindow },
+    { key = "r", fn = applyLayout },
 
     -- terminal
-    { key = 'p',      fn = executeLastCommand },
+    { key = "p", fn = executeLastCommand },
 
     -- misc
-    { key = '0',      fn = reloadConfig }
+    { key = "0", fn = reloadConfig },
 }
 
 -- Bind the hotkeys
