@@ -64,7 +64,7 @@ bindkey '^N' history-substring-search-down
 
 __fsel_files() {
   setopt localoptions pipefail no_aliases 2> /dev/null
-  eval "find . -not -path '*/\.git/*' -type f -print" | fzf --preview='less {}' -m "$@" | while read item; do
+  eval "find . -not -path '*/\.git/*' -type f -print" | fzf --preview='bat --style=full --color=always {}' -m "$@"  | while read item; do
     echo -n "${(q)item} "
   done
   local ret=$?
