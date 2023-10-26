@@ -21,6 +21,10 @@ local plugin_list = {
         config = function()
             require("gruvbox").setup({
                 transparent_mode = true,
+                overrides = {
+                    ["Pmenu"] = { bg = "#23272E" },
+                    ["NormalFloat"] = { bg = "#23272E" },
+                },
             })
             vim.cmd("colorscheme gruvbox")
         end,
@@ -67,12 +71,12 @@ local plugin_list = {
             cmp.setup({
                 completion = {
                     keyword_length = 3, -- Min word length before showing result
-                    completeopt = 'menu,menuone,noinsert'
+                    completeopt = "menu,menuone,noinsert",
                 },
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
-                        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                        require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
@@ -97,7 +101,6 @@ local plugin_list = {
     -- Shortucts etc
     { "tpope/vim-commentary" },
 
-
     {
         "christoomey/vim-tmux-navigator",
         cond = { require("utils").is_not_vscode },
@@ -121,7 +124,6 @@ local plugin_list = {
             require("plugins/treesitter")
         end,
     },
-
 
     -- Git
     {
@@ -151,7 +153,25 @@ local plugin_list = {
             require("plugins/telescope")
         end,
     },
-
+    {
+        "ThePrimeagen/harpoon",
+        config = function()
+            vim.keymap.set("n", "<c-e>", require("harpoon.ui").toggle_quick_menu)
+            vim.keymap.set("n", "<leader>a", function()
+                require("harpoon.mark").add_file()
+                print("added file to harpoon list")
+            end)
+            vim.keymap.set("n", "<leader>1", function()
+                require("harpoon.ui").nav_file(1)
+            end)
+            vim.keymap.set("n", "<leader>2", function()
+                require("harpoon.ui").nav_file(2)
+            end)
+            vim.keymap.set("n", "<leader>3", function()
+                require("harpoon.ui").nav_file(3)
+            end)
+        end,
+    },
     -- Misc
     {
         "norcalli/nvim-colorizer.lua",
@@ -176,7 +196,6 @@ local plugin_list = {
             -- set <leader>u to toggle undo tree
             vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
         end,
-
     },
     -- Copy to OSC52
     {
