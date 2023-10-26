@@ -151,11 +151,14 @@ local keybindings = {
     -- Apps
     { key = 'i',      fn = launchApp("kitty") },
     { key = 'e',      fn = launchApp("Google Chrome") },
-    { key = 'a',      fn = launchApp("Cursor") },
+    { key = 'a',      fn = launchApp("Visual Studio Code") },
     { key = 'm',      fn = launchApp("Spark Desktop") },
     { key = 's',      fn = launchApp("Slack") },
     { key = 'o',      fn = launchApp("Obsidian") },
     { key = 'z',      fn = launchApp("Zotero") },
+    { key = 't',      fn = launchApp("Timing") },
+    { key = 'n',      fn = launchApp("Anki") },
+    { key = 'd',      fn = function() launchApp("Dash")() hs.eventtap.keyStroke({"cmd"}, "L") end },
 
     -- Windows
     { key = 'h',      fn = moveWindow("left") },
