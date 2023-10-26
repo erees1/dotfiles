@@ -23,6 +23,8 @@ export LSCOLORS='Exfxcxdxbxegedabagacad'
 # FZF options - might also affect fzf-lua extenstion in vim
 export FZF_DEFAULT_OPTS='--color=16,bg:-1,bg+:#635B54,hl:4,hl+:4,fg:-1,fg+:-1,gutter:-1,pointer:-1,marker:-1,prompt:1 --height 60% --color border:-1 --border=rounded --no-scrollbar --no-separator --prompt="➤  " --pointer="➤ " --marker="➤ " --reverse'
 
+export BAT_THEME=gruvbox-dark
+
 export HISTSIZE=100000            # big big history
 export HISTFILESIZE=100000        # big big history
 export HISTTIMEFORMAT="%F %T "
