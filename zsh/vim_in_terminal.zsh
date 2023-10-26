@@ -25,9 +25,21 @@ function vi-yank-yk {
     zle vi-yank
    echo "$CUTBUFFER" | yk 2> /dev/null
 }
+function vi-cut-yk {
+    zle vi-delete-char
+    echo "$CUTBUFFER" | yk 2> /dev/null
+}
+function vi-delete-yk {
+    zle vi-delete
+    echo "$CUTBUFFER" | yk 2> /dev/null
+}
 
 zle -N vi-yank-yk
+zle -N vi-cut-yk
+zle -N vi-delete-yk
 bindkey -M vicmd 'y' vi-yank-yk
+bindkey -M vicmd 'x' vi-cut-yk
+bindkey -M vicmd 'd' vi-delete-yk
 
 # To match my custom vim bindings
 # bindkey -M vicmd 'H' beginning-of-line
