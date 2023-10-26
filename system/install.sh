@@ -7,6 +7,7 @@ then
   brew install exa
   brew install fzf
   brew install htop
+  brew install bat
   $(brew --prefix)/opt/fzf/install --all
 else
   # Just use the no root versions so that e.g. fzf uses a later version 
