@@ -12,13 +12,12 @@ local on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     vim.keymap.set("n", "gf", function() vim.lsp.buf.declaration() end, buf_opts)
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, buf_opts)
+    vim.keymap.set("n", "gD", function() vim.lsp.buf.type_definition() end, buf_opts)
     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, buf_opts)
     vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, buf_opts)
-    vim.keymap.set("n", "K", function() vim.lsp.buf.signature_help() end, buf_opts)
-    vim.keymap.set("n", "gh", function() vim.lsp.buf.hover() end, buf_opts)
-    vim.keymap.set("n", "<leader>D", function() vim.lsp.buf.type_definition() end, buf_opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, buf_opts)
     vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, buf_opts)
-    vim.keymap.set("n", "<leader>a", function() vim.lsp.buf.code_action() end, buf_opts)
+    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, buf_opts)
     vim.keymap.set("n", "<CR>", function() vim.diagnostic.goto_next() end, buf_opts)
     vim.keymap.set("n", "do", function() vim.diagnostic.open_float() end, buf_opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, buf_opts)
@@ -74,3 +73,16 @@ nvim_lsp.html.setup({
     on_attach = on_attach,
     provideFormatter = true,
 })
+
+-- Formatters
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+    on_attach = on_attach,
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.black,
+    },
+})
+
