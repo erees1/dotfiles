@@ -3,17 +3,15 @@ local api = vim.api
 
 local M = {}
 
-
 -- possible values are 'arrow' | 'rounded' | 'blank'
 vim.cmd("set laststatus=3")
-
 
 -- highlight groups, just picked random ones from highlights that looked okay
 M.colors = {
     active = "%#StatusLine#",
     inactive = "%#StatusLineNC#",
     mode = "%#IncSearch#",
-    git = "%#Pmenusel#",
+    git = "%#StatusLine#",
     filetype = "%#Pmenusel#",
     line_col = "%#StatusLine#",
     lsp = "%#StatusLine#",
@@ -42,7 +40,6 @@ M.modes = setmetatable({
     [""] = "V·B", -- this is not ^V, but it's , they're different
     ["s"] = "S",
     ["S"] = "S·L",
-    [""] = "S·B", -- same with this one, it's not ^S but it's
     ["i"] = "I",
     ["ic"] = "I",
     ["R"] = "R",
@@ -109,7 +106,6 @@ M.get_filetype = function()
     end
     return string.format(" %s %s ", icon, filetype):lower()
 end
-
 
 M.lsp_progress = function()
     local lsp = vim.lsp.util.get_progress_messages()[1]
