@@ -16,6 +16,11 @@ alias l="SKIP=no-commit-to-branch pre-commit run -a --hook-stage commit"
 # file and directories
 alias rmd='rm -rf'
 alias mkdir='mkdir -p'
+mva() {
+    # Move to archive for safe deleting
+    mkdir -p ~/.archive
+    mv "$@" ~/.archive
+}
 
 # find/read files
 alias h='head'
