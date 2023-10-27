@@ -15,6 +15,8 @@ local function makeLayout(x, y, w, h)
 end
 
 local layoutLeft = makeLayout(0, 0, 0.5, 1)
+local layoutLeft65 = makeLayout(0, 0, 0.65, 1)
+local layoutRight35 = makeLayout(0.65, 0, 0.35, 1)
 local layoutRight = makeLayout(0.5, 0, 0.5, 1)
 local layoutTop = makeLayout(0, 0, 1, 0.5)
 local layoutBottom = makeLayout(0, 0.5, 1, 0.5)
@@ -94,10 +96,9 @@ end
 
 -- Layouts
 local defaultLayout = {
-    { "Google Chrome", nil, nil, layoutLeft },
-    { "Code", nil, nil, layoutLeft },
-    { "Obsidian", nil, nil, layoutRight },
-    { "kitty", nil, nil, layoutRight },
+    { "Google Chrome", nil, nil, layoutLeft65 },
+    { "Code", nil, nil, layoutLeft65 },
+    { "kitty", nil, nil, layoutRight35 },
     { "Visual Studio Code", nil, nil, layoutLeft },
     { "Spark Desktop", nil, hs.screen:primaryScreen():toWest(), layoutMax },
     { "Slack", nil, hs.screen:primaryScreen():toWest(), layoutMax },
@@ -143,6 +144,7 @@ local keybindings = {
     { key = "m", fn = function() launchOrFocus("Spark Desktop") end },
     { key = "s", fn = function() launchOrFocus("Slack") end },
     { key = "z", fn = function() launchOrFocus("Zotero") end },
+    { key = "o", fn = function() launchOrFocus("Obsidian") end },
     { key = "t", fn = function() launchOrFocus("Timing") end },
     {
         key = "n",
