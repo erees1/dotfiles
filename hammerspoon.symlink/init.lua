@@ -1,89 +1,74 @@
+-- add slight gap to the left and right
 hs.window.animationDuration = 0
 local modifiers = { "ctrl", "cmd" } -- all shortcuts use this
-local window_margin = 4 -- border to have around windows, set to 0 if you don't want any
+local launchOrFocus = hs.application.launchOrFocus
+local keyStroke = hs.eventtap.keyStroke
 
-local function launchApp(App)
-    return function()
-        hs.application.launchOrFocus(App)
-    end
+local function makeLayout(x, y, w, h)
+    -- add slight gap to the left and right
+    w = w - 0.002
+    x = x + 0.001
+    h = h - 0.002
+    y = y + 0.001
+
+    return hs.geometry.rect(x, y, w, h)
 end
 
-local function baseMove(x, y, w, h)
-    return function()
-        local win = hs.window.focusedWindow()
-        local f = win:frame()
-        local screen = win:screen()
-        local max = screen:frame()
-
-        -- add max.x so it stays on the same screen, works with my second screen
-        f.x = max.w * x + max.x + window_margin
-        f.y = max.h * y + window_margin + max.y
-        f.w = max.w * w - window_margin * 2
-        f.h = max.h * h - window_margin * 2
-        print("setting frame", f.x, f.y, f.w, f.h)
-        win:setFrame(f, 0)
-    end
-end
-
-local snapLeft = baseMove(0, 0, 0.5, 1)
-local snapRight = baseMove(0.5, 0, 0.5, 1)
-local snapTop = baseMove(0, 0, 1, 0.5)
-local snapBottom = baseMove(0, 0.5, 1, 0.5)
-local snapMax = baseMove(0, 0, 1, 1)
+local layoutLeft = makeLayout(0, 0, 0.5, 1)
+local layoutRight = makeLayout(0.5, 0, 0.5, 1)
+local layoutTop = makeLayout(0, 0, 1, 0.5)
+local layoutBottom = makeLayout(0, 0.5, 1, 0.5)
+local layoutMax = makeLayout(0, 0, 1, 1)
+local layoutTopLeft = makeLayout(0, 0, 0.5, 0.5)
+local layoutTopRight = makeLayout(0.5, 0, 0.5, 0.5)
+local layoutBottomLeft = makeLayout(0, 0.5, 0.5, 0.5)
+local layoutBottomRight = makeLayout(0.5, 0.5, 0.5, 0.5)
 
 local stashed_windows = {}
 
-local function moveWindow(direction)
-    return function()
-        local win = hs.window.focusedWindow()
-        local screen = win:screen()
-        local max = screen:frame()
+local function moveWindow(direction, win)
+    -- work out if we are already on the left or right by moving it and
+    -- checking if the x position or width has changed
+    local curFrame = win:frame()
+    win:move(direction)
+    local didNotMove = (
+        curFrame.x == win:frame().x
+        and curFrame.w == win:frame().w
+        and curFrame.y == win:frame().y
+        and curFrame.h == win:frame().h
+    )
 
-        -- work out if we are already on the left or right by moving it and
-        -- checking if the x position or width has changed
-        local curFrame = win:frame()
-        if direction == "left" then
-            snapLeft()
-        else
-            snapRight()
-        end
-        local didNotMove = (
-            curFrame.x == win:frame().x
-            and curFrame.w == win:frame().w
-            and curFrame.y == win:frame().y
-            and curFrame.h == win:frame().h
-        )
+    if not didNotMove then
+        -- if we did move then we are done so return
+        return
+    end
 
-        if not didNotMove then
-            -- if we did move then we are done so return
-            return
-        end
-
-        -- if we didn't move then we are already on the left or right so need to move to the next screen
-        local win = hs.window.focusedWindow()
-        if direction == "right" then
-            local nextScreen = win:screen():next()
-            win:moveToScreen(nextScreen)
-            snapLeft()
-        else
-            local nextScreen = win:screen():previous()
-            win:moveToScreen(nextScreen)
-            snapRight()
-        end
+    -- if we didn't move then we are already on the left or right so need to move to the next screen
+    if direction == layoutRight then
+        local nextScreen = win:screen():next()
+        win:moveToScreen(nextScreen)
+        win:move(layoutLeft)
+    elseif direction == layoutLeft then
+        local nextScreen = win:screen():previous()
+        win:moveToScreen(nextScreen)
+        win:move(layoutRight)
     end
 end
 
-local function maximizeWindow()
+local function moveCurWindow(direction)
+    local win = hs.window.focusedWindow()
+    moveWindow(direction, win)
+end
+
+local function maxCurWindow()
     -- maximize window and remember original size
     -- if already maximized, restore to original size
     local win = hs.window.focusedWindow()
     local f = win:frame()
-    local screen = win:screen()
 
     -- if stashed window and currently maximized, restore
     local curFrame = win:frame()
-    print("calling maximize")
-    snapMax()
+    win:move(layoutMax)
     local didNotMove = (
         curFrame.x == win:frame().x
         and curFrame.w == win:frame().w
@@ -108,17 +93,20 @@ local function maximizeWindow()
 end
 
 -- Layouts
-local windowLayout = {
-    { "Visual Studio Code", snapLeft },
-    { "kitty", snapRight },
-    { "Google Chrome", snapLeft },
-    { "Code", snapLeft },
-    { "Obsidian", snapLeft },
+local defaultLayout = {
+    { "Google Chrome", nil, nil, layoutLeft },
+    { "Code", nil, nil, layoutLeft },
+    { "Obsidian", nil, nil, layoutRight },
+    { "kitty", nil, nil, layoutRight },
+    { "Visual Studio Code", nil, nil, layoutLeft },
+    { "Spark Desktop", nil, hs.screen:primaryScreen():toWest(), layoutMax },
+    { "Slack", nil, hs.screen:primaryScreen():toWest(), layoutMax },
+    { "Dash", nil, hs.screen:primaryScreen():toWest(), layoutMax },
+    { "Timing", nil, hs.screen:primaryScreen():toWest(), layoutMax },
+    { "Obsidian", nil, hs.screen:primaryScreen():toWest(), layoutMax },
+    { "Anki", nil, hs.screen:primaryScreen():toWest(), layoutMax },
+    { "Zotero", nil, hs.screen:primaryScreen():toWest(), layoutMax },
 }
-
-function applyLayout(layout)
-    return function() end
-end
 
 -- Execute last  command in iterm
 local function executeLastCommand()
@@ -139,58 +127,51 @@ local function executeLastCommand()
         -- Give iTerm some time to execute the command before switching back
         hs.timer.doAfter(0.01, function()
             -- Focus back to the previous window
-            if currentWindow then
-                currentWindow:focus()
-            end
+            if currentWindow then currentWindow:focus() end
         end)
     end)
 end
 
-local function reloadConfig()
-    hs.reload()
-end
+local function reloadConfig() hs.reload() end
 
 -- Keybindings
 local keybindings = {
     -- Apps
-    { key = "i", fn = launchApp("kitty") },
-    { key = "e", fn = launchApp("Google Chrome") },
-    { key = "a", fn = launchApp("Visual Studio Code") },
-    { key = "m", fn = launchApp("Spark Desktop") },
-    { key = "s", fn = launchApp("Slack") },
-    { key = "z", fn = launchApp("Zotero") },
-    { key = "t", fn = launchApp("Timing") },
+    { key = "i", fn = function() launchOrFocus("kitty") end },
+    { key = "e", fn = function() launchOrFocus("Google Chrome") end },
+    { key = "a", fn = function() launchOrFocus("Visual Studio Code") end },
+    { key = "m", fn = function() launchOrFocus("Spark Desktop") end },
+    { key = "s", fn = function() launchOrFocus("Slack") end },
+    { key = "z", fn = function() launchOrFocus("Zotero") end },
+    { key = "t", fn = function() launchOrFocus("Timing") end },
     {
         key = "n",
         fn = function()
-            launchApp("Obsidian")()
-            hs.eventtap.keyStroke({ "cmd" }, "D")
+            launchOrFocus("Obsidian")
+            keyStroke({ "cmd" }, "D")
         end,
     },
     {
         key = "d",
         fn = function()
-            launchApp("Dash")()
-            hs.eventtap.keyStroke({ "cmd" }, "L")
+            launchOrFocus("Dash")
+            keyStroke({ "cmd" }, "L")
         end,
     },
-    { key = "f", fn = launchApp("Anki") },
-
+    { key = "x", fn = function() launchOrFocus("Anki") end },
     -- Windows
-    { key = "h", fn = moveWindow("left") },
-    { key = "l", fn = moveWindow("right") },
-    { key = "j", fn = snapBottom },
-    { key = "k", fn = snapTop },
-    { key = "1", fn = baseMove(0, 0, 0.5, 0.5) },
-    { key = "2", fn = baseMove(0.5, 0, 0.5, 0.5) },
-    { key = "3", fn = baseMove(0, 0.5, 0.5, 0.5) },
-    { key = "4", fn = baseMove(0.5, 0.5, 0.5, 0.5) },
-    { key = "return", fn = maximizeWindow },
-    { key = "r", fn = applyLayout },
-
+    { key = "h", fn = function() moveCurWindow(layoutLeft) end },
+    { key = "l", fn = function() moveCurWindow(layoutRight) end },
+    { key = "j", fn = function() moveCurWindow(layoutTop) end },
+    { key = "k", fn = function() moveCurWindow(layoutBottom) end },
+    { key = "1", fn = function() moveCurWindow(layoutTopLeft) end },
+    { key = "2", fn = function() moveCurWindow(layoutTopRight) end },
+    { key = "3", fn = function() moveCurWindow(layoutBottomLeft) end },
+    { key = "4", fn = function() moveCurWindow(layoutBottomRight) end },
+    { key = "return", fn = maxCurWindow },
+    { key = "r", fn = function() hs.layout.apply(defaultLayout) end },
     -- terminal
     { key = "p", fn = executeLastCommand },
-
     -- misc
     { key = "0", fn = reloadConfig },
 }
