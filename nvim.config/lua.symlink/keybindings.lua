@@ -46,34 +46,24 @@ vim.keymap.set("n", "<leader>x", ":!chmod +x %<CR>")
 -- Replace current word
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
--- Only window and reset bufferline to 0 offset
-vim.keymap.set("n", "mo", "", {
-    callback = function()
-        vim.cmd(":wincmd o")
-    end,
-    noremap = true,
-    silent = true,
-})
+-- Only window 
+vim.keymap.set("n", "mo", ":wincmd o<CR>")
 
 -- Quit with q: instead of bringing up cmd mode
 vim.keymap.set("n", "q:", ":q<CR>")
 
--- Start/end of line with ctrl-b ctrl-e in insert mode
-vim.keymap.set("i", "<c-b>", "<c-o>^")
-vim.keymap.set("i", "<c-e>", "<c-o>$")
-
 -- Function to yank full path
 _G.yank_full_path = function()
-    local full_path = vim.fn.expand("%:p")                   -- Get the full path of the current file
+    local full_path = vim.fn.expand("%:p") -- Get the full path of the current file
     vim.api.nvim_call_function("setreg", { "+", full_path }) -- Set the clipboard register to the full path
-    print("Full path yanked: " .. full_path)                 -- Notify the user
+    print("Full path yanked: " .. full_path) -- Notify the user
 end
 
 -- Function to yank relative path
 _G.yank_relative_path = function()
-    local relative_path = vim.fn.expand("%:~:.")                 -- Get the relative path of the current file
+    local relative_path = vim.fn.expand("%:~:.") -- Get the relative path of the current file
     vim.api.nvim_call_function("setreg", { "+", relative_path }) -- Set the clipboard register to the relative path
-    print("Relative path yanked: " .. relative_path)             -- Notify the user
+    print("Relative path yanked: " .. relative_path) -- Notify the user
 end
 
 -- Map the functions to <leader>yr and <leader>yf

@@ -1,31 +1,7 @@
 #!/bin/bash
-SRC_DIR=$(dirname "$0")
-USAGE=$(cat <<-END
-Usage: ./install.sh [OPTION]
-Install zsh dependencies on mac or linux
 
-OPTIONS:
-    --force      force reinstall the zsh and tmux plugins
-END
-)
-
-force=false
-while (( "$#" )); do
-    case "$1" in
-        -h|--help)
-            echo "$USAGE" && exit 1 ;;
-        -f|--force)
-            force=true && shift ;;
-        --) # end argument parsing
-            shift && break ;;
-        -*|--*=) # unsupported flags
-            echo "Error: Unsupported flag $1" >&2 && exit 1 ;;
-    esac
-done
-
-
-if [ -d $OH_MY_ZSH ] && [ "$force" = "false" ]; then
-    echo "Skipping download of oh-my-zsh and related plugins, pass --force to force redownload"
+if [ -d $OH_MY_ZSH ] && [ -z "$FORCE" ]; then
+    echo "Skipping download of oh-my-zsh and related plugins, set FORCE=1 to force install"
 else
     rm -rf $OH_MY_ZSH
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
