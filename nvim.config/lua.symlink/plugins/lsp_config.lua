@@ -66,7 +66,7 @@ nvim_lsp.lua_ls.setup({
 })
 nvim_lsp.clangd.setup({
     capabilities = capabilities,
-    on_attch = on_attach,
+    on_attach = on_attach,
 })
 nvim_lsp.html.setup({
     capabilities = capabilities,
