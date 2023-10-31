@@ -49,8 +49,6 @@ bindkey -M vicmd 'd' vi-delete-yk
 bindkey -r "^a"
 bindkey -s '^a' "tsesh\n"
 bindkey -r '^b'
-bindkey -M viins '^b' beginning-of-line
-bindkey -M viins '^e' end-of-line
 
 # Set Up and Down arrow keys to the (zsh-)history-substring-search plugin
 # `-n` means `not empty`, equivalent to `! -z`
