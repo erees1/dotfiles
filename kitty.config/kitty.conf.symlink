@@ -14,6 +14,7 @@ include current-theme.conf
 background_opacity 0.92
 background_blur 90
 
+macos_titlebar_color dark
 macos_option_as_alt yes
 
 # Tabs
