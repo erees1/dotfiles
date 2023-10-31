@@ -43,11 +43,11 @@
             ]
           },
           {
-            "description": "Change command+ctrl full stop to right click",
+            "description": "Change command+ctrl b,e to start end of line",
             "manipulators": [
               {
                 "from": {
-                  "key_code": "period",
+                  "key_code": "semicolon",
                   "modifiers": {
                     "mandatory": [
                       "left_command",
@@ -57,7 +57,30 @@
                 },
                 "to": [
                   {
-                    "pointing_button": "button2"
+                    "key_code": "4",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "u",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "6",
+                    "modifiers": [
+                      "left_shift"
+                    ]
                   }
                 ],
                 "type": "basic"
