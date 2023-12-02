@@ -30,6 +30,10 @@ bind [ copy-mode \; send-keys ^
 # after copying with mouse, don't go back to the bottom
 bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection
 
+# move windows left and right with ctrl+shift+left/right
+bind-key S-Left swap-window -t -1\; select-window -t -1
+bind-key S-Right swap-window -t +1\; select-window -t +1
+
 # Shift JK to move to top and bottom of screen
 bind -T copy-mode-vi K send -X top-line
 bind -T copy-mode-vi J send -X bottom-line

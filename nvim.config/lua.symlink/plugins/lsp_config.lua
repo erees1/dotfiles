@@ -1,8 +1,8 @@
 -- Language servers for lsp
 require("mason").setup()
-require("mason-lspconfig").setup {
+require("mason-lspconfig").setup({
     ensure_installed = { "lua_ls", "pyright", "bashls", "clangd", "html", "rust_analyzer" },
-}
+})
 
 local nvim_lsp = require("lspconfig")
 
@@ -15,7 +15,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "gD", function() vim.lsp.buf.type_definition() end, buf_opts)
     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, buf_opts)
     vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, buf_opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, buf_opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, buf_opts)
     vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, buf_opts)
     vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, buf_opts)
     vim.keymap.set("n", "<CR>", function() vim.diagnostic.goto_next() end, buf_opts)
@@ -26,7 +26,7 @@ local on_attach = function(client, bufnr)
     vim.diagnostic.config({
         virtual_text = {
             -- source = "always",  -- Or "if_many"
-            prefix = '●', -- Could be '■', '▎', 'x'
+            prefix = "●", -- Could be '■', '▎', 'x'
         },
         severity_sort = true,
         float = {
@@ -67,6 +67,10 @@ nvim_lsp.lua_ls.setup({
 nvim_lsp.clangd.setup({
     capabilities = capabilities,
     on_attach = on_attach,
+    cmd = {
+        "clangd",
+        "--offset-encoding=utf-16",
+    },
 })
 nvim_lsp.html.setup({
     capabilities = capabilities,
@@ -85,4 +89,3 @@ null_ls.setup({
         null_ls.builtins.formatting.black,
     },
 })
-

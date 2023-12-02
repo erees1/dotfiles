@@ -22,3 +22,8 @@ if isLinux then
     require("remote")
 end
 
+function ShowSyntaxGroup()
+  local syntax_group = vim.fn.synIDattr(vim.fn.synID(vim.fn.line('.'), vim.fn.col('.'), 1), 'name')
+  print('Syntax group: ' .. syntax_group)
+end
+

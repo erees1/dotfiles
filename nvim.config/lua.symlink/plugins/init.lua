@@ -11,8 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 local plugin_list = {
     -- Colorschme Or with configuration
+
+    -- { "morhetz/gruvbox", config = function() vim.cmd.colorscheme("gruvbox") end },
 
     {
 
@@ -21,8 +24,11 @@ local plugin_list = {
         config = function()
             require("gruvbox").setup({
                 transparent_mode = true,
+                bold = false,
                 overrides = {
                     ["Pmenu"] = { bg = "#23272E" },
+                    ["@lsp.type.function"] = { fg = "#98BF83" },
+                    ["function"] = { fg = "#98BF83" },
                     ["NormalFloat"] = { bg = "#23272E" },
                 },
             })
@@ -42,9 +48,7 @@ local plugin_list = {
         "neovim/nvim-lspconfig",
         dependencies = { "jose-elias-alvarez/null-ls.nvim" },
         cond = { require("utils").is_not_vscode },
-        config = function()
-            require("plugins/lsp_config")
-        end,
+        config = function() require("plugins/lsp_config") end,
     },
     {
         "github/copilot.vim",
@@ -111,18 +115,14 @@ local plugin_list = {
 
     {
         "kyazdani42/nvim-tree.lua",
-        config = function()
-            require("plugins/nv-tree")
-        end,
+        config = function() require("plugins/nv-tree") end,
     },
 
     -- Treesitter
     {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
-        config = function()
-            require("plugins/treesitter")
-        end,
+        config = function() require("plugins/treesitter") end,
     },
 
     -- Git
@@ -130,17 +130,13 @@ local plugin_list = {
         "lewis6991/gitsigns.nvim",
         cond = { require("utils").is_not_vscode },
         dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("plugins/gitsigns")
-        end,
+        config = function() require("plugins/gitsigns") end,
     },
 
     {
         "tpope/vim-fugitive",
         cond = { require("utils").is_not_vscode },
-        config = function()
-            require("plugins/fugitive")
-        end,
+        config = function() require("plugins/fugitive") end,
         keys = { "gs", "<leader>ds" },
         cmd = { "Git", "G" },
     },
@@ -149,9 +145,7 @@ local plugin_list = {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("plugins/telescope")
-        end,
+        config = function() require("plugins/telescope") end,
     },
     {
         "ThePrimeagen/harpoon",
@@ -161,24 +155,16 @@ local plugin_list = {
                 require("harpoon.mark").add_file()
                 print("added file to harpoon list")
             end)
-            vim.keymap.set("n", "<leader>1", function()
-                require("harpoon.ui").nav_file(1)
-            end)
-            vim.keymap.set("n", "<leader>2", function()
-                require("harpoon.ui").nav_file(2)
-            end)
-            vim.keymap.set("n", "<leader>3", function()
-                require("harpoon.ui").nav_file(3)
-            end)
+            vim.keymap.set("n", "<leader>1", function() require("harpoon.ui").nav_file(1) end)
+            vim.keymap.set("n", "<leader>2", function() require("harpoon.ui").nav_file(2) end)
+            vim.keymap.set("n", "<leader>3", function() require("harpoon.ui").nav_file(3) end)
         end,
     },
     -- Misc
     {
         "norcalli/nvim-colorizer.lua",
         opt = true,
-        config = function()
-            require("colorizer").setup()
-        end,
+        config = function() require("colorizer").setup() end,
     },
 
     {
@@ -201,9 +187,7 @@ local plugin_list = {
     {
         "ojroques/vim-oscyank",
         cond = { require("utils").is_not_vscode },
-        config = function()
-            vim.g.oscyank_term = "default"
-        end,
+        config = function() vim.g.oscyank_term = "default" end,
     },
 }
 

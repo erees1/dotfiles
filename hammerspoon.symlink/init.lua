@@ -1,6 +1,7 @@
 -- add slight gap to the left and right
 hs.window.animationDuration = 0
-local modifiers = { "ctrl", "cmd" } -- all shortcuts use this
+local modifiers = { "ctrl", "cmd" } -- most shortcuts use this
+local modifier2 = { "ctrl", "cmd", "shift" } -- for some extra window movement
 local launchOrFocus = hs.application.launchOrFocus
 local keyStroke = hs.eventtap.keyStroke
 
@@ -21,6 +22,8 @@ local layoutRight = makeLayout(0.5, 0, 0.5, 1)
 local layoutTop = makeLayout(0, 0, 1, 0.5)
 local layoutBottom = makeLayout(0, 0.5, 1, 0.5)
 local layoutMax = makeLayout(0, 0, 1, 1)
+local layoutMid = makeLayout(0.16, 0.1, 0.68, 0.8)
+local layoutPlus = makeLayout(0.05, 0.025, 0.90, 0.95)
 local layoutTopLeft = makeLayout(0, 0, 0.5, 0.5)
 local layoutTopRight = makeLayout(0.5, 0, 0.5, 0.5)
 local layoutBottomLeft = makeLayout(0, 0.5, 0.5, 0.5)
@@ -33,13 +36,8 @@ local function moveWindow(direction, win)
     -- checking if the x position or width has changed
     local curFrame = win:frame()
     win:move(direction)
-    local didNotMove = (
-        curFrame.x == win:frame().x
-        and curFrame.w == win:frame().w
-        and curFrame.y == win:frame().y
-        and curFrame.h == win:frame().h
-    )
-
+    local newFrame = win:frame()
+    local didNotMove = (curFrame == newFrame)
     if not didNotMove then
         -- if we did move then we are done so return
         return
@@ -66,27 +64,17 @@ local function maxCurWindow()
     -- maximize window and remember original size
     -- if already maximized, restore to original size
     local win = hs.window.focusedWindow()
-    local f = win:frame()
-
-    -- if stashed window and currently maximized, restore
     local curFrame = win:frame()
     win:move(layoutMax)
-    local didNotMove = (
-        curFrame.x == win:frame().x
-        and curFrame.w == win:frame().w
-        and curFrame.y == win:frame().y
-        and curFrame.h == win:frame().h
-    )
+    -- if stashed window and currently maximized, restore
+    local newFrame = win:frame()
+    local didNotMove = (curFrame == newFrame)
     if didNotMove then
         -- then restore
         local frame = stashed_windows[win:id()]
         if frame then
-            f.x = frame.x
-            f.y = frame.y
-            f.w = frame.w
-            f.h = frame.h
             stashed_windows[win:id()] = nil
-            win:setFrame(f, 0)
+            win:setFrame(frame, 0)
         end
     else
         -- then stash
@@ -94,20 +82,44 @@ local function maxCurWindow()
     end
 end
 
+local function midCurWindow()
+    local win = hs.window.focusedWindow()
+    win:move(layoutMid)
+end
+local function plusCurWindow()
+    local win = hs.window.focusedWindow()
+    win:move(layoutPlus)
+end
+
+
 -- Layouts
 local defaultLayout = {
     { "Google Chrome", nil, nil, layoutLeft65 },
     { "Code", nil, nil, layoutLeft65 },
     { "kitty", nil, nil, layoutRight35 },
-    { "Visual Studio Code", nil, nil, layoutLeft },
-    { "Spark Desktop", nil, hs.screen:primaryScreen():toWest(), layoutMax },
-    { "Slack", nil, hs.screen:primaryScreen():toWest(), layoutMax },
-    { "Dash", nil, hs.screen:primaryScreen():toWest(), layoutMax },
-    { "Timing", nil, hs.screen:primaryScreen():toWest(), layoutMax },
-    { "Obsidian", nil, hs.screen:primaryScreen():toWest(), layoutMax },
-    { "Anki", nil, hs.screen:primaryScreen():toWest(), layoutMax },
-    { "Zotero", nil, hs.screen:primaryScreen():toWest(), layoutMax },
+    { "Spark Desktop", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Spotify", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Slack", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Dash", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Timing", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Obsidian", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Anki", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Zotero", nil, hs.screen:primaryScreen():next(), layoutMax },
 }
+
+-- Same as defaultLayout but with bigger terminal with nothing behind it
+local bigTermOverrides = {
+    { "Google Chrome", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "Code", nil, hs.screen:primaryScreen():next(), layoutMax },
+    { "kitty", nil, nil, layoutMax },
+}
+local bigTerm = hs.fnutils.concat(hs.fnutils.copy(defaultLayout), bigTermOverrides)
+
+local readingOverrides = {
+    { "Zotero", nil, nil, layoutLeft65 },
+    { "Obsidian", nil, nil, layoutRight35 },
+}
+local reading = hs.fnutils.concat(hs.fnutils.copy(defaultLayout), readingOverrides)
 
 -- Execute last  command in iterm
 local function executeLastCommand()
@@ -138,49 +150,67 @@ local function reloadConfig() hs.reload() end
 -- Keybindings
 local keybindings = {
     -- Apps
-    { key = "i", fn = function() launchOrFocus("kitty") end },
-    { key = "e", fn = function() launchOrFocus("Google Chrome") end },
-    { key = "a", fn = function() launchOrFocus("Visual Studio Code") end },
-    { key = "m", fn = function() launchOrFocus("Spark Desktop") end },
-    { key = "s", fn = function() launchOrFocus("Slack") end },
-    { key = "z", fn = function() launchOrFocus("Zotero") end },
-    { key = "o", fn = function() launchOrFocus("Obsidian") end },
-    { key = "t", fn = function() launchOrFocus("Timing") end },
+    { mod = modifiers, key = "i", fn = function() launchOrFocus("kitty") end },
+    { mod = modifiers, key = "e", fn = function() launchOrFocus("Google Chrome") end },
+    { mod = modifiers, key = "a", fn = function() launchOrFocus("Visual Studio Code") end },
+    { mod = modifiers, key = "m", fn = function() launchOrFocus("Spark Desktop") end },
+    { mod = modifiers, key = "s", fn = function() launchOrFocus("Slack") end },
+    { mod = modifiers, key = "z", fn = function() launchOrFocus("Zotero") end },
+    { mod = modifiers, key = "o", fn = function() launchOrFocus("Obsidian") end },
+    { mod = modifiers, key = "t", fn = function() launchOrFocus("Timing") end },
+    { mod = modifiers, key = "b", fn = function() launchOrFocus("Finder") end },
     {
+        mod = modifiers,
         key = "n",
         fn = function()
             launchOrFocus("Obsidian")
-            keyStroke({ "cmd" }, "D")
+            keyStroke({ "cmd" }, "Y")
         end,
     },
     {
+        mod = modifiers,
+        key = "y",
+        fn = function()
+            print("y")
+            launchOrFocus("Obsidian")
+            keyStroke({ "cmd" }, "Y")
+        end,
+    },
+    {
+        mod = modifiers,
         key = "d",
         fn = function()
             launchOrFocus("Dash")
             keyStroke({ "cmd" }, "L")
         end,
     },
-    { key = "x", fn = function() launchOrFocus("Anki") end },
+    { mod = modifiers, key = "x", fn = function() launchOrFocus("Anki") end },
     -- Windows
-    { key = "h", fn = function() moveCurWindow(layoutLeft) end },
-    { key = "l", fn = function() moveCurWindow(layoutRight) end },
-    { key = "j", fn = function() moveCurWindow(layoutTop) end },
-    { key = "k", fn = function() moveCurWindow(layoutBottom) end },
-    { key = "1", fn = function() moveCurWindow(layoutTopLeft) end },
-    { key = "2", fn = function() moveCurWindow(layoutTopRight) end },
-    { key = "3", fn = function() moveCurWindow(layoutBottomLeft) end },
-    { key = "4", fn = function() moveCurWindow(layoutBottomRight) end },
-    { key = "return", fn = maxCurWindow },
-    { key = "r", fn = function() hs.layout.apply(defaultLayout) end },
+    { mod = modifiers, key = "h", fn = function() moveCurWindow(layoutLeft) end },
+    { mod = modifier2, key = "h", fn = function() moveCurWindow(layoutLeft65) end },
+    { mod = modifiers, key = "l", fn = function() moveCurWindow(layoutRight) end },
+    { mod = modifier2, key = "l", fn = function() moveCurWindow(layoutRight35) end },
+    { mod = modifiers, key = "j", fn = function() moveCurWindow(layoutTop) end },
+    { mod = modifiers, key = "k", fn = function() moveCurWindow(layoutBottom) end },
+    { mod = modifiers, key = "1", fn = function() moveCurWindow(layoutTopLeft) end },
+    { mod = modifiers, key = "2", fn = function() moveCurWindow(layoutTopRight) end },
+    { mod = modifiers, key = "3", fn = function() moveCurWindow(layoutBottomLeft) end },
+    { mod = modifiers, key = "4", fn = function() moveCurWindow(layoutBottomRight) end },
+    { mod = modifiers, key = "return", fn = maxCurWindow },
+    { mod = modifiers, key = "-", fn = midCurWindow },
+    { mod = modifiers, key = "=", fn = plusCurWindow },
+    { mod = modifiers, key = "r", fn = function() hs.layout.apply(defaultLayout) end },
+    { mod = modifiers, key = "6", fn = function() hs.layout.apply(bigTerm) end },
+    { mod = modifiers, key = "7", fn = function() hs.layout.apply(reading) end },
     -- terminal
-    { key = "p", fn = executeLastCommand },
     -- misc
-    { key = "0", fn = reloadConfig },
+    { mod = modifiers, key = "0", fn = reloadConfig },
 }
 
 -- Bind the hotkeys
 for _, binding in pairs(keybindings) do
-    hs.hotkey.bind(modifiers, binding.key, binding.fn)
+    -- Bind on key release to avoid issues with sending keys whilst modifier is held down
+    hs.hotkey.bind(binding.mod, binding.key, nil, binding.fn)
 end
 
 hs.alert.show("Config loaded")
