@@ -75,3 +75,8 @@ vim.api.nvim_exec([[
   augroup END
 ]], false)
 
+
+
+-- Add ocp-indent to the runtime path for ocaml files
+local home = os.getenv('HOME')
+vim.opt.runtimepath:prepend(home .. '/.opam/default/share/ocp-indent/vim')
