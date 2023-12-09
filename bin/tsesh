@@ -63,6 +63,8 @@ dir2name(){
     elif [[ $name == *"/git/aladdin/"* ]] ; then
         sesh_name="aladdin-$sesh_name"
     fi
+    # replace dots with underscores
+    sesh_name=${sesh_name//./_}
     echo "$sesh_name"
 }
 
@@ -132,21 +134,21 @@ fi
 
 # If tmux is not running at all
 if [[ $is_inside == "false" ]] && [[ -z $is_running ]]; then
-    echo "tmux not running, starting new session"
-    tmux new-session -s $sesh_name -c $selected $args
+    tmux new-session -s "$sesh_name" -c $selected $args
     exit 0
 fi
 
 # If tmux is running but does not have a session with that name
 # create new session but dont attach
-if ! tmux has-session -t=$sesh_name 2> /dev/null; then
-    tmux new-session -ds $sesh_name -c $selected $args
+if ! tmux has-session -t="$sesh_name" 2> /dev/null; then
+    tmux new-session -ds "$sesh_name" -c $selected $args
 fi
 
 if [[ $is_inside == "true" ]]; then
     # Switiching from one session to another when already inside tmux
-    tmux switch-client -t $sesh_name
+
+    tmux switch-client -t "$sesh_name"
 else
     # If tmux is running, has a session with that name but we are not currently attached
-    tmux attach -t $sesh_name
+    tmux attach -t "$sesh_name"
 fi
