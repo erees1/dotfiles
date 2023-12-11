@@ -9,7 +9,6 @@ alias gcane='git commit --amend --no-edit'
 alias gp="git push"
 alias gpf="git push -f"
 
-alias gg='git gui'
 alias glog='git log --oneline --all --graph --decorate'
 
 alias gf="git fetch"
