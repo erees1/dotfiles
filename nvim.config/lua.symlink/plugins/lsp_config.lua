@@ -10,9 +10,9 @@ local nvim_lsp = require("lspconfig")
 local on_attach = function(client, bufnr)
     local buf_opts = { buffer = bufnr, silent = true }
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.keymap.set("n", "gf", function() vim.lsp.buf.declaration() end, buf_opts)
+    vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, buf_opts)
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, buf_opts)
-    vim.keymap.set("n", "gD", function() vim.lsp.buf.type_definition() end, buf_opts)
+    vim.keymap.set("n", "gt", function() vim.lsp.buf.type_definition() end, buf_opts)
     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, buf_opts)
     vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, buf_opts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, buf_opts)
