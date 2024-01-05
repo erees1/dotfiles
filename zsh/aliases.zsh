@@ -104,6 +104,9 @@ alias vimdiff='nvim -d'
 vs() {
     nvim /tmp/sratch-$(date +'%Y-%m-%d').txt
 }
+vp() {
+    nvim /tmp/sratch-$(date +'%Y-%m-%d').py
+}
 
 #-------------------------------------------------------------
 # Mac specific
