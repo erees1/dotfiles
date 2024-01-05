@@ -13,27 +13,10 @@ vim.opt.rtp:prepend(lazypath)
 
 
 local plugin_list = {
-    -- Colorschme Or with configuration
-
-    -- { "morhetz/gruvbox", config = function() vim.cmd.colorscheme("gruvbox") end },
-
     {
-
-        "https://github.com/ellisonleao/gruvbox.nvim",
-        -- Default options:
-        config = function()
-            require("gruvbox").setup({
-                transparent_mode = true,
-                bold = false,
-                overrides = {
-                    ["Pmenu"] = { bg = "#23272E" },
-                    ["@lsp.type.function"] = { fg = "#98BF83" },
-                    ["function"] = { fg = "#98BF83" },
-                    ["NormalFloat"] = { bg = "#23272E" },
-                },
-            })
-            vim.cmd("colorscheme gruvbox")
-        end,
+        "santos-gabriel-dario/darcula-solid.nvim",
+        config = function() vim.cmd("colorscheme darcula") end,
+        dependencies = { "rktjmp/lush.nvim" },
     },
     -- LSP Completion
     {
@@ -122,7 +105,12 @@ local plugin_list = {
     {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
+        ft = { "python", "javascript", "typescript", "lua", "rust", "go", "html", "css", "json" },
         config = function() require("plugins/treesitter") end,
+    },
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function() require("treesitter-context").setup({enable=true}) end,
     },
 
     -- Git
@@ -158,6 +146,7 @@ local plugin_list = {
             vim.keymap.set("n", "<leader>1", function() require("harpoon.ui").nav_file(1) end)
             vim.keymap.set("n", "<leader>2", function() require("harpoon.ui").nav_file(2) end)
             vim.keymap.set("n", "<leader>3", function() require("harpoon.ui").nav_file(3) end)
+            vim.keymap.set("n", "<leader>4", function() require("harpoon.ui").nav_file(4) end)
         end,
     },
     -- Misc
@@ -188,6 +177,14 @@ local plugin_list = {
         "ojroques/vim-oscyank",
         cond = { require("utils").is_not_vscode },
         config = function() vim.g.oscyank_term = "default" end,
+    },
+    {
+        "mg979/vim-visual-multi",
+        config = function()
+            vim.keymap.set("n", "<m-j>", "<Plug>(VM-Add-Cursor-Down)")
+            vim.keymap.set("n", "<m-k>", "<Plug>(VM-Add-Cursor-Up)")
+            vim.cmd(":VMTheme iceblue")
+        end,
     },
 }
 
