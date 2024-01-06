@@ -19,7 +19,7 @@ local spec = lush.extends({ darcula_solid }).with(function()
         GitSignsDelete({ fg = red }),
         DiffAdd({ bg = green.mix(bg, 70) }),
         DiffChange({ bg = yellow.mix(bg, 70) }),
-        DiffText({ bg = yellow.mix(bg, 70) }),
+        DiffText({ bg = green.mix(bg, 70) }),
         DiffDelete({ bg = red.mix(bg, 50) }),
     }
 end)

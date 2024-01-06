@@ -5,7 +5,7 @@ font_size 14.0
 scrollback_lines 5000
 
 window_margin_width 5
-adjust_line_height 3
+adjust_line_height 5
 
 confirm_os_window_close 0
 
