@@ -35,7 +35,7 @@ augroup fugitive_au
 augroup END
 ]])
 
-vim.keymap.set("n", "gs", ":lua require('plugins.fugitive').VertGStatus()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gs", ":Git|20wincmd_<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>ds", ":Gvdiffsplit!<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>mh", ":diffget //2<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>ml", ":diffget //3<CR>", { noremap = true, silent = true })
