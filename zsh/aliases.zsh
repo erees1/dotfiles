@@ -108,6 +108,22 @@ vp() {
     nvim /tmp/sratch-$(date +'%Y-%m-%d').py
 }
 
+act() {
+    if [[ -n $VIRTUAL_ENV ]]; then
+        echo "Activating pyenv $(basename $VIRTUAL_ENV)"
+        pyenv shell $(basename $VIRTUAL_ENV)
+    else
+        pyenv shell --unset
+    fi
+}
+
+nvim() {
+    # hack to get pyenv to work with nvim
+    act
+    command nvim $argv
+}
+
+
 #-------------------------------------------------------------
 # Mac specific
 #-------------------------------------------------------------
