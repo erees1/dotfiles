@@ -1,37 +1,8 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
-
-
-local plugin_list = {
+return {
     {
         "santos-gabriel-dario/darcula-solid.nvim",
         config = function() vim.cmd("colorscheme darcula") end,
         dependencies = { "rktjmp/lush.nvim" },
-    },
-    -- LSP Completion
-    {
-        "williamboman/mason.nvim",
-        cond = { require("utils").is_not_vscode },
-    },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        cond = { require("utils").is_not_vscode },
-    },
-    {
-        "neovim/nvim-lspconfig",
-        dependencies = { "jose-elias-alvarez/null-ls.nvim" },
-        cond = { require("utils").is_not_vscode },
-        config = function() require("plugins/lsp_config") end,
     },
     {
         "github/copilot.vim",
@@ -41,99 +12,11 @@ local plugin_list = {
         end,
         cond = { require("utils").is_not_vscode },
     },
-
-    {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        dependencies = {
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-nvim-lsp",
-            "L3MON4D3/LuaSnip",
-            "hrsh7th/cmp-nvim-lua",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
-        },
-        config = function()
-            local cmp = require("cmp")
-            cmp.setup({
-                completion = {
-                    keyword_length = 3, -- Min word length before showing result
-                    completeopt = "menu,menuone,noinsert",
-                },
-                snippet = {
-                    -- REQUIRED - you must specify a snippet engine
-                    expand = function(args)
-                        require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-                    end,
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-e>"] = cmp.mapping.abort(),
-                    ["<C-l>"] = cmp.mapping.complete(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    ["<Tab>"] = cmp.mapping.select_next_item(),
-                    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-                }),
-                sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
-                    { name = "buffer" },
-                    { name = "nvim_lsp_signature_help" },
-                }),
-            })
-        end,
-        cond = { require("utils").is_not_vscode },
-    },
-
     -- Shortucts etc
     { "tpope/vim-commentary" },
-
     {
         "christoomey/vim-tmux-navigator",
         cond = { require("utils").is_not_vscode },
-    },
-
-    -- Nvim tree / explorer stuff
-    { "kyazdani42/nvim-web-devicons", lazy = true },
-
-    {
-        "kyazdani42/nvim-tree.lua",
-        config = function() require("plugins/nv-tree") end,
-    },
-
-    -- Treesitter
-    {
-        "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate",
-        ft = { "python", "javascript", "typescript", "lua", "rust", "go", "html", "css", "json" },
-        config = function() require("plugins/treesitter") end,
-    },
-    {
-        "nvim-treesitter/nvim-treesitter-context",
-        config = function() require("treesitter-context").setup({enable=true}) end,
-    },
-
-    -- Git
-    {
-        "lewis6991/gitsigns.nvim",
-        cond = { require("utils").is_not_vscode },
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function() require("plugins/gitsigns") end,
-    },
-
-    {
-        "tpope/vim-fugitive",
-        cond = { require("utils").is_not_vscode },
-        config = function() require("plugins/fugitive") end,
-        keys = { "gs", "<leader>ds" },
-        cmd = { "Git", "G" },
-    },
-
-    {
-        "nvim-telescope/telescope.nvim",
-        branch = "0.1.x",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function() require("plugins/telescope") end,
     },
     {
         "ThePrimeagen/harpoon",
@@ -164,7 +47,6 @@ local plugin_list = {
             vim.api.nvim_set_var("auto_save_events", { "InsertLeave" })
         end,
     },
-    -- undo tree
     {
         "mbbill/undotree",
         config = function()
@@ -172,7 +54,7 @@ local plugin_list = {
             vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
         end,
     },
-    -- Copy to OSC52
+    -- Needed to copy from remote
     {
         "ojroques/vim-oscyank",
         cond = { require("utils").is_not_vscode },
@@ -187,5 +69,3 @@ local plugin_list = {
         end,
     },
 }
-
-require("lazy").setup(plugin_list)

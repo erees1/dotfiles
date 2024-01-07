@@ -1,4 +1,3 @@
-
 vim.opt.shortmess:append("sI") -- Disable nvim intro
 vim.cmd("set noshowmode") -- don't show --INSERT--
 vim.o.lazyredraw = true -- Faster scrolling
@@ -74,7 +73,6 @@ vim.api.nvim_exec([[
     autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
   augroup END
 ]], false)
-
 
 
 -- Add ocp-indent to the runtime path for ocaml files
