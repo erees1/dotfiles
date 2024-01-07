@@ -46,12 +46,14 @@ vim.keymap.set("n", "<leader>x", ":!chmod +x %<CR>")
 -- Replace current word
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
--- Only window 
+-- Only window
 vim.keymap.set("n", "mo", ":wincmd o<CR>")
 
 -- Quit with q: instead of bringing up cmd mode
 vim.keymap.set("n", "q:", ":q<CR>")
 
+vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>")
+--
 -- Function to yank full path
 _G.yank_full_path = function()
     local full_path = vim.fn.expand("%:p") -- Get the full path of the current file
