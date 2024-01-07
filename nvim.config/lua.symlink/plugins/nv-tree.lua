@@ -23,8 +23,8 @@ return {
                 update_cwd = true,
                 hijack_cursor = false,
                 filters = {
-                    dotfiles = true,
-                    custom = { "node_modules" },
+                    dotfiles = false,
+                    custom = { "node_modules", "__pycache__", ".git" },
                 },
                 git = {
                     ignore = false,
