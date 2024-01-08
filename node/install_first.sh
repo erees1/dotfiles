@@ -1,5 +1,6 @@
 #! /usr/bin/env zsh  
 SRC_DIR=$(dirname "$0")
+. $SRC_DIR/node.zsh
 
 if [ "$(uname -s)" = "Darwin" ]
 then
