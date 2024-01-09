@@ -61,8 +61,8 @@ return {
             }))
         end, { desc = "[/] Fuzzily search in current buffer]" })
 
-        vim.keymap.set("n", "<leader>t", require("telescope.builtin").git_files, { desc = "[T]elescope" })
-        vim.keymap.set("n", "<leader>of", require("telescope.builtin").find_files, { desc = "Telescp[o]pe [F]iles" })
+        vim.keymap.set("n", "<leader>t", require("telescope.builtin").find_files, { desc = "[T]elescope" })
+        vim.keymap.set("n", "<leader>of", require("telescope.builtin").git_files, { desc = "Telescp[o]pe Git [F]iles" })
         vim.keymap.set("n", "<leader>oh", require("telescope.builtin").help_tags, { desc = "Telescp[o]pe [H]elp" })
         vim.keymap.set("n", "<leader>ow", require("telescope.builtin").grep_string,
             { desc = "Telescp[o]pe current [W]ord" })
