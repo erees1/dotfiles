@@ -1,0 +1,8 @@
+export KUBECONFIG="${HOME}/.kube/kuber-auth-config.json:/Users/edward/git/kuber/kubeconfig"
+alias k="kubectl"
+alias kd="kuber deploy"
+alias kk="kuber kill"
+alias kgp="kubectl get pods"
+alias kgj="kubectl get jobs"
+alias kgc="kubectl config get-contexts"
+alias kuc="kubectl config use-context"
