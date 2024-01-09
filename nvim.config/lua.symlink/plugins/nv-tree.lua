@@ -24,7 +24,7 @@ return {
                 hijack_cursor = false,
                 filters = {
                     dotfiles = false,
-                    custom = { "node_modules", "__pycache__", ".git" },
+                    custom = { "node_modules", "__pycache__"},
                 },
                 git = {
                     ignore = false,
