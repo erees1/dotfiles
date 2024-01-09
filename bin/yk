@@ -9,5 +9,12 @@ function print_OSC52() {
 buf=$(cat "$@")
 buf_len=${#buf}
 
-print_OSC52 "$buf"
+
+if [ "$(uname -s)" == "Darwin" ]; then
+    # then just use pbcopy
+    echo "$buf" | pbcopy
+else
+    print_OSC52 "$buf"
+fi
+
 >&2 echo "Copied $buf_len characters to clipboard"
