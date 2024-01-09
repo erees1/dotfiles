@@ -104,6 +104,7 @@ set-option -g status-position bottom
 
 set -g @plugin 'tmux-plugins/tpm'  # Tmux plugin manager
 set -g @plugin 'dracula/tmux'
+set -g @plugin 'tmux-plugins/tmux-yank'
 
 # Theme
 set -g @dracula-plugins " "
