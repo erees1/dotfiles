@@ -26,7 +26,7 @@ install () {
 
 cd "$(dirname $0)"
 
-# Source all the env files in case thy set variables needed by the installers
+# Source all the env files in case they set variables needed by the installers
 for file in $SRC_DIR/**/*env.zsh; do . $file; done
 
 find . -name install_first.sh -mindepth 2 | while read installer ; do install "${installer}"; done
