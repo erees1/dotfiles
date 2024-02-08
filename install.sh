@@ -8,6 +8,7 @@ Install dotfile dependencies on mac or linux
 ENV Variables:
     FORCE=1      force reinstall the zsh and tmux plugins
     NO_ROOT=1    install without root permissions
+    EXTRA=1      install extra (non crucial binaries, e.g. bat / exa)
 END
 )
 

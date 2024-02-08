@@ -84,8 +84,15 @@ pd() {
 # ls
 #-------------------------------------------------------------
 
-alias ll="exa -bghla --color=automatic --group-directories-first"
-alias ls="exa"
+# If exa is found use it, otherwise use ls
+if command -v exa &> /dev/null; then
+    alias ll="exa -bghla --color=automatic --group-directories-first"
+    alias ls="exa"
+else
+    alias ll="ls -al --color=always"
+    # remove ls alias if it exists
+    alias ls="ls --color=always"
+fi
 
 #-------------------------------------------------------------
 # chmod

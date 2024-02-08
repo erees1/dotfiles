@@ -59,10 +59,16 @@ bindkey -M vicmd 'j' history-substring-search-down
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
+# use bat as the previewer for fzf if it is installed
+if command -v bat &> /dev/null; then
+  preview="bat --style=full --color=always {}"
+  else
+  preview="cat {}"
+fi
 
 __fsel_files() {
   setopt localoptions pipefail no_aliases 2> /dev/null
-  eval "find . -not -path '*/\.git/*' -type f -print" | fzf --preview='bat --style=full --color=always {}' -m "$@"  | while read item; do
+  eval "find . -not -path '*/\.git/*' -type f -print" | fzf --preview=$preview -m "$@"  | while read item; do
     echo -n "${(q)item} "
   done
   local ret=$?
