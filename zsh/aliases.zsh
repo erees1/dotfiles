@@ -88,10 +88,12 @@ pd() {
 if command -v exa &> /dev/null; then
     alias ll="exa -bghla --color=automatic --group-directories-first"
     alias ls="exa"
+    ls_command="exa"
 else
     alias ll="ls -al --color=always"
     # remove ls alias if it exists
     alias ls="ls --color=always"
+    ls_command="ls"
 fi
 
 #-------------------------------------------------------------
@@ -147,6 +149,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
 
     function chpwd() {
         emulate -L zsh
-        exa
+        $ls_command
     }
 fi
