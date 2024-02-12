@@ -93,7 +93,7 @@ else
     alias ll="ls -al --color=always"
     # remove ls alias if it exists
     alias ls="ls --color=always"
-    ls_command="ls"
+    ls_command="ls --color=always"
 fi
 
 #-------------------------------------------------------------
@@ -149,6 +149,6 @@ if [ "$(uname -s)" = "Darwin" ]; then
 
     function chpwd() {
         emulate -L zsh
-        $ls_command
+        eval $ls_command
     }
 fi
