@@ -24,11 +24,19 @@ set -g word-separators ""
 # Use vim keybindings in copy mode
 bind -T copy-mode-vi P paste-buffer
 bind -T copy-mode-vi v send-keys -X begin-selection
-bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 bind [ copy-mode \; send-keys ^
 
 # after copying with mouse, don't go back to the bottom
-bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection
+# bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-selection
+
+# Fix for copying on macos terminal, in iterm just use "applications in terminal may access the clipboard"
+# These are just the default commands with "reattach-to-user-namespace pbcopy" put after them
+bind-key    -T copy-mode-vi y                    send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key    -T copy-mode-vi MouseDragEnd1Pane    send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key    -T copy-mode-vi DoubleClick1Pane     select-pane \; send-keys -X select-word \; run-shell -d 0.3 \; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key    -T copy-mode-vi TripleClick1Pane     select-pane \; send-keys -X select-line \; run-shell -d 0.3 \; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key    -T root         TripleClick1Pane     select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-line ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" }
+bind-key    -T root         DoubleClick1Pane     select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-word ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" }
 
 # move windows left and right with ctrl+shift+left/right
 bind-key S-Left swap-window -t -1\; select-window -t -1
@@ -104,7 +112,6 @@ set-option -g status-position bottom
 
 set -g @plugin 'tmux-plugins/tpm'  # Tmux plugin manager
 set -g @plugin 'dracula/tmux'
-set -g @plugin 'tmux-plugins/tmux-yank'
 
 # Theme
 set -g @dracula-plugins " "
