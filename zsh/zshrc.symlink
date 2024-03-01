@@ -22,12 +22,28 @@ for file in ${(M)config_files:#*env.zsh}; do . $file; done
 
 # plugins that have been installed in zsh/install.sh
 . $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme
-. $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-. $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-. $ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.plugin.zsh
-add_to_fpath $ZSH_PLUGINS_DIR/zsh-completions/src
 
+# Syntax highlighting must be before history substring search
+. $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+add_to_fpath $ZSH_PLUGINS_DIR/zsh-completions/src
 add_to_fpath $ZSH_DOT_DIR/completions
+
+autoload -U compinit; compinit
+
+# special bindings for fzf-tab
+. $ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh
+zstyle ':fzf-tab:*' fzf-bindings 'ctrl-i:toggle+down'
+zstyle ':fzf-tab:*' fzf-bindings 'tab:down'
+
+. $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+
+# set completion colors to be the same as `ls`, after theme has been loaded
+[[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 # Activate vim mode. This needs to happen before loading any other keybinding.zsh files 
 # so we can override them if we want

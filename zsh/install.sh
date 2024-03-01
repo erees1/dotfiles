@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "HERE I AM"
-
 # use value of ZSH_PLUGIN_DIR if it exists (set in env.zsh)
 PLUGINS_DIR=${ZSH_PLUGIN_DIR:-"$HOME/.zsh/plugins"}
 
@@ -24,4 +22,7 @@ else
 
     git clone https://github.com/zsh-users/zsh-history-substring-search \
         ${PLUGINS_DIR}/zsh-history-substring-search 
+
+    git clone https://github.com/Aloxaf/fzf-tab \
+        ${PLUGINS_DIR}/fzf-tab
 fi
