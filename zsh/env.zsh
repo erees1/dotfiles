@@ -10,9 +10,9 @@ else
 fi
 export DOT_DIR=$(realpath "$ZSH_DOT_DIR"/../)
 
-export OH_MY_ZSH=$HOME/.oh-my-zsh
 export MY_BIN_LOC="$HOME/.local/dotbin"
 export PRO_BASE="$HOME/git"
+export ZSH_PLUGINS_DIR="$HOME/.zsh/plugins"
 
 # These are an edited version of the default colors to better match the default mac colors
 # Red executables, cyan dirs and purple symlinks

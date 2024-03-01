@@ -2,33 +2,18 @@
 SRC_DIR=$(dirname "$0")
 
 # System tools / utilities
-if [ "$(uname -s)" = "Darwin" ]
-then
+if [ "$(uname -s)" = "Darwin" ]; then
   brew install fzf
   brew install htop
   # if env variable extra set
-  if [ -n "$EXTRA" ];    
+  if [ -n "$EXTRA" ]; then    
     brew install bat
-    brew install exa
   fi
   $(brew --prefix)/opt/fzf/install --all
 else
   if [ -z "$NO_ROOT" ]; then
     sudo apt install htop
     sudo apt install unzip
-  fi
-
-  # Exa
-  if [ -n "$EXTRA" ];    
-    if ! $(which $MY_BIN_LOC/exa); then
-        (
-            tmp_dir=$(mktemp -d -t exa-XXXXXXX) && cd $tmp_dir
-            wget https://github.com/ogham/exa/releases/download/v0.9.0/exa-linux-x86_64-0.9.0.zip
-            unzip exa-linux-x86_64-0.9.0.zip && chmod a+x exa-linux-x86_64
-            cp exa-linux-x86_64 $MY_BIN_LOC/exa
-            rm -rf $tmp_dir
-        )
-    fi
   fi
 
   # fd

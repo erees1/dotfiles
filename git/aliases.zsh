@@ -63,13 +63,13 @@ function whip() {
     # Check if the last commit message was 'wip'
     if [[ "$last_commit_message" == "wip" ]]; then
         # Commit with 'wip' message
-        git commit -m 'wip'
+        git commit --no-verify -m 'wip'
 
         # Perform an interactive rebase of the last two commits
         # and squash them together
         GIT_SEQUENCE_EDITOR='sed -i "2s/pick/squash/"' git rebase -i HEAD~2
     else
         # Just add and commit normally if the last message was not 'wip'
-        git commit -m 'wip'
+        git commit --no-verify -m 'wip'
     fi
 }
