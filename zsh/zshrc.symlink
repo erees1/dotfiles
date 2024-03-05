@@ -45,9 +45,13 @@ zstyle ':fzf-tab:*' fzf-bindings 'tab:down'
 # set completion colors to be the same as `ls`, after theme has been loaded
 [[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-# Activate vim mode. This needs to happen before loading any other keybinding.zsh files 
-# so we can override them if we want
+# Activate vim mode. 
 bindkey -v
+# You need these here otherwise if you go into normal mode and then back to insert
+# mode the delete key doesn't work, on testing it seems I only need ^? in mac terminal but I kept both
+# of suggested here: https://vi.stackexchange.com/questions/31671/set-o-vi-in-zsh-backspace-doesnt-delete-non-inserted-characters 
+bindkey "^H" backward-delete-char
+bindkey "^?" backward-delete-char
 
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
