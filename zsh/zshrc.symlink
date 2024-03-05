@@ -14,18 +14,36 @@ fi
 
 ## all of our zsh files that we want to source
 typeset -U config_files
-config_files=($DOT_DIR/**/*.zsh) 
+config_files=($DOT_DIR/**/*.zsh)
 
 # load any env files first so that they can be used in other files
 # also defines stuff like $ZSH
 for file in ${(M)config_files:#*env.zsh}; do . $file; done
 
-# Oh My Zsh plugins
-plugins=(zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search)
-ZSH_THEME="powerlevel10k/powerlevel10k"
-add_to_fpath $OH_MY_ZSH/completions/plugins/zsh-completions/src
+# plugins that have been installed in zsh/install.sh
+. $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme
+
+# Syntax highlighting must be before history substring search
+. $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+add_to_fpath $ZSH_PLUGINS_DIR/zsh-completions/src
 add_to_fpath $ZSH_DOT_DIR/completions
-. $OH_MY_ZSH/oh-my-zsh.sh
+
+autoload -U compinit; compinit
+
+# special bindings for fzf-tab
+. $ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh
+zstyle ':fzf-tab:*' fzf-bindings 'ctrl-i:toggle+down'
+zstyle ':fzf-tab:*' fzf-bindings 'tab:down'
+
+. $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+
+# set completion colors to be the same as `ls`, after theme has been loaded
+[[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 # Activate vim mode. This needs to happen before loading any other keybinding.zsh files 
 # so we can override them if we want
@@ -34,3 +52,5 @@ bindkey -v
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
