@@ -43,8 +43,8 @@ alias gstd="git stash drop"
 alias gstc="git stash clear"
 alias gsts="git stash show -p"
 
-alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
-alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias ggsup='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD)'
+alias gpsup='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
 
 wt() {
