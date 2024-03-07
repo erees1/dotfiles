@@ -74,11 +74,6 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
-# pro cd function, see https://github.com/trishume/pro
-pd() {
-  projDir=$(pro search $1)
-  cd ${projDir}
-}
 
 #-------------------------------------------------------------
 # ls
