@@ -53,7 +53,7 @@ vim.keymap.set("n", "mo", ":wincmd o<CR>")
 vim.keymap.set("n", "q:", ":q<CR>")
 
 vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>")
---
+
 -- Function to yank full path
 _G.yank_full_path = function()
     local full_path = vim.fn.expand("%:p") -- Get the full path of the current file
@@ -68,6 +68,6 @@ _G.yank_relative_path = function()
     print("Relative path yanked: " .. relative_path) -- Notify the user
 end
 
--- Map the functions to <leader>yr and <leader>yf
+-- Map these yank functions to <leader>yr and <leader>yf
 vim.keymap.set("n", "<leader>yr", ":lua _G.yank_relative_path()<CR>")
 vim.keymap.set("n", "<leader>yf", ":lua _G.yank_full_path()<CR>")
