@@ -37,8 +37,9 @@ autoload -U compinit; compinit
 
 # special bindings for fzf-tab
 . $ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh
-zstyle ':fzf-tab:*' fzf-bindings 'ctrl-i:toggle+down'
 zstyle ':fzf-tab:*' fzf-bindings 'tab:down'
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':fzf-tab:*:git-checkout:*' continuous-trigger ''
 
 . $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
