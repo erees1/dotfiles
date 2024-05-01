@@ -36,3 +36,7 @@
 	clone-for-worktrees = "!git-clone-for-worktree"
 	nb = "!git-new-branch"
     wtf = "!git-wtf"
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs
+[fetch]
+	prune = true

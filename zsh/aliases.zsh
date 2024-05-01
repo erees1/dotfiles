@@ -3,14 +3,14 @@
 # -------------------------------------------------------------------
 
 # projects
-alias cdg="cd ~/git"
+alias cdg="cd ~/code"
 alias dot="cd $DOT_DIR"
 alias cot="cd ~/git/cot"
 
 alias vdot="nvim $DOT_DIR"
 alias debugpy_listen="python3 -m debugpy --listen 5678 --wait-for-client"
 alias enable_pyenv="source $ZSH_DOT_DIR/common/init_pyenv.sh"
-alias cl="clear -x"
+alias cl="/usr/bin/clear -x"
 alias l="SKIP=no-commit-to-branch pre-commit run -a --hook-stage commit"
 alias sfv="streamlit run streamlit_finetuning_data_viewer.py"
 alias sv="streamlit run streamlit_viewer.py"
@@ -30,7 +30,6 @@ alias t='tail'
 alias tf='tail -f'
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
-alias which='type -a'
 
 # storage
 alias du='du -kh'  # file space
@@ -102,9 +101,6 @@ alias chx='chmod u+x'
 # vim
 #-------------------------------------------------------------
 
-alias v="nvim"
-alias vim="nvim"
-alias vimdiff='nvim -d'
 vs() {
     nvim /tmp/sratch-$(date +'%Y-%m-%d').txt
 }

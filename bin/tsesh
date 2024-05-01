@@ -51,7 +51,8 @@ fi
 find_directories(){
     # Responsible for chosing which directories to display
     possible_options+=" $HOME/git"
-    find $HOME/git -mindepth 1 -maxdepth 1 \( -type d -o -type l \) -not -path '*/.*'
+    possible_options+=" $HOME/code"
+    find $possible_options -mindepth 1 -maxdepth 1 \( -type d -o -type l \) -not -path '*/.*'
 }
 
 dir2name(){

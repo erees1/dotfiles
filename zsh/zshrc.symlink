@@ -4,6 +4,9 @@ DOT_DIR=$SRC_DIR/..
 
 . $DOT_DIR/utils/funcs.sh
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(fzf --zsh)"
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -24,11 +27,14 @@ for file in ${(M)config_files:#*env.zsh}; do . $file; done
 . $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme
 
 # Syntax highlighting must be before history substring search
-. $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh
+if [ -s "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    . "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+# source $ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh if it exists
+if [ -s "$ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh" ]; then
+    . "$ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh"
+fi
 
 add_to_fpath $ZSH_PLUGINS_DIR/zsh-completions/src
 add_to_fpath $ZSH_DOT_DIR/completions
@@ -36,10 +42,12 @@ add_to_fpath $ZSH_DOT_DIR/completions
 autoload -U compinit; compinit
 
 # special bindings for fzf-tab
-. $ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh
-zstyle ':fzf-tab:*' fzf-bindings 'tab:down'
-zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':fzf-tab:*:git-checkout:*' continuous-trigger ''
+if [ -s "$ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh" ]; then
+  . $ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh
+  zstyle ':fzf-tab:*' fzf-bindings 'tab:down'
+  zstyle ':completion:*:git-checkout:*' sort false
+  zstyle ':fzf-tab:*:git-checkout:*' continuous-trigger ''
+fi
 
 . $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
