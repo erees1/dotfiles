@@ -106,23 +106,5 @@ set -g base-index 1
 setw -g pane-base-index 1
 
 set-option -g status-position bottom
-#+---------+
-#+ Plugins +
-#+---------+
 
-set -g @plugin 'tmux-plugins/tpm'  # Tmux plugin manager
-set -g @plugin 'dracula/tmux'
-
-# Theme
-set -g @dracula-plugins " "
-set -g @dracula-show-powerline false
-set -g @dracula-day-month false
-set -g @dracula-military-time true
-set -g @dracula-show-flags false
-set -g @dracula-show-left-icon session
-
-# Initialize TMUX plugin manager (keep this line at the bottom)
-run '~/.tmux/plugins/tpm/tpm'
-
-# Override themes here  
-set-option -g mode-style bg=brightblue,fg=black
+source-file ${HOME}/code/dotfiles/tmux/theme.conf
