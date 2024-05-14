@@ -127,6 +127,14 @@ install_dotfiles() {
       
       # Modify the dst path accordingly
       dst="$HOME/.config/$folder_name_without_config/$(basename "${src%.*}")"
+
+      # Only deploy nvim if NVIM_FULL is set
+      if [[ $folder_name_without_config == nvim && -z $NVIM ]]; then
+        info "Skipping $src"
+        info "Set NVIM=1 to deploy nvim config"
+        continue
+      fi
+
     else
       dst="$HOME/.$(basename "${src%.*}")"
     fi
