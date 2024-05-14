@@ -109,6 +109,10 @@ vp() {
 }
 
 act() {
+    # if no pyenv binary is found, return
+    if ! command -v pyenv &> /dev/null; then
+        return
+    fi
     if [[ -n $VIRTUAL_ENV ]]; then
         echo "Activating pyenv $(basename $VIRTUAL_ENV)"
         pyenv shell $(basename $VIRTUAL_ENV)
