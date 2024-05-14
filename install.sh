@@ -17,6 +17,17 @@ if [[ $# -gt 0 ]]; then
     exit 1
 fi
 
+read -p "This will install all */install.sh scripts? Do you want to continue. Consider using ./install-min.sh for a more minimal installation (y/n): " choice
+
+if [[ $choice =~ ^[Yy]$ ]]
+then
+    echo "Installing..."
+else
+    echo "Exiting..."
+    exit 0
+fi
+exit 1
+
 . $SRC_DIR/utils/logging.sh
 
 install () {
