@@ -45,6 +45,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>474AC466-F6FD-43FA-BA58-CA3339A3166E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>611B72FB-0A5D-4822-A6C8-C7F382B85B16</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>92154E3F-81BE-43A2-A6BD-9EC7AABFDFB8</key>
 		<array>
 			<dict>
@@ -246,23 +259,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>paths</key>
-				<array>
-					<string>/Applications/Visual Studio Code.app</string>
-				</array>
-				<key>toggle</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.launchfiles</string>
-			<key>uid</key>
-			<string>2D422AB2-C7D5-4A57-B0C6-1E84F878CB98</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -290,6 +286,23 @@
 			<string>C9ECCECE-36ED-4B8A-9A0C-47711ACCDD66</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>paths</key>
+				<array>
+					<string>/Applications/Visual Studio Code.app</string>
+				</array>
+				<key>toggle</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.launchfiles</string>
+			<key>uid</key>
+			<string>2D422AB2-C7D5-4A57-B0C6-1E84F878CB98</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -636,6 +649,27 @@ end tell</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>gmail</string>
+				<key>subtext</key>
+				<string>Open gmail in chrome</string>
+				<key>text</key>
+				<string>Gmail</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>474AC466-F6FD-43FA-BA58-CA3339A3166E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -675,6 +709,13 @@ end tell</string>
 			<real>60</real>
 			<key>ypos</key>
 			<real>120</real>
+		</dict>
+		<key>474AC466-F6FD-43FA-BA58-CA3339A3166E</key>
+		<dict>
+			<key>xpos</key>
+			<real>60</real>
+			<key>ypos</key>
+			<real>870</real>
 		</dict>
 		<key>611B72FB-0A5D-4822-A6C8-C7F382B85B16</key>
 		<dict>
