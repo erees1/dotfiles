@@ -7,13 +7,8 @@ alias cdg="cd ~/code"
 alias dot="cd $DOT_DIR"
 alias cot="cd ~/git/cot"
 
-alias vdot="nvim $DOT_DIR"
-alias debugpy_listen="python3 -m debugpy --listen 5678 --wait-for-client"
-alias enable_pyenv="source $ZSH_DOT_DIR/common/init_pyenv.sh"
-alias cl="/usr/bin/clear -x"
+alias clear="echo 'get out of here with that clear nonsense'"
 alias l="SKIP=no-commit-to-branch pre-commit run -a --hook-stage commit"
-alias sfv="streamlit run streamlit_finetuning_data_viewer.py"
-alias sv="streamlit run streamlit_viewer.py"
 
 # file and directories
 alias rmd='rm -rf'
@@ -23,38 +18,6 @@ mva() {
     mkdir -p ~/.archive
     mv "$@" ~/.archive
 }
-
-# find/read files
-alias h='head'
-alias t='tail'
-alias tf='tail -f'
-alias fd='find . -type d -name'
-alias ff='find . -type f -name'
-
-# storage
-alias du='du -kh'  # file space
-alias df='df -kTh' # disk space
-alias usage='du -sh * 2>/dev/null | sort -rh'
-
-# other
-alias rs='rsync -pravhz'
-alias hist='history | grep'
-alias path='echo -e ${PATH//:/\\n}'
-alias man="man -a"
-alias busy="cat /dev/urandom | hexdump -C | grep "ca fe""
-
-fkill() {
-    pid=$(ps -ef | sed 1d | fzf -m --ansi | awk '{print $2}')
-
-    if [ "x$pid" != "x" ]; then
-        echo "killing processes $pid"
-        kill -${1:-9} $pid
-    fi
-}
-
-#-------------------------------------------------------------
-# cd
-#-------------------------------------------------------------
 
 alias c='cd'
 alias ..='cd ..'
@@ -73,22 +36,6 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
-
-#-------------------------------------------------------------
-# ls
-#-------------------------------------------------------------
-
-# If exa is found use it, otherwise use ls
-if command -v exa &> /dev/null; then
-    alias ll="exa -bghla --color=automatic --group-directories-first"
-    alias ls="exa"
-    ls_command="exa"
-else
-    alias ll="ls -al --color=always"
-    # remove ls alias if it exists
-    alias ls="ls --color=always"
-    ls_command="ls --color=always"
-fi
 
 #-------------------------------------------------------------
 # chmod
@@ -126,6 +73,8 @@ nvim() {
     act
     command nvim $argv
 }
+alias vim="nvim"
+alias v="nvim"
 
 
 #-------------------------------------------------------------
