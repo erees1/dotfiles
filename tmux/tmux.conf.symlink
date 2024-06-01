@@ -31,12 +31,12 @@ bind [ copy-mode \; send-keys ^
 
 # Fix for copying on macos terminal, in iterm just use "applications in terminal may access the clipboard"
 # These are just the default commands with "reattach-to-user-namespace pbcopy" put after them
-bind-key    -T copy-mode-vi y                    send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
-bind-key    -T copy-mode-vi MouseDragEnd1Pane    send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
-bind-key    -T copy-mode-vi DoubleClick1Pane     select-pane \; send-keys -X select-word \; run-shell -d 0.3 \; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
-bind-key    -T copy-mode-vi TripleClick1Pane     select-pane \; send-keys -X select-line \; run-shell -d 0.3 \; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
-bind-key    -T root         TripleClick1Pane     select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-line ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" }
-bind-key    -T root         DoubleClick1Pane     select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-word ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" }
+bind-key    -T copy-mode-vi y                      send-keys -X copy-pipe-and-cancel
+# bind-key    -T copy-mode-vi MouseDragEnd1Pane    send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+# bind-key    -T copy-mode-vi DoubleClick1Pane     select-pane \; send-keys -X select-word \; run-shell -d 0.3 \; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+# bind-key    -T copy-mode-vi TripleClick1Pane     select-pane \; send-keys -X select-line \; run-shell -d 0.3 \; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+# bind-key    -T root         TripleClick1Pane     select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-line ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" }
+# bind-key    -T root         DoubleClick1Pane     select-pane -t = \; if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" { send-keys -M } { copy-mode -H ; send-keys -X select-word ; run-shell -d 0.3 ; send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" }
 
 # move windows left and right with ctrl+shift+left/right
 bind-key S-Left swap-window -t -1\; select-window -t -1
@@ -107,4 +107,75 @@ setw -g pane-base-index 1
 
 set-option -g status-position bottom
 
-source-file ${HOME}/code/dotfiles/tmux/theme.conf
+# This is a much abridged version of some of the stuff in https://github.com/dracula/tmux?tab=readme-ov-file
+
+# Dracula Color Pallette
+white='#f8f8f2'
+gray='#44475a'
+dark_gray='#282a36'
+light_purple='#bd93f9'
+dark_purple='#6272a4'
+cyan='#8be9fd'
+green='#50fa7b'
+orange='#ffb86c'
+red='#ff5555'
+pink='#ff79c6'
+yellow='#f1fa8c'
+
+# Handle left icon configuration
+left_icon="#S";;
+left_icon="$left_icon "
+
+# sets refresh interval to every 5 seconds
+# set-option -g status-interval $show_refresh
+
+# set the prefix + t time format
+set-option -g clock-mode-style 24
+
+# set length
+set-option -g status-left-length 100
+set-option -g status-right-length 100
+
+# pane border styling
+set-option -g pane-active-border-style "fg=${dark_purple}"
+set-option -g pane-border-style "fg=${gray}"
+
+# message styling
+set-option -g message-style "bg=${gray},fg=${white}"
+
+# status bar
+set-option -g status-style "bg=${gray},fg=${white}"
+
+# Status left
+set-option -g status-left "#[bg=${green},fg=${dark_gray}]#{?client_prefix,#[bg=${yellow}],} ${left_icon}"
+
+# Status right
+set-option -g status-right "#[fg=${white},bg=${dark_purple}] #h "
+
+
+setw -g window-status-format " #I #W "
+setw -g window-status-current-format " #I #W "
+setw -g window-status-style "fg=${white},bg=${gray}"
+setw -g window-status-current-style  "fg=${white},bg=${dark_purple}"
+set-window-option -g window-status-activity-style "bold"
+set-window-option -g window-status-bell-style "bold"
+
+
+# Also, change some visual styles when window keys are off
+bind -T root F12  \
+    set prefix None \;\
+    set window-status-current-style "fg=${red},bg=${gray}" \;\
+    set status-right "#[align=absolute-centre] #[fg=${dark_gray},bg=${red}]     [OFF]     #[fg=${dark_gray},bg=${red},align=right] #h " \;\
+    set key-table off \;\
+    if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
+    refresh-client -S \;\
+
+bind -T off F12 \
+    set -u prefix \;\
+    set -u key-table \;\
+    set -u status-style \;\
+    set -u status-right \;\
+    set -u status-left \;\
+    set -u window-status-current-style \;\
+    set -u window-status-format \;\
+    refresh-client -S \;\
