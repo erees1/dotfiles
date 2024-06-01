@@ -1,7 +1,0 @@
-#!/bin/bash
-
-msg=$2
-usr=$1
-
-
-ssh -t $usr.dev-vms.speechmatics.io "echo $msg | wall"
