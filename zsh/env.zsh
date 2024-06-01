@@ -21,9 +21,6 @@ export LS_COLORS='rs=0:di=01;34:ln=01;35:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 
 export LSCOLORS='Exfxcxdxbxegedabagacad'
 
-# FZF options - might also affect fzf-lua extenstion in vim
-export FZF_DEFAULT_OPTS=" --height ${FZF_TMUX_HEIGHT:-40%}"
-
 export BAT_THEME=gruvbox-dark
 
 export HISTSIZE=100000            # big big history
