@@ -6,6 +6,7 @@ alias gau="git add -u"
 alias gc="git commit -m"
 alias gcn="git commit --no-verify -m"
 alias gcane='git commit --amend --no-edit'
+alias gca='git commit --amend'
 alias gp="git push"
 alias gpf="git push -f"
 
