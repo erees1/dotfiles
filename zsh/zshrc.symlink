@@ -23,33 +23,13 @@ config_files=($DOT_DIR/**/*.zsh)
 # also defines stuff like $ZSH
 for file in ${(M)config_files:#*env.zsh}; do . $file; done
 
-# plugins that have been installed in zsh/install.sh
-. $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme
-
-# Syntax highlighting must be before history substring search
-if [ -s "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-    . "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-
-# source $ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh if it exists
-if [ -s "$ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh" ]; then
-    . "$ZSH_PLUGINS_DIR/zsh-history-substring-search/zsh-history-substring-search.zsh"
-fi
-
-add_to_fpath $ZSH_PLUGINS_DIR/zsh-completions/src
+# Oh My Zsh plugins
+plugins=(zsh-autosuggestions zsh-syntax-highlighting)
+ZSH_THEME="powerlevel10k/powerlevel10k"
+add_to_fpath $OH_MY_ZSH/completions/plugins/zsh-completions/src
 add_to_fpath $ZSH_DOT_DIR/completions
 
-autoload -U compinit; compinit
-
-# special bindings for fzf-tab
-if [ -s "$ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh" ]; then
-  . $ZSH_PLUGINS_DIR/fzf-tab/fzf-tab.plugin.zsh
-  zstyle ':fzf-tab:*' fzf-bindings 'tab:down'
-  zstyle ':completion:*:git-checkout:*' sort false
-  zstyle ':fzf-tab:*:git-checkout:*' continuous-trigger ''
-fi
-
-. $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+. $OH_MY_ZSH/oh-my-zsh.sh
 
 # set completion colors to be the same as `ls`, after theme has been loaded
 [[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -64,6 +44,3 @@ bindkey "^?" backward-delete-char
 
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

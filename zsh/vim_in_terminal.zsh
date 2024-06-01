@@ -45,19 +45,6 @@ bindkey -M vicmd 'd' vi-delete-yk
 # bindkey -M vicmd 'H' beginning-of-line
 # bindkey -M vicmd 'L' end-of-line
 
-# Use c-b to go to start of line c-a as tmux leader
-bindkey -r "^a"
-bindkey -s '^a' "tsesh\n"
-bindkey -r '^b'
-
-# Set Up and Down arrow keys to the (zsh-)history-substring-search plugin
-# `-n` means `not empty`, equivalent to `! -z`
-[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
-[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
 
 # use bat as the previewer for fzf if it is installed
 if command -v bat &> /dev/null; then
