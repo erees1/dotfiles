@@ -13,6 +13,7 @@ export DOT_DIR=$(realpath "$ZSH_DOT_DIR"/../)
 export MY_BIN_LOC="$HOME/.local/dotbin"
 export PRO_BASE="$HOME/git"
 export ZSH_PLUGINS_DIR="$HOME/.zsh/plugins"
+export OH_MY_ZSH=$HOME/.oh-my-zsh
 
 # These are an edited version of the default colors to better match the default mac colors
 # Red executables, cyan dirs and purple symlinks
@@ -21,7 +22,7 @@ export LS_COLORS='rs=0:di=01;34:ln=01;35:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 export LSCOLORS='Exfxcxdxbxegedabagacad'
 
 # FZF options - might also affect fzf-lua extenstion in vim
-export FZF_DEFAULT_OPTS=' --reverse'
+export FZF_DEFAULT_OPTS=" --height ${FZF_TMUX_HEIGHT:-40%}"
 
 export BAT_THEME=gruvbox-dark
 
