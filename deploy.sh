@@ -113,6 +113,10 @@ install_dotfiles() {
 
   local overwrite_all=false backup_all=false skip_all=false
 
+  # Don't symlink zshrc so that appliations can write to the "local" untracked copy
+  # if source $DOTFILES_ROOT/zsh/zshrc is not in .zshrc then add it
+  grep -q "source $DOTFILES_ROOT/zsh/zshrc" "$HOME/.zshrc" || echo "source $DOTFILES_ROOT/zsh/zshrc" >> "$HOME/.zshrc"
+
   for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*' | uniq) 
   do
     # Extract the first folder name from the $src path
