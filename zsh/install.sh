@@ -21,11 +21,11 @@ else
     git clone https://github.com/zsh-users/zsh-completions \
         ${PLUGINS_DIR}/zsh-completions 
 
-    git clone https://github.com/zsh-users/zsh-history-substring-search \
-        ${PLUGINS_DIR}/zsh-history-substring-search 
+    # git clone https://github.com/zsh-users/zsh-history-substring-search \
+    #     ${PLUGINS_DIR}/zsh-history-substring-search 
 
-    git clone https://github.com/Aloxaf/fzf-tab \
-        ${PLUGINS_DIR}/fzf-tab
+    # git clone https://github.com/Aloxaf/fzf-tab \
+    #     ${PLUGINS_DIR}/fzf-tab
 fi
 
 
