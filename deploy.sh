@@ -117,7 +117,7 @@ install_dotfiles() {
   # if source $DOTFILES_ROOT/zsh/zshrc is not in .zshrc then add it
   grep -q "source $DOTFILES_ROOT/zsh/zshrc" "$HOME/.zshrc" || echo "source $DOTFILES_ROOT/zsh/zshrc" >> "$HOME/.zshrc"
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*' | uniq) 
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*symlink' -not -path '*.git*' | uniq) 
   do
     # Extract the first folder name from the $src path
     folder=$(basename $(dirname $src))
@@ -131,24 +131,39 @@ install_dotfiles() {
       # Modify the dst path accordingly
       dst="$HOME/.config/$folder_name_without_config/$(basename "${src%.*}")"
 
-      # Only deploy nvim if NVIM_FULL is set
-      if [[ $folder_name_without_config == nvim && -z $NVIM ]]; then
-        info "Skipping $src"
-        info "Set NVIM=1 to deploy nvim config"
-        continue
-      fi
-
     else
       dst="$HOME/.$(basename "${src%.*}")"
     fi
-    
-    link_file "$src" "$dst"
+  link_file "$src" "$dst"
   done
 }
 
+symlink_init_lua() {
+
+  local overwrite_all=false backup_all=false skip_all=false
+  nvim_dir=$DOTFILES_ROOT/nvim.config
+  
+  # If NVIM not set print info message and skip
+  if [[ -z $NVIM ]]; then
+    info "NVIM not set, set NVIM=FULL or NVIM=MINIMAL to install nvim config"
+    continue
+  fi
+  
+  # Copy init.lua.symlink if NVIM=FULL
+  if [[ $NVIM == FULL ]]; then
+    rm -f $HOME/.config/nvim/init-minimal.lua 
+    link_file $nvim_dir/init.lua $HOME/.config/nvim/init.lua 
+  fi
+  # Copy init-minimmal.lua.symlink if NVIM=MINIMAL
+  if [[ $NVIM == MINIMAL ]]; then
+    rm -f $HOME/.config/nvim/init.lua
+    link_file $nvim_dir/init-minimal.lua $HOME/.config/nvim/init.lua
+fi
+}
 
 setup_gitconfig
 install_dotfiles
+symlink_init_lua
 
 echo ''
 echo '  All installed!'
