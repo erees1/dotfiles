@@ -8,7 +8,8 @@ alias dot="cd $DOT_DIR"
 alias cot="cd ~/git/cot"
 
 alias clear="echo 'get out of here with that clear nonsense'"
-alias l="SKIP=no-commit-to-branch pre-commit run -a --hook-stage commit"
+alias l="SKIP=no-commit-to-branch pre-commit run --hook-stage push"
+alias la="SKIP=no-commit-to-branch pre-commit run -a --hook-stage push"
 
 # file and directories
 alias rmd='rm -rf'
