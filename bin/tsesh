@@ -36,7 +36,6 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 if tmux list-sessions > /dev/null 2>&1; then
     is_running="true"
 else
-    echo "Tmux not running, will start new session"
     is_running="false"
 fi
 
@@ -50,7 +49,7 @@ fi
 
 find_directories(){
     # Responsible for chosing which directories to display
-    possible_options+=" $HOME/git"
+    # possible_options+=" $HOME/git"
     possible_options+=" $HOME/code"
     find $possible_options -mindepth 1 -maxdepth 1 \( -type d -o -type l \) -not -path '*/.*'
 }
