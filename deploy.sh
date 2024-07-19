@@ -146,7 +146,6 @@ symlink_init_lua() {
   # If NVIM not set print info message and skip
   if [[ -z $NVIM ]]; then
     info "NVIM not set, set NVIM=FULL or NVIM=MINIMAL to install nvim config"
-    continue
   fi
   
   # Copy init.lua.symlink if NVIM=FULL
