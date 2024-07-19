@@ -33,6 +33,7 @@ add_to_fpath $ZSH_DOT_DIR/completions
 
 # set completion colors to be the same as `ls`, after theme has been loaded
 [[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+export LSCOLORS=$MYLSCOLORS  # do after oh-my-zsh to override their setting
 
 # Activate vim mode. 
 bindkey -v
