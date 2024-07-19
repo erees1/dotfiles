@@ -2,7 +2,7 @@
 
 font_family      MesloLGS NF
 font_size 14.0
-scrollback_lines 5000
+scrollback_lines 100
 
 window_margin_width 5
 adjust_line_height 5
