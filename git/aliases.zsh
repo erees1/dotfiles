@@ -26,10 +26,12 @@ alias gmm='(git show-ref --verify --quiet refs/heads/main && git merge main) || 
 alias gmom='(git show-ref --verify --quiet refs/heads/main && git pull --rebase=false origin main) || (git show-ref --verify --quiet refs/heads/master && git pull --rebase=false origin master)'
 
 alias gd="git diff"
+alias gdc="git diff --cached"
 alias gdt="git difftool"
 alias gs="git status"
 
 alias gco="git checkout"
+alias sw="git switch"
 alias gcb="git checkout -b"
 alias gcm='(git show-ref --verify --quiet refs/heads/main && git checkout main) || (git show-ref --verify --quiet refs/heads/master && git checkout master)'
 
