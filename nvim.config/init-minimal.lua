@@ -5,6 +5,7 @@ vim.g.mapleader = " "
 
 -- No Plugins configuration
 require("settings")
+vim.cmd("colorscheme gruvbox")
 
 
 -- Keybindings need to be compatible with vscode
