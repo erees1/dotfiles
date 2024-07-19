@@ -1,6 +1,7 @@
 function add_to_path() {
   p=$1
-  if [[ "$PATH" != *"$p"* ]]; then
+  # Add to path if not already there and directory exists
+  if [[ "$PATH" != *"$p"* && -d "$p" ]]; then
     export PATH="$p:$PATH"
   fi
 }
