@@ -12,6 +12,10 @@ defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 # Always open everything in Finder's column view.
 defaults write com.apple.Finder FXPreferredViewStyle clmv
 
+# Make the menu items closer together
+defaults -currentHost write -globalDomain NSStatusItemSpacing -int 12
+defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 8
+
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
