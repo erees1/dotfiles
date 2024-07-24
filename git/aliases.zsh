@@ -34,6 +34,7 @@ alias gco="git checkout"
 alias sw="git switch"
 alias gcb="git checkout -b"
 alias gcm='(git show-ref --verify --quiet refs/heads/main && git checkout main) || (git show-ref --verify --quiet refs/heads/master && git checkout master)'
+alias swm='gcm'
 
 alias grhead="git reset HEAD"
 alias grewind="git reset HEAD^1"
@@ -48,6 +49,8 @@ alias gsts="git stash show -p"
 
 alias ggsup='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD)'
 alias gpsup='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
+
+alias garxv='git branch -m "arxv/$(git rev-parse --abbrev-ref HEAD)"&& git switch master'
 
 
 wt() {
