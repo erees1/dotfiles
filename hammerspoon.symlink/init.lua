@@ -169,15 +169,6 @@ local keybindings = {
     },
     {
         mod = modifiers,
-        key = "y",
-        fn = function()
-            print("y")
-            launchOrFocus("Obsidian")
-            keyStroke({ "cmd" }, "Y")
-        end,
-    },
-    {
-        mod = modifiers,
         key = "d",
         fn = function()
             launchOrFocus("Dash")
