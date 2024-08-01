@@ -4,16 +4,8 @@ DOT_DIR=$SRC_DIR/..
 
 . $DOT_DIR/utils/funcs.sh
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(fzf --zsh)"
-
-# Stash your environment variables in ~/.localrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but
-# you'll have access to them in your scripts.
-if [[ -a ~/.localrc ]]
-then
-  . ~/.localrc
-fi
 
 ## all of our zsh files that we want to source
 typeset -U config_files
@@ -35,13 +27,23 @@ add_to_fpath $ZSH_DOT_DIR/completions
 [[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 export LSCOLORS=$MYLSCOLORS  # do after oh-my-zsh to override their setting
 
-# Activate vim mode. 
+# Activate vim mode.
 bindkey -v
 # You need these here otherwise if you go into normal mode and then back to insert
 # mode the delete key doesn't work, on testing it seems I only need ^? in mac terminal but I kept both
-# of suggested here: https://vi.stackexchange.com/questions/31671/set-o-vi-in-zsh-backspace-doesnt-delete-non-inserted-characters 
+# of suggested here: https://vi.stackexchange.com/questions/31671/set-o-vi-in-zsh-backspace-doesnt-delete-non-inserted-characters
 bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
 
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
+
+# Stash your environment variables in ~/.localrc or zshrc.secret. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]; then
+  . ~/.localrc
+fi
+if [[ -a $SRC_DIR/zshrc.secret ]]; then
+    . $SRC_DIR/zshrc.secret
+fi

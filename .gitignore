@@ -4,3 +4,4 @@
 git/gitconfig.local
 Session.vim
 xlstart/~$PERSONAL.XLSB
+*.secret
