@@ -1,1 +1,0 @@
-bindkey -s ^f "tsesh --popup\n"
