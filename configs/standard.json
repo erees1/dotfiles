@@ -1,0 +1,14 @@
+{
+  "osx/karabiner.json": "~/.config/karabiner/karabiner.json",
+  "terminal/alacritty.toml": "~/.config/alacritty/alacritty.toml",
+  "terminal/kitty.conf": "~/.config/kitty/kitty.conf",
+  "hammerspoon": "~/.hammerspoon",
+  "git/gitconfig": "~/.gitconfig",
+  "git/gitconfig.local": "~/.gitconfig.local",
+  "nvim/after": "~/.config/nvim/after",
+  "nvim/colors": "~/.config/nvim/colors",
+  "nvim/lua": "~/.config/nvim/lua",
+  "nvim/init.lua": "~/.config/nvim/init.lua",
+  "ocaml/utoprc": "~/.utoprc",
+  "python/pdbrc.py": "~/.pdbrc.py"
+}
