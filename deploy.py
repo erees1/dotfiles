@@ -4,6 +4,7 @@ Script that reads a json file of source: destination paths and symlinks them.
 If the json file is like:
 """
 import argparse
+import contextlib
 import json
 import sys
 from pathlib import Path
@@ -43,8 +44,9 @@ def create_symlinks(json_file):
                     print(f"Skipping: {destination}")
                     continue
                 elif choice.lower() == 'o':
-                    backup = destination.with_suffix(".bak")
-                    backup.write_text(destination.read_text())
+                    with contextlib.suppress(FileNotFoundError):
+                        backup = destination.with_suffix(".bak")
+                        backup.write_text(destination.read_text())
                     destination.unlink()
                 else:
                     print(f"Invalid choice")
