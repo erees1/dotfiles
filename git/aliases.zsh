@@ -79,3 +79,12 @@ function whip() {
         git commit --no-verify -m 'wip'
     fi
 }
+
+recent() {
+    local count=${1:-15}
+    git for-each-ref --color=always  --sort=-committerdate refs/heads/ --count=$count \
+    --format='%(committerdate:short)|%(HEAD)|%(color:yellow)%(refname:short)%(color:reset)|(%(committerdate:relative))|-- %(contents:lines=1)' \
+    | sed 's/\*/->/' | column -t -c 5 -s '|' 
+
+}
+alias gr='recent'
