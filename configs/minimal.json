@@ -6,5 +6,6 @@
   "nvim/after": "~/.config/nvim/after",
   "nvim/colors": "~/.config/nvim/colors",
   "nvim/lua": "~/.config/nvim/lua",
-  "nvim/init-minimal.lua": "~/.config/nvim/init.lua"
+  "nvim/init-minimal.lua": "~/.config/nvim/init.lua",
+  "tmux/tmux.conf": "~/.tmux.conf"
 }
