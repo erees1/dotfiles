@@ -80,11 +80,19 @@ function whip() {
     fi
 }
 
-recent() {
-    local count=${1:-15}
+git-recent() {
+    # Show 10 most recent branches used in the last 10 days
+    local count=${1:-10}
     git for-each-ref --color=always  --sort=-committerdate refs/heads/ --count=$count \
     --format='%(committerdate:short)|%(HEAD)|%(color:yellow)%(refname:short)%(color:reset)|(%(committerdate:relative))|-- %(contents:lines=1)' \
-    | sed 's/\*/->/' | column -t -c 5 -s '|' 
-
+    | sed 's/\*/->/' | column -t -c 5 -s '|' | grep -E -v '(?:1[1-9]|[2-9]\d|\d{3,})\s*days'
 }
-alias gr='recent'
+git-switch-fzf() {
+    selected=$(git-recent | fzf --ansi | sed 's/->/ /' | awk '{print $2}')
+    if [ -n "$selected" ]; then
+        echo "Switching to branch $selected"
+        git switch $selected
+    fi
+}
+alias gr='git-recent'
+alias swf='git-switch-fzf'
