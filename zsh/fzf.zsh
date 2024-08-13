@@ -1,7 +1,7 @@
 bindkey -r "^R"  # Remove ctrl-r binding
 
 # FZF options - might also affect fzf-lua extenstion in vim
-export FZF_DEFAULT_OPTS=" --height ${FZF_TMUX_HEIGHT:-40%}"
+export FZF_DEFAULT_OPTS=" --height ${FZF_TMUX_HEIGHT:-40%} --reverse"
 
 # CTRL-R - Paste the selected command from history into the command line
 fzf-history-widget() {
