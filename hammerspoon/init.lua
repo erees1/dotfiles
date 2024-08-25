@@ -7,10 +7,10 @@ local keyStroke = hs.eventtap.keyStroke
 
 local function makeLayout(x, y, w, h)
     -- add slight gap to the left and right
-    w = w - 0.002
-    x = x + 0.001
-    h = h - 0.002
-    y = y + 0.001
+    -- w = w - 0.002
+    -- x = x + 0.001
+    -- h = h - 0.002
+    -- y = y + 0.001
 
     return hs.geometry.rect(x, y, w, h)
 end
@@ -121,43 +121,15 @@ local readingOverrides = {
 }
 local reading = hs.fnutils.concat(hs.fnutils.copy(defaultLayout), readingOverrides)
 
--- Execute last  command in iterm
-local function executeLastCommand()
-    -- Save the current focused window
-    local currentWindow = hs.window.focusedWindow()
-
-    -- Focus iTerm
-    hs.application.launchOrFocus("kitty")
-
-    -- Give iTerm some time to focus before sending the keys
-    hs.timer.doAfter(0.01, function()
-        -- Send up arrow to get the last command
-        hs.eventtap.keyStroke({}, "up")
-
-        -- Send return to run the last command
-        hs.eventtap.keyStroke({}, "return")
-
-        -- Give iTerm some time to execute the command before switching back
-        hs.timer.doAfter(0.01, function()
-            -- Focus back to the previous window
-            if currentWindow then currentWindow:focus() end
-        end)
-    end)
-end
-
-local function reloadConfig() hs.reload() end
-
 -- Keybindings
 local keybindings = {
     -- Apps
     { mod = modifiers, key = "i", fn = function() launchOrFocus("kitty") end },
-    { mod = modifiers, key = "e", fn = function() launchOrFocus("Google Chrome") end },
-    { mod = modifiers, key = "a", fn = function() launchOrFocus("Visual Studio Code") end },
+    { mod = modifiers, key = "a", fn = function() launchOrFocus("Zed Nightly") end },
+    { mod = modifiers, key = "v", fn = function() launchOrFocus("Visual Studio Code") end },
     { mod = modifiers, key = "m", fn = function() launchOrFocus("Spark Desktop") end },
     { mod = modifiers, key = "s", fn = function() launchOrFocus("Slack") end },
     { mod = modifiers, key = "z", fn = function() launchOrFocus("Zotero") end },
-    { mod = modifiers, key = "o", fn = function() launchOrFocus("Obsidian") end },
-    { mod = modifiers, key = "t", fn = function() launchOrFocus("Timing") end },
     { mod = modifiers, key = "b", fn = function() launchOrFocus("Finder") end },
     {
         mod = modifiers,
@@ -181,8 +153,8 @@ local keybindings = {
     { mod = modifier2, key = "h", fn = function() moveCurWindow(layoutLeft65) end },
     { mod = modifiers, key = "l", fn = function() moveCurWindow(layoutRight) end },
     { mod = modifier2, key = "l", fn = function() moveCurWindow(layoutRight35) end },
-    { mod = modifiers, key = "j", fn = function() moveCurWindow(layoutTop) end },
-    { mod = modifiers, key = "k", fn = function() moveCurWindow(layoutBottom) end },
+    { mod = modifiers, key = "k", fn = function() moveCurWindow(layoutTop) end },
+    { mod = modifiers, key = "j", fn = function() moveCurWindow(layoutBottom) end },
     { mod = modifiers, key = "1", fn = function() moveCurWindow(layoutTopLeft) end },
     { mod = modifiers, key = "2", fn = function() moveCurWindow(layoutTopRight) end },
     { mod = modifiers, key = "3", fn = function() moveCurWindow(layoutBottomLeft) end },
@@ -195,7 +167,7 @@ local keybindings = {
     { mod = modifiers, key = "7", fn = function() hs.layout.apply(reading) end },
     -- terminal
     -- misc
-    { mod = modifiers, key = "0", fn = reloadConfig },
+    { mod = modifiers, key = "0", fn = hs.reload } ,
 }
 
 -- Bind the hotkeys
