@@ -90,9 +90,26 @@ git-recent() {
 git-switch-fzf() {
     selected=$(git-recent | fzf --ansi | sed 's/->/ /' | awk '{print $2}')
     if [ -n "$selected" ]; then
-        echo "Switching to branch $selected"
         git switch $selected
     fi
 }
 alias gr='git-recent'
 alias swf='git-switch-fzf'
+
+# Custom function for git checkout autocomplete
+_git_checkout_local_branches() {
+    local -a local_branches
+    local_branches=(${(f)"$(git branch --format='%(refname:short)')"})
+    _describe 'local branches' local_branches
+}
+
+# Override the default git-checkout completion
+zstyle ':completion:*:*:git:*' user-commands checkout:'locally modified checkout command'
+_git-checkout() {
+    _git_checkout_local_branches
+}
+# Override the default git-switch completion
+zstyle ':completion:*:*:git:*' user-commands switch:'locally modified switch command'
+_git-switch() {
+    _git_checkout_local_branches
+}
