@@ -38,6 +38,13 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
+# alias to mv stuff on s3 use s5cmd cp then rm
+s5mv() {
+    if s5cmd cp "$1/*" "$2"; then
+        s5cmd rm "$1/*"
+    fi
+}
+
 
 #-------------------------------------------------------------
 # chmod
