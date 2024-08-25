@@ -3,6 +3,7 @@
   "terminal/kitty.conf": "~/.config/kitty/kitty.conf",
   "git/gitconfig": "~/.gitconfig",
   "git/gitconfig.local": "~/.gitconfig.local",
+  "hammerspoon": "~/.hammerspoon",
   "nvim/after": "~/.config/nvim/after",
   "nvim/colors": "~/.config/nvim/colors",
   "nvim/lua": "~/.config/nvim/lua",
