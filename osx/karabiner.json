@@ -42,6 +42,34 @@
             ]
           },
           {
+            "description": "Change ctrl-space to tab in Zed",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "dev.zed.Zed",
+                      "dev.zed.Zed-Preview"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "spacebar",
+                  "modifiers": {
+                    "mandatory": ["left_control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "tab"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
             "description": "Change command+ctrl b,e to start end of line",
             "manipulators": [
               {
@@ -240,8 +268,7 @@
                     "bundle_identifiers": [
                       "^org\\.vim\\.",
                       "^com.googlecode.iterm2",
-                      "com.microsoft.VSCode",
-                      "dev.zed.Zed-Preview"
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
