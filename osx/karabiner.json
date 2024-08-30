@@ -193,6 +193,7 @@
                     "bundle_identifiers": [
                       "^org\\.vim\\.",
                       "^com.googlecode.iterm2",
+                      "net.kovidgoyal.kitty",
                       "com.microsoft.VSCode",
                       "com.apple.Terminal",
                       "dev.zed.Zed-Preview"
