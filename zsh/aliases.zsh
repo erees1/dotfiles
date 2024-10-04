@@ -10,6 +10,7 @@ alias cot="cd ~/git/cot"
 alias clear="echo 'get out of here with that clear nonsense'"
 alias lc="SKIP=no-commit-to-branch pre-commit run --hook-stage commit"
 alias lp="SKIP=no-commit-to-branch pre-commit run --hook-stage push"
+alias lr="pre-commit run ruff --all-files"
 alias lpa="SKIP=no-commit-to-branch pre-commit run -a --hook-stage push"
 
 # file and directories
