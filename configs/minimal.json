@@ -1,6 +1,7 @@
 {
   "osx/karabiner.json": "~/.config/karabiner/karabiner.json",
   "terminal/kitty.conf": "~/.config/kitty/kitty.conf",
+  "terminal/file_opener_hint.py": "~/.config/kitty/file_opener_hint.py",
   "git/gitconfig": "~/.gitconfig",
   "git/gitconfig.local": "~/.gitconfig.local",
   "hammerspoon": "~/.hammerspoon",
