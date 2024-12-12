@@ -35,6 +35,10 @@ bindkey -v
 bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
 
+# Add keybindings for ctrl-b and ctrl-e to go to beginning/end of line in insert mode
+bindkey -M viins '^U' beginning-of-line
+bindkey -M viins '^E' end-of-line
+
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
 
