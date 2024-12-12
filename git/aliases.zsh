@@ -10,10 +10,11 @@ alias gca='git commit --amend'
 alias gp="git push"
 alias gpf="git push -f"
 
-alias glog='git log --oneline --all --graph --decorate'
+alias glog='git log --oneline --first-parent'
 
 alias gf="git fetch"
 alias gl="git pull"
+alias glh='git pull origin $(git rev-parse --abbrev-ref HEAD)'
 
 alias grb="git rebase"
 alias grbm="git rebase master"
@@ -24,6 +25,7 @@ alias grba="git rebase --abort"
 alias gm="git merge"
 alias gmm='(git show-ref --verify --quiet refs/heads/main && git merge main) || (git show-ref --verify --quiet refs/heads/master && git merge main)'
 alias gmom='(git show-ref --verify --quiet refs/heads/main && git pull --rebase=false origin main) || (git show-ref --verify --quiet refs/heads/master && git pull --rebase=false origin master)'
+alias grom='(git show-ref --verify --quiet refs/heads/main && git pull --rebase=true origin main) || (git show-ref --verify --quiet refs/heads/master && git pull --rebase=true origin master)'
 
 alias gd="git diff"
 alias gdc="git diff --cached"
