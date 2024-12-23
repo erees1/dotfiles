@@ -41,7 +41,7 @@ bindkey '^[[A' history-backsearch
 
 # Use c-b to go to start of line c-a as tmux leader
 bindkey -r "^a"
-bindkey -s '^a' "tsesh\n"
+# bindkey -s '^a' "tsesh\n"
 bindkey -r '^b'
 
 # Set Up and Down arrow keys to the (zsh-)history-substring-search plugin
