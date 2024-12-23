@@ -7,10 +7,10 @@ local keyStroke = hs.eventtap.keyStroke
 
 local function makeLayout(x, y, w, h)
     -- add slight gap to the left and right
-    -- w = w - 0.002
-    -- x = x + 0.001
-    -- h = h - 0.002
-    -- y = y + 0.001
+    w = w - 0.002
+    x = x + 0.001
+    h = h - 0.002
+    y = y + 0.001
 
     return hs.geometry.rect(x, y, w, h)
 end
@@ -21,6 +21,7 @@ local layoutRight35 = makeLayout(0.65, 0, 0.35, 1)
 local layoutRight = makeLayout(0.5, 0, 0.5, 1)
 local layoutTop = makeLayout(0, 0, 1, 0.5)
 local layoutBottom = makeLayout(0, 0.5, 1, 0.5)
+local layoutBottom75 = makeLayout(0, 0.25, 1, 0.75)
 local layoutMax = makeLayout(0, 0, 1, 1)
 local layoutMid = makeLayout(0.16, 0.1, 0.68, 0.8)
 local layoutPlus = makeLayout(0.05, 0.025, 0.90, 0.95)
@@ -28,7 +29,6 @@ local layoutTopLeft = makeLayout(0, 0, 0.5, 0.5)
 local layoutTopRight = makeLayout(0.5, 0, 0.5, 0.5)
 local layoutBottomLeft = makeLayout(0, 0.5, 0.5, 0.5)
 local layoutBottomRight = makeLayout(0.5, 0.5, 0.5, 0.5)
-
 local stashed_windows = {}
 
 local function moveWindow(direction, win)
@@ -91,12 +91,27 @@ local function plusCurWindow()
     win:move(layoutPlus)
 end
 
-
 -- Layouts
+
+-- local function applyLayoutSafely(layout)
+--     -- Launch all apps first
+--     for _, entry in ipairs(layout) do
+--         local appName = entry[1]
+--         launchOrFocus(appName)
+--     end
+
+--     -- Wait briefly for apps to launch
+--     hs.timer.doAfter(0.5, function()
+--         hs.layout.apply(layout)
+--     end)
+-- end
+
 local defaultLayout = {
-    { "Google Chrome", nil, nil, layoutLeft65 },
     { "Code", nil, nil, layoutLeft65 },
+    { "Zed Nightly", nil, nil, layoutLeft65 },
     { "kitty", nil, nil, layoutRight35 },
+    { "Sublime Merge", nil, nil, layoutPlus },
+    { "Google Chrome", nil, hs.screen:primaryScreen():next(), layoutMax },
     { "Spark Desktop", nil, hs.screen:primaryScreen():next(), layoutMax },
     { "Spotify", nil, hs.screen:primaryScreen():next(), layoutMax },
     { "Slack", nil, hs.screen:primaryScreen():next(), layoutMax },
@@ -105,6 +120,12 @@ local defaultLayout = {
     { "Obsidian", nil, hs.screen:primaryScreen():next(), layoutMax },
     { "Anki", nil, hs.screen:primaryScreen():next(), layoutMax },
     { "Zotero", nil, hs.screen:primaryScreen():next(), layoutMax },
+}
+
+
+local splitWork = {
+    { "Zed Nightly", nil, nil, makeLayout(0, 0, 0.60, 1) },
+    { "kitty", nil, nil, makeLayout(0.60, 0, 0.40, 1) },
 }
 
 -- Same as defaultLayout but with bigger terminal with nothing behind it
@@ -155,6 +176,7 @@ local keybindings = {
     { mod = modifier2, key = "l", fn = function() moveCurWindow(layoutRight35) end },
     { mod = modifiers, key = "k", fn = function() moveCurWindow(layoutTop) end },
     { mod = modifiers, key = "j", fn = function() moveCurWindow(layoutBottom) end },
+    { mod = modifier2, key = "j", fn = function() moveCurWindow(layoutBottom75) end },
     { mod = modifiers, key = "1", fn = function() moveCurWindow(layoutTopLeft) end },
     { mod = modifiers, key = "2", fn = function() moveCurWindow(layoutTopRight) end },
     { mod = modifiers, key = "3", fn = function() moveCurWindow(layoutBottomLeft) end },
@@ -162,7 +184,7 @@ local keybindings = {
     { mod = modifiers, key = "return", fn = maxCurWindow },
     { mod = modifiers, key = "-", fn = midCurWindow },
     { mod = modifiers, key = "=", fn = plusCurWindow },
-    { mod = modifiers, key = "r", fn = function() hs.layout.apply(defaultLayout) end },
+    { mod = modifiers, key = "r", fn = function() launchOrFocus("Zed Nightly") launchOrFocus("kitty") hs.layout.apply(splitWork) end },
     { mod = modifiers, key = "6", fn = function() hs.layout.apply(bigTerm) end },
     { mod = modifiers, key = "7", fn = function() hs.layout.apply(reading) end },
     -- terminal
