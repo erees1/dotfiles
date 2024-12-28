@@ -2,8 +2,6 @@
 SRC_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
 DOT_DIR=$SRC_DIR/..
 
-. $DOT_DIR/utils/funcs.sh
-
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(fzf --zsh)"
 
@@ -18,6 +16,12 @@ for file in ${(M)config_files:#*env.zsh}; do . $file; done
 # Oh My Zsh plugins
 plugins=(zsh-autosuggestions zsh-syntax-highlighting)
 ZSH_THEME="powerlevel10k/powerlevel10k"
+function add_to_fpath() {
+  p=$1
+  if [[ "$fpath" != *"$p"* ]]; then
+    fpath=($1 $fpath)
+  fi
+}
 add_to_fpath $OH_MY_ZSH/completions/plugins/zsh-completions/src
 add_to_fpath $ZSH_DOT_DIR/completions
 

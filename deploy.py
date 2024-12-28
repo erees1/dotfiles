@@ -59,19 +59,30 @@ def create_symlinks(json_file):
             print(f"Error creating symlink {source} -> {destination}: {str(e)}")
 
 
-def setup_zshrc():
+def setup_zshrc(include_homebrew: bool = False):
     zshrc_path = Path.home() / ".zshrc"
     dotfiles_root = Path(__file__).parent
-    source_line = f"source {dotfiles_root}/zsh/zshrc"
 
+    if include_homebrew:
+        source_line = f"source {dotfiles_root}/zsh/brew"
+        if Path(zshrc_path).exists():
+            content = zshrc_path.read_text()
+            if source_line not in content:
+                with zshrc_path.open('w') as f:
+                    f.write(f"{source_line}\n{content}")
+        else:
+            with zshrc_path.open('w') as f:
+                f.write(f"{source_line}\n")
+
+    source_line = f"source {dotfiles_root}/zsh/zshrc"
     if source_line not in zshrc_path.read_text():
         with zshrc_path.open('a') as f:
-            f.write(f"\n{source_line}\n")
-
+            f.write(f"{source_line}\n")
 
 def main():
     parser = argparse.ArgumentParser(description="Create symlinks based on a JSON file")
     parser.add_argument("json_file", help="Path to the JSON file containing source:destination mappings")
+    parser.add_argument("--homebrew", action="store_true", help="Include homebrew setup in zshrc")
     args = parser.parse_args()
 
     json_file = Path(args.json_file)
@@ -79,7 +90,7 @@ def main():
         print(f"Error: File {json_file} not found")
         sys.exit(1)
 
-    setup_zshrc()
+    setup_zshrc(include_homebrew=args.homebrew)
     create_symlinks(json_file)
 
 if __name__ == '__main__':
