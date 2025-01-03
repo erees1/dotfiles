@@ -10,7 +10,7 @@ alias gca='git commit --amend'
 alias gp="git push"
 alias gpf="git push -f"
 
-alias glog='git log --oneline --first-parent'
+alias glog="git log --first-parent --color --format=format:'%C(yellow)%h %C(blue)%ad%C(auto)%d %C(reset)%s' --date=format:'%d-%m-%Y %H:%M:%S'"
 
 alias gf="git fetch"
 alias gl="git pull"
