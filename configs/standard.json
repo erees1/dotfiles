@@ -1,5 +1,5 @@
 {
-  "osx/karabiner.json": "~/.config/karabiner/karabiner.json",
+  "osx/karabiner.uk.json": "~/.config/karabiner/karabiner.json",
   "terminal/alacritty.toml": "~/.config/alacritty/alacritty.toml",
   "terminal/kitty.conf": "~/.config/kitty/kitty.conf",
   "hammerspoon": "~/.hammerspoon",
