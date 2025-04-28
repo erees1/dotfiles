@@ -32,17 +32,11 @@ alias gdc="git diff --cached"
 alias gdt="git difftool"
 alias gs="git status"
 
-alias gco="git checkout"
-alias sw="git switch"
-alias gcb="git checkout -b"
-alias gcm='(git show-ref --verify --quiet refs/heads/main && git checkout main) || (git show-ref --verify --quiet refs/heads/master && git checkout master)'
-alias swm='gcm'
 
 alias grhead="git reset HEAD"
 alias grewind="git reset HEAD^1"
 alias grhard="git fetch origin && git reset --hard"
 
-alias gst="git stash"
 alias gstp="git stash pop"
 alias gsta="git stash apply"
 alias gstd="git stash drop"
@@ -92,11 +86,95 @@ git-recent() {
 git-switch-fzf() {
     selected=$(git-recent | fzf --ansi | sed 's/->/ /' | awk '{print $2}')
     if [ -n "$selected" ]; then
-        git switch $selected
+        sws $selected
     fi
 }
 alias gr='git-recent'
 alias swf='git-switch-fzf'
+
+
+# Function to automatically stash and apply changes when switching branches
+sw() {
+    # Ensure we have a branch name
+    if [[ $# -lt 1 ]]; then
+        echo "Usage: sws <branch>"
+        return 1
+    fi
+    
+    local current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    local target_branch=$1
+    
+    # Check if we're in a git repository
+    if [[ $? -ne 0 ]]; then
+        echo "Not in a git repository"
+        return 1
+    fi
+    
+    # Skip if switching to the same branch
+    if [[ $current_branch == $target_branch ]]; then
+        git checkout "$target_branch"
+        return
+    fi
+    
+    # Check if we have changes to stash
+    if ! git diff --quiet || ! git diff --cached --quiet; then
+        echo "Auto-stashing changes for branch: $current_branch"
+        git stash push -m "autostash-$current_branch" >/dev/null
+    fi
+    
+    # Switch to the target branch
+    git checkout "$target_branch"
+    
+    # If checkout was successful, check for existing autostash
+    if [[ $? -eq 0 ]]; then
+        # Look for existing autostash for the target branch
+        # Handle special case when target_branch is '-' (switch to previous branch)
+        if [[ $target_branch == "-" ]]; then
+            target_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+            if [[ $? -ne 0 ]]; then
+                echo "Failed to determine current branch after switching with '-'"
+                return 1
+            fi
+        fi
+        
+        local stash_index=$(git stash list | grep "autostash-$target_branch" | head -n 1 | cut -d: -f1)
+        
+        if [[ -n $stash_index ]]; then
+            echo "Auto-applying stash for branch: $target_branch"
+            git stash apply "$stash_index" >/dev/null 2>&1
+            
+            # If apply was successful, drop the stash
+            if [[ $? -eq 0 ]]; then
+                git stash drop "$stash_index" >/dev/null
+            else
+                echo "Warning: Could not apply stash automatically. Stash preserved."
+            fi
+        fi
+    fi
+}
+
+alias gcm='(git show-ref --verify --quiet refs/heads/main && sw main) || (git show-ref --verify --quiet refs/heads/master && sw master)'
+alias swm='gcm'
+
+# Helper function to clean up orphaned autostashes
+gs-cleanup() {
+    local branches=$(git for-each-ref --format='%(refname:short)' refs/heads/)
+
+    git stash list | grep "autostash-" | while read -r stash; do
+        local stash_branch=$(echo "$stash" | sed -n 's/.*autostash-\(.*\)$/\1/p')
+
+        if ! echo "$branches" | grep -q "^$stash_branch$"; then
+            local stash_index=$(echo "$stash" | cut -d: -f1)
+            echo "Removing orphaned autostash for deleted branch: $stash_branch"
+            git stash drop "$stash_index"
+        fi
+    done
+}
+
+# List all autostashes
+gs-list() {
+    git stash list | grep "autostash-"
+}
 
 # Custom function for git checkout autocomplete
 _git_checkout_local_branches() {
@@ -115,3 +193,5 @@ zstyle ':completion:*:*:git:*' user-commands switch:'locally modified switch com
 _git-switch() {
     _git_checkout_local_branches
 }
+# Override the sws function completion
+compdef _git_checkout_local_branches sw
