@@ -4,14 +4,17 @@ local modifiers = { "ctrl", "cmd" } -- most shortcuts use this
 local modifier2 = { "ctrl", "cmd", "shift" } -- for some extra window movement
 local launchOrFocus = hs.application.launchOrFocus
 local keyStroke = hs.eventtap.keyStroke
+local is_65_35_split = true
+local add_gap_between_windows = true
 
 local function makeLayout(x, y, w, h)
-    -- add slight gap to the left and right
-    w = w - 0.002
-    x = x + 0.001
-    h = h - 0.002
-    y = y + 0.001
-
+    if add_gap_between_windows then
+        -- add slight gap in between windows
+        w = w - 0.001
+        if x ~= 0 then
+            x = x + 0.001
+        end
+    end
     return hs.geometry.rect(x, y, w, h)
 end
 
@@ -44,14 +47,14 @@ local function moveWindow(direction, win)
     end
 
     -- if we didn't move then we are already on the left or right so need to move to the next screen
-    if direction == layoutRight then
+    if direction == layoutRight or direction == layoutRight35 then
         local nextScreen = win:screen():next()
         win:moveToScreen(nextScreen)
-        win:move(layoutLeft)
-    elseif direction == layoutLeft then
+        win:move(is_65_35_split and layoutLeft65 or layoutLeft)
+    elseif direction == layoutLeft or direction == layoutLeft65 then
         local nextScreen = win:screen():previous()
         win:moveToScreen(nextScreen)
-        win:move(layoutRight)
+        win:move(is_65_35_split and layoutRight35 or layoutRight)
     end
 end
 
@@ -86,61 +89,58 @@ local function midCurWindow()
     local win = hs.window.focusedWindow()
     win:move(layoutMid)
 end
+
 local function plusCurWindow()
     local win = hs.window.focusedWindow()
     win:move(layoutPlus)
 end
 
--- Layouts
+local function isWindowLeftOfMidpoint(win, screen)
+    local frame = win:frame()
+    local screenFrame = screen:frame()
+    local midPoint = screenFrame.x + (screenFrame.w / 2)
+    local windowMidPoint = frame.x + (frame.w / 2)
+    return windowMidPoint < midPoint
+end
 
--- local function applyLayoutSafely(layout)
---     -- Launch all apps first
---     for _, entry in ipairs(layout) do
---         local appName = entry[1]
---         launchOrFocus(appName)
---     end
+local function tileWindows6535()
+    local curScreen = hs.window.focusedWindow():screen()
+    local allWindows = hs.window.visibleWindows()
 
---     -- Wait briefly for apps to launch
---     hs.timer.doAfter(0.5, function()
---         hs.layout.apply(layout)
---     end)
--- end
+    for _, win in ipairs(allWindows) do
+        if win:screen() == curScreen then
+            if isWindowLeftOfMidpoint(win, curScreen) then
+                win:move(layoutLeft65)
+            else
+                win:move(layoutRight35)
+            end
+        end
+    end
+end
 
-local defaultLayout = {
-    { "Code", nil, nil, layoutLeft65 },
-    { "Zed Nightly", nil, nil, layoutLeft65 },
-    { "kitty", nil, nil, layoutRight35 },
-    { "Sublime Merge", nil, nil, layoutPlus },
-    { "Google Chrome", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Spark Desktop", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Spotify", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Slack", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Dash", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Timing", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Obsidian", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Anki", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Zotero", nil, hs.screen:primaryScreen():next(), layoutMax },
-}
+local function tileWindows5050()
+    local curScreen = hs.window.focusedWindow():screen()
+    local allWindows = hs.window.visibleWindows()
 
+    for _, win in ipairs(allWindows) do
+        if win:screen() == curScreen then
+            if isWindowLeftOfMidpoint(win, curScreen) then
+                win:move(layoutLeft)
+            else
+                win:move(layoutRight)
+            end
+        end
+    end
+end
 
-local splitWork = {
-    { "Zed Nightly", nil, nil, makeLayout(0, 0, 0.60, 1) },
-    { "kitty", nil, nil, makeLayout(0.60, 0, 0.40, 1) },
-}
-
--- Same as defaultLayout but with bigger terminal with nothing behind it
-local bigTermOverrides = {
-    { "Google Chrome", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "Code", nil, hs.screen:primaryScreen():next(), layoutMax },
-    { "kitty", nil, nil, layoutMax },
-}
-local bigTerm = hs.fnutils.concat(hs.fnutils.copy(defaultLayout), bigTermOverrides)
-
-local readingOverrides = {
-    { "Zotero", nil, nil, layoutLeft65 },
-    { "Obsidian", nil, nil, layoutRight35 },
-}
-local reading = hs.fnutils.concat(hs.fnutils.copy(defaultLayout), readingOverrides)
+local function toggleTileWindows()
+    if is_65_35_split then
+        tileWindows5050()
+    else
+        tileWindows6535()
+    end
+    is_65_35_split = not is_65_35_split
+end
 
 -- Keybindings
 local keybindings = {
@@ -148,32 +148,12 @@ local keybindings = {
     { mod = modifiers, key = "i", fn = function() launchOrFocus("kitty") end },
     { mod = modifiers, key = "a", fn = function() launchOrFocus("Zed Nightly") end },
     { mod = modifiers, key = "v", fn = function() launchOrFocus("Visual Studio Code") end },
-    { mod = modifiers, key = "m", fn = function() launchOrFocus("Spark Desktop") end },
     { mod = modifiers, key = "s", fn = function() launchOrFocus("Slack") end },
-    { mod = modifiers, key = "z", fn = function() launchOrFocus("Zotero") end },
     { mod = modifiers, key = "b", fn = function() launchOrFocus("Finder") end },
-    {
-        mod = modifiers,
-        key = "n",
-        fn = function()
-            launchOrFocus("Obsidian")
-            keyStroke({ "cmd" }, "Y")
-        end,
-    },
-    {
-        mod = modifiers,
-        key = "d",
-        fn = function()
-            launchOrFocus("Dash")
-            keyStroke({ "cmd" }, "L")
-        end,
-    },
     { mod = modifiers, key = "x", fn = function() launchOrFocus("Anki") end },
     -- Windows
-    { mod = modifiers, key = "h", fn = function() moveCurWindow(layoutLeft) end },
-    { mod = modifier2, key = "h", fn = function() moveCurWindow(layoutLeft65) end },
-    { mod = modifiers, key = "l", fn = function() moveCurWindow(layoutRight) end },
-    { mod = modifier2, key = "l", fn = function() moveCurWindow(layoutRight35) end },
+    { mod = modifiers, key = "h", fn = function() moveCurWindow(is_65_35_split and layoutLeft65 or layoutLeft) end },
+    { mod = modifiers, key = "l", fn = function() moveCurWindow(is_65_35_split and layoutRight35 or layoutRight) end },
     { mod = modifiers, key = "k", fn = function() moveCurWindow(layoutTop) end },
     { mod = modifiers, key = "j", fn = function() moveCurWindow(layoutBottom) end },
     { mod = modifier2, key = "j", fn = function() moveCurWindow(layoutBottom75) end },
@@ -184,12 +164,9 @@ local keybindings = {
     { mod = modifiers, key = "return", fn = maxCurWindow },
     { mod = modifiers, key = "-", fn = midCurWindow },
     { mod = modifiers, key = "=", fn = plusCurWindow },
-    { mod = modifiers, key = "r", fn = function() launchOrFocus("Zed Nightly") launchOrFocus("kitty") hs.layout.apply(splitWork) end },
-    { mod = modifiers, key = "6", fn = function() hs.layout.apply(bigTerm) end },
-    { mod = modifiers, key = "7", fn = function() hs.layout.apply(reading) end },
-    -- terminal
+    { mod = modifiers, key = "r", fn = toggleTileWindows },
     -- misc
-    { mod = modifiers, key = "0", fn = hs.reload } ,
+    { mod = modifiers, key = "0", fn = hs.reload },
 }
 
 -- Bind the hotkeys
