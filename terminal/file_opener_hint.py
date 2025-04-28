@@ -1,6 +1,12 @@
 import re
 import sys
 import subprocess
+import os
+import logging
+from pathlib import Path
+
+# log to a file
+logging.basicConfig(filename='/tmp/file_opener_hint.log', level=logging.DEBUG)
 
 class FilePatternConverter:
     def __init__(self):
@@ -15,6 +21,10 @@ class FilePatternConverter:
             return text
         return f"{m.group(1)}:{m.group(2)}"
 
+class DebugPatternConverter(FilePatternConverter):
+    def __init__(self):
+        self.pattern: str = r'([^\s:][^\s:]+\.py)\((\d+)\)'
+
 class DirectPatternConverter:
     def __init__(self):
         self.pattern: str = r'[^\s:][^\s:]+\.py:(\d+)(?::(\d+))?'
@@ -24,14 +34,12 @@ class DirectPatternConverter:
 
 CONVERTERS = {
     "direct": DirectPatternConverter(),
-    "file_line": FilePatternConverter()
+    "file_line": FilePatternConverter(),
+    "ipdb": DebugPatternConverter(),
 }
 
 def mark(text, args, Mark, extra_cli_args, *a):
-    patterns_with_converters = [
-        (CONVERTERS["direct"].pattern, "direct"),
-        (CONVERTERS["file_line"].pattern, "file_line"),
-    ]
+    patterns_with_converters = [(CONVERTERS[key].pattern, key) for key in CONVERTERS.keys()]
 
     # Collect all matches first
     matches = []
