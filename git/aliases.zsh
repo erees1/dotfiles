@@ -95,6 +95,12 @@ alias swf='git-switch-fzf'
 
 # Function to automatically stash and apply changes when switching branches
 sw() {
+    # Check if first arg starts with - and pass directly to git switch
+    if [[ $1 == -* ]]; then
+        git switch "$@"
+        return
+    fi 
+     
     # Ensure we have a branch name
     if [[ $# -lt 1 ]]; then
         echo "Usage: sws <branch>"
