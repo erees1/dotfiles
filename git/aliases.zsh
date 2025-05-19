@@ -86,7 +86,7 @@ git-recent() {
 git-switch-fzf() {
     selected=$(git-recent | fzf --ansi | sed 's/->/ /' | awk '{print $2}')
     if [ -n "$selected" ]; then
-        sws $selected
+        sw $selected
     fi
 }
 alias gr='git-recent'
@@ -95,15 +95,10 @@ alias swf='git-switch-fzf'
 
 # Function to automatically stash and apply changes when switching branches
 sw() {
-    # Check if first arg starts with - and pass directly to git switch
-    if [[ $1 == -* ]]; then
-        git switch "$@"
-        return
-    fi 
      
     # Ensure we have a branch name
     if [[ $# -lt 1 ]]; then
-        echo "Usage: sws <branch>"
+        echo "Usage: sw <branch>"
         return 1
     fi
     
@@ -199,5 +194,5 @@ zstyle ':completion:*:*:git:*' user-commands switch:'locally modified switch com
 _git-switch() {
     _git_checkout_local_branches
 }
-# Override the sws function completion
+# Override the sw function completion
 compdef _git_checkout_local_branches sw
