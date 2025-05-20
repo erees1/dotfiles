@@ -62,6 +62,8 @@ def create_symlinks(json_file):
 def setup_zshrc(include_homebrew: bool = False):
     zshrc_path = Path.home() / ".zshrc"
     dotfiles_root = Path(__file__).parent
+    # Create a .hushlogin file to disable the "Last login" message
+    Path.home().joinpath(".hushlogin").touch()
 
     if include_homebrew:
         source_line = f"source {dotfiles_root}/zsh/brew"
