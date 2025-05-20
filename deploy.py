@@ -49,7 +49,7 @@ def create_symlinks(json_file):
                         backup.write_text(destination.read_text())
                     destination.unlink()
                 else:
-                    print(f"Invalid choice")
+                    print("Invalid choice")
                     exit(1)
 
         try:
