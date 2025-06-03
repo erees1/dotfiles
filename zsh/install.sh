@@ -31,7 +31,7 @@ fi
 
 # System tools / utilities
 if [ "$(uname -s)" = "Darwin" ]; then
-  brew install fzf
+  brew install fzf --no-zsh
   brew install htop
   # if env variable extra set
   if [ -n "$EXTRA" ]; then    
