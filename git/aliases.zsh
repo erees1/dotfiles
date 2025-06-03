@@ -102,6 +102,12 @@ sw() {
         return 1
     fi
     
+    # If arg starts with - and is not just "-", pass directly to git switch
+    if [[ $1 =~ ^- ]] && [[ $1 != "-" ]]; then
+        git switch "$@"
+        return
+    fi
+    
     local current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     local target_branch=$1
     
