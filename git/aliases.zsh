@@ -84,17 +84,21 @@ git-recent() {
     | sed 's/\*/->/' | column -t -c 5 -s '|' | grep -E -v '(?:1[1-9]|[2-9]\d|\d{3,})\s*days'
 }
 git-switch-fzf() {
+    # If args are passed then call sw-and-stash
+    if [[ $# -gt 0 ]]; then
+        sw-and-stash "$@"
+        return
+    fi
     selected=$(git-recent | fzf --ansi | sed 's/->/ /' | awk '{print $2}')
     if [ -n "$selected" ]; then
-        sw $selected
+        sw-and-stash $selected
     fi
 }
 alias gr='git-recent'
-alias swf='git-switch-fzf'
-
+alias sw='git-switch-fzf'
 
 # Function to automatically stash and apply changes when switching branches
-sw() {
+sw-and-stash() {
      
     # Ensure we have a branch name
     if [[ $# -lt 1 ]]; then
