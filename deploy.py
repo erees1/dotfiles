@@ -3,17 +3,20 @@ Script that reads a json file of source: destination paths and symlinks them.
 
 If the json file is like:
 """
+
 import argparse
 import contextlib
 import json
 import sys
 from pathlib import Path
 
+
 def yellow(msg: str):
-    return(f"\033[93m{msg}\033[0m")
+    return f"\033[93m{msg}\033[0m"
+
 
 def create_symlinks(json_file):
-    with open(json_file, 'r') as f:
+    with open(json_file, "r") as f:
         path_mapping = json.load(f)
 
     skip_all = False
@@ -27,6 +30,10 @@ def create_symlinks(json_file):
             print(yellow(f"Source {source} does not exist. Skipping."))
             continue
 
+        # If destination is symlink and already points at source, skip it
+        if destination.is_symlink() and destination.resolve() == source:
+            continue
+
         if destination.exists() or destination.is_symlink():
             if skip_all:
                 print(f"Skipping: {destination}")
@@ -34,16 +41,20 @@ def create_symlinks(json_file):
             elif overwrite_all:
                 destination.unlink()
             else:
-                choice = input(yellow(f"{destination} already exists. Skip [s], overwrite [o], skip all [S], or overwrite all [O]?: "))
+                choice = input(
+                    yellow(
+                        f"{destination} already exists. Skip [s], overwrite [o], skip all [S], or overwrite all [O]?: "
+                    )
+                )
 
-                if choice == 'S':
+                if choice == "S":
                     skip_all = True
-                elif choice == 'O':
+                elif choice == "O":
                     overwrite_all = True
-                if choice.lower() == 's':
+                if choice.lower() == "s":
                     print(f"Skipping: {destination}")
                     continue
-                elif choice.lower() == 'o':
+                elif choice.lower() == "o":
                     with contextlib.suppress(FileNotFoundError):
                         backup = destination.with_suffix(".bak")
                         backup.write_text(destination.read_text())
@@ -70,21 +81,26 @@ def setup_zshrc(include_homebrew: bool = False):
         if Path(zshrc_path).exists():
             content = zshrc_path.read_text()
             if source_line not in content:
-                with zshrc_path.open('w') as f:
+                with zshrc_path.open("w") as f:
                     f.write(f"{source_line}\n{content}")
         else:
-            with zshrc_path.open('w') as f:
+            with zshrc_path.open("w") as f:
                 f.write(f"{source_line}\n")
 
     source_line = f"source {dotfiles_root}/zsh/zshrc"
     if source_line not in zshrc_path.read_text():
-        with zshrc_path.open('a') as f:
+        with zshrc_path.open("a") as f:
             f.write(f"{source_line}\n")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Create symlinks based on a JSON file")
-    parser.add_argument("json_file", help="Path to the JSON file containing source:destination mappings")
-    parser.add_argument("--homebrew", action="store_true", help="Include homebrew setup in zshrc")
+    parser.add_argument(
+        "json_file", help="Path to the JSON file containing source:destination mappings"
+    )
+    parser.add_argument(
+        "--homebrew", action="store_true", help="Include homebrew setup in zshrc"
+    )
     args = parser.parse_args()
 
     json_file = Path(args.json_file)
@@ -95,5 +111,6 @@ def main():
     setup_zshrc(include_homebrew=args.homebrew)
     create_symlinks(json_file)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
