@@ -10,5 +10,6 @@
   "nvim/colors": "~/.config/nvim/colors",
   "nvim/lua": "~/.config/nvim/lua",
   "nvim/init-minimal.lua": "~/.config/nvim/init.lua",
-  "tmux/tmux.conf": "~/.tmux.conf"
+  "tmux/tmux.conf": "~/.tmux.conf",
+  "zsh/zprofile": "~/.zprofile"
 }

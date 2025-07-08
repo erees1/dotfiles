@@ -23,6 +23,9 @@ export MYLSCOLORS='Exfxcxdxbxegedabagacad'
 
 export BAT_THEME=gruvbox-dark
 
+# Give lsp more memory
+export NODE_OPTIONS="--max-old-space-size=12288 --max-semi-space-size=64"
+
 export HISTSIZE=10000            # big big history
 export HISTFILESIZE=10000        # big big history
 export HISTTIMEFORMAT="%F %T "
