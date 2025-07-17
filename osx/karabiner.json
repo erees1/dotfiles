@@ -172,6 +172,18 @@
                         "description": "Change ctrl-n and ctrl-p + up and down arrow keys",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.vim\\.",
+                                            "^com.googlecode.iterm2",
+                                            "com.microsoft.VSCode",
+                                            "dev.zed.Zed-Preview",
+                                            "net.kovidgoyal.kitty"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "n",
                                     "modifiers": { "mandatory": ["left_control"] }
@@ -186,7 +198,8 @@
                                             "^org\\.vim\\.",
                                             "^com.googlecode.iterm2",
                                             "com.microsoft.VSCode",
-                                            "dev.zed.Zed-Preview"
+                                            "dev.zed.Zed-Preview",
+                                            "net.kovidgoyal.kitty"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
