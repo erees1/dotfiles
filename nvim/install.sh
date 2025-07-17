@@ -6,6 +6,9 @@ then
     brew install nvim
     # Ensure vim language servers are installed
     brew install ripgrep
+    # Install pyright language server
+    brew install node  # pyright requires node
+    npm install -g pyright
 else
     release_version=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest \
         | grep "browser_download_url.*appimage\"" \
@@ -28,4 +31,14 @@ else
     ./nvim.appimage --appimage-extract
     ln -sf ~/.local/nvim/squashfs-root/usr/bin/nvim $MY_BIN_LOC/nvim
     popd
+    
+    # Install language servers on Linux
+    # Install Node.js if not present
+    if ! command -v node &> /dev/null; then
+        curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+    fi
+    
+    # Install pyright
+    sudo npm install -g pyright
 fi
