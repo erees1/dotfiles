@@ -141,3 +141,4 @@ vim.keymap.set('n', '<leader>fa', fzf_rg_word, { desc = 'Search word under curso
 
 -- Map Cmd+P to find files (works in terminals that support it)
 vim.keymap.set({'n', 'i', 'v'}, '<D-p>', fzf_files, { desc = 'Find files with fzf' })
+vim.keymap.set({'n', 'i', 'v'}, '<D-s-f>', fzf_rg_interactive , { desc = 'Find files with fzf' })

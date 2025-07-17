@@ -1,14 +1,42 @@
-print("Using minimal configuration")
-
--- No plugin manager configuration
 require("settings")
 require("keybindings")
 require("statusline")
 require("fzf")
-require("manual-lsp").setup() -- Just ensures lsp_config plugin is downloaded
+require("indent-guides").setup()
 require("git-hunks").setup()
-require("pyright").setup()
 require("kitty-navigator").setup()
+require("lsp")
+
+-- Mini plugins
+require('mini.comment').setup({
+    mappings = {
+        comment = '<D-/>',
+        comment_line = '<D-/>',
+        comment_visual = '<D-/>',
+    }
+})
+require('mini.files').setup({})
+vim.keymap.set('n', '<leader>e', function() MiniFiles.open() end, { desc = 'Open file explorer' })
+
+require('mini.completion').setup({
+    delay = { 
+        completion = 10000000,  -- Effectively disable auto-completion
+        info = 100, 
+        signature = 50 
+    },
+    lsp_completion = {
+        source_func = 'completefunc',  -- or 'omnifunc'
+        auto_setup = true,
+    },
+    fallback_action = function() end,  -- Do nothing when LSP has no results
+    mappings = {
+        force_twostep = '<C-n>',  -- Use Ctrl-L to trigger completion
+        force_fallback = '',  -- Disable fallback trigger
+        scroll_down = '<C-f>',
+        scroll_up = '<C-b>',
+    },
+})
+
 
 
 

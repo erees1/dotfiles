@@ -23,7 +23,6 @@ end
 local function get_kitty_socket()
   local socket = vim.env.KITTY_LISTEN_ON
   if socket and socket ~= "" then
-    vim.notify("Kitty socket from env: " .. socket, vim.log.levels.DEBUG)
     return socket
   end
   
@@ -58,8 +57,6 @@ local function kitty_command(args)
   
   if not success then
     vim.notify("Kitty command failed with error: " .. vim.v.shell_error .. "\nOutput: " .. output, vim.log.levels.ERROR)
-  else
-    vim.notify("Kitty command succeeded", vim.log.levels.DEBUG)
   end
   
   return success
@@ -68,17 +65,14 @@ end
 -- Navigate in the given direction
 function M.navigate(direction)
   local cur_winnr = vim.fn.winnr()
-  vim.notify(string.format("Navigating %s from window %d", direction, cur_winnr), vim.log.levels.DEBUG)
   
   -- Try vim navigation first
   vim.cmd("wincmd " .. direction)
   
   local new_winnr = vim.fn.winnr()
-  vim.notify(string.format("After vim navigation: window %d", new_winnr), vim.log.levels.DEBUG)
   
   -- If we changed windows in vim, we're done
   if cur_winnr ~= new_winnr then
-    vim.notify("Navigated within vim", vim.log.levels.DEBUG)
     if M.config.save_on_switch then
       -- Save the buffer if it has a name and has been modified
       local bufname = vim.fn.bufname()
@@ -88,9 +82,6 @@ function M.navigate(direction)
     end
     return
   end
-  
-  -- Otherwise, navigate in kitty
-  vim.notify("At edge of vim, trying kitty navigation", vim.log.levels.INFO)
   
   local kitty_direction = {
     h = "left",

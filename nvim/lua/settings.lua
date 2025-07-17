@@ -5,7 +5,9 @@ vim.g.mapleader = " "
 vim.o.termguicolors = true -- Needed for colors
 vim.cmd("colorscheme darcula")
 
-vim.opt.shortmess:append("sI") -- Disable nvim intro
+vim.o.winborder = "rounded"
+
+vim.opt.shortmess:append("sIc") -- Disable nvim intro and completion messages
 vim.cmd("set noshowmode") -- don't show --INSERT--
 vim.o.lazyredraw = true -- Faster scrolling
 vim.o.expandtab = true -- Converts tabs to spaces
@@ -36,13 +38,13 @@ vim.opt.updatetime = 50
 vim.opt.signcolumn = "yes"
 
 -- Only show cursorline in active window
-vim.cmd([[
-  augroup CursorLineOnlyInActiveWindow
-    autocmd!
-    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-    autocmd WinLeave * if &buftype != 'quickfix' | setlocal nocursorline | endif
-  augroup END
-]])
+-- vim.cmd([[
+--   augroup CursorLineOnlyInActiveWindow
+--     autocmd!
+--     autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+--     autocmd WinLeave * if &buftype != 'quickfix' | setlocal nocursorline | endif
+--   augroup END
+-- ]])
 
 vim.o.fillchars = "diff:/"
 
@@ -90,6 +92,18 @@ vim.api.nvim_exec([[
   augroup END
 ]], false)
 
+
+-- Auto-save when leaving insert mode or changing buffers
+vim.api.nvim_create_autocmd({"InsertLeave", "TextChanged"}, {
+    pattern = "*",
+    callback = function()
+        if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" then
+            vim.schedule(function()
+                vim.cmd("silent! write")
+            end)
+        end
+    end,
+})
 
 -- Add ocp-indent to the runtime path for ocaml files
 local home = os.getenv('HOME')

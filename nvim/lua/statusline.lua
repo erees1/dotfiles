@@ -117,7 +117,7 @@ end
 
 M.lsp_progress = function()
     -- Show active LSP clients
-    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     if #clients > 0 then
         local client_names = {}
         for _, client in ipairs(clients) do

@@ -130,6 +130,33 @@ end)
 
 local isLinux = (os.execute("uname -s | grep -q Linux") == 0)
 
+
+-- Make <CR> accept selected completion item or insert new line
+vim.keymap.set('i', '<CR>', function()
+    if vim.fn.pumvisible() == 1 then
+        -- If item is selected, accept it. Otherwise close menu and insert newline
+        local item_selected = vim.fn.complete_info()['selected'] ~= -1
+        return item_selected and '<C-y>' or '<C-e><CR>'
+    else
+        return '<CR>'
+    end
+end, { expr = true, desc = 'Accept completion or newline' })
+
+
+-- Add scrolling keybindings for floating windows
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        local win = vim.api.nvim_get_current_win()
+        local config = vim.api.nvim_win_get_config(win)
+        if config.relative ~= "" then  -- It's a floating window
+            vim.keymap.set("n", "<C-n>", "<C-e>", { buffer = true, desc = "Scroll down" })
+            vim.keymap.set("n", "<C-p>", "<C-y>", { buffer = true, desc = "Scroll up" })
+            vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = true, desc = "Close window" })
+            vim.keymap.set("n", "<Esc>", "<cmd>close<cr>", { buffer = true, desc = "Close window" })
+        end
+    end,
+})
+
 -- Require a file if on a Linux machine
 if isLinux then 
     vim.api.nvim_command([[
