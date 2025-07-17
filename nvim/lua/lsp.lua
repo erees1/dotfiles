@@ -62,3 +62,11 @@ vim.api.nvim_set_hl(0, "DiagnosticLineHint", { bg = "#1c1c2c" })
 vim.lsp.config("pyright", {on_attach = on_attach})
 vim.lsp.enable('pyright')
 
+-- Ruff LSP configuration
+vim.lsp.config("ruff", {
+    cmd = { "ruff", "server" },
+    filetypes = { "python" },
+    on_attach = on_attach,
+})
+vim.lsp.enable('ruff')
+
