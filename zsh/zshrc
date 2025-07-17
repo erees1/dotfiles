@@ -47,6 +47,12 @@ bindkey "^?" backward-delete-char
 bindkey -M viins '^U' beginning-of-line
 bindkey -M viins '^E' end-of-line
 
+# Add keybindings for ctrl-n and ctrl-p to work like up/down arrows
+bindkey -M viins '^P' up-line-or-history
+bindkey -M viins '^N' down-line-or-history
+bindkey -M vicmd '^P' up-line-or-history
+bindkey -M vicmd '^N' down-line-or-history
+
 # load everything but env files
 for file in ${${config_files:#*env.zsh}}; do . $file; done
 
