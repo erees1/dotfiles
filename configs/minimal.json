@@ -3,6 +3,7 @@
   "terminal/kitty.conf": "~/.config/kitty/kitty.conf",
   "terminal/ghostty.config": "~/.config/ghostty/config",
   "terminal/file_opener_hint.py": "~/.config/kitty/file_opener_hint.py",
+  "terminal/pass_keys.py": "~/.config/kitty/pass_keys.py",
   "git/gitconfig": "~/.gitconfig",
   "git/gitconfig.local": "~/.gitconfig.local",
   "hammerspoon": "~/.hammerspoon",
