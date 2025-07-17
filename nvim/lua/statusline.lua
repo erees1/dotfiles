@@ -16,6 +16,7 @@ M.colors = {
     line_col = "%#StatusLine#",
     lsp = "%#StatusLine#",
     filename = "%#StatusLine#",
+    filetype = "%#StatusLine#",
 }
 
 M.trunc_width = setmetatable({
@@ -98,7 +99,14 @@ end
 
 M.get_filetype = function()
     local file_name, file_ext = fn.expand("%:t"), fn.expand("%:e")
-    local icon = require("nvim-web-devicons").get_icon(file_name, file_ext, { default = true })
+    local icon = ""
+    
+    -- Check if nvim-web-devicons is available
+    local has_devicons, devicons = pcall(require, "nvim-web-devicons")
+    if has_devicons then
+        icon = devicons.get_icon(file_name, file_ext, { default = true }) or ""
+    end
+    
     local filetype = vim.bo.filetype
 
     if filetype == "" then
@@ -108,13 +116,14 @@ M.get_filetype = function()
 end
 
 M.lsp_progress = function()
-    local lsp = vim.lsp.util.get_progress_messages()[1]
-    if lsp then
-        local name = lsp.name or ""
-        local msg = lsp.message or ""
-        local percentage = lsp.percentage or 0
-        local title = lsp.title or ""
-        return string.format(" %%<%s: %s %s (%s%%%%) ", name, title, msg, percentage)
+    -- Show active LSP clients
+    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+    if #clients > 0 then
+        local client_names = {}
+        for _, client in ipairs(clients) do
+            table.insert(client_names, client.name)
+        end
+        return string.format(" LSP: %s ", table.concat(client_names, ", "))
     end
 
     return ""

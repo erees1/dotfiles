@@ -1,3 +1,10 @@
+vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true })
+vim.g.mapleader = " "
+
+-- Vim options
+vim.o.termguicolors = true -- Needed for colors
+vim.cmd("colorscheme darcula")
+
 vim.opt.shortmess:append("sI") -- Disable nvim intro
 vim.cmd("set noshowmode") -- don't show --INSERT--
 vim.o.lazyredraw = true -- Faster scrolling
@@ -27,6 +34,15 @@ vim.opt.undofile = true
 
 vim.opt.updatetime = 50
 vim.opt.signcolumn = "yes"
+
+-- Only show cursorline in active window
+vim.cmd([[
+  augroup CursorLineOnlyInActiveWindow
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave * if &buftype != 'quickfix' | setlocal nocursorline | endif
+  augroup END
+]])
 
 vim.o.fillchars = "diff:/"
 

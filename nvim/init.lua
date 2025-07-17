@@ -1,11 +1,3 @@
--- Set leader
-vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", { noremap = true, silent = true })
-vim.g.mapleader = " "
-
--- Vim options
-vim.o.termguicolors = true -- Needed for colors
-
-require("statusline")
 require("settings")
 
 -- Ensure that we have lazy
@@ -27,9 +19,4 @@ require("lazy").setup("plugins")
 
 -- Keybindings need to be compatible with vscode
 require("keybindings")
-
--- Check if the operating system is Linux
-local isLinux = (os.execute("uname -s | grep -q Linux") == 0)
-
--- Require a file if on a Linux machine
-if isLinux then require("remote") end
+require("statusline")

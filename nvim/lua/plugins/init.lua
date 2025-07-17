@@ -1,9 +1,4 @@
 return {
-    {
-        "santos-gabriel-dario/darcula-solid.nvim",
-        config = function() vim.cmd("colorscheme darcula") end,
-        dependencies = { "rktjmp/lush.nvim" },
-    },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     {
         "github/copilot.vim",

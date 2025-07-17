@@ -71,3 +71,122 @@ end
 -- Map these yank functions to <leader>yr and <leader>yf
 vim.keymap.set("n", "<leader>yr", ":lua _G.yank_relative_path()<CR>")
 vim.keymap.set("n", "<leader>yf", ":lua _G.yank_full_path()<CR>")
+
+-- Open netrw file explorer with <leader>e
+vim.keymap.set("n", "<leader>e", ":Ex<CR>")
+
+-- Cmd+S to save (works in GUI Neovim)
+vim.keymap.set({'n', 'i', 'v'}, '<D-s>', ':update<CR>')
+-- Also map Ctrl+S for terminal compatibility
+vim.keymap.set({'n', 'i', 'v'}, '<C-s>', ':update<CR>')
+
+-- Window splits that focus the new window
+vim.keymap.set("n", "<c-w>v", ":vsplit<CR>:wincmd l<CR>")
+vim.keymap.set("n", "<c-w>s", ":split<CR>:wincmd j<CR>")
+
+-- Window navigation with Ctrl+hjkl
+vim.keymap.set("n", "<C-h>", ":wincmd h<CR>")
+vim.keymap.set("n", "<C-j>", ":wincmd j<CR>")
+vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
+vim.keymap.set("n", "<C-l>", ":wincmd l<CR>")
+
+-- Toggle comments for Python (visual mode)
+vim.keymap.set("v", "<D-/>", function()
+    -- Get visual selection range
+    local start_line = vim.fn.line("'<")
+    local end_line = vim.fn.line("'>")
+    
+    -- Check if all selected lines are commented
+    local all_commented = true
+    for line = start_line, end_line do
+        local line_content = vim.fn.getline(line)
+        if not line_content:match("^%s*#") then
+            all_commented = false
+            break
+        end
+    end
+    
+    -- Toggle comments
+    for line = start_line, end_line do
+        local line_content = vim.fn.getline(line)
+        if all_commented then
+            -- Remove comment
+            local uncommented = line_content:gsub("^(%s*)#%s?", "%1")
+            vim.fn.setline(line, uncommented)
+        else
+            -- Add comment
+            local indent = line_content:match("^(%s*)")
+            local rest = line_content:sub(#indent + 1)
+            if rest ~= "" then
+                vim.fn.setline(line, indent .. "# " .. rest)
+            end
+        end
+    end
+    
+    -- Exit visual mode
+    vim.cmd("normal! gv")
+end)
+
+
+local isLinux = (os.execute("uname -s | grep -q Linux") == 0)
+
+-- Require a file if on a Linux machine
+if isLinux then 
+    vim.api.nvim_command([[
+
+    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
+    ]])
+     vim.api.nvim_command([[
+    autocmd TextYankPost * if v:event.operator is 'x' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
+    ]])
+
+    vim.api.nvim_command([[
+    function! YankFullPathToOsc()
+    let @+ = expand('%:p')
+    OSCYankRegister +
+    endfunction
+
+    function! YankRelativePathToOsc()
+    let @+ = expand('%:.')
+    OSCYankRegister +
+    endfunction
+    ]])
+
+    vim.api.nvim_set_keymap('n', '<leader>yr' , ':call YankRelativePathToOsc()<CR>', {noremap=true, silent=true })
+    vim.api.nvim_set_keymap('n', '<leader>yf' , ':call YankFullPathToOsc()<CR>', {noremap=true, silent=true })
+end
+
+if not require("utils").is_not_vscode() then
+    print("Using vscode keybindings")
+    -- Better Navigation
+    vim.keymap.set("n", "<C-j>", "<cmd>call VSCodeNotify('workbench.action.navigateDown')<CR>")
+    vim.keymap.set("n", "<C-k>", "<cmd>call VSCodeNotify('workbench.action.navigateUp')<CR>")
+    vim.keymap.set("n", "<C-h>", "<cmd>call VSCodeNotify('workbench.action.navigateLeft')<CR>")
+    vim.keymap.set("n", "<C-l>", "<cmd>call VSCodeNotify('workbench.action.navigateRight')<CR>")
+    vim.keymap.set("n", "<C-w>_", "<cmd><C-u>call VSCodeNotify('workbench.action.toggleEditorWidths')<CR>")
+
+    vim.keymap.set("n", "gr", "<cmd>call VSCodeNotify('editor.action.goToReferences')<CR>")
+    vim.keymap.set("n", "<leader>e", "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
+    vim.keymap.set("n", "<leader>t", "<cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>")
+    vim.keymap.set("n", "<leader>s", "<cmd>call VSCodeNotify('workbench.action.files.save')<CR>")
+    vim.keymap.set("n", "<leader>q", "<cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>")
+    vim.keymap.set("n", "<leader>f", "<cmd>call VSCodeNotify('editor.action.formatDocument')<CR>")
+    vim.keymap.set(
+        "n",
+        "<leader>yr",
+        "<cmd>call VSCodeNotify('copyRelativeFilePath')<CR>:echo 'YANKED RELATIVE FILE PATH'<CR>"
+    )
+    vim.keymap.set("n", "<leader>yf", "<cmd>call VSCodeNotify('copyFilePath')<CR>:echo 'YANKED FILE PATH'<CR>")
+    vim.keymap.set("n", "<leader>rn", "<cmd>call VSCodeNotify('editor.action.rename')<CR>")
+    vim.keymap.set("v", "<leader>rn", "<cmd>call VSCodeNotify('editor.action.rename')<CR>")
+
+    -- Git navigation
+    vim.keymap.set("n", "<leader>hn", "<cmd>call VSCodeNotify('workbench.action.editor.nextChange')<CR>")
+    vim.keymap.set("n", "<leader>hp", "<cmd>call VSCodeNotify('git.timeline.openDiff')<CR>")
+
+    -- line indendation
+    vim.keymap.set("n", "<S-,>", "<cmd>call VSCodeNotify('editor.action.outdentLines')<CR>")
+    vim.keymap.set("n", "<S-.>", "<cmd>call VSCodeNotify('editor.action.indentLines')<CR>")
+    vim.keymap.set("v", "<S-,>", "<cmd>call VSCodeNotify('editor.action.outdentLines')<CR>")
+    vim.keymap.set("v", "<S-.>", "<cmd>call VSCodeNotify('editor.action.indentLines')<CR>")
+end
