@@ -26,6 +26,7 @@ alias gm="git merge"
 alias gmm='(git show-ref --verify --quiet refs/heads/main && git merge main) || (git show-ref --verify --quiet refs/heads/master && git merge main)'
 alias gmom='(git show-ref --verify --quiet refs/heads/main && git pull --rebase=false origin main) || (git show-ref --verify --quiet refs/heads/master && git pull --rebase=false origin master)'
 alias grom='(git show-ref --verify --quiet refs/heads/main && git pull --rebase=true origin main) || (git show-ref --verify --quiet refs/heads/master && git pull --rebase=true origin master)'
+alias gros='git pull --rebase=true origin staging'
 
 alias gd="git diff"
 alias gdc="git diff --cached"
@@ -42,6 +43,8 @@ alias gsta="git stash apply"
 alias gstd="git stash drop"
 alias gstc="git stash clear"
 alias gsts="git stash show -p"
+
+alias gbd="git branch -D"
 
 alias ggsup='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD)'
 alias gpsup='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
@@ -83,7 +86,7 @@ git-recent() {
     --format='%(committerdate:short)|%(HEAD)|%(color:yellow)%(refname:short)%(color:reset)|(%(committerdate:relative))|-- %(contents:lines=1)' \
     | sed 's/\*/->/' | column -t -c 5 -s '|' | grep -E -v '(?:1[1-9]|[2-9]\d|\d{3,})\s*days'
 }
-git-switch-fzf() {
+sw() {
     # If args are passed then call sw-and-stash
     if [[ $# -gt 0 ]]; then
         sw-and-stash "$@"
@@ -95,7 +98,6 @@ git-switch-fzf() {
     fi
 }
 alias gr='git-recent'
-alias sw='git-switch-fzf'
 
 # Function to automatically stash and apply changes when switching branches
 sw-and-stash() {
