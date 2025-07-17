@@ -11,7 +11,7 @@
   "nvim/colors": "~/.config/nvim/colors",
   "nvim/lua": "~/.config/nvim/lua",
   "nvim/lsp": "~/.config/nvim/lsp",
-  "nvim/init-minimal.lua": "~/.config/nvim/init.lua",
+  "nvim/init.lua": "~/.config/nvim/init.lua",
   "tmux/tmux.conf": "~/.tmux.conf",
   "zsh/zprofile": "~/.zprofile"
 }
