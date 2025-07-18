@@ -50,9 +50,12 @@ vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 vim.keymap.set("n", "mo", ":wincmd o<CR>")
 
 -- Quit with q: instead of bringing up cmd mode
-vim.keymap.set("n", "q:", ":q<CR>")
+-- vim.keymap.set("n", "q:", ":q<CR>")
 
 vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>")
+
+-- Disable macros because it lags quit etc..
+-- vim.keymap.set('n', 'q', '<nop>')
 
 -- Function to yank full path
 _G.yank_full_path = function()

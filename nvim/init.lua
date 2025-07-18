@@ -6,6 +6,7 @@ require("indent-guides").setup()
 require("git-hunks").setup()
 require("kitty-navigator").setup()
 require("lsp")
+require("claude").setup()
 
 -- Mini plugins
 require('mini.comment').setup({
