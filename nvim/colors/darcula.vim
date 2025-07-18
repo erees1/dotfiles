@@ -157,11 +157,15 @@ call s:HL('Ignore', s:bg, s:none)
 call s:HL('Error', s:red, s:none)
 call s:HL('Todo', s:keyword, s:none, 'bold')
 
-" Diff
-call s:HL('DiffAdd', s:green, s:bg_light)
-call s:HL('DiffChange', s:yellow, s:bg_light)
-call s:HL('DiffDelete', s:red, s:bg_light)
-call s:HL('DiffText', s:blue, s:bg_light)
+" Diff - Subtle backgrounds with preserved syntax highlighting
+" Added lines: subtle green background, preserve syntax colors
+call s:HL('DiffAdd', s:none, ['#2d4a2d', 22])
+" Changed lines: lighter grey background, preserve syntax colors
+call s:HL('DiffChange', s:none, ['#4a4a4a', 239])
+" Deleted lines: subtle grey with hatching
+call s:HL('DiffDelete', ['#5a5a5a', 240], ['#3a3a3a', 237])
+" Specific changed text: bright orange background, preserve syntax colors
+call s:HL('DiffText', s:none, ['#8b5a2b', 208])
 
 " Spell
 call s:HL('SpellBad', s:none, s:none, 'undercurl')

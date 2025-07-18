@@ -46,7 +46,7 @@ vim.opt.signcolumn = "yes"
 --   augroup END
 -- ]])
 
-vim.o.fillchars = "diff:/"
+vim.o.fillchars = "diff:╱"
 
 -- Autocommands
 vim.api.nvim_create_augroup("Misc", { clear = true })
