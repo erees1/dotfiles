@@ -148,8 +148,9 @@ M.insert = function()
       print('Claude is generating code...')
     end
     
+    local context_data = H.get_context(start_line, start_line)
     -- Call Claude API
-    H.call_claude_api(prompt, nil, function(response)
+    H.call_claude_api_with_context(prompt, "", context_data, function(response)
       if response then
         -- Extract code from backticks
         local code = H.extract_code(response)
@@ -266,8 +267,7 @@ H.call_claude_api_with_context = function(prompt, original_text, context_data, c
   local content = string.format(
     [[File: %s
 
-[... %d lines of context ...]
-
+```
 %s
 
 <selection_to_modify>
@@ -275,25 +275,23 @@ H.call_claude_api_with_context = function(prompt, original_text, context_data, c
 </selection_to_modify>
 
 %s
-
-[... %d lines of context ...]
+```
 
 Task: %s
 
-Please respond with only the rewritten code for the selection in a single code block, no explanations or alternatives.]],
+Please carry out the task specified, your output should be a single codeblock (```) only that wholly replaces the code in <selection_to_modify>, do not provide any explanations or alternatives. To help you have also been give code before and after the selection. Ensure to maintain the correct level of indentation in your output.]],
     context_data.file_name,
-    context_data.before_count,
     table.concat(context_data.before_lines, '\n'),
     original_text,
     table.concat(context_data.after_lines, '\n'),
-    context_data.after_count,
     prompt
   )
   
-  H.call_claude_api(content, nil, callback)
+  -- print(content)
+  H.call_claude_api(content, callback)
 end
 
-H.call_claude_api = function(prompt, original_text, callback)
+H.call_claude_api = function(prompt, callback)
   local api_key = os.getenv('NVIM_ANTHROPIC_API_KEY')
   if not api_key then
     H.error('NVIM_ANTHROPIC_API_KEY environment variable not set')
@@ -301,12 +299,6 @@ H.call_claude_api = function(prompt, original_text, callback)
   end
   
   -- Build the message content
-  local content
-  if original_text then
-    content = prompt .. '\n\nOriginal code:\n```\n' .. original_text .. '\n```\n\nPlease respond with only the rewritten code in a single code block, no explanations or alternatives.'
-  else
-    content = prompt .. '\n\nPlease respond with only the code in a single code block, no explanations or alternatives.'
-  end
   
   -- Prepare the request payload
   local payload = {
@@ -315,7 +307,7 @@ H.call_claude_api = function(prompt, original_text, callback)
     messages = {
       {
         role = 'user',
-        content = content
+        content = prompt
       }
     }
   }
