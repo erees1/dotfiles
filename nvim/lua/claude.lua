@@ -42,6 +42,9 @@ M.config = {
   -- Whether to disable showing non-error feedback
   silent = false,
   
+  -- Number of lines of context to include before and after selection
+  context_lines = 30,
+  
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     -- Rewrite selected text (visual mode) - Cmd+i on macOS
@@ -83,6 +86,9 @@ M.rewrite = function()
     return
   end
   
+  -- Get context around the selection
+  local context_data = H.get_context(start_line, end_line)
+  
   -- Prompt for input
     vim.ui.input({ prompt = '[' .. start_line .. "->" .. end_line .. "] Claude rewrite prompt: "}, function(prompt)
     if not prompt or prompt == '' then
@@ -94,8 +100,8 @@ M.rewrite = function()
       print(string.format('Claude is rewriting lines %d->%d...', start_line, end_line))
     end
     
-    -- Call Claude API
-    H.call_claude_api(prompt, original_text, function(response)
+    -- Call Claude API with context
+    H.call_claude_api_with_context(prompt, original_text, context_data, function(response)
       if response then
         -- Extract code from backticks
         local code = H.extract_code(response)
@@ -216,6 +222,77 @@ H.apply_config = function(config)
 end
 
 -- API calls ------------------------------------------------------------------
+H.get_context = function(start_line, end_line)
+  local total_lines = vim.api.nvim_buf_line_count(0)
+  local context_lines = M.config.context_lines or 30
+  
+  -- Calculate context boundaries
+  local context_start = math.max(1, start_line - context_lines)
+  local context_end = math.min(total_lines, end_line + context_lines)
+  
+  -- Get file path
+  local file_path = vim.api.nvim_buf_get_name(0)
+  local file_name = file_path ~= '' and vim.fn.fnamemodify(file_path, ':t') or 'buffer'
+  
+  -- Get context lines
+  local before_lines = {}
+  local after_lines = {}
+  
+  if context_start < start_line then
+    before_lines = vim.api.nvim_buf_get_lines(0, context_start - 1, start_line - 1, false)
+  end
+  
+  if end_line < context_end then
+    after_lines = vim.api.nvim_buf_get_lines(0, end_line, context_end, false)
+  end
+  
+  return {
+    file_name = file_name,
+    before_lines = before_lines,
+    after_lines = after_lines,
+    before_count = #before_lines,
+    after_count = #after_lines
+  }
+end
+
+H.call_claude_api_with_context = function(prompt, original_text, context_data, callback)
+  local api_key = os.getenv('NVIM_ANTHROPIC_API_KEY')
+  if not api_key then
+    H.error('NVIM_ANTHROPIC_API_KEY environment variable not set')
+    return
+  end
+  
+  -- Build the message content with context
+  local content = string.format(
+    [[File: %s
+
+[... %d lines of context ...]
+
+%s
+
+<selection_to_modify>
+%s
+</selection_to_modify>
+
+%s
+
+[... %d lines of context ...]
+
+Task: %s
+
+Please respond with only the rewritten code for the selection in a single code block, no explanations or alternatives.]],
+    context_data.file_name,
+    context_data.before_count,
+    table.concat(context_data.before_lines, '\n'),
+    original_text,
+    table.concat(context_data.after_lines, '\n'),
+    context_data.after_count,
+    prompt
+  )
+  
+  H.call_claude_api(content, nil, callback)
+end
+
 H.call_claude_api = function(prompt, original_text, callback)
   local api_key = os.getenv('NVIM_ANTHROPIC_API_KEY')
   if not api_key then
