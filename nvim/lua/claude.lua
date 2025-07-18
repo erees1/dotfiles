@@ -9,8 +9,8 @@
 --- Requires NVIM_ANTHROPIC_API_KEY environment variable to be set.
 ---
 --- Usage:
---- - `:ClaudeRewrite <prompt>` - Rewrite selected text or current line
---- - `:ClaudeInsert <prompt>` - Insert generated code at cursor
+--- - Use configured mapping to rewrite selected text or current line
+--- - Use configured mapping to insert generated code at cursor
 
 local M = {}
 local H = {}
@@ -53,42 +53,27 @@ M.config = {
 }
 
 --- Rewrite selected text or current line
----
----@param prompt string The prompt for rewriting
----@param opts table|nil Options table with 'range' field for visual selection
-M.rewrite = function(prompt, opts)
-  opts = opts or {}
+--- No args - prompts for input and detects mode automatically
+M.rewrite = function()
+  -- Determine if we're in visual mode by checking the mode
+  local mode = vim.fn.mode()
+  local start_line, end_line
   
-  -- Get text to rewrite
-  local lines, start_line, end_line
-  if opts.range and opts.range > 0 then
-    -- Visual selection - try to get marks, fallback to current line
-    start_line = vim.fn.line("'<")
-    end_line = vim.fn.line("'>")
+  if mode == 'v' or mode == 'V' or mode == '' then
+    -- Visual mode - get the actual visual selection
+    start_line = vim.fn.line("v")
+    end_line = vim.fn.line(".")
     
-    -- Check if marks are valid
-    if start_line == 0 or end_line == 0 then
-      start_line = vim.fn.line('.')
-      end_line = start_line
+    -- Ensure start is before end
+    if start_line > end_line then
+      start_line, end_line = end_line, start_line
     end
-    
-    lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
   else
-    -- Current line
+    -- Normal mode - use current line
     start_line = vim.fn.line('.')
     end_line = start_line
-    lines = vim.api.nvim_buf_get_lines(0, start_line - 1, start_line, false)
   end
   
-  M.rewrite_lines(prompt, start_line, end_line)
-end
-
---- Rewrite specific lines
----
----@param prompt string The prompt for rewriting
----@param start_line number Start line number (1-based)
----@param end_line number End line number (1-based, inclusive)
-M.rewrite_lines = function(prompt, start_line, end_line)
   -- Get the lines to rewrite
   local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
   local original_text = table.concat(lines, '\n')
@@ -98,83 +83,97 @@ M.rewrite_lines = function(prompt, start_line, end_line)
     return
   end
   
-  -- Show progress if enabled
-  if M.config.show_progress then
-    print(string.format('Claude is rewriting lines %d:%d...', start_line, end_line))
-  end
-  
-  -- Call Claude API
-  H.call_claude_api(prompt, original_text, function(response)
-    if response then
-      -- Extract code from backticks
-      local code = H.extract_code(response)
-      local new_lines = vim.split(code, '\n')
-      
-      if M.config.preview_changes then
-        -- Show preview and ask for confirmation
-        H.show_preview(lines, new_lines, function(accepted)
-          if accepted then
-            vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, new_lines)
-            if not M.config.silent then
-              print('Claude rewrite accepted')
+  -- Prompt for input
+    vim.ui.input({ prompt = '[' .. start_line .. "->" .. end_line .. "] Claude rewrite prompt: "}, function(prompt)
+    if not prompt or prompt == '' then
+      return
+    end
+    
+    -- Show progress if enabled
+    if M.config.show_progress then
+      print(string.format('Claude is rewriting lines %d->%d...', start_line, end_line))
+    end
+    
+    -- Call Claude API
+    H.call_claude_api(prompt, original_text, function(response)
+      if response then
+        -- Extract code from backticks
+        local code = H.extract_code(response)
+        local new_lines = vim.split(code, '\n')
+        
+        if M.config.preview_changes then
+          -- Show preview and ask for confirmation
+          H.show_preview(lines, new_lines, function(accepted)
+            if accepted then
+              vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, new_lines)
+              if not M.config.silent then
+                print('Claude rewrite accepted')
+              end
+            else
+              if not M.config.silent then
+                print('Claude rewrite rejected')
+              end
             end
-          else
-            if not M.config.silent then
-              print('Claude rewrite rejected')
-            end
+          end)
+        else
+          -- Apply changes directly
+          vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, new_lines)
+          if not M.config.silent then
+            print('Claude rewrite completed')
           end
-        end)
-      else
-        -- Apply changes directly
-        vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, new_lines)
-        if not M.config.silent then
-          print('Claude rewrite completed')
         end
       end
-    end
+    end)
   end)
 end
 
 --- Insert generated code at cursor
----
----@param prompt string The prompt for code generation
-M.insert = function(prompt)
-  -- Show progress if enabled
-  if M.config.show_progress then
-    print('Claude is generating code...')
-  end
-  
-  -- Call Claude API
-  H.call_claude_api(prompt, nil, function(response)
-    if response then
-      -- Extract code from backticks
-      local code = H.extract_code(response)
-      local new_lines = vim.split(code, '\n')
-      
-      if M.config.preview_changes then
-        -- Show preview and ask for confirmation
-        H.show_preview({}, new_lines, function(accepted)
-          if accepted then
-            local cursor_line = vim.fn.line('.')
-            vim.api.nvim_buf_set_lines(0, cursor_line - 1, cursor_line - 1, false, new_lines)
-            if not M.config.silent then
-              print('Claude code insertion accepted')
+--- No args - prompts for input
+M.insert = function()
+    -- Prompt for input
+    start_line = vim.fn.line(".") 
+    vim.ui.input({ prompt = '[' .. start_line .. "] Claude rewrite prompt: "}, function(prompt)
+    if not prompt or prompt == '' then
+      return
+    end
+    
+    -- Show progress if enabled
+    if M.config.show_progress then
+      print('Claude is generating code...')
+    end
+    
+    -- Call Claude API
+    H.call_claude_api(prompt, nil, function(response)
+      if response then
+        -- Extract code from backticks
+        local code = H.extract_code(response)
+        local new_lines = vim.split(code, '\n')
+        
+        if M.config.preview_changes then
+          -- Show preview and ask for confirmation
+          H.show_preview({}, new_lines, function(accepted)
+            if accepted then
+              local cursor_line = vim.fn.line('.')
+              vim.api.nvim_buf_set_lines(0, cursor_line - 1, cursor_line - 1, false, new_lines)
+              if not M.config.silent then
+                print('Claude code insertion accepted')
+              end
+            else
+              if not M.config.silent then
+                print('Claude code insertion rejected')
+              end
             end
-          else
-            if not M.config.silent then
-              print('Claude code insertion rejected')
-            end
+          end)
+        else
+          -- Apply changes directly
+          local cursor_line = vim.fn.line('.')
+          vim.api.nvim_buf_set_lines(0, cursor_line - 1, cursor_line - 1, false, new_lines)
+          if not M.config.silent then
+            print('Claude code insertion completed')
           end
-        end)
-      else
-        -- Apply changes directly
-        local cursor_line = vim.fn.line('.')
-        vim.api.nvim_buf_set_lines(0, cursor_line - 1, cursor_line - 1, false, new_lines)
-        if not M.config.silent then
-          print('Claude code insertion completed')
         end
       end
-    end
+    end)
   end)
 end
 
@@ -203,86 +202,16 @@ end
 H.apply_config = function(config)
   M.config = config
   
-  -- Create user commands
-  vim.api.nvim_create_user_command('ClaudeRewrite', function(cmd)
-    if cmd.args == '' then
-      H.error('Please provide a prompt for rewriting')
-      return
-    end
-    M.rewrite(cmd.args, { range = cmd.range })
-  end, {
-    nargs = '+',
-    range = true,
-    desc = 'Rewrite selected text or current line with Claude',
-  })
-  
-  vim.api.nvim_create_user_command('ClaudeInsert', function(cmd)
-    if cmd.args == '' then
-      H.error('Please provide a prompt for code generation')
-      return
-    end
-    M.insert(cmd.args)
-  end, {
-    nargs = '+',
-    desc = 'Insert Claude-generated code at cursor',
-  })
-  
   -- Create mappings
-  -- For rewrite: support both normal and visual mode with input prompt
+  -- For rewrite: support both normal and visual mode
   if config.mappings.rewrite ~= '' then
-    -- Normal mode mapping
-    local rewrite_normal = function()
-      vim.ui.input({ prompt = 'Claude rewrite prompt: ' }, function(input)
-        if input and input ~= '' then
-          M.rewrite(input)
-        end
-      end)
-    end
-    H.map('n', config.mappings.rewrite, rewrite_normal, { desc = 'Claude rewrite' })
-    
-    -- Visual mode mapping - capture selection before showing prompt
-    local rewrite_visual = function()
-      -- Get current visual selection using different approach
-      -- This works even on first visual selection
-      local _, start_line, _, _ = unpack(vim.fn.getpos("'<"))
-      local _, end_line, _, _ = unpack(vim.fn.getpos("'>"))
-      
-      -- If marks are not set (0), fall back to current visual selection
-      if start_line == 0 or end_line == 0 then
-        -- Use v:start and v:end which are set during visual mode
-        start_line = vim.fn.line("v")
-        end_line = vim.fn.line(".")
-        
-        -- Ensure start is before end
-        if start_line > end_line then
-          start_line, end_line = end_line, start_line
-        end
-      end
-      
-      -- Debug logging
-      print(string.format("Visual selection captured: start=%d, end=%d", start_line, end_line))
-      
-      -- Now show the input prompt
-      vim.ui.input({ prompt = 'Claude rewrite prompt: ' }, function(input)
-        if input and input ~= '' then
-          -- Directly use the captured line numbers
-          M.rewrite_lines(input, start_line, end_line)
-        end
-      end)
-    end
-    H.map('x', config.mappings.rewrite, rewrite_visual, { desc = 'Claude rewrite selection' })
+    H.map('n', config.mappings.rewrite, M.rewrite, { desc = 'Claude rewrite' })
+    H.map('x', config.mappings.rewrite, M.rewrite, { desc = 'Claude rewrite selection' })
   end
   
-  -- For insert: normal mode only with input prompt
+  -- For insert: normal mode only
   if config.mappings.insert ~= '' then
-    local insert_func = function()
-      vim.ui.input({ prompt = 'Claude insert prompt: ' }, function(input)
-        if input and input ~= '' then
-          M.insert(input)
-        end
-      end)
-    end
-    H.map('n', config.mappings.insert, insert_func, { desc = 'Claude insert' })
+    H.map('n', config.mappings.insert, M.insert, { desc = 'Claude insert' })
   end
 end
 
