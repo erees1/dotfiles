@@ -399,64 +399,81 @@ H.extract_code = function(text)
 end
 
 H.show_preview = function(original_lines, new_lines, callback)
-  -- Create preview content
-  local preview_content = {}
+  -- Create two buffers for diff comparison
+  local buf_original = vim.api.nvim_create_buf(false, true)
+  local buf_new = vim.api.nvim_create_buf(false, true)
   
-  -- Add header
-  table.insert(preview_content, '--- Claude Preview ---')
-  table.insert(preview_content, '')
-  
-  -- Add original (if exists)
-  if #original_lines > 0 then
-    table.insert(preview_content, '--- Original ---')
-    for _, line in ipairs(original_lines) do
-      table.insert(preview_content, line)
-    end
-    table.insert(preview_content, '')
-  end
-  
-  -- Add new content
-  table.insert(preview_content, '--- New ---')
-  for _, line in ipairs(new_lines) do
-    table.insert(preview_content, line)
-  end
-  table.insert(preview_content, '')
-  table.insert(preview_content, 'Press "y" to accept, "n" to reject, or "q" to quit')
-  
-  -- Create floating window
-  local buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, preview_content)
+  -- Set content in buffers
+  vim.api.nvim_buf_set_lines(buf_original, 0, -1, false, original_lines)
+  vim.api.nvim_buf_set_lines(buf_new, 0, -1, false, new_lines)
   
   -- Set buffer options
-  vim.api.nvim_buf_set_option(buf, 'modifiable', false)
-  vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf_original })
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf_new })
   
-  -- Calculate window size
+  -- Calculate window dimensions
   local width = math.min(80, vim.o.columns - 4)
-  local height = math.min(#preview_content + 2, vim.o.lines - 4)
+  local height = math.min(30, math.floor(vim.o.lines * 0.8))
+  local col = math.floor((vim.o.columns - width) / 2)
+  local row = math.floor((vim.o.lines - height) / 2)
   
-  -- Create floating window
-  local win = vim.api.nvim_open_win(buf, true, {
+  -- Create top floating window (original)
+  local win_original = vim.api.nvim_open_win(buf_original, false, {
     relative = 'editor',
     width = width,
-    height = height,
-    col = math.floor((vim.o.columns - width) / 2),
-    row = math.floor((vim.o.lines - height) / 2),
+    height = math.floor(height / 2) - 1,
+    col = col,
+    row = row,
     border = 'rounded',
-    title = 'Claude Preview',
+    title = 'Original',
     title_pos = 'center',
   })
   
-  -- Set up keymaps for the preview window
+  -- Create bottom floating window (new)
+  local win_new = vim.api.nvim_open_win(buf_new, true, {
+    relative = 'editor',
+    width = width,
+    height = math.floor(height / 2) - 1,
+    col = col,
+    row = row + math.floor(height / 2) + 1,
+    border = 'rounded',
+    title = 'Claude Suggestion (y: accept, n: reject, q: quit)',
+    title_pos = 'center',
+  })
+  
+  -- Enable diff mode in both windows
+  vim.api.nvim_win_call(win_original, function()
+    vim.cmd('diffthis')
+  end)
+  vim.api.nvim_win_call(win_new, function()
+    vim.cmd('diffthis')
+  end)
+  
+  -- Function to close both windows and clean up
   local function close_and_callback(accepted)
-    vim.api.nvim_win_close(win, true)
+    -- Disable diff mode before closing
+    vim.api.nvim_win_call(win_original, function()
+      vim.cmd('diffoff')
+    end)
+    vim.api.nvim_win_call(win_new, function()
+      vim.cmd('diffoff')
+    end)
+    
+    -- Close windows
+    vim.api.nvim_win_close(win_original, true)
+    vim.api.nvim_win_close(win_new, true)
+    
+    -- Execute callback
     callback(accepted)
   end
   
-  vim.keymap.set('n', 'y', function() close_and_callback(true) end, { buffer = buf })
-  vim.keymap.set('n', 'n', function() close_and_callback(false) end, { buffer = buf })
-  vim.keymap.set('n', 'q', function() close_and_callback(false) end, { buffer = buf })
-  vim.keymap.set('n', '<Esc>', function() close_and_callback(false) end, { buffer = buf })
+  -- Set up keymaps for both windows
+  for _, buf in ipairs({buf_original, buf_new}) do
+    vim.keymap.set('n', 'y', function() close_and_callback(true) end, { buffer = buf })
+    vim.keymap.set('n', 'n', function() close_and_callback(false) end, { buffer = buf })
+    vim.keymap.set('n', 'q', function() close_and_callback(false) end, { buffer = buf })
+    vim.keymap.set('n', '<Esc>', function() close_and_callback(false) end, { buffer = buf })
+  end
 end
 
 return M
