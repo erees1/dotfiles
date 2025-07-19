@@ -34,13 +34,5 @@ if [[ -e "$server" ]]; then
 
     osascript -e "tell application \"Ghostty\" to activate"
 else
-    echo "No server found, launching normally..."
-    # Start local nvim
-    if [[ -n "$col" ]]; then
-        /opt/homebrew/bin/nvim "+call cursor($line,$col)" "$file"
-    elif [[ -n "$line" ]]; then
-        /opt/homebrew/bin/nvim "+$line" "$file"
-    else
-        /opt/homebrew/bin/nvim "$file"
-    fi
+    echo "No server found!"
 fi
