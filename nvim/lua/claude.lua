@@ -43,7 +43,8 @@ M.config = {
   silent = false,
   
   -- Number of lines of context to include before and after selection
-  context_lines = 30,
+  context_before = 45,
+  context_after = 10,
   
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
@@ -225,11 +226,12 @@ end
 -- API calls ------------------------------------------------------------------
 H.get_context = function(start_line, end_line)
   local total_lines = vim.api.nvim_buf_line_count(0)
-  local context_lines = M.config.context_lines or 30
+  local context_before = M.config.context_before or 30
+  local context_after = M.config.context_after or 30
   
   -- Calculate context boundaries
-  local context_start = math.max(1, start_line - context_lines)
-  local context_end = math.min(total_lines, end_line + context_lines)
+  local context_start = math.max(1, start_line - context_before)
+  local context_end = math.min(total_lines, end_line + context_after)
   
   -- Get file path
   local file_path = vim.api.nvim_buf_get_name(0)
@@ -279,7 +281,7 @@ H.call_claude_api_with_context = function(prompt, original_text, context_data, c
 
 Task: %s
 
-Please carry out the task specified, your output should be a single codeblock (```) only that wholly replaces the code in <selection_to_modify>, do not provide any explanations or alternatives. To help you have also been give code before and after the selection. Ensure to maintain the correct level of indentation in your output.]],
+Please carry out the task specified, your output should be a single codeblock (```) that wholly replaces <selection_to_modify>, do not provide any explanations or alternatives. You have also been give some of the surrounding context. Ensure to maintain the correct indentation in your output.]],
     context_data.file_name,
     table.concat(context_data.before_lines, '\n'),
     original_text,
