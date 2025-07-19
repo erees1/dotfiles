@@ -193,7 +193,7 @@ local function reset_hunk()
     end
     
     -- Get full diff to find the hunk
-    local cmd = string.format('cd %s && git diff HEAD -- %s', vim.fn.shellescape(git_root), vim.fn.shellescape(relative_path))
+    local cmd = string.format('cd %s && git --no-pager diff -U0 --no-color --no-ext-diff HEAD -- %s', vim.fn.shellescape(git_root), vim.fn.shellescape(relative_path))
     local handle = io.popen(cmd)
     if not handle then return end
     
@@ -210,8 +210,10 @@ local function reset_hunk()
         if current_line >= hunk.new_start and current_line < hunk.new_start + hunk.new_count then
             found_hunk = true
             
-            -- Create a patch file with just this hunk
-            local patch_content = string.format("--- a/%s\n+++ b/%s\n", relative_path, relative_path)
+            -- Create proper patch content with full diff header
+            local patch_content = string.format("diff --git a/%s b/%s\n", relative_path, relative_path)
+            patch_content = patch_content .. string.format("index 0000000..1111111 100644\n")
+            patch_content = patch_content .. string.format("--- a/%s\n+++ b/%s\n", relative_path, relative_path)
             patch_content = patch_content .. string.format("@@ -%d,%d +%d,%d @@\n", 
                 hunk.old_start, hunk.old_count, hunk.new_start, hunk.new_count)
             
@@ -227,7 +229,7 @@ local function reset_hunk()
                 patch_file:close()
                 
                 -- Apply reverse patch
-                local apply_cmd = string.format('cd %s && git apply --reverse %s', 
+                local apply_cmd = string.format('cd %s && git apply --reverse --unidiff-zero %s', 
                     vim.fn.shellescape(git_root), 
                     vim.fn.shellescape(temp_patch))
                 
@@ -242,6 +244,8 @@ local function reset_hunk()
                     vim.defer_fn(function()
                         update_signs(bufnr)
                     end, 50)
+                    
+                    vim.notify("Hunk reset successfully", vim.log.levels.INFO)
                 else
                     vim.notify("Failed to reset hunk", vim.log.levels.ERROR)
                 end
@@ -268,7 +272,7 @@ update_signs = function(bufnr)
     vim.fn.sign_unplace('GitHunks', { buffer = bufnr })
     
     -- Get git diff
-    local cmd = string.format('cd %s && git diff -U0 --no-color --no-ext-diff HEAD -- %s', vim.fn.shellescape(git_root), vim.fn.shellescape(relative_path))
+    local cmd = string.format('cd %s && git --no-pager diff -U0 --no-color --no-ext-diff HEAD -- %s', vim.fn.shellescape(git_root), vim.fn.shellescape(relative_path))
     local handle = io.popen(cmd)
     if not handle then return end
     
