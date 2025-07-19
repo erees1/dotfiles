@@ -5,6 +5,13 @@ local function hover_dynamic_size(buf_opts)
   vim.lsp.buf.hover({width=width, height=height})
 end
 
+
+local function format_and_organize_imports()
+  vim.lsp.buf.format({ async = true })
+  vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
+end
+
+
 local on_attach = function(client, bufnr)
     local buf_opts = { buffer = bufnr, silent = true }
     
@@ -20,7 +27,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<CR>", vim.diagnostic.goto_next, buf_opts)
     vim.keymap.set("n", "do", vim.diagnostic.open_float, buf_opts)
     vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, buf_opts)
-    vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, buf_opts)
+    vim.keymap.set("n", "<leader>f", format_and_organize_imports, buf_opts)
 
     
     -- Diagnostic configuration

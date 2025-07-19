@@ -1,5 +1,5 @@
 -- FZF integration without plugins
-local function run_fzf_command(command, cleanup_fn, parse_fn)
+local function run_fzf_command(command, cleanup_fn, parse_fn, window_title)
   local tmpfile = vim.fn.tempname()
   local original_win = vim.api.nvim_get_current_win()
   
@@ -9,6 +9,9 @@ local function run_fzf_command(command, cleanup_fn, parse_fn)
   vim.bo.buftype = 'nofile'
   vim.bo.bufhidden = 'wipe'
   vim.bo.buflisted = false
+  
+  -- Set a buffer-local variable for the window title
+  vim.b.fzf_window_title = window_title or 'FZF'
   
   vim.fn.termopen(command .. ' > ' .. tmpfile, {
     on_exit = function(_, exit_code)
@@ -47,12 +50,12 @@ end
 
 -- FZF files
 local function fzf_files()
-  run_fzf_command('fzf')
+  run_fzf_command('fzf', nil, nil, 'Find Files')
 end
 
 -- FZF git files
 local function fzf_git_files()
-  run_fzf_command('git ls-files | fzf')
+  run_fzf_command('git ls-files | fzf', nil, nil, 'Find Git Files')
 end
 
 -- FZF buffers
@@ -70,7 +73,7 @@ local function fzf_buffers()
   vim.fn.writefile(buffers, tmpfile)
   run_fzf_command('cat ' .. tmpfile .. ' | fzf', function()
     vim.fn.delete(tmpfile)
-  end)
+  end, nil, 'Find Buffers')
 end
 
 -- Parse ripgrep output and open file at correct position
@@ -103,7 +106,8 @@ local function fzf_rg()
       run_fzf_command(
         'rg --column --line-number --no-heading --color=always --smart-case ' .. query .. ' | fzf --ansi --delimiter : --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}-/2"',
         nil,
-        parse_rg_selection
+        parse_rg_selection,
+        'Search: ' .. query
       )
     end
   end)
@@ -114,7 +118,8 @@ local function fzf_rg_interactive()
   run_fzf_command(
     'true | fzf --phony --bind "change:reload:rg --column --line-number --no-heading --color=always --smart-case {q} || true" --ansi --delimiter : --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}-/2"',
     nil,
-    parse_rg_selection
+    parse_rg_selection,
+    'Live Search'
   )
 end
 
@@ -126,7 +131,8 @@ local function fzf_rg_word()
     run_fzf_command(
       'rg --column --line-number --no-heading --color=always --smart-case ' .. query .. ' | fzf --ansi --delimiter : --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}-/2"',
       nil,
-      parse_rg_selection
+      parse_rg_selection,
+      'Search: ' .. word
     )
   end
 end

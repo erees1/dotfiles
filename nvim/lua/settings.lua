@@ -3,7 +3,6 @@ vim.g.mapleader = " "
 
 -- Vim options
 vim.o.termguicolors = true -- Needed for colors
-vim.cmd("colorscheme darcula")
 
 vim.o.winborder = "rounded"
 

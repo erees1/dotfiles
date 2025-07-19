@@ -78,13 +78,28 @@ act() {
     fi
 }
 
-nvim() {
+nv() {
     # hack to get pyenv to work with nvim
     act
-    command nvim $argv
+  if [[ "$1" =~ '^(.+):([0-9]+):([0-9]+)$' ]]; then
+    local file=${match[1]}
+    local line=${match[2]}
+    local col=${match[3]}
+    command nvim +call\ cursor\($line,$col\) "$file" "${@:2}"
+  elif [[ "$1" =~ '^(.+):([0-9]+)$' ]]; then
+    local file=${match[1]}
+    local line=${match[2]}
+    command nvim +$line "$file" "${@:2}"
+  else
+    command nvim "$@"
+  fi
 }
-alias vim="nvim"
-alias v="nvim"
+
+alias vim="nv"
+alias v="nv"
+
+# Start nvim listening on server pipe
+alias nvl='nvim --listen /Users/ed/.cache/nvim/server.pipe'
 
 
 #-------------------------------------------------------------

@@ -17,6 +17,8 @@ endif
 
 " Color Palette - Matched to VSCode Darcula theme
 let s:none = ['NONE', 'NONE']
+let s:bg_darker = ['#262626', 234]
+let s:bg_dark = ['#282828', 235]
 let s:bg = ['#2b2b2b', 235]
 let s:bg_light = ['#303030', 236]
 let s:bg_lighter = ['#3d3f41', 237]
@@ -38,6 +40,8 @@ let s:orange = ['#CC8242', 172]
 let s:blue = ['#7A9EC2', 110]
 let s:purple = ['#9E7BB0', 139]
 let s:cyan = ['#0c7d9d', 31]
+let s:white = ['#ffffff', 15]
+let s:black = ['#000000', 0]
 
 " Selection colors
 let s:selection = ['#204182cc', 25]
@@ -85,6 +89,8 @@ call s:HL('VertSplit', ['#3c3f41', 237], s:bg)
 call s:HL('TabLine', s:fg, ['#3c3f41', 237])
 call s:HL('TabLineFill', s:fg, ['#3c3f41', 237])
 call s:HL('TabLineSel', s:fg, ['#2c2c2c', 236])
+
+call s:HL('WinBar', s:white, ['#4a4a4a', 239], 'bold')
 call s:HL('StatusLine', ['#ffffff', 231], ['#4a4a4a', 239], 'bold')
 call s:HL('StatusLineNC', ['#888888', 244], ['#3c3c3c', 237])
 call s:HL('Search', s:bg, s:yellow, 'bold')

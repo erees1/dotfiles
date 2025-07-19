@@ -179,7 +179,8 @@
                                             "^com.googlecode.iterm2",
                                             "com.microsoft.VSCode",
                                             "dev.zed.Zed-Preview",
-                                            "net.kovidgoyal.kitty"
+                                            "net.kovidgoyal.kitty",
+                                            "com.mitchellh.ghostty"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -199,7 +200,8 @@
                                             "^com.googlecode.iterm2",
                                             "com.microsoft.VSCode",
                                             "dev.zed.Zed-Preview",
-                                            "net.kovidgoyal.kitty"
+                                            "net.kovidgoyal.kitty",
+                                            "com.mitchellh.ghostty"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }

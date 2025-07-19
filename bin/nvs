@@ -1,0 +1,46 @@
+#!/bin/bash
+# Extract file path and optional line:col
+if [[ "$1" =~ ^(.+):([0-9]+):([0-9]+)$ ]]; then
+    query="${BASH_REMATCH[1]}"
+    line="${BASH_REMATCH[2]}"
+    col="${BASH_REMATCH[3]}"
+elif [[ "$1" =~ ^(.+):([0-9]+)$ ]]; then
+    query="${BASH_REMATCH[1]}"
+    line="${BASH_REMATCH[2]}"
+else
+    query="$1"
+fi
+
+# Strip /root/code/ if present
+query=$(echo "$query" | sed 's|^/root/code/||')
+
+# Apply absolute vs relative path logic
+file="$(realpath "$query")"
+
+# Server pipe path
+server="/Users/ed/.cache/nvim/server.pipe"
+
+# Check if server is running
+if [[ -e "$server" ]]; then
+    # Open file remotely
+    /opt/homebrew/bin/nvim --server "$server" --remote "$file"
+
+    # Send cursor positioning commands if needed
+    if [[ -n "$col" ]]; then
+        /opt/homebrew/bin/nvim --server "$server" --remote-send ":call cursor($line,$col)<CR>"
+    elif [[ -n "$line" ]]; then
+        /opt/homebrew/bin/nvim --server "$server" --remote-send ":$line<CR>"
+    fi
+
+    osascript -e "tell application \"Ghostty\" to activate"
+else
+    echo "No server found, launching normally..."
+    # Start local nvim
+    if [[ -n "$col" ]]; then
+        /opt/homebrew/bin/nvim "+call cursor($line,$col)" "$file"
+    elif [[ -n "$line" ]]; then
+        /opt/homebrew/bin/nvim "+$line" "$file"
+    else
+        /opt/homebrew/bin/nvim "$file"
+    fi
+fi

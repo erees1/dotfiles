@@ -29,6 +29,13 @@ local function update_indent_guides(bufnr)
     
     bufnr = bufnr or vim.api.nvim_get_current_buf()
     
+    -- Only show for Python filetypes
+    local filetype = vim.bo[bufnr].filetype
+    if filetype ~= 'python' then
+        vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
+        return
+    end
+    
     -- Clear existing virtual text
     vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
     
