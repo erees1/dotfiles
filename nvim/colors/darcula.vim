@@ -3,7 +3,7 @@
 
 " Initialization
 if version > 580
-  hi clear
+  " hi clear
   if exists("syntax_on")
     syntax reset
   endif
