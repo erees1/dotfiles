@@ -237,8 +237,14 @@ local function reset_hunk()
                 os.remove(temp_patch)
                 
                 if result == 0 then
+                    -- Save view (scroll position, cursor, etc.)
+                    local view = vim.fn.winsaveview()
+                    
                     -- Reload buffer
                     vim.cmd('edit!')
+                    
+                    -- Restore view
+                    vim.fn.winrestview(view)
                     
                     -- Update signs
                     vim.defer_fn(function()
