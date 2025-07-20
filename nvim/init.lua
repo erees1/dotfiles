@@ -1,6 +1,3 @@
-
-vim.cmd("colorscheme darcula")
-
 require("settings")
 require("keybindings")
 require("statusline")
@@ -44,14 +41,14 @@ require('mini.completion').setup({
 
 require('mini.hues').setup({
     -- Base colors (required)
-    background = '#2a2530',
+    background = '#26222d',
     foreground = '#d0d0d0',
 
     -- Number of hues for non-base colors (0-8)
     n_hues = 8,
 
     -- Saturation level
-    saturation = 'high',  -- 'low', 'lowmedium', 'medium', 'mediumhigh', 'high'
+    saturation = 'mediumhigh',  -- 'low', 'lowmedium', 'medium', 'mediumhigh', 'high'
 
 
     -- Plugin integrations
@@ -65,18 +62,18 @@ vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#323238', fg = '#999999' })
 vim.api.nvim_set_hl(0, 'WinBar', { bg = '#3a3540', fg = '#e6e6e6' })
 vim.api.nvim_set_hl(0, 'WinBarNC', { bg = '#323238', fg = '#999999' })
 
--- Python keyword highlight overrides using MiniHues palette
 local palette = require('mini.hues').get_palette()
-vim.api.nvim_set_hl(0, 'Statement', { fg = '#e06c75', bold = true })        -- Clear red for statements like return, pass, break
-vim.api.nvim_set_hl(0, 'pythonConditional', { fg = palette.cyan, bold = true })    -- Cyan for if, elif, else
-vim.api.nvim_set_hl(0, 'pythonRepeat', { fg = palette.blue, bold = true })         -- Blue for for, while loops
-vim.api.nvim_set_hl(0, 'pythonException', { fg = palette.orange, bold = true })      -- Orange for try, except, finally, raise
-vim.api.nvim_set_hl(0, 'pythonInclude', { fg = palette.purple, bold = true })        -- Purple for import, from
-vim.api.nvim_set_hl(0, 'pythonOperator', { fg = palette.yellow })                    -- Yellow for operators like and, or, not, in, is
-vim.api.nvim_set_hl(0, 'pythonAsync', { fg = palette.purple, bold = true })        -- Purple for async/await
-vim.api.nvim_set_hl(0, 'pythonFunction', { fg = palette.orange, bold = true })      -- Orange for function definitions
-vim.api.nvim_set_hl(0, 'TypeDef', { fg = palette.orange, bold = true })      
-vim.api.nvim_set_hl(0, 'Type', { fg = palette.orange, bold = true })      -- Orange for function definitions
+vim.api.nvim_set_hl(0, 'Statement', { fg = '#e06c75', bold = false })        -- return, pass, break
+vim.api.nvim_set_hl(0, 'Conditional', { fg = palette.orange, bold = false }) -- if, elif, else
+vim.api.nvim_set_hl(0, 'Repeat', { fg = palette.orange })                    -- for, while loops
+vim.api.nvim_set_hl(0, 'Exception', { fg = palette.orange, bold = false })   -- try, except, finally, raise
+vim.api.nvim_set_hl(0, 'Include', { fg = palette.purple, bold = false })     -- import, from
+vim.api.nvim_set_hl(0, 'Operator', { fg = palette.orange })                  -- and, or, not, in, is
+vim.api.nvim_set_hl(0, 'Async', { fg = palette.purple, bold = false })       -- async/await
+vim.api.nvim_set_hl(0, 'Function', { fg = palette.orange, bold = true })     -- function definitions
+vim.api.nvim_set_hl(0, 'TypeDef', { fg = palette.orange, bold = false })     -- type definitions
+vim.api.nvim_set_hl(0, 'Type', { fg = palette.orange, bold = false })        -- types
+vim.api.nvim_set_hl(0, 'pythonBuiltin', { fg = palette.blue, bold = false }) -- builtin functions
 
 -- After setting any colorschemes
 require("indent-guides").setup()
