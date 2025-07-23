@@ -50,12 +50,12 @@ end
 
 -- FZF files
 local function fzf_files()
-  run_fzf_command('fzf', nil, nil, 'Find Files')
+  run_fzf_command('fzf --height=100%', nil, nil, 'Find Files')
 end
 
 -- FZF git files
 local function fzf_git_files()
-  run_fzf_command('git ls-files | fzf', nil, nil, 'Find Git Files')
+  run_fzf_command('git ls-files | fzf --height=100%', nil, nil, 'Find Git Files')
 end
 
 -- FZF buffers
@@ -71,7 +71,7 @@ local function fzf_buffers()
     end
   end
   vim.fn.writefile(buffers, tmpfile)
-  run_fzf_command('cat ' .. tmpfile .. ' | fzf', function()
+  run_fzf_command('cat ' .. tmpfile .. ' | fzf --height=100%', function()
     vim.fn.delete(tmpfile)
   end, nil, 'Find Buffers')
 end
@@ -104,7 +104,7 @@ local function fzf_rg()
       -- Escape special characters for shell
       query = vim.fn.shellescape(query)
       run_fzf_command(
-        'rg --column --line-number --no-heading --color=always --smart-case ' .. query .. ' | fzf --ansi --delimiter : --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}-/2"',
+        'rg --column --line-number --no-heading --color=always --smart-case ' .. query .. ' | fzf --ansi --delimiter : --height=100% --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:50%:+{2}-/2"',
         nil,
         parse_rg_selection,
         'Search: ' .. query
@@ -116,7 +116,7 @@ end
 -- Alternative: Interactive ripgrep with fzf (live search)
 local function fzf_rg_interactive()
   run_fzf_command(
-    'true | fzf --phony --bind "change:reload:rg --column --line-number --no-heading --color=always --smart-case {q} || true" --ansi --delimiter : --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}-/2"',
+    'true | fzf --phony --bind "change:reload:rg --column --line-number --no-heading --color=always --smart-case {q} || true" --ansi --delimiter : --height=100% --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:50%:+{2}-/2"',
     nil,
     parse_rg_selection,
     'Live Search'
@@ -129,7 +129,7 @@ local function fzf_rg_word()
   if word and word ~= '' then
     local query = vim.fn.shellescape(word)
     run_fzf_command(
-      'rg --column --line-number --no-heading --color=always --smart-case ' .. query .. ' | fzf --ansi --delimiter : --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:60%:+{2}-/2"',
+      'rg --column --line-number --no-heading --color=always --smart-case ' .. query .. ' | fzf --ansi --delimiter : --height=100% --preview "bat --style=numbers --color=always {1} --highlight-line {2}" --preview-window "right:50%:+{2}-/2"',
       nil,
       parse_rg_selection,
       'Search: ' .. word
@@ -137,14 +137,15 @@ local function fzf_rg_word()
   end
 end
 
+
 -- Key mappings for fzf
-vim.keymap.set('n', '<leader>ff', fzf_files, { desc = 'Find files with fzf' })
-vim.keymap.set('n', '<leader>fg', fzf_git_files, { desc = 'Find git files with fzf' })
-vim.keymap.set('n', '<leader>fb', fzf_buffers, { desc = 'Find buffers with fzf' })
-vim.keymap.set('n', '<leader>fr', fzf_rg, { desc = 'Search with ripgrep and fzf' })
-vim.keymap.set('n', '<leader>fi', fzf_rg_interactive, { desc = 'Interactive ripgrep search with fzf' })
-vim.keymap.set('n', '<leader>fa', fzf_rg_word, { desc = 'Search word under cursor with ripgrep and fzf' })
+vim.keymap.set('n', '<leader>of', fzf_files, { desc = 'Find files with fzf' })
+vim.keymap.set('n', '<leader>og', fzf_git_files, { desc = 'Find git files with fzf' })
+vim.keymap.set('n', '<leader>ob', fzf_buffers, { desc = 'Find buffers with fzf' })
+vim.keymap.set('n', '<leader>or', fzf_rg, { desc = 'Search with ripgrep and fzf' })
+vim.keymap.set('n', '<leader>oi', fzf_rg_interactive, { desc = 'Interactive ripgrep search with fzf' })
+vim.keymap.set('n', '<leader>ow', fzf_rg_word, { desc = 'Search word under cursor with ripgrep and fzf' })
 
 -- Map Cmd+P to find files (works in terminals that support it)
-vim.keymap.set({'n', 'i', 'v'}, '<D-p>', fzf_files, { desc = 'Find files with fzf' })
+vim.keymap.set({'n', 'i', 'v'}, '<D-p>', fzf_git_files, { desc = 'Find git files with fzf' })
 vim.keymap.set({'n', 'i', 'v'}, '<D-s-f>', fzf_rg_interactive , { desc = 'Find files with fzf' })
