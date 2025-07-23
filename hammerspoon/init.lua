@@ -146,7 +146,7 @@ end
 local keybindings = {
     -- Apps
     { mod = modifiers, key = "i", fn = function() launchOrFocus("kitty") end },
-    { mod = modifiers, key = "a", fn = function() launchOrFocus("Ghostty") end },
+    { mod = modifiers, key = "a", fn = function() launchOrFocus("Zed") end },
     { mod = modifiers, key = "v", fn = function() launchOrFocus("Visual Studio Code") end },
     { mod = modifiers, key = "s", fn = function() launchOrFocus("Slack") end },
     { mod = modifiers, key = "b", fn = function() launchOrFocus("Finder") end },
