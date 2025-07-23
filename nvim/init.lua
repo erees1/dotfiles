@@ -7,6 +7,7 @@ require("git-hunks").setup()
 require("kitty-navigator").setup()
 require("lsp")
 require("claude").setup()
+-- require("python-autoimport").setup()
 
 -- Mini plugins
 require('mini.comment').setup({
@@ -39,41 +40,43 @@ require('mini.completion').setup({
     },
 })
 
-require('mini.hues').setup({
-    -- Base colors (required)
-    background = '#26222d',
-    foreground = '#d0d0d0',
+-- require('mini.hues').setup({
+--     -- Base colors (required)
+--     background = '#26222d',
+--     foreground = '#d0d0d0',
+--
+--     -- Number of hues for non-base colors (0-8)
+--     n_hues = 8,
+--
+--     -- Saturation level
+--     saturation = 'mediumhigh',  -- 'low', 'lowmedium', 'medium', 'mediumhigh', 'high'
+--
+--
+--     -- Plugin integrations
+--     plugins = {
+--         default = false,  -- Enable all by default
+--     },
+-- })
+-- -- Override winbar and statusbar colors for better visibility
+-- vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#3a3540', fg = '#e6e6e6' })
+-- vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#323238', fg = '#999999' })
+-- vim.api.nvim_set_hl(0, 'WinBar', { bg = '#3a3540', fg = '#e6e6e6' })
+-- vim.api.nvim_set_hl(0, 'WinBarNC', { bg = '#323238', fg = '#999999' })
+--
+-- local palette = require('mini.hues').get_palette()
+-- vim.api.nvim_set_hl(0, 'Statement', { fg = '#e06c75', bold = false })        -- return, pass, break
+-- vim.api.nvim_set_hl(0, 'Conditional', { fg = palette.orange, bold = false }) -- if, elif, else
+-- vim.api.nvim_set_hl(0, 'Repeat', { fg = palette.orange })                    -- for, while loops
+-- vim.api.nvim_set_hl(0, 'Exception', { fg = palette.orange, bold = false })   -- try, except, finally, raise
+-- vim.api.nvim_set_hl(0, 'Include', { fg = palette.purple, bold = false })     -- import, from
+-- vim.api.nvim_set_hl(0, 'Operator', { fg = palette.orange })                  -- and, or, not, in, is
+-- vim.api.nvim_set_hl(0, 'Async', { fg = palette.purple, bold = false })       -- async/await
+-- vim.api.nvim_set_hl(0, 'Function', { fg = palette.orange, bold = true })     -- function definitions
+-- vim.api.nvim_set_hl(0, 'TypeDef', { fg = palette.orange, bold = false })     -- type definitions
+-- vim.api.nvim_set_hl(0, 'Type', { fg = palette.orange, bold = false })        -- types
+-- vim.api.nvim_set_hl(0, 'pythonBuiltin', { fg = palette.blue, bold = false }) -- builtin functions
 
-    -- Number of hues for non-base colors (0-8)
-    n_hues = 8,
-
-    -- Saturation level
-    saturation = 'mediumhigh',  -- 'low', 'lowmedium', 'medium', 'mediumhigh', 'high'
-
-
-    -- Plugin integrations
-    plugins = {
-        default = false,  -- Enable all by default
-    },
-})
--- Override winbar and statusbar colors for better visibility
-vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#3a3540', fg = '#e6e6e6' })
-vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#323238', fg = '#999999' })
-vim.api.nvim_set_hl(0, 'WinBar', { bg = '#3a3540', fg = '#e6e6e6' })
-vim.api.nvim_set_hl(0, 'WinBarNC', { bg = '#323238', fg = '#999999' })
-
-local palette = require('mini.hues').get_palette()
-vim.api.nvim_set_hl(0, 'Statement', { fg = '#e06c75', bold = false })        -- return, pass, break
-vim.api.nvim_set_hl(0, 'Conditional', { fg = palette.orange, bold = false }) -- if, elif, else
-vim.api.nvim_set_hl(0, 'Repeat', { fg = palette.orange })                    -- for, while loops
-vim.api.nvim_set_hl(0, 'Exception', { fg = palette.orange, bold = false })   -- try, except, finally, raise
-vim.api.nvim_set_hl(0, 'Include', { fg = palette.purple, bold = false })     -- import, from
-vim.api.nvim_set_hl(0, 'Operator', { fg = palette.orange })                  -- and, or, not, in, is
-vim.api.nvim_set_hl(0, 'Async', { fg = palette.purple, bold = false })       -- async/await
-vim.api.nvim_set_hl(0, 'Function', { fg = palette.orange, bold = true })     -- function definitions
-vim.api.nvim_set_hl(0, 'TypeDef', { fg = palette.orange, bold = false })     -- type definitions
-vim.api.nvim_set_hl(0, 'Type', { fg = palette.orange, bold = false })        -- types
-vim.api.nvim_set_hl(0, 'pythonBuiltin', { fg = palette.blue, bold = false }) -- builtin functions
+vim.cmd('colorscheme darcula')
 
 -- After setting any colorschemes
 require("indent-guides").setup()
