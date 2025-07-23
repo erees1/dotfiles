@@ -2,59 +2,19 @@
 SRC_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
 DOT_DIR=$SRC_DIR/..
 
-# eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(fzf --zsh)"
+source $DOT_DIR/zsh/env.zsh
+source $DOT_DIR/zsh/base.zsh            # options + keybindings + vi mode
+source $DOT_DIR/zsh/plugins.zsh         # zsh plugins
+source $DOT_DIR/zsh/aliases.zsh         # command aliases
+source $DOT_DIR/zsh/fzf.zsh             # FZF integration
+source $DOT_DIR/zsh/p10k.zsh            # theme
 
-## all of our zsh files that we want to source
-typeset -U config_files
-config_files=($DOT_DIR/**/*.zsh)
-
-# load any env files first so that they can be used in other files
-# also defines stuff like $ZSH
-for file in ${(M)config_files:#*env.zsh}; do . $file; done
-
-function add_to_fpath() {
-  p=$1
-  if [[ "$fpath" != *"$p"* ]]; then
-    fpath=($1 $fpath)
-  fi
-}
-add_to_fpath $ZSH_PLUGINS_DIR/zsh-completions/src
-add_to_fpath $ZSH_DOT_DIR/completions
-
-# Enable menu selection for completions
-zstyle ':completion:*' menu select
-
-# Load plugins manually
-[[ -f $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -f $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[[ -f $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme ]] && source $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme
-
-
-# set completion colors to be the same as `ls`, after theme has been loaded
-[[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-export LSCOLORS=$MYLSCOLORS  # do after oh-my-zsh to override their setting
-
-# Activate vim mode.
-bindkey -v
-# You need these here otherwise if you go into normal mode and then back to insert
-# mode the delete key doesn't work, on testing it seems I only need ^? in mac terminal but I kept both
-# of suggested here: https://vi.stackexchange.com/questions/31671/set-o-vi-in-zsh-backspace-doesnt-delete-non-inserted-characters
-bindkey "^H" backward-delete-char
-bindkey "^?" backward-delete-char
-
-# Add keybindings for ctrl-b and ctrl-e to go to beginning/end of line in insert mode
-bindkey -M viins '^U' beginning-of-line
-bindkey -M viins '^E' end-of-line
-
-# Add keybindings for ctrl-n and ctrl-p to work like up/down arrows
-bindkey -M viins '^P' up-line-or-history
-bindkey -M viins '^N' down-line-or-history
-bindkey -M vicmd '^P' up-line-or-history
-bindkey -M vicmd '^N' down-line-or-history
-
-# load everything but env files
-for file in ${${config_files:#*env.zsh}}; do . $file; done
+source $DOT_DIR/git/git.zsh             # git aliases, functions, and keybindings
+source $DOT_DIR/tmux/tmux.zsh           # tmux shortcuts
+source $DOT_DIR/node/node.zsh           # nvm setup
+source $DOT_DIR/python/python.zsh       # python and pyenv setup
+source $DOT_DIR/ocaml/ocaml.zsh         # opam configuration
+source $DOT_DIR/ruby/rbenv.zsh          # rbenv setup
 
 # Stash your environment variables in ~/.localrc or zshrc.secret. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but

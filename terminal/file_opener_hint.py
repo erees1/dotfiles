@@ -27,7 +27,7 @@ class DebugPatternConverter(FilePatternConverter):
 
 class DirectPatternConverter:
     def __init__(self):
-        self.pattern: str = r'[^\s:][^\s:]+\.py:(\d+)(?::(\d+))?'
+        self.pattern: str = r'[^\s:(\[{][^\s:]+\.py:(\d+)(?::(\d+))?'
 
     def convert(self, text: str) -> str:
         return text

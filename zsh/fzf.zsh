@@ -1,3 +1,5 @@
+eval "$(fzf --zsh)"
+
 bindkey -r "^R"  # Remove ctrl-r binding
 
 # FZF options - might also affect fzf-lua extenstion in vim
