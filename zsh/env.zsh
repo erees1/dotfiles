@@ -10,7 +10,6 @@ else
 fi
 export DOT_DIR=$(realpath "$ZSH_DOT_DIR"/../)
 
-export MY_BIN_LOC="$HOME/.local/dotbin"
 export PRO_BASE="$HOME/git"
 export ZSH_PLUGINS_DIR="$HOME/.zsh/plugins"
 export OH_MY_ZSH=$HOME/.oh-my-zsh
