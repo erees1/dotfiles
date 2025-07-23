@@ -54,8 +54,10 @@ vim.keymap.set("n", "mo", ":wincmd o<CR>")
 
 vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>")
 
--- Disable macros because it lags quit etc..
--- vim.keymap.set('n', 'q', '<nop>')
+-- Select all with cmd-a
+vim.keymap.set("n", "<D-a>", "ggVG")
+vim.keymap.set("i", "<D-a>", "<Esc>ggVG")
+vim.keymap.set("v", "<D-a>", "<Esc>ggVG")
 
 -- Function to yank full path
 _G.yank_full_path = function()
