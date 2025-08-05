@@ -15,6 +15,13 @@ zstyle ':completion:*' menu select
 [[ -f $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -f $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme ]] && source $ZSH_PLUGINS_DIR/powerlevel10k/powerlevel10k.zsh-theme
 
+# Substring search is stored in this repo
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=black,bold'
+source $DOT_DIR/zsh/history_substring_search.zsh
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+
+
 # set completion colors to be the same as `ls`, after theme has been loaded
 [[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 export LSCOLORS=$MYLSCOLORS  # do after oh-my-zsh to override their setting
