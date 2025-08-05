@@ -1,4 +1,7 @@
 # for pyright
+SRC_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
+DOT_DIR=$SRC_DIR/..
+
 export NODE_OPTIONS="--max-old-space-size=12288 --max-semi-space-size=64"
 
 # PATH setup - runs once per login session
