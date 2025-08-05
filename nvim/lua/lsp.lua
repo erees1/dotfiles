@@ -47,12 +47,12 @@ local on_attach = function(client, bufnr)
                 [vim.diagnostic.severity.INFO] = "■",
                 [vim.diagnostic.severity.HINT] = "■",
             },
-            linehl = {
-                [vim.diagnostic.severity.ERROR] = "DiagnosticLineError",
-                [vim.diagnostic.severity.WARN] = "DiagnosticLineWarn",
-                [vim.diagnostic.severity.INFO] = "DiagnosticLineInfo",
-                [vim.diagnostic.severity.HINT] = "DiagnosticLineHint",
-            },
+            -- linehl = {
+            --     [vim.diagnostic.severity.ERROR] = "DiagnosticLineError",
+            --     [vim.diagnostic.severity.WARN] = "DiagnosticLineWarn",
+            --     [vim.diagnostic.severity.INFO] = "DiagnosticLineInfo",
+            --     [vim.diagnostic.severity.HINT] = "DiagnosticLineHint",
+            -- },
         },
         underline = true,
         update_in_insert = false,
@@ -60,10 +60,10 @@ local on_attach = function(client, bufnr)
 end
 
 -- Set up diagnostic highlighting
-vim.api.nvim_set_hl(0, "DiagnosticLineError", { bg = "#2c1418" })
-vim.api.nvim_set_hl(0, "DiagnosticLineWarn", { bg = "#2c2418" })
-vim.api.nvim_set_hl(0, "DiagnosticLineInfo", { bg = "#182c24" })
-vim.api.nvim_set_hl(0, "DiagnosticLineHint", { bg = "#1c1c2c" })
+-- vim.api.nvim_set_hl(0, "DiagnosticLineError", { bg = "#2c1418" })
+-- vim.api.nvim_set_hl(0, "DiagnosticLineWarn", { bg = "#2c2418" })
+-- vim.api.nvim_set_hl(0, "DiagnosticLineInfo", { bg = "#182c24" })
+-- vim.api.nvim_set_hl(0, "DiagnosticLineHint", { bg = "#1c1c2c" })
 
 -- Pyright configuration
 vim.lsp.config("pyright", {on_attach = on_attach})
