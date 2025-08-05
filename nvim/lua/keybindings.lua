@@ -73,9 +73,28 @@ _G.yank_relative_path = function()
     print("Relative path yanked: " .. relative_path) -- Notify the user
 end
 
--- Map these yank functions to <leader>yr and <leader>yf
+-- Function to yank Python module path
+_G.yank_module_path = function()
+    local relative_path = vim.fn.expand("%:~:.") -- Get the relative path of the current file
+    local module_path = relative_path:gsub("/", "."):gsub("%.py$", "") -- Replace / with . and remove .py extension
+    
+    -- Remove first directory if it's duplicated (e.g., sandbox/sandbox -> sandbox)
+    local first_dir = module_path:match("^([^%.]+)%.")
+    if first_dir and module_path:match("^" .. first_dir .. "%." .. first_dir .. "%.") then
+        module_path = module_path:gsub("^" .. first_dir .. "%.", "")
+    end
+    
+    -- Add python -m prefix
+    local full_command = "python -m " .. module_path
+    
+    vim.api.nvim_call_function("setreg", { "+", full_command }) -- Set the clipboard register to the full command
+    print("Module command yanked: " .. full_command) -- Notify the user
+end
+
+-- Map these yank functions to <leader>yr, <leader>yf, and <leader>ym
 vim.keymap.set("n", "<leader>yr", ":lua _G.yank_relative_path()<CR>")
 vim.keymap.set("n", "<leader>yf", ":lua _G.yank_full_path()<CR>")
+vim.keymap.set("n", "<leader>ym", ":lua _G.yank_module_path()<CR>")
 
 -- Open netrw file explorer with <leader>e
 vim.keymap.set("n", "<leader>e", ":Ex<CR>")
