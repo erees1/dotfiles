@@ -1,45 +1,62 @@
 #!/bin/bash
 set -euo pipefail
-SRC_DIR="$(dirname "$0")"
-help_message=$(cat <<-END
-Usage: [<ENV>=1] ./install.sh 
-Install dotfile dependencies on mac or linux
 
-ENV Variables:
-    FORCE=1      force reinstall the zsh and tmux plugins
-    NO_ROOT=1    install without root permissions
-    EXTRA=1      install extra (non crucial binaries, e.g. bat / exa)
-END
-)
+# Simple Mac-only installer for dotfiles
+# Installs all dependencies directly without complex logic
 
-if [[ $# -gt 0 ]]; then
-    echo "$help_message"
+echo "Starting dotfiles installation for macOS..."
+
+# Check if running on macOS
+if [ "$(uname -s)" != "Darwin" ]; then
+    echo "Error: This installer is macOS only"
     exit 1
 fi
 
-read -p "This will install all */install.sh scripts? Do you want to continue. Consider using ./install-min.sh for a more minimal installation (y/n): " choice
-
-if [[ $choice =~ ^[Yy]$ ]]
-then
-    echo "Installing..."
-else
-    echo "Exiting..."
+read -p "This will install dotfiles and dependencies. Continue? (y/n): " choice
+if [[ ! $choice =~ ^[Yy]$ ]]; then
+    echo "Installation cancelled"
     exit 0
 fi
-exit 1
 
-. $SRC_DIR/utils/logging.sh
+echo "Installing Homebrew packages..."
 
-install () {
-    info "Installing $1"
-    "$@"
-    success "Finished installing $1"
-}
+# Core utilities
+brew install coreutils
 
-cd "$(dirname $0)"
+# Terminal tools
+brew install tmux
+brew install fzf
+brew install htop
+brew install ripgrep
 
-# Source all the env files in case they set variables needed by the installers
-for file in $SRC_DIR/**/*env.zsh; do . $file; done
+# Git tools
+brew install git-delta
 
-find . -name install_first.sh -mindepth 2 | while read installer ; do install "${installer}"; done
-find . -name install.sh -mindepth 2 | while read installer ; do install "${installer}" ; done
+# Python environment
+brew install openssl readline sqlite3 xz zlib tcl-tk
+brew install pyenv
+brew install pyenv-virtualenv
+
+# Node (for LSPs and tools)
+brew install nvm
+mkdir -p ~/.nvm
+
+# Optional tools (uncomment if wanted)
+# brew install bat
+
+echo "Installing tmux plugin manager..."
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+echo "Installing zsh plugins..."
+./zsh/install.sh
+
+echo "Installing Neovim..."
+./nvim/install.sh
+
+echo "Setting macOS defaults..."
+./osx/set_defaults.sh
+
+echo "Installation complete!"
+echo "Please restart your terminal or run 'source ~/.zshrc' to apply changes"
