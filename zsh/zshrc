@@ -2,6 +2,7 @@
 SRC_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
 DOT_DIR=$SRC_DIR/..
 
+source $DOT_DIR/zsh/brew.zsh            # homebrew setup
 source $DOT_DIR/zsh/base.zsh            # env + options + keybindings + vi mode + aliases
 source $DOT_DIR/zsh/plugins.zsh         # zsh plugins
 source $DOT_DIR/zsh/fzf.zsh             # FZF integration
