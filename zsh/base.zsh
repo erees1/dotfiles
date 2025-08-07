@@ -263,15 +263,13 @@ alias nvl='nvim --listen /Users/ed/.cache/nvim/server.pipe'
 # Mac specific
 #-------------------------------------------------------------
 
-if [ "$(uname -s)" = "Darwin" ]; then
-    alias vm='ssh vm'
-    alias rl='greadlink -f'
-    alias rm="grm -i"
-    alias cp='gcp -i'
-    alias mv='gmv -i'
+alias vm='ssh vm'
+alias rl='greadlink -f'
+alias rm="grm -i"
+alias cp='gcp -i'
+alias mv='gmv -i'
 
-    function chpwd() {
-        emulate -L zsh
-        eval ls
-    }
-fi
+function chpwd() {
+    emulate -L zsh
+    eval ls
+}
