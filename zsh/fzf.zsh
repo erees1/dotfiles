@@ -38,11 +38,32 @@ history-backsearch() {
 
 zle -N history-backsearch
 
+# use bat as the previewer for fzf if it is installed
+if command -v bat &> /dev/null; then
+  preview="bat --style=full --color=always {}"
+  else
+  preview="cat {}"
+fi
 
-# Set Up and Down arrow keys to the (zsh-)history-substring-search plugin
-# `-n` means `not empty`, equivalent to `! -z`
-# [[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
-# [[ -n "${terminfo[kcud1]}" ] fzf-history-widget] && bindkey "${terminfo[kcud1]}" history-substring-search-down
-# bindkey -M vicmd 'k' history-substring-search-up
-# bindkey -M vicmd 'j' history-substring-search-down
-# set ctrl + p and ctrl + n to do up and down arrow
+__fsel_files() {
+  setopt localoptions pipefail no_aliases 2> /dev/null
+  eval "find . -not -path '*/\.git/*' -type f -print" | fzf --preview=$preview -m "$@"  | while read item; do
+    echo -n "${(q)item} "
+  done
+  local ret=$?
+  echo
+  return $ret
+}
+
+function fzf-vim {
+    selected=$(__fsel_files)
+    if [[ -z "$selected" ]]; then
+        zle redisplay
+        return 0
+    fi
+    zle push-line # Clear buffer
+    BUFFER="v $selected";
+    zle accept-line
+}
+zle -N fzf-vim
+bindkey "^v" fzf-vim

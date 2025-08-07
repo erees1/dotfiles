@@ -117,33 +117,3 @@ zle -N vi-delete-yk
 bindkey -M vicmd 'y' vi-yank-yk
 bindkey -M vicmd 'x' vi-cut-yk
 bindkey -M vicmd 'd' vi-delete-yk
-
-# use bat as the previewer for fzf if it is installed
-if command -v bat &> /dev/null; then
-  preview="bat --style=full --color=always {}"
-  else
-  preview="cat {}"
-fi
-
-__fsel_files() {
-  setopt localoptions pipefail no_aliases 2> /dev/null
-  eval "find . -not -path '*/\.git/*' -type f -print" | fzf --preview=$preview -m "$@"  | while read item; do
-    echo -n "${(q)item} "
-  done
-  local ret=$?
-  echo
-  return $ret
-}
-
-function fzf-vim {
-    selected=$(__fsel_files)
-    if [[ -z "$selected" ]]; then
-        zle redisplay
-        return 0
-    fi
-    zle push-line # Clear buffer
-    BUFFER="v $selected";
-    zle accept-line
-}
-zle -N fzf-vim
-bindkey "^v" fzf-vim

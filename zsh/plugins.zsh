@@ -17,7 +17,7 @@ zstyle ':completion:*' menu select
 
 # Substring search is stored in this repo
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=black,bold'
-source $DOT_DIR/zsh/history_substring_search.zsh
+source $DOT_DIR/zsh/plugins/history_substring_search.zsh
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
