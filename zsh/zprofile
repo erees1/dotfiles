@@ -1,4 +1,4 @@
-# for pyright
+ for pyright
 SRC_DIR=$(realpath $(dirname $(realpath ${(%):-%x})))
 DOT_DIR=$SRC_DIR/..
 
