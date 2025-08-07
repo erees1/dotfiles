@@ -1,35 +1,30 @@
 #!/usr/bin/env bash
-# deploy.sh symlink dotfiles to your home directory
+# Setup git configuration with user details
+
+set -euo pipefail
 
 cd "$(dirname "$0")"
-DOTFILES_ROOT=$(pwd -P)
 
-. $DOTFILES_ROOT/utils/logging.sh
+echo "Setting up git configuration..."
 
-set -e
+# Check if gitconfig.local already exists
+if [ -f git/gitconfig.local ]; then
+    echo "git/gitconfig.local already exists, skipping setup"
+    exit 0
+fi
 
-echo ''
+# Since we're Mac-only, always use osxkeychain
+git_credential='osxkeychain'
 
-setup_gitconfig () {
-  if ! [ -f git/gitconfig.local ]
-  then
-    info 'setup gitconfig'
+# Get user details
+echo ""
+read -p "Enter your GitHub author name: " git_authorname
+read -p "Enter your GitHub author email: " git_authoremail
 
-    git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
-    then
-      git_credential='osxkeychain'
-    fi
+# Create gitconfig.local from template
+sed -e "s/AUTHORNAME/$git_authorname/g" \
+    -e "s/AUTHOREMAIL/$git_authoremail/g" \
+    -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" \
+    git/gitconfig.local.example > git/gitconfig.local
 
-    user ' - What is your github author name?'
-    read -e git_authorname
-    user ' - What is your github author email?'
-    read -e git_authoremail
-
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.example > git/gitconfig.local
-
-    success 'gitconfig'
-  fi
-}
-
-setup_gitconfig
+echo "✓ Git configuration complete"

@@ -1,9 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-# Simple Mac-only installer for dotfiles
-# Installs all dependencies directly without complex logic
-
 echo "Starting dotfiles installation for macOS..."
 
 # Check if running on macOS
