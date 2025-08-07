@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "Installing zsh plugins..."
-
 # zsh plugins use value of ZSH_PLUGINS_DIR if it exists (set in base.zsh)
 PLUGINS_DIR=${ZSH_PLUGINS_DIR:-"$HOME/.zsh/plugins"}
 
@@ -24,10 +22,4 @@ else
 
     git clone https://github.com/zsh-users/zsh-completions \
         "${PLUGINS_DIR}/zsh-completions"
-fi
-
-# FZF installation
-echo "Configuring fzf..."
-if command -v brew &>/dev/null; then
-    $(brew --prefix)/opt/fzf/install --all --no-bash --no-fish
 fi
