@@ -184,6 +184,7 @@ sw-and-stash() {
 
 alias gcm='(git show-ref --verify --quiet refs/heads/main && sw main) || (git show-ref --verify --quiet refs/heads/master && sw master)'
 alias swm='gcm'
+alias sws='git switch staging'
 
 # Helper function to clean up orphaned autostashes
 gs-cleanup() {
