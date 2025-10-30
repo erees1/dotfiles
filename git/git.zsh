@@ -68,15 +68,6 @@ alias gpsup='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 alias garxv='git branch -m "arxv/$(git rev-parse --abbrev-ref HEAD)"&& git switch master'
 
 
-wt() {
-    # function to change git worktrees easily
-    directory=$(git worktree list | awk '{print $1}' | grep "/$1$")
-    if [ ! -z $directory ]; then
-	    echo Changing to worktree at: "$directory"
-        cd $directory
-    fi
-}
-
 function whip() {
     # Get the last commit message
     last_commit_message=$(git log -1 --pretty=%B)
@@ -166,7 +157,7 @@ sw-and-stash() {
             fi
         fi
         
-        local stash_index=$(git stash list | grep "autostash-$target_branch" | head -n 1 | cut -d: -f1)
+        local stash_index=$(git stash list | grep "autostash-$target_branch$" | head -n 1 | cut -d: -f1)
         
         if [[ -n $stash_index ]]; then
             echo "Auto-applying stash for branch: $target_branch"
