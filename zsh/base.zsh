@@ -2,6 +2,9 @@
 # Environment setup (from env.zsh)
 #-------------------------------------------------------------
 
+autoload -Uz compinit
+compinit
+
 if [[ $0 == -*zsh* ]]; then
     # When sourced by Zsh
     ZSH_DOT_DIR=$(realpath "$(dirname "${(%):-%x}")")

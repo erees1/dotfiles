@@ -9,6 +9,5 @@
   "nvim/colors": "~/.config/nvim/colors",
   "nvim/lua": "~/.config/nvim/lua",
   "nvim/init.lua": "~/.config/nvim/init.lua",
-  "ocaml/utoprc": "~/.utoprc",
   "python/pdbrc.py": "~/.pdbrc.py"
 }
