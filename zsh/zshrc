@@ -11,10 +11,9 @@ source $DOT_DIR/zsh/p10k.zsh            # theme
 
 source $DOT_DIR/git/git.zsh             # git aliases, functions, and keybindings
 source $DOT_DIR/tmux/tmux.zsh           # tmux shortcuts
-source $DOT_DIR/node/node.zsh           # nvm setup
+source $DOT_DIR/zsh/node.zsh            # nvm setup
 source $DOT_DIR/python/python.zsh       # python and pyenv setup
-source $DOT_DIR/ocaml/ocaml.zsh         # opam configuration
-source $DOT_DIR/ruby/rbenv.zsh          # rbenv setup
+source $DOT_DIR/zsh/rbenv.zsh           # rbenv setup
 
 # Stash your environment variables in ~/.localrc or zshrc.secret. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
