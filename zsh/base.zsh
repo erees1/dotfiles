@@ -151,6 +151,13 @@ function prepend-sudo {
 zle -N prepend-sudo
 bindkey "\es" prepend-sudo
 
+function copy-line {
+  echo -n "$BUFFER" | yk 2> /dev/null
+  zle -M "Copied: $BUFFER"
+}
+zle -N copy-line
+bindkey '^Y' copy-line
+
 #-------------------------------------------------------------
 # Aliases and functions (from aliases.zsh)
 #-------------------------------------------------------------
